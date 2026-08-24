@@ -28,7 +28,7 @@ import weights.GaussianScheduleOverlapKernel;
 import weights.NumberOfStopsKernel;
 import weight.TravelerKernel;
 import model.Person;
-import mdoel.SurveyResponse;
+import model.SurveyResponse;
 import nodes.NodeWithActivity;
 import weights.GeometricMeanStayingWeight;
 import weights.MovementWeight;
@@ -177,19 +177,24 @@ import se.vti.utils.misc.Tuple;
             MultiRoundTrip<NodeWithActivity> initialState =
                     createInitialState(scenario, agents, homeNodes, partition, partitionOffset);
 
-            CaseRunner runner = new CaseRunner(scenario, partition)
-                    .setInitialState(initialState)
-                    .withDefaultLoggers(partitionDir, opts.effectiveMsgInterval(), partition)
-                    .withBlockConvergence(opts.stationarityTolerance);
+            Runner runner = new Runner<>(scenario)
+                .setPopulationBinomialPrior(BINOMIAL_PRIOR_MEAN_ROUND_TRIP_SIZE)
+                .setInitialState(initialState)
+                .addIndividualWeight(new StrictlyRequireMinNumberOfStops<>(1))
+                .addIndividualWeight(new StrictlyEnforceCorrectHomeLocationWeight(homeNodes))
+                ;
+            
+            var crit = BlockAverageTerminationCriterion<MultiRoundTrip<GridNodeWithActivity>>()
+                .setConvergenceStatsFilename(outputDir.resolve("convergenceStats.tsv").toString())
+                .setMinSamples(minStationarySamples)
+                .setRelativeVarianceTolerance(tolerance)
+                .setStandardizedMeanTolerance(tolerance)
+                ;
+            
+            runner.setTerminationCriterion(crit);
 
             logger.info("Partition {}: adding weights", partition);
-
-            runner.setPopulationBinomialPrior(BINOMIAL_PRIOR_MEAN_ROUND_TRIP_SIZE);
-            runner.addIndividualWeight(new StrictlyRequireMinNumberOfStops<>(1));
-            runner.addIndividualWeight(new StrictlyEnforceCorrectHomeLocationWeight(homeNodes));
-
-            GeometricMeanStayingWeight stayingWeight =
-                    new GeometricMeanStayingWeight(opportunityWeights, WEIGHT_EPSILON)
+            GeometricMeanStayingWeight stayingWeight = new GeometricMeanStayingWeight(opportunityWeights, WEIGHT_EPSILON)
                             .withExponent(opts.stayingWeightExponent);
             stayingWeight.configureRequiredSummary(initialState);
             runner.addPopulationWeight(stayingWeight, opts.stayMixingWeight);
