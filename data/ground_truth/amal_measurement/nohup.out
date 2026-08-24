@@ -1,0 +1,661 @@
+2026-08-07T18:03:06,839  INFO ParallellAmalRunner:174 ===== Simulation setup =====
+2026-08-07T18:03:06,845  INFO ParallellAmalRunner:175 Start time: 2026-08-07T18:03:06.843134059
+2026-08-07T18:03:06,845  INFO ParallellAmalRunner:176 Maximum number of iterations 20000000:
+2026-08-07T18:03:06,845  INFO ParallellAmalRunner:177 Message interval 200000:
+2026-08-07T18:03:06,845  INFO ParallellAmalRunner:181 Target population size: 
+2026-08-07T18:03:06,845  INFO ParallellAmalRunner:185 Base output dir:  output/ProductionRun_1000
+2026-08-07T18:03:06,845  INFO ParallellAmalRunner:186 Preferences file: configs/spread_preferences_evenMoreHome_retired.xml
+2026-08-07T18:03:06,845  INFO ParallellAmalRunner:187 Opportunities:    output/ProductionRun_1000/opportunity_weights.csv
+2026-08-07T18:03:06,846  INFO ParallellAmalRunner:190 Available processors (numProc): 5
+2026-08-07T18:03:06,846  INFO ParallellAmalRunner:191 Base partition size: 200, remainder: 0
+2026-08-07T18:03:06,846  INFO ParallellAmalRunner:192 Population sizes per partition: [200, 200, 200, 200, 200]
+2026-08-07T18:03:06,846  INFO ParallellAmalRunner:193 Seeds per partition: [100, 149, 198, 247, 296] (baseSeed=100)
+2026-08-07T18:03:06,846  INFO ParallellAmalRunner:196 Grid size: 5x5
+2026-08-07T18:03:06,847  INFO ParallellAmalRunner:197 Period length (h): 24.0
+2026-08-07T18:03:06,847  INFO ParallellAmalRunner:198 Time bin size (h): 1.0
+2026-08-07T18:03:06,847  INFO ParallellAmalRunner:199 Number of time bins: 24
+2026-08-07T18:03:06,850  INFO ParallellAmalRunner:201 Work opening hours: Tuple(6.0, 18.0)
+2026-08-07T18:03:06,851  INFO ParallellAmalRunner:202 EDUCATION opening hours: Tuple(7.0, 18.0)
+2026-08-07T18:03:06,851  INFO ParallellAmalRunner:203 OTHER opening hours: Tuple(8.0, 20.0)
+2026-08-07T18:03:06,851  INFO ParallellAmalRunner:204 Minimum home duration opening hours: 9.0
+2026-08-07T18:03:06,851  INFO ParallellAmalRunner:205 Maximum opening hour shift: 0.0
+2026-08-07T18:03:06,851  INFO ParallellAmalRunner:207 Saved opportunity weights to: output/ProductionRun_1000/opportunity_weights.csv
+2026-08-07T18:03:06,851  INFO ParallellAmalRunner:208 ============================
+2026-08-07T18:03:06,873  INFO ParallellAmalRunner:295 Starting partition 2 from thread pool-2-thread-3
+2026-08-07T18:03:06,873  INFO ParallellAmalRunner:295 Starting partition 0 from thread pool-2-thread-1
+2026-08-07T18:03:06,873  INFO ParallellAmalRunner:295 Starting partition 3 from thread pool-2-thread-4
+2026-08-07T18:03:06,873  INFO ParallellAmalRunner:295 Starting partition 4 from thread pool-2-thread-5
+2026-08-07T18:03:06,873  INFO ParallellAmalRunner:295 Starting partition 1 from thread pool-2-thread-2
+2026-08-07T18:03:06,888  INFO ParallellAmalRunner:304 Partition 2: Loaded population of size 200
+2026-08-07T18:03:06,888  INFO ParallellAmalRunner:304 Partition 4: Loaded population of size 200
+2026-08-07T18:03:06,889  INFO ParallellAmalRunner:304 Partition 1: Loaded population of size 200
+2026-08-07T18:03:06,889  INFO ParallellAmalRunner:304 Partition 3: Loaded population of size 200
+2026-08-07T18:03:06,890  INFO ParallellAmalRunner:304 Partition 0: Loaded population of size 200
+2026-08-07T18:03:06,990  INFO ParallellAmalRunner:319 Partition 4: Sampling activity locations for 200 persons
+2026-08-07T18:03:06,990  INFO ParallellAmalRunner:319 Partition 2: Sampling activity locations for 200 persons
+2026-08-07T18:03:06,990  INFO ParallellAmalRunner:319 Partition 0: Sampling activity locations for 200 persons
+2026-08-07T18:03:06,990  INFO ParallellAmalRunner:319 Partition 1: Sampling activity locations for 200 persons
+2026-08-07T18:03:06,990  INFO ParallellAmalRunner:319 Partition 3: Sampling activity locations for 200 persons
+2026-08-07T18:03:07,246  INFO ParallellAmalRunner:411 Partition 1: Initializing runner...
+2026-08-07T18:03:07,258  INFO ParallellAmalRunner:417 Partition 1: Adding weights:
+2026-08-07T18:03:07,258  INFO ParallellAmalRunner:419 	Added StrictlyEnforceCorrectHomeLocationWeight as individualWeight
+2026-08-07T18:03:07,258  INFO ParallellAmalRunner:421 	Uniform prior added
+2026-08-07T18:03:07,258  INFO ParallellAmalRunner:423 	Added timeUseWeight as populationWeight with factor 5
+2026-08-07T18:03:07,259  INFO ParallellAmalRunner:411 Partition 4: Initializing runner...
+2026-08-07T18:03:07,260  INFO ParallellAmalRunner:417 Partition 4: Adding weights:
+2026-08-07T18:03:07,260  INFO ParallellAmalRunner:411 Partition 2: Initializing runner...
+2026-08-07T18:03:07,260  INFO ParallellAmalRunner:411 Partition 3: Initializing runner...
+2026-08-07T18:03:07,260  INFO ParallellAmalRunner:411 Partition 0: Initializing runner...
+2026-08-07T18:03:07,260  INFO ParallellAmalRunner:419 	Added StrictlyEnforceCorrectHomeLocationWeight as individualWeight
+2026-08-07T18:03:07,260  INFO ParallellAmalRunner:417 Partition 2: Adding weights:
+2026-08-07T18:03:07,260  INFO ParallellAmalRunner:417 Partition 3: Adding weights:
+2026-08-07T18:03:07,260  INFO ParallellAmalRunner:421 	Uniform prior added
+2026-08-07T18:03:07,260  INFO ParallellAmalRunner:417 Partition 0: Adding weights:
+2026-08-07T18:03:07,261  INFO ParallellAmalRunner:419 	Added StrictlyEnforceCorrectHomeLocationWeight as individualWeight
+2026-08-07T18:03:07,261  INFO ParallellAmalRunner:423 	Added timeUseWeight as populationWeight with factor 5
+2026-08-07T18:03:07,261  INFO ParallellAmalRunner:419 	Added StrictlyEnforceCorrectHomeLocationWeight as individualWeight
+2026-08-07T18:03:07,260  INFO ParallellAmalRunner:419 	Added StrictlyEnforceCorrectHomeLocationWeight as individualWeight
+2026-08-07T18:03:07,261  INFO ParallellAmalRunner:421 	Uniform prior added
+2026-08-07T18:03:07,261  INFO ParallellAmalRunner:423 	Added timeUseWeight as populationWeight with factor 5
+2026-08-07T18:03:07,261  INFO ParallellAmalRunner:421 	Uniform prior added
+2026-08-07T18:03:07,261  INFO ParallellAmalRunner:421 	Uniform prior added
+2026-08-07T18:03:07,262  INFO ParallellAmalRunner:423 	Added timeUseWeight as populationWeight with factor 5
+2026-08-07T18:03:07,262  INFO ParallellAmalRunner:423 	Added timeUseWeight as populationWeight with factor 5
+2026-08-07T18:03:07,264  INFO ParallellAmalRunner:490 Partition 1: Starting MCMC
+2026-08-07T18:03:07,264  INFO ParallellAmalRunner:490 Partition 4: Starting MCMC
+2026-08-07T18:03:07,264  INFO ParallellAmalRunner:490 Partition 0: Starting MCMC
+2026-08-07T18:03:07,264  INFO ParallellAmalRunner:490 Partition 2: Starting MCMC
+2026-08-07T18:03:07,264  INFO ParallellAmalRunner:490 Partition 3: Starting MCMC
+MH iteration 0
+  state     = {index=0,nodes[(1,4)[HOME]],bins[0],index=1,nodes[(0,4)[HOME]],bins[0],index=2,nodes[(3,1)[HOME]],bins[0],...}
+MH iteration 0
+  state     = {index=0,nodes[(1,4)[HOME]],bins[0],index=1,nodes[(4,2)[HOME]],bins[0],index=2,nodes[(3,0)[HOME]],bins[0],...}
+MH iteration 0
+  state     = {index=0,nodes[(1,4)[HOME]],bins[0],index=1,nodes[(1,2)[HOME]],bins[0],index=2,nodes[(4,1)[HOME]],bins[0],...}
+MH iteration 0
+MH iteration 0
+  state     = {index=0,nodes[(1,4)[HOME]],bins[0],index=1,nodes[(4,3)[HOME]],bins[0],index=2,nodes[(3,4)[HOME]],bins[0],...}
+  state     = {index=0,nodes[(1,4)[HOME]],bins[0],index=1,nodes[(2,3)[HOME]],bins[0],index=2,nodes[(3,2)[HOME]],bins[0],...}
+2026-08-07T18:03:07,327  INFO ParallellAmalRunner$1:444 Partition 1: iter=200000 logWeight=-10941.999703160305 (3030303 it/s)
+2026-08-07T18:03:07,334  INFO ParallellAmalRunner$1:444 Partition 4: iter=200000 logWeight=-11040.069490581795 (2739726 it/s)
+2026-08-07T18:03:07,339  INFO ParallellAmalRunner$1:444 Partition 2: iter=200000 logWeight=-12882.521785506164 (2631579 it/s)
+2026-08-07T18:03:07,343  INFO ParallellAmalRunner$1:444 Partition 3: iter=200000 logWeight=-8521.380056667145 (2469136 it/s)
+2026-08-07T18:03:07,346  INFO ParallellAmalRunner$1:444 Partition 0: iter=200000 logWeight=-9758.268660267262 (2380952 it/s)
+MH iteration 200000
+  state     = {index=0,nodes[(1,4)[HOME],(0,4)[OTHER]],bins[9,13],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(1,0)[WORK],(3,1)[EDUCATION]],bins[8,10,16,18],...}
+2026-08-07T18:03:15,557  INFO ParallellAmalRunner$1:444 Partition 2: iter=400000 logWeight=25751.45143936901 (48222 it/s)
+MH iteration 200000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[6,11,14],index=1,nodes[(0,4)[HOME]],bins[12],...}
+2026-08-07T18:03:15,755  INFO ParallellAmalRunner$1:444 Partition 1: iter=400000 logWeight=28563.061610728644 (47092 it/s)
+MH iteration 200000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK]],bins[10,18],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[9,14],...}
+2026-08-07T18:03:16,200  INFO ParallellAmalRunner$1:444 Partition 3: iter=400000 logWeight=30333.49689487456 (44758 it/s)
+MH iteration 200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[9,15,18],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,8,15,17],...}
+2026-08-07T18:03:16,281  INFO ParallellAmalRunner$1:444 Partition 4: iter=400000 logWeight=25409.943354059313 (44346 it/s)
+MH iteration 200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[OTHER],(1,3)[WORK]],bins[9,16,21],index=1,nodes[(2,3)[HOME],(4,4)[WORK]],bins[9,18],...}
+2026-08-07T18:03:16,898  INFO ParallellAmalRunner$1:444 Partition 0: iter=400000 logWeight=27676.181599948563 (41515 it/s)
+MH iteration 400000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(3,1)[EDUCATION],(2,0)[OTHER],(2,3)[EDUCATION]],bins[6,12,14,17,18],...}
+2026-08-07T18:03:22,819  INFO ParallellAmalRunner$1:444 Partition 1: iter=600000 logWeight=45649.293176941625 (38565 it/s)
+MH iteration 400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[12,18,20],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(1,0)[WORK],(3,1)[EDUCATION]],bins[8,10,15,18],...}
+2026-08-07T18:03:22,851  INFO ParallellAmalRunner$1:444 Partition 2: iter=600000 logWeight=42143.0548235994 (38489 it/s)
+MH iteration 400000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK]],bins[10,17],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[9,14],...}
+2026-08-07T18:03:23,065  INFO ParallellAmalRunner$1:444 Partition 3: iter=600000 logWeight=44239.05636870677 (37967 it/s)
+MH iteration 400000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(2,4)[OTHER]],bins[7,14,16],index=1,nodes[(2,3)[HOME],(4,4)[WORK],(4,0)[OTHER]],bins[6,14,17],...}
+2026-08-07T18:03:24,501  INFO ParallellAmalRunner$1:444 Partition 0: iter=600000 logWeight=42901.67512940533 (34805 it/s)
+MH iteration 400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[11,16,19],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[8,10,17,19],...}
+2026-08-07T18:03:25,296  INFO ParallellAmalRunner$1:444 Partition 4: iter=600000 logWeight=44145.63777319405 (33269 it/s)
+MH iteration 600000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[6,13,16],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[8,12],...}
+2026-08-07T18:03:29,786  INFO ParallellAmalRunner$1:444 Partition 3: iter=800000 logWeight=48473.970362420645 (35518 it/s)
+MH iteration 600000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[9,15,17],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[7,15,17],...}
+2026-08-07T18:03:29,821  INFO ParallellAmalRunner$1:444 Partition 1: iter=800000 logWeight=49380.384177115564 (35461 it/s)
+MH iteration 600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[9,15,18],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,17],...}
+2026-08-07T18:03:30,017  INFO ParallellAmalRunner$1:444 Partition 2: iter=800000 logWeight=47739.752193337765 (35157 it/s)
+MH iteration 600000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(2,4)[OTHER]],bins[11,18,20],index=1,nodes[(2,3)[HOME],(4,4)[WORK],(4,0)[OTHER]],bins[8,17,19],...}
+2026-08-07T18:03:32,347  INFO ParallellAmalRunner$1:444 Partition 0: iter=800000 logWeight=49005.44409033255 (31892 it/s)
+MH iteration 600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[8,14,17],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[9,10,18,20],...}
+2026-08-07T18:03:33,555  INFO ParallellAmalRunner$1:444 Partition 4: iter=800000 logWeight=48748.01434500321 (30425 it/s)
+MH iteration 800000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[10,16,18],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[9,16,19],...}
+2026-08-07T18:03:37,112  INFO ParallellAmalRunner$1:444 Partition 1: iter=1000000 logWeight=50669.09426698338 (33500 it/s)
+MH iteration 800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[9,15,17],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,17],...}
+2026-08-07T18:03:37,868  INFO ParallellAmalRunner$1:444 Partition 2: iter=1000000 logWeight=49361.15068239824 (32674 it/s)
+MH iteration 800000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[6,13,16],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[14,17],...}
+2026-08-07T18:03:38,016  INFO ParallellAmalRunner$1:444 Partition 3: iter=1000000 logWeight=50015.44170170935 (32516 it/s)
+MH iteration 800000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(2,4)[OTHER]],bins[10,16,18],index=1,nodes[(2,3)[HOME],(4,4)[WORK],(4,0)[OTHER]],bins[8,16,18],...}
+2026-08-07T18:03:40,315  INFO ParallellAmalRunner$1:444 Partition 0: iter=1000000 logWeight=50732.25573635271 (30254 it/s)
+MH iteration 800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[7,13,16],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,8,15,17],...}
+2026-08-07T18:03:41,541  INFO ParallellAmalRunner$1:444 Partition 4: iter=1000000 logWeight=50443.16139584043 (29172 it/s)
+MH iteration 1000000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[12,18,20],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[11,16,20],...}
+2026-08-07T18:03:45,937  INFO ParallellAmalRunner$1:444 Partition 1: iter=1200000 logWeight=51191.1289279404 (31027 it/s)
+MH iteration 1000000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[8,18,20],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[15,20],...}
+2026-08-07T18:03:45,962  INFO ParallellAmalRunner$1:444 Partition 3: iter=1200000 logWeight=51558.96434224613 (31009 it/s)
+MH iteration 1000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[12,17,20],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:03:46,752  INFO ParallellAmalRunner$1:444 Partition 2: iter=1200000 logWeight=49976.858337889185 (30387 it/s)
+MH iteration 1000000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(2,4)[OTHER]],bins[10,16,19],index=1,nodes[(2,3)[HOME],(4,4)[WORK],(4,0)[OTHER]],bins[7,16,18],...}
+2026-08-07T18:03:48,627  INFO ParallellAmalRunner$1:444 Partition 0: iter=1200000 logWeight=51046.57247061288 (29010 it/s)
+MH iteration 1000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[6,12,16],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,8,15,17],...}
+2026-08-07T18:03:50,309  INFO ParallellAmalRunner$1:444 Partition 4: iter=1200000 logWeight=50926.48695002861 (27876 it/s)
+MH iteration 1200000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[10,17,19],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[11,14],...}
+2026-08-07T18:03:53,983  INFO ParallellAmalRunner$1:444 Partition 3: iter=1400000 logWeight=51821.555072392235 (29966 it/s)
+MH iteration 1200000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[11,17,20],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[7,12,15],...}
+2026-08-07T18:03:54,925  INFO ParallellAmalRunner$1:444 Partition 1: iter=1400000 logWeight=51345.81798410268 (29373 it/s)
+MH iteration 1200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[12,16,20],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,17],...}
+2026-08-07T18:03:55,228  INFO ParallellAmalRunner$1:444 Partition 2: iter=1400000 logWeight=50558.64688532239 (29187 it/s)
+MH iteration 1200000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(2,4)[OTHER]],bins[10,15,18],index=1,nodes[(2,3)[HOME],(4,4)[WORK],(4,0)[OTHER]],bins[11,18,20],...}
+2026-08-07T18:03:56,423  INFO ParallellAmalRunner$1:444 Partition 0: iter=1400000 logWeight=51287.54205038079 (28478 it/s)
+MH iteration 1200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[6,11,14],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,9,16,18],...}
+2026-08-07T18:03:59,426  INFO ParallellAmalRunner$1:444 Partition 4: iter=1400000 logWeight=51110.15743967467 (26838 it/s)
+MH iteration 1400000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[8,17,20],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[11,15],...}
+2026-08-07T18:04:02,368  INFO ParallellAmalRunner$1:444 Partition 3: iter=1600000 logWeight=51900.75844344379 (29035 it/s)
+MH iteration 1400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[11,17,19],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,17],...}
+2026-08-07T18:04:03,602  INFO ParallellAmalRunner$1:444 Partition 2: iter=1600000 logWeight=50725.53785199702 (28399 it/s)
+MH iteration 1400000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[9,13,18],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[8,14,17],...}
+2026-08-07T18:04:03,846  INFO ParallellAmalRunner$1:444 Partition 1: iter=1600000 logWeight=51559.110977089804 (28276 it/s)
+MH iteration 1400000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(2,4)[OTHER]],bins[7,14,17],index=1,nodes[(2,3)[HOME],(4,4)[WORK],(4,0)[OTHER]],bins[8,17,18],...}
+2026-08-07T18:04:04,965  INFO ParallellAmalRunner$1:444 Partition 0: iter=1600000 logWeight=51348.07198633029 (27728 it/s)
+MH iteration 1400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[9,16,19],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,9,16,18],...}
+2026-08-07T18:04:08,800  INFO ParallellAmalRunner$1:444 Partition 4: iter=1600000 logWeight=51264.1572166458 (26000 it/s)
+MH iteration 1600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[12,17,19],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:04:11,749  INFO ParallellAmalRunner$1:444 Partition 2: iter=1800000 logWeight=50793.940255636866 (27913 it/s)
+MH iteration 1600000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[10,18,20],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[13,17],...}
+2026-08-07T18:04:12,253  INFO ParallellAmalRunner$1:444 Partition 3: iter=1800000 logWeight=52010.39115694772 (27696 it/s)
+MH iteration 1600000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[6,12,15],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[8,15,18],...}
+2026-08-07T18:04:13,206  INFO ParallellAmalRunner$1:444 Partition 1: iter=1800000 logWeight=51621.5211623919 (27295 it/s)
+MH iteration 1600000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(2,4)[OTHER]],bins[7,12,15],index=1,nodes[(2,3)[HOME],(4,4)[WORK],(4,0)[OTHER]],bins[8,16,18],...}
+2026-08-07T18:04:13,438  INFO ParallellAmalRunner$1:444 Partition 0: iter=1800000 logWeight=51637.60955048567 (27200 it/s)
+MH iteration 1600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[8,16,18],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[10,12,18,20],...}
+2026-08-07T18:04:18,598  INFO ParallellAmalRunner$1:444 Partition 4: iter=1800000 logWeight=51311.33170281765 (25232 it/s)
+MH iteration 1800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[11,17,19],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:04:20,037  INFO ParallellAmalRunner$1:444 Partition 2: iter=2000000 logWeight=50782.770254805466 (27482 it/s)
+MH iteration 1800000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[6,12,13,15],...}
+2026-08-07T18:04:21,937  INFO ParallellAmalRunner$1:444 Partition 0: iter=2000000 logWeight=51678.63042417103 (26783 it/s)
+MH iteration 1800000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[9,16,19],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[9,16,19],...}
+2026-08-07T18:04:22,425  INFO ParallellAmalRunner$1:444 Partition 1: iter=2000000 logWeight=51684.27585417346 (26608 it/s)
+MH iteration 1800000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[11,17,19],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[8,12],...}
+2026-08-07T18:04:26,313  INFO ParallellAmalRunner$1:444 Partition 3: iter=2000000 logWeight=52003.896296281215 (25300 it/s)
+MH iteration 1800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[9,15,19],index=1,nodes[(4,2)[HOME],(3,3)[WORK],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[8,11,12,17,19],...}
+2026-08-07T18:04:28,089  INFO ParallellAmalRunner$1:444 Partition 4: iter=2000000 logWeight=51313.56473195191 (24744 it/s)
+MH iteration 2000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[11,16,18],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,11,13,18],...}
+2026-08-07T18:04:28,283  INFO ParallellAmalRunner$1:444 Partition 2: iter=2200000 logWeight=50816.92504423267 (27153 it/s)
+MH iteration 2000000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[7,12,13,16],...}
+2026-08-07T18:04:30,344  INFO ParallellAmalRunner$1:444 Partition 0: iter=2200000 logWeight=51714.12807856493 (26480 it/s)
+MH iteration 2000000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[12,18,20],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[7,14,16],...}
+2026-08-07T18:04:31,684  INFO ParallellAmalRunner$1:444 Partition 1: iter=2200000 logWeight=51570.48311855084 (26059 it/s)
+MH iteration 2000000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[12,18,20],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[8,12],...}
+2026-08-07T18:04:35,429  INFO ParallellAmalRunner$1:444 Partition 3: iter=2200000 logWeight=52013.44387868198 (24953 it/s)
+MH iteration 2000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[10,15,18],index=1,nodes[(4,2)[HOME],(3,3)[WORK],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[8,9,10,17,19],...}
+2026-08-07T18:04:37,947  INFO ParallellAmalRunner$1:444 Partition 4: iter=2200000 logWeight=51406.21438794331 (24260 it/s)
+MH iteration 2200000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[6,12,13,16],...}
+2026-08-07T18:04:38,874  INFO ParallellAmalRunner$1:444 Partition 0: iter=2400000 logWeight=51676.5950123936 (26197 it/s)
+MH iteration 2200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[12,18,20],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,17],...}
+2026-08-07T18:04:39,468  INFO ParallellAmalRunner$1:444 Partition 2: iter=2400000 logWeight=50839.085141183255 (26029 it/s)
+MH iteration 2200000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[14,18,20],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[7,14,17],...}
+2026-08-07T18:04:41,145  INFO ParallellAmalRunner$1:444 Partition 1: iter=2400000 logWeight=51604.21173495202 (25563 it/s)
+MH iteration 2200000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[12,18,20],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[16,19],...}
+2026-08-07T18:04:44,153  INFO ParallellAmalRunner$1:444 Partition 3: iter=2400000 logWeight=52001.44114085724 (24770 it/s)
+MH iteration 2400000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[6,11,12,14],...}
+2026-08-07T18:04:47,537  INFO ParallellAmalRunner$1:444 Partition 0: iter=2600000 logWeight=51718.75074976478 (25929 it/s)
+MH iteration 2400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[12,17,20],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:04:49,814  INFO ParallellAmalRunner$1:444 Partition 2: iter=2600000 logWeight=50863.03042067234 (25353 it/s)
+MH iteration 2200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[7,13,16],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[8,9,16,18],...}
+2026-08-07T18:04:50,547  INFO ParallellAmalRunner$1:444 Partition 4: iter=2400000 logWeight=51366.31835269654 (23237 it/s)
+MH iteration 2400000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[8,16,18],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[16,20],...}
+2026-08-07T18:04:53,217  INFO ParallellAmalRunner$1:444 Partition 3: iter=2600000 logWeight=51984.181185724345 (24539 it/s)
+MH iteration 2400000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[10,16,18],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[7,13,15],...}
+2026-08-07T18:04:55,081  INFO ParallellAmalRunner$1:444 Partition 1: iter=2600000 logWeight=51742.26945319834 (24114 it/s)
+MH iteration 2600000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[7,12,13,16],...}
+2026-08-07T18:04:56,326  INFO ParallellAmalRunner$1:444 Partition 0: iter=2800000 logWeight=51722.91398521865 (25673 it/s)
+MH iteration 2600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[12,18,20],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK],(1,0)[WORK]],bins[9,10,12,13,18],...}
+2026-08-07T18:04:59,313  INFO ParallellAmalRunner$1:444 Partition 2: iter=2800000 logWeight=50818.131774563815 (24989 it/s)
+MH iteration 2600000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[11,18,20],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[9,14],...}
+2026-08-07T18:05:02,270  INFO ParallellAmalRunner$1:444 Partition 3: iter=2800000 logWeight=52013.77087478358 (24346 it/s)
+MH iteration 2400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[7,14,17],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[9,11,18,20],...}
+2026-08-07T18:05:05,012  INFO ParallellAmalRunner$1:444 Partition 4: iter=2600000 logWeight=51424.225823007364 (22080 it/s)
+MH iteration 2800000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[7,13,14,17],...}
+2026-08-07T18:05:05,264  INFO ParallellAmalRunner$1:444 Partition 0: iter=3000000 logWeight=51674.07261216456 (25423 it/s)
+MH iteration 2600000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER],(2,4)[HOME]],bins[8,13,17,18],...}
+2026-08-07T18:05:08,188  INFO ParallellAmalRunner$1:444 Partition 1: iter=2800000 logWeight=51689.01998906111 (23154 it/s)
+MH iteration 2800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[11,17,18],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:05:08,669  INFO ParallellAmalRunner$1:444 Partition 2: iter=3000000 logWeight=50878.84504843501 (24710 it/s)
+MH iteration 2800000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[10,17,19],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[7,11],...}
+2026-08-07T18:05:11,362  INFO ParallellAmalRunner$1:444 Partition 3: iter=3000000 logWeight=51946.12087546058 (24174 it/s)
+MH iteration 2600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[10,17,20],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[9,10,17,19],...}
+2026-08-07T18:05:14,026  INFO ParallellAmalRunner$1:444 Partition 4: iter=2800000 logWeight=51372.56648526091 (22088 it/s)
+MH iteration 3000000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[11,14,15,18],...}
+2026-08-07T18:05:14,263  INFO ParallellAmalRunner$1:444 Partition 0: iter=3200000 logWeight=51707.38310256661 (25197 it/s)
+MH iteration 3000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[10,15,18],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,13,18],...}
+2026-08-07T18:05:18,495  INFO ParallellAmalRunner$1:444 Partition 2: iter=3200000 logWeight=50839.98208068141 (24384 it/s)
+MH iteration 2800000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[6,12,16],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[9,15,18],...}
+2026-08-07T18:05:20,334  INFO ParallellAmalRunner$1:444 Partition 1: iter=3000000 logWeight=51664.28288275265 (22544 it/s)
+MH iteration 3000000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[12,18,20],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[13,17],...}
+2026-08-07T18:05:20,558  INFO ParallellAmalRunner$1:444 Partition 3: iter=3200000 logWeight=51984.613576780976 (24007 it/s)
+MH iteration 2800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[7,13,15],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[9,10,18,20],...}
+2026-08-07T18:05:24,247  INFO ParallellAmalRunner$1:444 Partition 4: iter=3000000 logWeight=51418.60736842147 (21900 it/s)
+MH iteration 3200000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[11,16,17,20],...}
+2026-08-07T18:05:24,593  INFO ParallellAmalRunner$1:444 Partition 0: iter=3400000 logWeight=51741.91160889263 (24758 it/s)
+MH iteration 3200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[8,13,15],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:05:27,936  INFO ParallellAmalRunner$1:444 Partition 2: iter=3400000 logWeight=50874.33923102558 (24169 it/s)
+MH iteration 3000000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[9,15,18],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[9,15,18],...}
+2026-08-07T18:05:29,375  INFO ParallellAmalRunner$1:444 Partition 1: iter=3200000 logWeight=51708.04870622758 (22517 it/s)
+MH iteration 3200000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[8,14,17],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[13,18],...}
+2026-08-07T18:05:29,903  INFO ParallellAmalRunner$1:444 Partition 3: iter=3400000 logWeight=52004.985632670076 (23836 it/s)
+MH iteration 3400000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[11,17,18,20],...}
+2026-08-07T18:05:33,749  INFO ParallellAmalRunner$1:444 Partition 0: iter=3600000 logWeight=51691.141469995426 (24576 it/s)
+MH iteration 3000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[12,18,20],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[8,9,17,19],...}
+2026-08-07T18:05:36,215  INFO ParallellAmalRunner$1:444 Partition 4: iter=3200000 logWeight=51343.144918905484 (21483 it/s)
+MH iteration 3400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[9,14,16],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:05:37,821  INFO ParallellAmalRunner$1:444 Partition 2: iter=3600000 logWeight=50793.79799898767 (23911 it/s)
+MH iteration 3200000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[10,18,20],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[10,16,19],...}
+2026-08-07T18:05:38,553  INFO ParallellAmalRunner$1:444 Partition 1: iter=3400000 logWeight=51709.95706919934 (22473 it/s)
+MH iteration 3600000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[11,17,18,20],...}
+2026-08-07T18:05:43,284  INFO ParallellAmalRunner$1:444 Partition 0: iter=3800000 logWeight=51731.12137590602 (24356 it/s)
+MH iteration 3400000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(0,0)[WORK],(4,0)[OTHER]],bins[10,14,16,18],...}
+2026-08-07T18:05:44,405  INFO ParallellAmalRunner$1:444 Partition 3: iter=3600000 logWeight=51968.724480706784 (22909 it/s)
+MH iteration 3200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[12,17,19],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[9,10,18,20],...}
+2026-08-07T18:05:46,826  INFO ParallellAmalRunner$1:444 Partition 4: iter=3400000 logWeight=51359.700238379635 (21308 it/s)
+MH iteration 3400000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[12,17,19],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[7,16,19],...}
+2026-08-07T18:05:47,888  INFO ParallellAmalRunner$1:444 Partition 1: iter=3600000 logWeight=51657.7328531468 (22412 it/s)
+MH iteration 3600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[11,16,19],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:05:48,105  INFO ParallellAmalRunner$1:444 Partition 2: iter=3800000 logWeight=50876.53013704189 (23626 it/s)
+MH iteration 3800000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[12,16,17,20],...}
+2026-08-07T18:05:52,723  INFO ParallellAmalRunner$1:444 Partition 0: iter=4000000 logWeight=51775.27679928094 (24175 it/s)
+MH iteration 3600000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[11,17,19],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[9,17,19],...}
+2026-08-07T18:05:57,142  INFO ParallellAmalRunner$1:444 Partition 1: iter=3800000 logWeight=51717.261753844425 (22369 it/s)
+MH iteration 3800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[8,14,17],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,13,18],...}
+2026-08-07T18:05:57,282  INFO ParallellAmalRunner$1:444 Partition 2: iter=4000000 logWeight=50894.20249635008 (23527 it/s)
+MH iteration 3400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[9,15,18],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[10,11,17,20],...}
+2026-08-07T18:05:58,154  INFO ParallellAmalRunner$1:444 Partition 4: iter=3600000 logWeight=51423.01970385185 (21066 it/s)
+MH iteration 3600000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[7,13,15],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[10,14],...}
+2026-08-07T18:05:59,859  INFO ParallellAmalRunner$1:444 Partition 3: iter=3800000 logWeight=52007.1971703331 (22017 it/s)
+MH iteration 4000000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[11,16,17,20],...}
+2026-08-07T18:06:02,293  INFO ParallellAmalRunner$1:444 Partition 0: iter=4200000 logWeight=51735.41989598282 (23996 it/s)
+MH iteration 4000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[6,12,14],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:06:06,695  INFO ParallellAmalRunner$1:444 Partition 2: iter=4200000 logWeight=50850.52196650996 (23407 it/s)
+MH iteration 3800000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[8,13,15],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[10,15,19],...}
+2026-08-07T18:06:06,742  INFO ParallellAmalRunner$1:444 Partition 1: iter=4000000 logWeight=51695.23164186128 (22287 it/s)
+MH iteration 3600000
+  state     = {index=0,nodes[(1,4)[HOME],(1,4)[HOME],(2,4)[WORK],(1,4)[WORK],(1,1)[OTHER]],bins[0,6,11,12,14],...}
+2026-08-07T18:06:09,234  INFO ParallellAmalRunner$1:444 Partition 4: iter=3800000 logWeight=51367.041653733315 (20882 it/s)
+MH iteration 4200000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[10,16,17,19],...}
+2026-08-07T18:06:13,026  INFO ParallellAmalRunner$1:444 Partition 0: iter=4400000 logWeight=51737.381398695135 (23686 it/s)
+MH iteration 3800000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[7,13,16],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[8,13],...}
+2026-08-07T18:06:15,917  INFO ParallellAmalRunner$1:444 Partition 3: iter=4000000 logWeight=51999.15745079958 (21203 it/s)
+MH iteration 4200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER],(1,4)[HOME]],bins[11,16,20,22],...}
+2026-08-07T18:06:16,205  INFO ParallellAmalRunner$1:444 Partition 2: iter=4400000 logWeight=50839.03936648296 (23288 it/s)
+MH iteration 4000000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[11,16,19],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[10,15,18],...}
+2026-08-07T18:06:16,512  INFO ParallellAmalRunner$1:444 Partition 1: iter=4200000 logWeight=51707.33773766377 (22193 it/s)
+MH iteration 3800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[6,12,14],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,9,17,19],...}
+2026-08-07T18:06:21,304  INFO ParallellAmalRunner$1:444 Partition 4: iter=4000000 logWeight=51424.95157559799 (20614 it/s)
+MH iteration 4400000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[10,17,18,20],...}
+2026-08-07T18:06:23,077  INFO ParallellAmalRunner$1:444 Partition 0: iter=4600000 logWeight=51773.68603573527 (23492 it/s)
+MH iteration 4400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[9,13,15],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:06:25,855  INFO ParallellAmalRunner$1:444 Partition 2: iter=4600000 logWeight=50879.28542644276 (23163 it/s)
+MH iteration 4200000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[7,15,18],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[10,15,19],...}
+2026-08-07T18:06:26,454  INFO ParallellAmalRunner$1:444 Partition 1: iter=4400000 logWeight=51711.9096876976 (22089 it/s)
+MH iteration 4000000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[6,13,15],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[13,18],...}
+2026-08-07T18:06:28,940  INFO ParallellAmalRunner$1:444 Partition 3: iter=4200000 logWeight=51965.72553507983 (20825 it/s)
+MH iteration 4600000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[10,16,17,20],...}
+2026-08-07T18:06:33,116  INFO ParallellAmalRunner$1:444 Partition 0: iter=4800000 logWeight=51729.94535923132 (23318 it/s)
+MH iteration 4000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[6,11,14],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,9,16,18],...}
+2026-08-07T18:06:33,283  INFO ParallellAmalRunner$1:444 Partition 4: iter=4200000 logWeight=51441.92383285186 (20386 it/s)
+MH iteration 4600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[8,13,16],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:06:35,653  INFO ParallellAmalRunner$1:444 Partition 2: iter=4800000 logWeight=50817.05178480526 (23034 it/s)
+MH iteration 4400000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[8,14,17],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[8,12,17],...}
+2026-08-07T18:06:36,275  INFO ParallellAmalRunner$1:444 Partition 1: iter=4600000 logWeight=51679.50481759279 (22008 it/s)
+MH iteration 4200000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[6,13,16],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[11,16],...}
+2026-08-07T18:06:40,001  INFO ParallellAmalRunner$1:444 Partition 3: iter=4400000 logWeight=51985.11743481204 (20683 it/s)
+MH iteration 4800000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[10,16,17,20],...}
+2026-08-07T18:06:43,477  INFO ParallellAmalRunner$1:444 Partition 0: iter=5000000 logWeight=51782.05934061449 (23125 it/s)
+MH iteration 4200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[6,13,15],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,8,14,17],...}
+2026-08-07T18:06:45,046  INFO ParallellAmalRunner$1:444 Partition 4: iter=4400000 logWeight=51401.59544521737 (20204 it/s)
+MH iteration 4800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[13,17,20],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:06:45,568  INFO ParallellAmalRunner$1:444 Partition 2: iter=5000000 logWeight=50839.83970618154 (22904 it/s)
+MH iteration 4600000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[11,16,19],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[7,13,16],...}
+2026-08-07T18:06:46,443  INFO ParallellAmalRunner$1:444 Partition 1: iter=4800000 logWeight=51708.54979394922 (21900 it/s)
+MH iteration 4400000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[6,13,15],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[8,12],...}
+2026-08-07T18:06:51,378  INFO ParallellAmalRunner$1:444 Partition 3: iter=4600000 logWeight=52011.61249417378 (20525 it/s)
+MH iteration 5000000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[9,14,15,18],...}
+2026-08-07T18:06:53,753  INFO ParallellAmalRunner$1:444 Partition 0: iter=5200000 logWeight=51700.88694495014 (22959 it/s)
+MH iteration 4800000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[6,13,15],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(3,2)[WORK],(0,2)[OTHER]],bins[7,10,14,17],...}
+2026-08-07T18:06:56,524  INFO ParallellAmalRunner$1:444 Partition 1: iter=5000000 logWeight=51639.64113167623 (21809 it/s)
+MH iteration 5000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[11,16,19],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[7,10,12,18],...}
+2026-08-07T18:06:56,555  INFO ParallellAmalRunner$1:444 Partition 2: iter=5200000 logWeight=50809.77616692583 (22678 it/s)
+MH iteration 4400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[8,14,18],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,9,17,19],...}
+2026-08-07T18:06:57,171  INFO ParallellAmalRunner$1:444 Partition 4: iter=4600000 logWeight=51390.226587945 (20008 it/s)
+MH iteration 4600000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[8,15,17],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[13,18],...}
+2026-08-07T18:07:02,930  INFO ParallellAmalRunner$1:444 Partition 3: iter=4800000 logWeight=52012.75702739814 (20368 it/s)
+MH iteration 5200000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[12,16,17,20],...}
+2026-08-07T18:07:04,154  INFO ParallellAmalRunner$1:444 Partition 0: iter=5400000 logWeight=51728.81993776934 (22795 it/s)
+MH iteration 5200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER],(1,4)[HOME]],bins[10,16,18,23],...}
+2026-08-07T18:07:08,000  INFO ParallellAmalRunner$1:444 Partition 2: iter=5400000 logWeight=50831.4893777915 (22431 it/s)
+MH iteration 5000000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[7,12,16],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[8,14,17],...}
+2026-08-07T18:07:08,422  INFO ParallellAmalRunner$1:444 Partition 1: iter=5200000 logWeight=51686.35987987982 (21562 it/s)
+MH iteration 4600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[11,17,20],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[10,11,17,19],...}
+2026-08-07T18:07:09,444  INFO ParallellAmalRunner$1:444 Partition 4: iter=4800000 logWeight=51425.23116125006 (19820 it/s)
+MH iteration 5400000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[12,17,18,20],...}
+2026-08-07T18:07:14,629  INFO ParallellAmalRunner$1:444 Partition 0: iter=5600000 logWeight=51728.8214499447 (22639 it/s)
+MH iteration 4800000
+  state     = {index=0,nodes[(1,4)[HOME],(0,0)[WORK],(4,0)[OTHER]],bins[9,17,20],index=1,nodes[(4,3)[HOME],(1,0)[OTHER]],bins[8,13],...}
+2026-08-07T18:07:14,649  INFO ParallellAmalRunner$1:444 Partition 3: iter=5000000 logWeight=52038.29705248554 (20211 it/s)
+MH iteration 5400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[8,17,20],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,11,13,18],...}
+2026-08-07T18:07:19,633  INFO ParallellAmalRunner$1:444 Partition 2: iter=5600000 logWeight=50861.09592431727 (22190 it/s)
+MH iteration 5200000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[6,11,14],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[8,14,17],...}
+2026-08-07T18:07:20,995  INFO ParallellAmalRunner$1:444 Partition 1: iter=5400000 logWeight=51688.919294753854 (21282 it/s)
+MH iteration 4800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[10,15,19],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[11,12,18,19],...}
+2026-08-07T18:07:21,690  INFO ParallellAmalRunner$1:444 Partition 4: iter=5000000 logWeight=51468.932625598056 (19652 it/s)
+2026-08-07T18:07:22,952  INFO ParallellAmalRunner:501 Partition 3: Wrote final state to file output/ProductionRun_1000/3/final_state.json
+2026-08-07T18:07:22,952  INFO ParallellAmalRunner:502 Partition 3: Simulation finished. Plotting results ...
+2026-08-07T18:07:23,006  INFO ParallellAmalRunner:543 Done!
+2026-08-07T18:07:23,006  INFO ParallellAmalRunner:240 Partition 3 finished!
+MH iteration 5600000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[11,17,18,20],...}
+2026-08-07T18:07:25,143  INFO ParallellAmalRunner$1:444 Partition 0: iter=5800000 logWeight=51746.7280252316 (22491 it/s)
+MH iteration 5600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[12,17,19],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,18],...}
+2026-08-07T18:07:31,373  INFO ParallellAmalRunner$1:444 Partition 2: iter=5800000 logWeight=50861.437901917474 (21960 it/s)
+MH iteration 5400000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[7,14,16],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[7,13,18],...}
+2026-08-07T18:07:33,286  INFO ParallellAmalRunner$1:444 Partition 1: iter=5600000 logWeight=51665.4141993798 (21051 it/s)
+MH iteration 5000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[6,11,14],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[9,11,18,20],...}
+2026-08-07T18:07:33,705  INFO ParallellAmalRunner$1:444 Partition 4: iter=5200000 logWeight=51423.50868586676 (19516 it/s)
+MH iteration 5800000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[11,16,17,19],...}
+2026-08-07T18:07:35,788  INFO ParallellAmalRunner$1:444 Partition 0: iter=6000000 logWeight=51733.54272881319 (22344 it/s)
+MH iteration 5800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,3)[WORK],(0,4)[OTHER]],bins[9,15,17],index=1,nodes[(1,2)[HOME],(2,3)[OTHER],(3,1)[EDUCATION],(1,0)[WORK]],bins[8,10,12,17],...}
+2026-08-07T18:07:43,219  INFO ParallellAmalRunner$1:444 Partition 2: iter=6000000 logWeight=50856.03482416002 (21743 it/s)
+MH iteration 5200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[6,11,14],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[9,10,18,20],...}
+2026-08-07T18:07:44,420  INFO ParallellAmalRunner$1:444 Partition 4: iter=5400000 logWeight=51470.19999018349 (19483 it/s)
+MH iteration 5600000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[6,13,16],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[6,14,16],...}
+2026-08-07T18:07:45,719  INFO ParallellAmalRunner$1:444 Partition 1: iter=5800000 logWeight=51694.230426653005 (20829 it/s)
+MH iteration 6000000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[9,15,16,19],...}
+2026-08-07T18:07:46,485  INFO ParallellAmalRunner$1:444 Partition 0: iter=6200000 logWeight=51715.47693101842 (22204 it/s)
+2026-08-07T18:07:49,273  INFO ParallellAmalRunner:501 Partition 2: Wrote final state to file output/ProductionRun_1000/2/final_state.json
+2026-08-07T18:07:49,273  INFO ParallellAmalRunner:502 Partition 2: Simulation finished. Plotting results ...
+2026-08-07T18:07:49,328  INFO ParallellAmalRunner:543 Done!
+2026-08-07T18:07:49,329  INFO ParallellAmalRunner:240 Partition 2 finished!
+MH iteration 5400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[10,17,19],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[9,10,17,19],...}
+2026-08-07T18:07:55,388  INFO ParallellAmalRunner$1:444 Partition 4: iter=5600000 logWeight=51456.77750666663 (19436 it/s)
+MH iteration 6200000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[8,13,14,16],...}
+2026-08-07T18:07:57,407  INFO ParallellAmalRunner$1:444 Partition 0: iter=6400000 logWeight=51751.61015595738 (22058 it/s)
+MH iteration 5800000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[7,12,15],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[12,18,20],...}
+2026-08-07T18:07:58,005  INFO ParallellAmalRunner$1:444 Partition 1: iter=6000000 logWeight=51735.12623294863 (20637 it/s)
+MH iteration 5600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[10,17,20],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[8,9,17,19],...}
+2026-08-07T18:08:06,412  INFO ParallellAmalRunner$1:444 Partition 4: iter=5800000 logWeight=51414.807374355485 (19388 it/s)
+MH iteration 6400000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[7,13,14,16],...}
+2026-08-07T18:08:08,427  INFO ParallellAmalRunner$1:444 Partition 0: iter=6600000 logWeight=51728.528928669446 (21915 it/s)
+MH iteration 6000000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[6,12,14],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[8,15,18],...}
+2026-08-07T18:08:09,062  INFO ParallellAmalRunner$1:444 Partition 1: iter=6200000 logWeight=51673.92989576679 (20543 it/s)
+MH iteration 5800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[11,17,19],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,9,16,19],...}
+2026-08-07T18:08:17,618  INFO ParallellAmalRunner$1:444 Partition 4: iter=6000000 logWeight=51425.742530011375 (19333 it/s)
+MH iteration 6600000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[11,15,16,18],...}
+2026-08-07T18:08:19,424  INFO ParallellAmalRunner$1:444 Partition 0: iter=6800000 logWeight=51724.723348253654 (21784 it/s)
+MH iteration 6200000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[7,14,17],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[7,15,18],...}
+2026-08-07T18:08:20,440  INFO ParallellAmalRunner$1:444 Partition 1: iter=6400000 logWeight=51675.97681678469 (20436 it/s)
+MH iteration 6000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[13,18,20],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[8,9,17,19],...}
+2026-08-07T18:08:30,199  INFO ParallellAmalRunner$1:444 Partition 4: iter=6200000 logWeight=51434.54259106123 (19199 it/s)
+MH iteration 6800000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[10,15,16,18],...}
+2026-08-07T18:08:30,504  INFO ParallellAmalRunner$1:444 Partition 0: iter=7000000 logWeight=51707.48244247721 (21656 it/s)
+MH iteration 6400000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[8,14,16],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[6,12,14],...}
+2026-08-07T18:08:31,853  INFO ParallellAmalRunner$1:444 Partition 1: iter=6600000 logWeight=51672.56015147936 (20333 it/s)
+MH iteration 6200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[9,14,16],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[10,11,18,20],...}
+2026-08-07T18:08:41,659  INFO ParallellAmalRunner$1:444 Partition 4: iter=6400000 logWeight=51389.99003389315 (19139 it/s)
+MH iteration 7000000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[9,15,16,19],...}
+2026-08-07T18:08:41,732  INFO ParallellAmalRunner$1:444 Partition 0: iter=7200000 logWeight=51690.04530956912 (21527 it/s)
+MH iteration 6600000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[7,12,15],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[7,13,15],...}
+2026-08-07T18:08:43,370  INFO ParallellAmalRunner$1:444 Partition 1: iter=6800000 logWeight=51653.82098730368 (20232 it/s)
+MH iteration 7200000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[9,14,15,18],...}
+2026-08-07T18:08:53,242  INFO ParallellAmalRunner$1:444 Partition 0: iter=7400000 logWeight=51737.52655940013 (21389 it/s)
+MH iteration 6400000
+  state     = {index=0,nodes[(1,4)[HOME],(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[1,11,16,19],...}
+2026-08-07T18:08:53,586  INFO ParallellAmalRunner$1:444 Partition 4: iter=6600000 logWeight=51421.71141224859 (19057 it/s)
+MH iteration 6800000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[7,12,15],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[5,12,14],...}
+2026-08-07T18:08:55,591  INFO ParallellAmalRunner$1:444 Partition 1: iter=7000000 logWeight=51711.8432542214 (20096 it/s)
+MH iteration 7400000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[9,15,16,19],...}
+2026-08-07T18:09:05,261  INFO ParallellAmalRunner$1:444 Partition 0: iter=7600000 logWeight=51749.189608277826 (21229 it/s)
+MH iteration 6600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[10,16,19],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,9,16,19],...}
+2026-08-07T18:09:06,576  INFO ParallellAmalRunner$1:444 Partition 4: iter=6800000 logWeight=51467.92110186906 (18925 it/s)
+MH iteration 7000000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[8,14,17],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[9,15,17],...}
+2026-08-07T18:09:08,078  INFO ParallellAmalRunner$1:444 Partition 1: iter=7200000 logWeight=51671.75780909483 (19955 it/s)
+MH iteration 7600000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[10,15,17,19],...}
+2026-08-07T18:09:17,156  INFO ParallellAmalRunner$1:444 Partition 0: iter=7800000 logWeight=51728.47174066109 (21087 it/s)
+MH iteration 6800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[10,15,17],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,8,14,16],...}
+2026-08-07T18:09:20,358  INFO ParallellAmalRunner$1:444 Partition 4: iter=7000000 logWeight=51362.23555316407 (18762 it/s)
+MH iteration 7200000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[9,14,16],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[8,14,16],...}
+2026-08-07T18:09:20,857  INFO ParallellAmalRunner$1:444 Partition 1: iter=7400000 logWeight=51702.624256876756 (19808 it/s)
+MH iteration 7800000
+  state     = {index=0,nodes[(1,4)[HOME],(1,3)[WORK],(3,1)[EDUCATION],(2,4)[OTHER]],bins[8,15,16,19],...}
+2026-08-07T18:09:29,124  INFO ParallellAmalRunner$1:444 Partition 0: iter=8000000 logWeight=51712.63411971074 (20950 it/s)
+2026-08-07T18:09:32,752  INFO ParallellAmalRunner:501 Partition 0: Wrote final state to file output/ProductionRun_1000/0/final_state.json
+2026-08-07T18:09:32,753  INFO ParallellAmalRunner:502 Partition 0: Simulation finished. Plotting results ...
+2026-08-07T18:09:32,889  INFO ParallellAmalRunner:543 Done!
+2026-08-07T18:09:32,889  INFO ParallellAmalRunner:240 Partition 0 finished!
+MH iteration 7400000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(3,1)[WORK],(2,0)[OTHER],(1,4)[HOME]],bins[8,10,15,17,23],...}
+2026-08-07T18:09:33,961  INFO ParallellAmalRunner$1:444 Partition 1: iter=7600000 logWeight=51694.418750123135 (19654 it/s)
+MH iteration 7000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[11,16,19],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[9,10,17,19],...}
+2026-08-07T18:09:34,376  INFO ParallellAmalRunner$1:444 Partition 4: iter=7200000 logWeight=51429.64615201615 (18599 it/s)
+MH iteration 7600000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[7,13,15],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[7,13,16],...}
+2026-08-07T18:09:47,271  INFO ParallellAmalRunner$1:444 Partition 1: iter=7800000 logWeight=51707.90785775904 (19500 it/s)
+MH iteration 7200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[9,16,18],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,10,16,18],...}
+2026-08-07T18:09:47,821  INFO ParallellAmalRunner$1:444 Partition 4: iter=7400000 logWeight=51380.663675008946 (18474 it/s)
+MH iteration 7400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[11,15,17],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[9,11,16,20],...}
+2026-08-07T18:09:59,486  INFO ParallellAmalRunner$1:444 Partition 4: iter=7600000 logWeight=51385.65840336107 (18437 it/s)
+MH iteration 7800000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[6,12,15],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[8,14,17],...}
+2026-08-07T18:10:00,438  INFO ParallellAmalRunner$1:444 Partition 1: iter=8000000 logWeight=51697.55134226699 (19362 it/s)
+MH iteration 7600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[6,13,16],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,9,16,19],...}
+2026-08-07T18:10:11,604  INFO ParallellAmalRunner$1:444 Partition 4: iter=7800000 logWeight=51351.094010606386 (18381 it/s)
+MH iteration 8000000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[7,14,16],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[8,14,18],...}
+2026-08-07T18:10:12,727  INFO ParallellAmalRunner$1:444 Partition 1: iter=8200000 logWeight=51693.63902403574 (19273 it/s)
+MH iteration 7800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[10,17,19],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[8,9,16,18],...}
+2026-08-07T18:10:23,634  INFO ParallellAmalRunner$1:444 Partition 4: iter=8000000 logWeight=51408.4427841359 (18333 it/s)
+MH iteration 8200000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[7,13,15],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(3,2)[WORK],(0,2)[OTHER]],bins[12,16,18,20],...}
+2026-08-07T18:10:24,703  INFO ParallellAmalRunner$1:444 Partition 1: iter=8400000 logWeight=51656.829313337905 (19203 it/s)
+MH iteration 8000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[13,18,20],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,8,15,19],...}
+2026-08-07T18:10:35,917  INFO ParallellAmalRunner$1:444 Partition 4: iter=8200000 logWeight=51400.076333925725 (18277 it/s)
+MH iteration 8400000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[6,12,14],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[11,18,20],...}
+2026-08-07T18:10:36,882  INFO ParallellAmalRunner$1:444 Partition 1: iter=8600000 logWeight=51701.721524460794 (19127 it/s)
+MH iteration 8200000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[12,18,20],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[7,8,15,17],...}
+2026-08-07T18:10:48,399  INFO ParallellAmalRunner$1:444 Partition 4: iter=8400000 logWeight=51400.13031852593 (18216 it/s)
+MH iteration 8600000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[6,13,15],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[9,15,18],...}
+2026-08-07T18:10:49,054  INFO ParallellAmalRunner$1:444 Partition 1: iter=8800000 logWeight=51716.62503526241 (19056 it/s)
+MH iteration 8400000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[11,18,20],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[10,12,18,20],...}
+2026-08-07T18:11:01,182  INFO ParallellAmalRunner$1:444 Partition 4: iter=8600000 logWeight=51425.57994155989 (18146 it/s)
+MH iteration 8800000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[6,12,14],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[8,14,16],...}
+2026-08-07T18:11:01,887  INFO ParallellAmalRunner$1:444 Partition 1: iter=9000000 logWeight=51689.28525207055 (18962 it/s)
+MH iteration 9000000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[6,12,15],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[9,14,18],...}
+2026-08-07T18:11:13,969  INFO ParallellAmalRunner$1:444 Partition 1: iter=9200000 logWeight=51696.89216909892 (18903 it/s)
+MH iteration 8600000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[9,17,19],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[10,11,18,20],...}
+2026-08-07T18:11:13,981  INFO ParallellAmalRunner$1:444 Partition 4: iter=8800000 logWeight=51417.52619678714 (18080 it/s)
+MH iteration 9200000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[7,12,14],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[6,15,17],...}
+2026-08-07T18:11:26,732  INFO ParallellAmalRunner$1:444 Partition 1: iter=9400000 logWeight=51653.267569416166 (18820 it/s)
+MH iteration 8800000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[8,13,16],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[9,11,18,20],...}
+2026-08-07T18:11:26,944  INFO ParallellAmalRunner$1:444 Partition 4: iter=9000000 logWeight=51417.30504143445 (18011 it/s)
+MH iteration 9000000
+  state     = {index=0,nodes[(1,4)[HOME],(2,4)[WORK],(1,1)[OTHER]],bins[11,16,19],index=1,nodes[(4,2)[HOME],(3,1)[EDUCATION],(3,3)[WORK],(3,3)[OTHER]],bins[9,10,16,18],...}
+2026-08-07T18:11:40,162  INFO ParallellAmalRunner$1:444 Partition 4: iter=9200000 logWeight=51448.610529259124 (17937 it/s)
+MH iteration 9400000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[10,16,19],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[6,12,15],...}
+2026-08-07T18:11:40,178  INFO ParallellAmalRunner$1:444 Partition 1: iter=9600000 logWeight=51716.72521650285 (18716 it/s)
+2026-08-07T18:11:50,142  INFO ParallellAmalRunner:501 Partition 4: Wrote final state to file output/ProductionRun_1000/4/final_state.json
+2026-08-07T18:11:50,142  INFO ParallellAmalRunner:502 Partition 4: Simulation finished. Plotting results ...
+2026-08-07T18:11:50,224  INFO ParallellAmalRunner:543 Done!
+2026-08-07T18:11:50,224  INFO ParallellAmalRunner:240 Partition 4 finished!
+MH iteration 9600000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[10,17,20],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[6,13,15],...}
+2026-08-07T18:11:52,771  INFO ParallellAmalRunner$1:444 Partition 1: iter=9800000 logWeight=51678.555059731036 (18649 it/s)
+MH iteration 9800000
+  state     = {index=0,nodes[(1,4)[HOME],(3,1)[WORK],(2,0)[OTHER]],bins[10,17,19],index=1,nodes[(0,4)[HOME],(3,2)[WORK],(0,2)[OTHER]],bins[6,12,15],...}
+2026-08-07T18:12:06,578  INFO ParallellAmalRunner$1:444 Partition 1: iter=10000000 logWeight=51701.7963409047 (18542 it/s)
+2026-08-07T18:12:07,502  INFO ParallellAmalRunner:501 Partition 1: Wrote final state to file output/ProductionRun_1000/1/final_state.json
+2026-08-07T18:12:07,502  INFO ParallellAmalRunner:502 Partition 1: Simulation finished. Plotting results ...
+2026-08-07T18:12:07,674  INFO ParallellAmalRunner:543 Done!
+2026-08-07T18:12:07,674  INFO ParallellAmalRunner:240 Partition 1 finished!

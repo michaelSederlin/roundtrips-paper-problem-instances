@@ -1,0 +1,32 @@
+{
+  "gridSize": 5,
+  "cityDiameter_km": 10.00,
+  "travelSpeed_kmh": 30.00,
+  "cells": {
+    "0,0": {"HOME": 40, "OTHER": 15, "EDUCATION": 16, "WORK": 47},
+    "0,1": {"HOME": 40, "OTHER": 11, "EDUCATION": 7, "WORK": 32},
+    "0,2": {"HOME": 40, "OTHER": 66, "EDUCATION": 59, "WORK": 25},
+    "0,3": {"HOME": 40, "OTHER": 11, "EDUCATION": 34, "WORK": 26},
+    "0,4": {"HOME": 40, "OTHER": 24, "EDUCATION": 9, "WORK": 29},
+    "1,0": {"HOME": 40, "OTHER": 44, "EDUCATION": 11, "WORK": 24},
+    "1,1": {"HOME": 40, "OTHER": 87, "EDUCATION": 157, "WORK": 116},
+    "1,2": {"HOME": 40, "OTHER": 17, "EDUCATION": 27, "WORK": 26},
+    "1,3": {"HOME": 40, "OTHER": 29, "EDUCATION": 23, "WORK": 37},
+    "1,4": {"HOME": 40, "OTHER": 19, "EDUCATION": 14, "WORK": 33},
+    "2,0": {"HOME": 40, "OTHER": 262, "EDUCATION": 89, "WORK": 28},
+    "2,1": {"HOME": 40, "OTHER": 15, "EDUCATION": 19, "WORK": 24},
+    "2,2": {"HOME": 40, "OTHER": 26, "EDUCATION": 13, "WORK": 35},
+    "2,3": {"HOME": 40, "OTHER": 37, "EDUCATION": 10, "WORK": 67},
+    "2,4": {"HOME": 40, "OTHER": 131, "EDUCATION": 5, "WORK": 27},
+    "3,0": {"HOME": 40, "OTHER": 14, "EDUCATION": 8, "WORK": 82},
+    "3,1": {"HOME": 40, "OTHER": 22, "EDUCATION": 413, "WORK": 30},
+    "3,2": {"HOME": 40, "OTHER": 13, "EDUCATION": 7, "WORK": 23},
+    "3,3": {"HOME": 40, "OTHER": 20, "EDUCATION": 5, "WORK": 41},
+    "3,4": {"HOME": 40, "OTHER": 16, "EDUCATION": 5, "WORK": 25},
+    "4,0": {"HOME": 40, "OTHER": 52, "EDUCATION": 43, "WORK": 31},
+    "4,1": {"HOME": 40, "OTHER": 11, "EDUCATION": 5, "WORK": 44},
+    "4,2": {"HOME": 40, "OTHER": 13, "EDUCATION": 6, "WORK": 52},
+    "4,3": {"HOME": 40, "OTHER": 12, "EDUCATION": 9, "WORK": 38},
+    "4,4": {"HOME": 40, "OTHER": 33, "EDUCATION": 6, "WORK": 58}
+  }
+}

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Preferences>
+    <GenderPreferences>
+        <Gender type="male">
+            <Activity name="WORK">6.3</Activity>
+            <Activity name="EDUCATION">0.0</Activity>
+            <Activity name="OTHER">5.9</Activity>
+            <Activity name="HOME">11.81</Activity>
+        </Gender>
+        <Gender type="female">
+            <Activity name="WORK">5.6</Activity>
+            <Activity name="EDUCATION">0.0</Activity>
+            <Activity name="OTHER">5.47</Activity>
+            <Activity name="HOME">12.89</Activity>
+        </Gender>
+    </GenderPreferences>
+
+    <AgePreferences>
+	    <AgeGroup minAge="0" maxAge="17">
+		    <Activity name="WORK">0.00</Activity>
+		    <Activity name="EDUCATION">6.50</Activity>
+		    <Activity name="OTHER">5.50</Activity>
+		    <Activity name="HOME">12.00</Activity>
+		</AgeGroup>
+        <AgeGroup minAge="18" maxAge="29">
+            <Activity name="WORK">4.97</Activity>
+            <Activity name="EDUCATION">3.41</Activity>
+            <Activity name="OTHER">5.78</Activity>
+            <Activity name="HOME">9.85</Activity>
+        </AgeGroup>
+        <AgeGroup minAge="30" maxAge="44">
+            <Activity name="WORK">6.41</Activity>
+            <Activity name="EDUCATION">0.00</Activity>
+            <Activity name="OTHER">5.47</Activity>
+            <Activity name="HOME">12.12</Activity>
+        </AgeGroup>
+        <AgeGroup minAge="45" maxAge="64">
+            <Activity name="WORK">6.12</Activity>
+            <Activity name="EDUCATION">0.00</Activity>
+            <Activity name="OTHER">5.33</Activity>
+            <Activity name="HOME">12.55</Activity>
+        </AgeGroup>
+        <AgeGroup minAge="65" maxAge="100">
+            <Activity name="WORK">4.90</Activity>
+            <Activity name="EDUCATION">0.00</Activity>
+            <Activity name="OTHER">5.73</Activity>
+            <Activity name="HOME">13.37</Activity>
+        </AgeGroup>
+    </AgePreferences>
+
+    <IncomePreferences>
+        <IncomeGroup minIncome="0" maxIncome="50">
+            <Activity name="WORK">5.02</Activity>
+            <Activity name="EDUCATION">2.93</Activity>
+            <Activity name="OTHER">4.87</Activity>
+            <Activity name="HOME">11.18</Activity>
+        </IncomeGroup>
+        <IncomeGroup minIncome="50" maxIncome="100">
+            <Activity name="WORK">5.37</Activity>
+            <Activity name="EDUCATION">2.91</Activity>
+            <Activity name="OTHER">4.82</Activity>
+            <Activity name="HOME">10.90</Activity>
+        </IncomeGroup>
+        <IncomeGroup minIncome="100" maxIncome="200">
+            <Activity name="WORK">5.57</Activity>
+            <Activity name="EDUCATION">2.78</Activity>
+            <Activity name="OTHER">5.09</Activity>
+            <Activity name="HOME">10.55</Activity>
+        </IncomeGroup>
+        <IncomeGroup minIncome="200" maxIncome="300">
+            <Activity name="WORK">5.98</Activity>
+            <Activity name="EDUCATION">0.00</Activity>
+            <Activity name="OTHER">6.14</Activity>
+            <Activity name="HOME">11.88</Activity>
+        </IncomeGroup>
+        <IncomeGroup minIncome="300" maxIncome="99999999">
+            <Activity name="WORK">5.42</Activity>
+            <Activity name="EDUCATION">0.00</Activity>
+            <Activity name="OTHER">6.58</Activity>
+            <Activity name="HOME">12.00</Activity>
+        </IncomeGroup>
+    </IncomePreferences>
+</Preferences>
