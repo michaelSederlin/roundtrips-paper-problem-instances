@@ -55,15 +55,12 @@ public class Options {
                     + " choice, not only a speed knob.")
     public int max_processes;
 
-    @Option(names = "--stationarity-tolerance", defaultValue = "0.2",
-            description = "Relative-variance and standardized-mean tolerance of the block-average"
+    @Option(names = "--stationarity-tolerance", defaultValue = "0.2",description = "Relative-variance and standardized-mean tolerance of the block-average"
                     + " convergence criterion.")
     public double stationarity_tolerance;
 
-    @Option(names = "--n-respondents",
-            description = "Draw this many survey respondents at random (seeded by --seed)."
-                    + " Unset means every person in the survey is a respondent.")
-    public Integer n_respondents;
+    @Option(names = "--n-respondents", description = "Draw this many survey respondents at random (seeded by --seed). Default: survey size")
+        public Integer n_respondents;
 
     @Option(names = "--enforce-correct-home-location",
             description = "Reject states in which an agent's home location differs from the survey's.")
@@ -84,22 +81,22 @@ public class Options {
     @Option(names = "--schedule-overlap-bandwidth", defaultValue = "0.5") public double schedule_overlap_bandwidth;
     @Option(names = "--schedule_mixing_weight", defaultValue = "1.0") public double schedule_mixing_weight;
 
-    @Option(names = "--n-stops-mixing-weight", defaultValue = "1.0",
-            description = "Weight of the number-of-stops kernel inside the schedule kernel; 0 switches it off.")
-    public double n_stops_mixing_weight;
+    @Option(names = "--median-duration") public Map<Activity, Double> median_durations = new EnumMap<>(Activity.class);
+    @Option(names = "--unique-activity-node") public Map<Activity, Boolean> unique_activity_nodes = new EnumMap<>(Activity.class);
 
-    @Option(names = "--schedule-overlap-mixing-weight", defaultValue = "2.0",
-            description = "Weight of the schedule-overlap kernel inside the schedule kernel; 0 switches it off.")
-    public double schedule_overlap_mixing_weight;
+    @Option(names = "--n-stops-mixing-weight", defaultValue = "1.0", description = "Weight of the number-of-stops kernel inside the schedule kernel; 0 switches it off.")
+        public double n_stops_mixing_weight;
+
+    @Option(names = "--schedule-overlap-mixing-weight", defaultValue = "2.0", description = "Weight of the schedule-overlap kernel inside the schedule kernel; 0 switches it off.")
+        public double schedule_overlap_mixing_weight;
 
 
     @Option(names = "--stayMixingWeight", defaultValue = "2.0") public double stayMixingWeight;
     @Option(names = "--moveMixingWeight", defaultValue = "2.0") public double moveMixingWeight;
 
 
-    @Option(names = "--verbose",
-            description = "Let the sampler print its own per-iteration progress messages.")
-    public boolean verbose;
+    @Option(names = "--verbose", description = "Let the sampler print its ownprogress messages.")
+        public boolean verbose;
 
     /** Iterations between logged samples, resolving the -1 sentinel. */
     public int effectiveMsgInterval() {
