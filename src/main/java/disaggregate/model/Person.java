@@ -1,5 +1,7 @@
 package disaggregate.model;
 
+import disaggregate.rvu.Trip;
+
 import java.util.Map;
 
 public class Person {

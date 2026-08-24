@@ -1,13 +1,20 @@
 package disaggregate;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,335 +27,485 @@ import org.apache.logging.log4j.ThreadContext;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
+import picocli.CommandLine.Model.CommandSpec;
 
-import weights.ExplainRoundTripsByResponses;
-import weights.CompositeKernel;
-import weights.Kernel.Role;
-import weights.GaussianScheduleOverlapKernel;
-import weights.NumberOfStopsKernel;
-import weight.TravelerKernel;
-import model.Person;
-import model.SurveyResponse;
-import nodes.NodeWithActivity;
-import weights.GeometricMeanStayingWeight;
-import weights.MovementWeight;
-import weights.StrictlyEnforceCorrectHomeLocationWeight;
-
-import renate.rvu.MDDR;
-import renate.rvu.MDDRRepository;
-import renate.rvu.UPBD;
-import renate.rvu.UPBDRepository;
-
-import renate.stateprocessors.PopulationWriter;
-import renate.utils.LoadOpportunityWeights;
-import renate.utils.MatrixDataReader;
-import renate.utils.ScenarioUtils;
+import disaggregate.RunnerOptions;
+import disaggregate.logging.ProgressLogger;
+import disaggregate.logging.XMLStateLogger;
+import disaggregate.stateprocessors.ActivityDurationLogger;
+import disaggregate.stateprocessors.VariablesLogger;
+import se.vti.utils.misc.metropolishastings.MHWeight;
+import se.vti.utils.misc.metropolishastings.MHWeightContainer;
+import se.vti.utils.misc.metropolishastings.MHWeightsToFileLogger;
+import se.vti.utils.misc.metropolishastings.terminationcriteria.BlockAverageTerminationCriterion;
+import se.vti.utils.misc.metropolishastings.terminationcriteria.CombinedAnyTerminationCriterion;
+import se.vti.utils.misc.metropolishastings.terminationcriteria.FixedNumberOfIterationsTerminationCriterion;
+import se.vti.utils.misc.metropolishastings.terminationcriteria.TerminationCriterion;
+import disaggregate.kernels.JaccardActivityLocationKernel;
+import disaggregate.kernels.CompositeKernel;
+import disaggregate.kernels.Features;
+import disaggregate.kernels.Kernel;
+import disaggregate.kernels.Role;
+import disaggregate.kernels.GaussianScheduleOverlapKernel;
+import disaggregate.kernels.NumberOfStopsKernel;
+import disaggregate.kernels.TotalTravelTimeKernel;
+import disaggregate.kernels.IndicatorTravelerKernel;
+import disaggregate.kernels.TravelerKernel;
+import disaggregate.model.Activity;
+import disaggregate.model.Person;
+import disaggregate.model.SurveyResponse;
+import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.weights.ExplainRoundTripsByResponses;
+import disaggregate.model.weights.MovementWeight;
+import disaggregate.model.weights.StrictlyEnforceCorrectHomeLocationWeight;
+import disaggregate.model.weights.StrictlyEnforceUniqueHomeLocation;
+import disaggregate.model.weights.GeometricMeanStayingWeight;
+import disaggregate.rvu.MDDR;
+import disaggregate.rvu.MDDRRepository;
+import disaggregate.rvu.UPBD;
+import disaggregate.rvu.UPBDRepository;
+import disaggregate.stateprocessors.PopulationWriter;
+import disaggregate.utils.LoadOpportunityWeights;
+import disaggregate.utils.MatrixDataReader;
+import disaggregate.utils.ScenarioUtils;
+import disaggregate.utils.summaries.UniqueActivityNodeSummary;
 import se.vti.roundtrips.common.Scenario;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.multiple.MultiRoundTripJsonIO;
 import se.vti.roundtrips.samplingweights.StrictlyPeriodicSchedule;
 import se.vti.roundtrips.samplingweights.StrictlyRequireMinNumberOfStops;
 import se.vti.roundtrips.single.RoundTrip;
+import disaggregate.logging.PerThreadConsole;
 import se.vti.utils.misc.Tuple;
 
-/**
- * Minimal AMAL runner -- the version accompanying the paper.
- *
- * Samples a synthetic population of round trips with Metropolis-Hastings, under
- * a prior plus up to three weights:
- *
- * <ul>
- *   <li><b>kernel weight</b> -- explains the sampled round trips by the survey
- *       responses, through a traveler kernel (socio-demographics) times a
- *       schedule kernel (number of stops, total travel time, schedule overlap);</li>
- *   <li><b>staying weight</b> -- rewards time spent where the activity's
- *       opportunity weights are high;</li>
- *   <li><b>movement weight</b> -- pulls the sampled origin-destination flows
- *       towards an observed OD matrix.</li>
- * </ul>
- *
- * The population is split into partitions that are sampled in parallel, each
- * with its own chain and its own output directory. Population weights are
- * evaluated within a partition, so the number of partitions is part of the model
- * specification and not just a speed setting.
- *
- * This is a deliberately reduced version of {@code renate.cases.amal.AmalRunner}:
- * the model setup is the same, but the plotting, post-processing and partition
- * merging (all of which shell out to Python) are left out, as are the option
- * groups the paper does not vary. Each partition writes {@code stateVariables.tsv},
- * {@code weights.tsv}, {@code convergenceStats.tsv}, {@code activityDurations.tsv},
- * {@code states.xml}, {@code finalState.json}, {@code population.tsv} and
- * {@code respondents.tsv}.
- */
-@Command(name = "amal", mixinStandardHelpOptions = true,
-        description = "Minimal AMAL runner: MCMC sampling of a synthetic round trip population.")
-    public class Runner implements Callable<Integer> {
 
-    private static final Logger logger = LogManager.getLogger(Runner.class);
-    private static final double WEIGHT_EPSILON = 1e-5;
-    private static final double BINOMIAL_PRIOR_MEAN_ROUND_TRIP_SIZE = 3.125;
+@Command(name = "Amal", mixinStandardHelpOptions = true)
+public class Runner implements Callable<Integer> {
+    static final Logger logger = LogManager.getLogger(Runner.class);
+    static final DateTimeFormatter RUN_TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
+    static final ZoneId RUN_TIMESTAMP_ZONE = ZoneId.of("Europe/Stockholm");
 
-    @Mixin Options opts;
-
-    public static void main(String[] args) {
+    @CommandLine.Spec CommandSpec spec; 
+    @Mixin RunnerOptions opts;
+    public static void main(String[] args) throws Exception {
         System.exit(new CommandLine(new Runner()).execute(args));
+    }
+    static Path resolveRunOutputPath(Path outputPath) {
+        String runName = System.getenv("RUN_NAME");
+        String timestamp = LocalDateTime.now(RUN_TIMESTAMP_ZONE).format(RUN_TIMESTAMP_FORMAT);
+        String folderName = (runName == null || runName.isBlank()) ? timestamp : runName + "_" + timestamp;
+        return outputPath.resolve(folderName);
+    }
+    static void copyArgumentsFileIfPresent(Path runOutputPath) throws IOException {
+        Path argsFile = Path.of("amal-arguments.txt");
+        if (Files.exists(argsFile)) {
+            Files.copy(argsFile, runOutputPath.resolve("arguments.txt"), StandardCopyOption.REPLACE_EXISTING);
+        }
     }
 
     @Override
     public Integer call() throws Exception {
-        Path scenarioDir = Path.of(opts.scenarioDir);
-        Path outputDir = Path.of(opts.outputDir).resolve(opts.name);
-        Files.createDirectories(outputDir);
+        Path scenarioPath = Path.of(opts.scenarioDir);
+        Path outputPath = Path.of(opts.outputDir).resolve(opts.name);
+        Path runOutputPath = resolveRunOutputPath(outputPath);
+        int effectiveMsgInterval = (opts.msgInterval < 0) ? (opts.maxIter != null ? opts.maxIter / 100 : 1000) : opts.msgInterval;
 
+        Files.createDirectories(runOutputPath);
         ThreadContext.put("runId", "amal");
-        ThreadContext.put("logDir", outputDir.toString());
-        logConfiguration(scenarioDir, outputDir);
+        ThreadContext.put("logDir", runOutputPath.toString());
+        copyArgumentsFileIfPresent(runOutputPath);
 
-        UPBD upbd = new UPBDRepository().fromCSV(scenarioDir.resolve("upbd.csv")).load();
-        MDDR mddr = new MDDRRepository().fromCSV(scenarioDir.resolve("mddr.csv")).load();
-        List<Person> agents = ScenarioUtils.loadRespondents(upbd, mddr, upbd.size());
-        List<Person> respondents = selectRespondents(agents);
-        logger.info("Loaded {} agents, of which {} act as survey respondents", agents.size(), respondents.size());
+        logger.info("===== AMAL Parallel Simulation setup =====");
+        logger.info("--- Run ---");
+        logger.info("  name={}  |  maxProcesses={}", opts.name, opts.maxProcesses > 0 ? opts.maxProcesses : "auto");
+        logger.info("  maxIter={}  |  seed={}  |  msgInterval={}", opts.maxIter, opts.seed, effectiveMsgInterval);
+        logger.info("  timeBinSize={}h  |  horizon={}h  |  stationarityTolerance={}", opts.timeBinSize, opts.horizon, opts.stationarity_tolerance);
+        logger.info("--- Paths ---");
+        logger.info("  scenarioDir:   {}", scenarioPath.toAbsolutePath());
+        logger.info("  outputDir:     {}", outputPath.toAbsolutePath());
+        logger.info("  runOutputDir:  {}", runOutputPath.toAbsolutePath());
+        logger.info("  warmStartFile: {}", opts.warmStartFile != null ? opts.warmStartFile : "none");
+        logger.info("--- Prior ---");
+        logger.info("  binomialPrior={}", opts.binomialPrior);
+        logger.info("--- Traveler kernel ---");
+        logger.info("  lAge={}  |  lInc={}  |  eta={}  |  threshold={}  |  travelerMixWeight={}",
+                opts.lAge, opts.lInc, opts.eta, opts.kernelThreshold, opts.travelerMixWeight);
+        logger.info("--- Schedule kernel (withKernelWeights={}, factor={}) ---", opts.withKernelWeights, opts.kernelFactor);
+        logger.info("  nStops:  bandwidth={}  |  weight={}", opts.nStopsBandwidth, opts.n_stops_weight);
+        logger.info("  ttt:     bandwidth={}  |  weight={}", opts.tttBandwidth, opts.ttt_weight);
+        logger.info("  overlap: bandwidth={}  |  weight={}", opts.scheduleOverlapBandwidth, opts.schedule_overlap_weight);
+        logger.info("  scheduleMixWeight={}  |  subtractPartition={}", opts.schedule_mixing_weight, opts.subtractPartition);
+        logger.info("--- Staying weight (withStayingWeight={}, geometricMean={}) ---",
+                opts.with_staying_weight, opts.geometric_mean_staying_weight_flag);
+        logger.info("  withCenterStay={}  |  stayMixingWeight={}  |  normalizeWeightsAcrossNodes={}  |  normalizeByMeanSigma={}",
+                opts.with_center_stay, opts.stay_mixing_weight, opts.normalize_weights_across_nodes, opts.normalize_by_mean_sigma);
+        logger.info("--- Movement weight (withMovementWeight={}) ---", opts.with_movement_weight);
+        logger.info("  geometricMean={}  |  traceNormalized={}  |  moveMixingWeight={}",
+                opts.geometric_mean_movement_weight, opts.trace_normalized_movement_weight, opts.move_mixing_weight);
+        logger.info("--- Output ---");
+        logger.info("  writeFinalState={}  |  verbose={}", opts.writeFinalState, opts.verbose);
+        logger.info("--- Plotting ---");
+        logger.info("  weights={}  |  convergenceStats={}  |  evaluationPlots={}  |  surveyTimeStructure={}",
+                opts.plot_weights, opts.plot_convergence_stats, opts.plot_evaluation_plots, opts.plot_survey_time_structure);
+        logger.info("  activityLocation={}  |  activityDurationReproduction={}  |  kernelMatrices={}  |  reproduction={}",
+                opts.activity_location_plotter, opts.plot_activity_duration_reproduction, opts.plot_kernel_matrices, opts.plot_reproduction);
+        logger.info("  odAndTransitions={}", opts.plot_od_and_transitions);
+        logger.info("  populationReproduction={}", opts.plot_population_reproduction);
+        logger.info("  individualReproduction={}", opts.plot_individual_reproduction);
+        logger.info("===========================================");
 
-        Map<Tuple<String, String>, Double> odMatrix = opts.withMovementWeight
-                ? MatrixDataReader.readWithSemicolonSeparator(scenarioDir.resolve("od_matrix.tsv"))
-                : null;
+        // LOAD FULL POPULATION
+        UPBD upbd = new UPBDRepository().fromCSV(scenarioPath.resolve("upbd.csv")).load();
+        MDDR mddr = new MDDRRepository().fromCSV(scenarioPath.resolve("mddr.csv")).load();
+        List<Person> population = ScenarioUtils.loadRespondents(upbd, mddr, upbd.size());
+        List<Person> completeAgents = new ArrayList<>();
+        List<Person> completeRespondents = new ArrayList<>();
 
-        int nPartitions = (opts.maxProcesses > 0) ? opts.maxProcesses : Runtime.getRuntime().availableProcessors();
-        List<List<Person>> partitions = splitEvenly(agents, nPartitions);
-        logger.info("Split {} agents into {} partitions", agents.size(), partitions.size());
-
-        ExecutorService pool = Executors.newFixedThreadPool(partitions.size());
-        try {
-            List<Future<?>> futures = new ArrayList<>();
-            int partitionOffset = 0;
-            for (int i = 0; i < partitions.size(); i++) {
-                String partition = String.valueOf(i);
-                List<Person> partitionAgents = partitions.get(i);
-                int offset = partitionOffset;
-                futures.add(pool.submit(() -> {
-                    runPartition(partition, partitionAgents, respondents, odMatrix,
-                            outputDir.resolve(partition), scenarioDir, offset);
-                    return null;
-                }));
-                partitionOffset += partitionAgents.size();
-            }
-            for (Future<?> future : futures) {
-                future.get();
-            }
-        } finally {
-            pool.shutdown();
+        for (Person p : population) {
+            if ((opts.respondentSelection.wanted_respondents != null) && (!opts.respondentSelection.wanted_respondents.contains(p.getName()))) continue;
+            completeRespondents.add(p);
         }
 
-        logger.info("All partitions finished. Results are under {}", outputDir.toAbsolutePath());
+        for (Person p : population) {
+            if ((opts.wanted_agents != null) && (!opts.wanted_agents.contains(p.getName()))) continue;
+            completeAgents.add(p);
+        }
+
+        logger.info("Loaded {} respondents and {} agents from {} persons", completeRespondents.size(), completeAgents.size(), population.size());
+
+        Map<Tuple<String, String>, Double> odMatrix = null;
+        if (opts.with_movement_weight) {
+            odMatrix = MatrixDataReader.readWithSemicolonSeparator(scenarioPath.resolve("od_matrix.tsv"));
+        }
+
+        final Map<Tuple<String, String>, Double> finalOdMatrix = odMatrix;
+
+        final List<Person> finalCompleteRespondents;
+        // List<Person> kernelRespondents = ;
+        if (opts.respondentSelection.n_respondents != null) {
+            List<Person> shuffled = new ArrayList<>(completeRespondents);
+            Collections.shuffle(shuffled, new Random(opts.seed));
+            finalCompleteRespondents = shuffled.subList(0, Math.min(opts.respondentSelection.n_respondents, shuffled.size()));
+        } else {
+            finalCompleteRespondents = completeRespondents;
+        }
+        // final List<Person> finalKernelRespondents = finalCompleteRespondents;
+        logger.info("Kernel respondents: {} of {}", finalCompleteRespondents.size(), population.size());
+
+        int nParts = (opts.maxProcesses > 0) ? opts.maxProcesses : Runtime.getRuntime().availableProcessors();
+        List<List<Person>> partitions = splitEvenly(completeAgents, nParts);
+        logger.info("Split {} persons into {} partitions", completeAgents.size(), partitions.size());
+
+        ExecutorService pool = Executors.newFixedThreadPool(nParts);
+        PerThreadConsole.install();
+        
+        List<Future<?>> futures = new ArrayList<>();
+        int from = 0;
+        for (int i = 0; i < partitions.size(); i++) {
+            final String partName = String.valueOf(i);
+            final List<Person> agents = partitions.get(i);
+            final Path partOutputDir = runOutputPath.resolve(partName);
+            final int partFrom = from;
+            futures.add(pool.submit(() -> {
+                try {
+                    runPartition(partName, agents, finalCompleteRespondents,
+                            finalOdMatrix,
+                            effectiveMsgInterval, partOutputDir, scenarioPath, opts.warmStartFile, partFrom);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                return null;
+            }));
+            from += agents.size();
+        }
+        pool.shutdown();
+        for (var f : futures) f.get();
+
+        // if (partitions.size() > 1) {
+        mergePartitions(runOutputPath);
+        plotAggregateResults(runOutputPath, scenarioPath);
+        // } else {
+        //     logger.info("Single partition run -- skipping partition merge ({} already holds the run's output)", runOutputPath);
+        // }
+
         return 0;
     }
 
-    /** Samples one partition's chain. Runs on its own thread, with its own log file. */
-    void runPartition(
-            String partition,
-            List<Person> agents,
-            List<Person> respondents,
-            Map<Tuple<String, String>, Double> odMatrix,
-            Path partitionDir,
-            Path scenarioDir,
-            int partitionOffset) throws Exception {
+    void mergePartitions(Path runOutputPath) throws IOException, InterruptedException {
+        logger.info("Merging partitions into {}", runOutputPath.resolve("partitions_merged"));
+        Files.createDirectories(runOutputPath.resolve("partitions_merged"));
 
-        Files.createDirectories(partitionDir);
-        ThreadContext.put("runId", partition);
-        ThreadContext.put("logDir", partitionDir.toString());
+
+
+        Path firstPartitionRespondents;
+        try (var partitionDirs = Files.list(runOutputPath)) {
+            firstPartitionRespondents = partitionDirs
+                    .filter(p -> Files.isDirectory(p) && p.getFileName().toString().matches("\\d+"))
+                    .sorted()
+                    .map(p -> p.resolve("respondents.tsv"))
+                    .filter(Files::exists)
+                    .findFirst()
+                    .orElse(null);
+        }
+        if (firstPartitionRespondents != null) {
+            Files.copy(firstPartitionRespondents,
+                    runOutputPath.resolve("partitions_merged").resolve("respondents.tsv"),
+                    StandardCopyOption.REPLACE_EXISTING);
+        } else {
+            logger.warn("No partition respondents.tsv found under {}; skipping respondents copy", runOutputPath);
+        }
+    }
+
+    void plotAggregateResults(Path runOutputPath, Path scenarioPath) throws IOException, InterruptedException {
+        // Plotting is handled outside this repository; the run writes its raw
+        // outputs (states.xml, population.tsv, convergence stats) to runOutputPath.
+    }
+
+    /**
+     * Snapshot of the runner's sampling weights, for MHWeightsToFileLogger.
+     * (was CaseRunner.getWeightsContainer)
+     */
+    private static MHWeightContainer<MultiRoundTrip<NodeWithActivity>> weightsContainer(
+            se.vti.roundtrips.common.Runner<NodeWithActivity> runner) {
+        MHWeightContainer<MultiRoundTrip<NodeWithActivity>> weights = new MHWeightContainer<>();
+        for (MHWeight<MultiRoundTrip<NodeWithActivity>> w : runner.getSamplingWeightsView()) {
+            weights.add(w);
+        }
+        return weights;
+    }
+
+    /** (was CaseRunner.constructTerminationCriterion) */
+    private static TerminationCriterion<MultiRoundTrip<NodeWithActivity>> combineTerminationCriteria(
+            List<TerminationCriterion<MultiRoundTrip<NodeWithActivity>>> criteria) {
+        return switch (criteria.size()) {
+            case 0 -> null;
+            case 1 -> criteria.get(0);
+            default -> {
+                var tc = new CombinedAnyTerminationCriterion<>(criteria.get(0));
+                criteria.stream().skip(1).forEach(tc::add);
+                yield tc;
+            }
+        };
+    }
+
+    void runPartition(
+        String partName,
+        List<Person> agents,
+        List<Person> respondents,
+        Map<Tuple<String, String>, Double> odMatrix,
+        int effectiveMsgInterval,
+        Path partOutputDir,
+        Path scenarioPath,
+        String warmStartFile,
+        int partFrom
+        ) throws Exception {
+        Files.createDirectories(partOutputDir);
+        ThreadContext.put("runId", partName);
+        ThreadContext.put("logDir", partOutputDir.toString());
+
         try {
-            logger.info("Partition {}: {} agents on thread {}",
-                    partition, agents.size(), Thread.currentThread().getName());
+            logger.info("Starting partition {} ({} agents) on thread {}", partName, agents.size(), Thread.currentThread().getName());
 
             Scenario<NodeWithActivity> scenario = new Scenario<>(new Random(opts.seed));
             scenario.setNumberOfTimeBins((int) (opts.horizon / opts.timeBinSize));
             scenario.setTimeBinSize_h(opts.timeBinSize);
-            ScenarioUtils.loadNetworkFromTSV(scenario, scenarioDir);
+            ScenarioUtils.loadNetworkFromTSV(scenario, scenarioPath);
 
-            Map<NodeWithActivity, Double> opportunityWeights = opts.withStayingWeight
-                    ? LoadOpportunityWeights.load(scenarioDir.resolve("opportunity_weights.csv"), scenario)
-                    : null;
+            // Activities restricted to a single (highest-opportunity) node per round trip.
+            Set<Activity> uniqueActivities = EnumSet.noneOf(Activity.class);
+            for (Map.Entry<Activity, Boolean> entry : opts.unique_activity_nodes.entrySet()) {
+                if (Boolean.TRUE.equals(entry.getValue())) uniqueActivities.add(entry.getKey());
+            }
+            if (!uniqueActivities.isEmpty() && opts.schedule_overlap_c != null) {
+                // lambda2PerActivity.keySet() is the schedule overlap kernel's scored activity
+                // set, so a restricted activity without a median duration would be collapsed
+                // here but never scored there.
+                for (Activity act : uniqueActivities) {
+                    if (!opts.median_durations.containsKey(act)) {
+                        throw new IllegalArgumentException("--unique-activity-node " + act
+                                + " has no --median-duration entry, so it would never be scored"
+                                + " by the schedule overlap kernel");
+                    }
+                }
+            }
 
-            new PopulationWriter(agents, partitionDir.resolve("population.tsv").toString()).write();
-            new PopulationWriter(respondents, partitionDir.resolve("respondents.tsv").toString()).write();
+            Map<NodeWithActivity, Double> opportunityWeights = null;
+            if (opts.with_staying_weight || opts.geometric_mean_staying_weight_flag || !uniqueActivities.isEmpty()) {
+                opportunityWeights = LoadOpportunityWeights.load(scenarioPath.resolve("opportunity_weights.csv"), scenario);
+                if (opts.normalize_weights_across_nodes) opportunityWeights = LoadOpportunityWeights.divideByMaxAcrossNodes(opportunityWeights);
+                if (opts.normalize_by_mean_sigma) opportunityWeights = LoadOpportunityWeights.normalizeByMeanSigma(opportunityWeights);
+            }
+
+            new PopulationWriter(respondents, partOutputDir.resolve("respondents.tsv").toString()).write();
+            new PopulationWriter(agents, partOutputDir.resolve("population.tsv").toString()).write();
 
             List<NodeWithActivity> homeNodes = ScenarioUtils.findHomes(scenario, agents);
-            MultiRoundTrip<NodeWithActivity> initialState =
-                    createInitialState(scenario, agents, homeNodes, partition, partitionOffset);
-
-            Runner runner = new Runner<>(scenario)
-                .setPopulationBinomialPrior(BINOMIAL_PRIOR_MEAN_ROUND_TRIP_SIZE)
-                .setInitialState(initialState)
-                .addIndividualWeight(new StrictlyRequireMinNumberOfStops<>(1))
-                .addIndividualWeight(new StrictlyEnforceCorrectHomeLocationWeight(homeNodes))
-                ;
-            
-            var crit = BlockAverageTerminationCriterion<MultiRoundTrip<GridNodeWithActivity>>()
-                .setConvergenceStatsFilename(outputDir.resolve("convergenceStats.tsv").toString())
-                .setMinSamples(minStationarySamples)
-                .setRelativeVarianceTolerance(tolerance)
-                .setStandardizedMeanTolerance(tolerance)
-                ;
-            
-            runner.setTerminationCriterion(crit);
-
-            logger.info("Partition {}: adding weights", partition);
-            GeometricMeanStayingWeight stayingWeight = new GeometricMeanStayingWeight(opportunityWeights, WEIGHT_EPSILON)
-                            .withExponent(opts.stayingWeightExponent);
-
-            stayingWeight.configureRequiredSummary(initialState);
-            runner.addPopulationWeight(stayingWeight, opts.stayMixingWeight);
-            logger.info("\tstaying weight (geometric mean), mixing weight {}", opts.stayMixingWeight);
-
-
-            MovementWeight movementWeight = new MovementWeight(odMatrix, WEIGHT_EPSILON)
-                    .withExponent(opts.movementWeightExponent)
-                    .withGeometricMean();
-            movementWeight.configureRequiredSummary(initialState);
-            runner.addPopulationWeight(movementWeight, opts.moveMixingWeight);
-            logger.info("\tmovement weight (geometric mean), mixing weight {}", opts.moveMixingWeight);
-
-
-            if (opts.withKernelWeights) {
-                ExplainRoundTripsByResponses kernelWeights = new ExplainRoundTripsByResponses(
-                        buildKernelResponses(respondents), agents, opts.kernelThreshold);
-                kernelWeights.configureRequiredSummary(initialState);
-                runner.addPopulationWeight(kernelWeights, opts.kernelFactor);
-                logger.info("\tkernel weight over {} responses, factor {}", respondents.size(), opts.kernelFactor);
+            MultiRoundTrip<NodeWithActivity> initState;
+            if (warmStartFile != null) {
+                if (!Files.exists(Path.of(warmStartFile))) {
+                    throw new FileNotFoundException("Missing warm start file " + warmStartFile);
+                }
+                MultiRoundTrip<NodeWithActivity> globalState =
+                        MultiRoundTripJsonIO.singleton().readFromFile(scenario, warmStartFile);
+                initState = new MultiRoundTrip<>(agents.size());
+                for (int j = 0; j < agents.size(); j++) {
+                    RoundTrip<NodeWithActivity> globalRt = globalState.getRoundTrip(partFrom + j);
+                    RoundTrip<NodeWithActivity> localRt =
+                            new RoundTrip<>(j, globalRt.cloneNodes(), globalRt.cloneDepartures());
+                    localRt.setEpisodes(scenario.getOrCreateSimulator().simulate(localRt));
+                    initState.setRoundTripAndUpdateSummaries(j, localRt);
+                }
+                logger.info("Partition {} warm-started from {} (global offset {})", partName, warmStartFile, partFrom);
+            } else {
+                initState = ScenarioUtils.createInitialMultiRoundTrip(scenario, homeNodes, agents);
             }
 
+            // Must be registered before any weight registers its own summary: summaries are
+            // updated in registration order, and both StayingSummary and KernelSummary read
+            // this one during their own update. Registering it here is also what switches the
+            // feature on -- both look it up on the MultiRoundTrip and treat absence as "off".
+            if (!uniqueActivities.isEmpty()) {
+                UniqueActivityNodeSummary uniqueActivityNodes = new UniqueActivityNodeSummary(opportunityWeights);
+                uniqueActivityNodes.addActivities(uniqueActivities.toArray(new Activity[0]));
+                initState.addSummary(uniqueActivityNodes);
+                initState.recomputeSummaries();
+                logger.info("\tRestricting to a single (highest-opportunity) node per round trip for: {}", uniqueActivities);
+            }
+
+            List<SurveyResponse<NodeWithActivity>> responses = buildKernelResponses(respondents, opts);
+            se.vti.roundtrips.common.Runner<NodeWithActivity> runner = new se.vti.roundtrips.common.Runner<>(scenario);
+            runner.setInitialState(initState);
+
+            // --- termination criteria (was CaseRunner.withBlockConvergence / withMaxIter) ---
+            List<TerminationCriterion<MultiRoundTrip<NodeWithActivity>>> terminationCriteria = new ArrayList<>();
+            var blockCrit = new BlockAverageTerminationCriterion<MultiRoundTrip<NodeWithActivity>>()
+                    .setConvergenceStatsFileName(partOutputDir.resolve("convergenceStats.tsv").toString());
+            blockCrit.setRelativeVarianceTolerance(opts.stationarity_tolerance)
+                     .setStandardizedMeanTolerance(opts.stationarity_tolerance);
+            if (opts.min_number_of_stable_samples > 0) {
+                logger.info("Setting minimum number of stable samples to {}", opts.min_number_of_stable_samples);
+                blockCrit.setMinSamples(opts.min_number_of_stable_samples);
+            }
+            terminationCriteria.add(blockCrit);
+
+            // ADDING DEFAULT PRIORS
+            logger.info("Partition {}: Adding weights:", partName); 
+            runner.setPopulationBinomialPrior(3.125);
+
+            if (opts.enforceCorrectHomeLocation) runner.addIndividualWeight(new StrictlyEnforceCorrectHomeLocationWeight(homeNodes));
+            if (opts.enforce_unique_home_location) runner.addIndividualWeight(new StrictlyEnforceUniqueHomeLocation());
+            logger.info("\tAdded StrictlyEnforeCorrectHomeLocationWeight as individualWeight");
+            runner.addIndividualWeight(new StrictlyRequireMinNumberOfStops<>(1));
+
+            var geometricMeanStayingWeight = new GeometricMeanStayingWeight(opportunityWeights, 1e-5)
+                .withExponent(opts.staying_weight_exponent);
+            geometricMeanStayingWeight.configureRequiredSummary(initState);
+
+            // var stayingWeight = new StayingWeight(opportunityWeights);
+            // stayingWeight.setC(-Math.log(LoadOpportunityWeights.meanSigma(opportunityWeights)));
+
+            runner.addPopulationWeight(geometricMeanStayingWeight, opts.stay_mixing_weight);
+            logger.info("Geometric mean staying weight added");
+        
+            var movementWeight = new MovementWeight(odMatrix, 1e-5)
+                .withExponent(opts.movement_weight_exponent)
+                .withGeometricMean();
+            if (opts.raw_counts_flag) movementWeight.withRawCounts();
+            movementWeight.configureRequiredSummary(initState);
+            runner.addPopulationWeight(movementWeight, opts.move_mixing_weight);
+            logger.info("Geometric Mean Movement weight added");
+            
+            ExplainRoundTripsByResponses kernelWeights =
+            new ExplainRoundTripsByResponses(responses, agents, opts.kernelThreshold);
+            runner.addPopulationWeight(kernelWeights, opts.kernelFactor);
+            kernelWeights.configureRequiredSummary(initState);
+            logger.info("Kernel weights added");
+        
             if (opts.maxIter != null) {
-                runner.withMaxIter(opts.maxIter);
+                terminationCriteria.add(new FixedNumberOfIterationsTerminationCriterion<>(opts.maxIter));
+            }
+            // --- loggers (was CaseRunner.addDefaultLoggers, called from run()) ---
+            // Registered after all weights: weightsContainer() snapshots the runner's
+            // sampling weights, so it must see the complete list.
+            runner.addStateProcessor(new VariablesLogger<>(
+                    effectiveMsgInterval, partOutputDir.resolve("stateVariables.tsv").toString()));
+            runner.addStateProcessor(new MHWeightsToFileLogger<>(
+                    effectiveMsgInterval, weightsContainer(runner), partOutputDir.resolve("weights.tsv").toString()));
+            runner.addStateProcessor(new XMLStateLogger<>(effectiveMsgInterval, partOutputDir));
+            runner.addStateProcessor(new ActivityDurationLogger<>(
+                    effectiveMsgInterval, partOutputDir.resolve("activityDurations.tsv").toString()));
+            runner.addStateProcessor(new ProgressLogger<>(effectiveMsgInterval, partName));
+
+            runner.setTerminationCriterion(combineTerminationCriteria(terminationCriteria));
+
+            if (!opts.verbose) runner.setMessageInterval(0);
+
+            logger.info("Partition {}: Starting MCMC", partName);
+            runner.run();
+
+            if (opts.writeFinalState) {
+                MultiRoundTripJsonIO.singleton().writeToFile(
+                        runner.getFinalState(),
+                        partOutputDir.resolve("finalState.json").toString());
             }
 
-            runner.setMessageInterval(0);
 
-            // CaseRunner.run() writes finalState.json alongside the sample loggers.
-            runner.run();
-            logger.info("Partition {}: done, results in {}", partition, partitionDir.toAbsolutePath());
         } finally {
             ThreadContext.clearAll();
         }
     }
+    
+    List<SurveyResponse<NodeWithActivity>> buildKernelResponses(List<Person> kernelRespondents, RunnerOptions opts) {
+        logger.info("Kernel construction: traveler(lAge={}, lInc={}, eta={}) | "
+                + "nStops={} | scheduleOverlap(bw={})",
+                opts.lAge, opts.lInc, opts.eta,
+                opts.n_stops_weight > 0 ? "ON(bw=" + opts.n_stops_weight + ")" : "OFF",
+                opts.schedule_overlap_weight > 0 ? "ON(bw=" + opts.schedule_overlap_weight + ")" : "OFF");
 
-    /**
-     * Starting point of the chain: either the matching slice of an earlier run's final state,
-     * or a fresh state in which everybody stays home.
-     */
-    private MultiRoundTrip<NodeWithActivity> createInitialState(
-            Scenario<NodeWithActivity> scenario,
-            List<Person> agents,
-            List<NodeWithActivity> homeNodes,
-            String partition,
-            int partitionOffset) throws Exception {
-
-        if (opts.warmStartFile == null) {
-            return ScenarioUtils.createInitialMultiRoundTrip(scenario, homeNodes, agents);
-        }
-        if (!Files.exists(Path.of(opts.warmStartFile))) {
-            throw new FileNotFoundException("Missing warm start file " + opts.warmStartFile);
-        }
-
-        MultiRoundTrip<NodeWithActivity> globalState =
-                MultiRoundTripJsonIO.singleton().readFromFile(scenario, opts.warmStartFile);
-        MultiRoundTrip<NodeWithActivity> initialState = new MultiRoundTrip<>(agents.size());
-        for (int i = 0; i < agents.size(); i++) {
-            RoundTrip<NodeWithActivity> globalRoundTrip = globalState.getRoundTrip(partitionOffset + i);
-            RoundTrip<NodeWithActivity> localRoundTrip =
-                    new RoundTrip<>(i, globalRoundTrip.cloneNodes(), globalRoundTrip.cloneDepartures());
-            localRoundTrip.setEpisodes(scenario.getOrCreateSimulator().simulate(localRoundTrip));
-            initialState.setRoundTripAndUpdateSummaries(i, localRoundTrip);
-        }
-        logger.info("Partition {}: warm-started from {} at global offset {}",
-                partition, opts.warmStartFile, partitionOffset);
-        return initialState;
-    }
-
-    /**
-     * One kernel per respondent: a traveler kernel over socio-demographics, mixed with a
-     * schedule kernel built from whichever of the three schedule components carry a
-     * non-zero weight.
-     */
-    List<SurveyResponse<NodeWithActivity>> buildKernelResponses(List<Person> respondents) {
-        double[] travelerParams = { opts.lAge, opts.lInc, opts.eta };
+        double[] travelerParams = {opts.lAge, opts.lInc, opts.eta};
         List<SurveyResponse<NodeWithActivity>> responses = new ArrayList<>();
+        for (Person person : kernelRespondents) {
+            Kernel<? extends Features> kTrav = opts.indicatorTravelerKernel 
+                ? new IndicatorTravelerKernel(person)
+                : new TravelerKernel(person, travelerParams);  // Default is TravelerKernel
 
-        for (Person respondent : respondents) {
-            CompositeKernel schedule = new CompositeKernel();
-            if (opts.nStopsWeight > 0) {
-                schedule.add(new NumberOfStopsKernel(
-                        respondent.getTrip().getStopCount(), opts.nStopsBandwidth), opts.nStopsWeight);
-            }
-            if (opts.tttWeight > 0) {
-                schedule.add(new TotalTravelTimeKernel(
-                        respondent.getTrip().getTotalTravelTime_h(), opts.tttBandwidth), opts.tttWeight);
-            }
-            if (opts.scheduleOverlapWeight > 0) {
-                schedule.add(new GaussianScheduleOverlapKernel(
-                        respondent, opts.scheduleOverlapBandwidth), opts.scheduleOverlapWeight);
+            CompositeKernel kSched = new CompositeKernel();
+            if (opts.n_stops_weight > 0) kSched.add(new NumberOfStopsKernel(person.getTrip().getStopCount(), opts.nStopsBandwidth), opts.n_stops_weight);
+            if (opts.schedule_overlap_weight > 0) {
+                GaussianScheduleOverlapKernel kOverlap = (opts.schedule_overlap_c != null)
+                    ? new GaussianScheduleOverlapKernel(person, opts.schedule_overlap_c, opts.median_durations)
+                    : new GaussianScheduleOverlapKernel(person, opts.scheduleOverlapBandwidth);
+
+                kSched.add(kOverlap, opts.schedule_overlap_weight);
             }
 
-            CompositeKernel kernel = new CompositeKernel()
-                    .add(new TravelerKernel(respondent, travelerParams), Role.TRAVELER)
-                    .add(schedule, Role.SCHEDULE);
-            kernel.setMixtureWeights(new double[] { opts.travelerMixWeight, opts.scheduleMixWeight });
-            responses.add(new SurveyResponse<>(respondent, kernel));
+            CompositeKernel kloc = new CompositeKernel();
+            if (opts.jaccard_activity_location_kernel) {
+                kloc.add(new JaccardActivityLocationKernel(person, opts.jaccard_activity_location_kernel_bandwidth));
+            }
+
+            CompositeKernel k = new CompositeKernel()
+                    .add(kTrav, Role.TRAVELER)
+                    .add(kSched, Role.SCHEDULE)
+                    .add(kloc, Role.LOCATION)
+                    ;
+            k.setMixtureWeights(new double[] { opts.travelerMixWeight, opts.schedule_mixing_weight, opts.location_kernel_weight});
+            responses.add(new SurveyResponse<>(person, k));
         }
         return responses;
     }
 
-    /** Every person responds, unless {@code --nRespondents} asks for a seeded random subset. */
-    private List<Person> selectRespondents(List<Person> population) {
-        if (opts.nRespondents == null) {
-            return population;
-        }
-        List<Person> shuffled = new ArrayList<>(population);
-        Collections.shuffle(shuffled, new Random(opts.seed));
-        return List.copyOf(shuffled.subList(0, Math.min(opts.nRespondents, shuffled.size())));
-    }
-
-    /** Splits into n contiguous parts whose sizes differ by at most one. */
     static <T> List<List<T>> splitEvenly(List<T> list, int n) {
-        int base = list.size() / n;
-        int remainder = list.size() % n;
+        int size = list.size();
+        int base = size / n;
+        int extra = size % n;
         List<List<T>> parts = new ArrayList<>(n);
         int from = 0;
         for (int i = 0; i < n; i++) {
-            int to = from + base + (i < remainder ? 1 : 0);
+            int to = from + base + (i < extra ? 1 : 0);
             parts.add(list.subList(from, to));
             from = to;
         }
         return parts;
-    }
-
-    private void logConfiguration(Path scenarioDir, Path outputDir) {
-        logger.info("===== AMAL run setup =====");
-        logger.info("  name={}  |  seed={}  |  maxIter={}  |  msgInterval={}",
-                opts.name, opts.seed, opts.maxIter != null ? opts.maxIter : "until convergence",
-                opts.effectiveMsgInterval());
-        logger.info("  maxProcesses={}  |  stationarityTolerance={}",
-                opts.maxProcesses > 0 ? opts.maxProcesses : "auto", opts.stationarityTolerance);
-        logger.info("  timeBinSize={}h  |  horizon={}h", opts.timeBinSize, opts.horizon);
-        logger.info("  scenarioDir={}", scenarioDir.toAbsolutePath());
-        logger.info("  outputDir={}", outputDir.toAbsolutePath());
-        logger.info("  warmStartFile={}", opts.warmStartFile != null ? opts.warmStartFile : "none");
-        logger.info("  prior={}  |  enforceCorrectHomeLocation={}",
-                opts.binomialPrior ? "binomial" : "uniform", opts.enforceCorrectHomeLocation);
-        logger.info("  kernelWeights={}", opts.withKernelWeights
-                ? String.format("on (factor=%s, traveler[lAge=%s, lInc=%s, eta=%s, threshold=%s, mix=%s],"
-                        + " schedule[nStops=%s/bw=%s, ttt=%s/bw=%s, overlap=%s/bw=%s, mix=%s])",
-                        opts.kernelFactor, opts.lAge, opts.lInc, opts.eta, opts.kernelThreshold,
-                        opts.travelerMixWeight, opts.nStopsWeight, opts.nStopsBandwidth,
-                        opts.tttWeight, opts.tttBandwidth, opts.scheduleOverlapWeight,
-                        opts.scheduleOverlapBandwidth, opts.scheduleMixWeight)
-                : "off");
-        logger.info("  stayingWeight={}", opts.withStayingWeight
-                ? String.format("on (mix=%s, exponent=%s)", opts.stayMixingWeight, opts.stayingWeightExponent)
-                : "off");
-        logger.info("  movementWeight={}", opts.withMovementWeight
-                ? String.format("on (mix=%s, exponent=%s)", opts.moveMixingWeight, opts.movementWeightExponent)
-                : "off");
-        logger.info("==========================");
     }
 }

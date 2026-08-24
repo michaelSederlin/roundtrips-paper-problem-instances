@@ -14,8 +14,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- <maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target> -->
-		<maven.compiler.source>16</maven.compiler.source>
-		<maven.compiler.target>16</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 
 	<repositories>
@@ -80,6 +80,11 @@
 			<version>42.7.3</version>
 		</dependency> -->
 		<dependency>
+			<groupId>se.vti.java-projects</groupId>
+			<artifactId>roundtrips</artifactId>
+			  <version>0.1.23</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
 			<version>2.25.0</version>
@@ -95,11 +100,17 @@
 			<version>5.10.0</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- <dependency>
+		<!-- brings in se.vti.java-projects:roundtrips -> se.vti.java-projects:utils transitively -->
+		<dependency>
 			<groupId>se.vti.dynamic-demand-sampling</groupId>
 			<artifactId>ddsutils</artifactId>
 			<version>0.0.3</version>
-		</dependency> -->
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.14.1</version>
+		</dependency>
 		<!-- <dependency>
 			<groupId>se.java-utils</groupId>
 			<artifactId>java-utils</artifactId>
