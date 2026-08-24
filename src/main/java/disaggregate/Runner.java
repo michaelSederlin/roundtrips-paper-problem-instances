@@ -196,6 +196,7 @@ import se.vti.utils.misc.Tuple;
             logger.info("Partition {}: adding weights", partition);
             GeometricMeanStayingWeight stayingWeight = new GeometricMeanStayingWeight(opportunityWeights, WEIGHT_EPSILON)
                             .withExponent(opts.stayingWeightExponent);
+
             stayingWeight.configureRequiredSummary(initialState);
             runner.addPopulationWeight(stayingWeight, opts.stayMixingWeight);
             logger.info("\tstaying weight (geometric mean), mixing weight {}", opts.stayMixingWeight);

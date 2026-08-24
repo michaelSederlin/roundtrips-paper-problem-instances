@@ -16,23 +16,23 @@ import se.vti.utils.misc.metropolishastings.MHWeight;
 // Trial to mitigate the bias
 //  */
 
-public class GeometricMeanStayingWeight implements MHWeight<MultiRoundTrip<NodeWithActivity>>{
+public class StayingWeight implements MHWeight<MultiRoundTrip<NodeWithActivity>>{
     private double exponent = 1.0;
     private final double epsilon; 
     private final Map<NodeWithActivity, Double> nodeActivityOpportunities;
     private final Map<RoundTrip<NodeWithActivity>, Double> roundTripLogWeightsCache;
     private final Map<NodeWithActivity, Double> logSigma;
 
-    public GeometricMeanStayingWeight withExponent(double exponent) {
+    public StayingWeight withExponent(double exponent) {
         this.exponent = exponent;
         return this;
     }
 
-    public GeometricMeanStayingWeight(Map<NodeWithActivity, Double> nodeActivityOpportunities) {    
+    public StayingWeight(Map<NodeWithActivity, Double> nodeActivityOpportunities) {    
         this(nodeActivityOpportunities, 1e-6);
     }
 
-    public GeometricMeanStayingWeight(Map<NodeWithActivity, Double> nodeActivityOpportunities, double epsilon) {
+    public StayingWeight(Map<NodeWithActivity, Double> nodeActivityOpportunities, double epsilon) {
         this.epsilon = epsilon;
         this.nodeActivityOpportunities = nodeActivityOpportunities;
         this.roundTripLogWeightsCache = new HashMap<>();

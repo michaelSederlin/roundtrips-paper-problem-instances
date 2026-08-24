@@ -1,10 +1,21 @@
-/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/StayingWeight.java
-/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/Runner.java
-/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/SurveyResponse.java
-/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/MovementWeight.java
-/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/Options.java
-/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/ExplainRoundTripsByResponses.java
-/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/NumberOfStopsKernel.java
-/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/ScheduleOverlapKernel.java
-/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/CompositeKernel.java
-/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/TravelerKernel.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\weights\MovementWeight.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\weights\ScheduleOverlapKernel.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\UPBDRepository.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\weights\MovementSummary.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\weights\CompositeKernel.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\weights\StayingWeight.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\weights\NumberOfStopsKernel.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\Person.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\Options.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\MDDRRepository.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\Runner.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\MDDR.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\SurveyResponse.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\weights\ExplainRoundTripsByResponses.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\weights\TravelerKernel.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\Trip.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\weights\StayingSummary.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\common\Activity.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\common\ActivityNode.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\UPBD.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\weights\Kernel.java

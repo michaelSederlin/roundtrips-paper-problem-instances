@@ -1,0 +1,111 @@
+# =====================================================================================
+# AMAL arguments estimation (ParallellAmalRunner / renate.cases.RunnerOptions)
+# =====================================================================================
+
+--name n-responses-1000
+--scenarioDir "data/scenarios/amal/results_paper/2026 08 07/full"
+--outputDir output/amal/
+--warmStartFile "data/scenarios/amal/results_paper/2026 08 07/full/finalState.json" # Starting from prior
+
+### ===========================
+### === === RUN CONFIG ===  ===
+### ===========================
+
+--binomial-prior 
+#--maxProcesses 2
+
+--seed 1084
+--timeBinSize 1
+--horizon 24
+--msgInterval 10000
+--stationarity-tolerance 0.10
+--min-number-of-stable-samples 30
+
+--n-responses 1000
+
+--enforce-correct-home-location
+# OFF # --enforce-unique-home-location
+
+### ==========================
+### ===== TRAVELER KERNEL ====
+### ==========================
+
+--withKernelWeights
+--kernelFactor 1.0
+--indication-traveler-kernel
+--lAge 5.0
+--lInc 70.0
+--eta 0.3
+--travelerKernelThreshold 0.00005
+--travelerMixWeight 1.0
+
+### ==========================
+### ===== LOCATION KERNEL ====
+### ==========================
+
+# OFF # --jaccard-activity-location-kernel 
+# OFF # --jaccard-activity-location-kernel-bandwidth 0.1
+# OFF # --location-kernel-weight 1.0
+
+### ==========================
+### ===== SCHEDULE KERNEL ====
+### ==========================
+
+--nStopsBandwidth 0.3
+# OFF # --tttBandwidth 0.5
+
+# OFF # --scheduleOverlapBandwidth 0.5
+# OFF # --schedule-overlap-c 0.1
+# OFF # --median-duration EDUCATION=1
+# OFF # --median-duration HOME=5
+# OFF # --median-duration OTHER=1.5
+# OFF # --median-duration WORK=2
+
+--schedule-overlap-c 1.0
+--median-duration EDUCATION=0.3
+--median-duration HOME=2.5
+--median-duration OTHER=0.3
+--median-duration WORK=0.75
+
+--nStopsWeight 1
+--tttWeight 0
+--scheduleOverlapWeight 1
+
+--scheduleMixWeight 1
+
+### ==========================
+### ===== STAYING WEIGHT ===== 
+### ==========================
+
+# OFF # --withStayingWeight
+# OFF # --stayMixingWeight 1.5
+# OFF # --staying-weight-exponent 1
+
+# OFF # --normalizeWeightsAcrossNodes
+# OFF # --normalize-by-mean-sigma
+
+--unique-activity-node HOME=true
+--unique-activity-node WORK=true
+--unique-activity-node EDUCATION=true
+
+### ===========================
+### ===== MOVEMENT WEIGHT ===== 
+### ===========================
+
+# OFF # --withMovementWeight
+# OFF # --geometricMeanMovementWeight
+# OFF # --movement-weight-exponent 1.0
+# OFF # --moveMixingWeight 1.5
+# OFF # --with-raw-movement-counts
+
+### ==========================
+### ======== PLOTTING ========
+### ==========================
+
+--measurementStatesXml "../amal/Results_Paper/2026 08 07/amal_measurement/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml"
+--validationStatesXml "../amal/Results_Paper/2026 08 07/amal_validation/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml"
+
+--output-suffix .png
+
+--no-activity-location-plotter
+--no-plot-kernel-matrices
