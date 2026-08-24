@@ -1,0 +1,10 @@
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/StayingWeight.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/Runner.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/SurveyResponse.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/MovementWeight.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/Options.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/ExplainRoundTripsByResponses.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/NumberOfStopsKernel.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/ScheduleOverlapKernel.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/CompositeKernel.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/weights/TravelerKernel.java

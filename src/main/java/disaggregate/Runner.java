@@ -21,24 +21,24 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 
-import renate.cases.CaseRunner;
-import renate.kernels.commons.CompositeKernel;
-import renate.kernels.commons.Role;
-import renate.kernels.schedulekernels.GaussianScheduleOverlapKernel;
-import renate.kernels.schedulekernels.NumberOfStopsKernel;
-import renate.kernels.schedulekernels.TotalTravelTimeKernel;
-import renate.kernels.travelerkernels.TravelerKernel;
-import renate.model.Person;
-import renate.model.SurveyResponse;
-import renate.model.nodes.NodeWithActivity;
-import renate.model.weights.ExplainRoundTripsByResponses;
-import renate.model.weights.GeometricMeanStayingWeight;
-import renate.model.weights.MovementWeight;
-import renate.model.weights.StrictlyEnforceCorrectHomeLocationWeight;
+import weights.ExplainRoundTripsByResponses;
+import weights.CompositeKernel;
+import weights.Kernel.Role;
+import weights.GaussianScheduleOverlapKernel;
+import weights.NumberOfStopsKernel;
+import weight.TravelerKernel;
+import model.Person;
+import mdoel.SurveyResponse;
+import nodes.NodeWithActivity;
+import weights.GeometricMeanStayingWeight;
+import weights.MovementWeight;
+import weights.StrictlyEnforceCorrectHomeLocationWeight;
+
 import renate.rvu.MDDR;
 import renate.rvu.MDDRRepository;
 import renate.rvu.UPBD;
 import renate.rvu.UPBDRepository;
+
 import renate.stateprocessors.PopulationWriter;
 import renate.utils.LoadOpportunityWeights;
 import renate.utils.MatrixDataReader;
@@ -85,11 +85,7 @@ import se.vti.utils.misc.Tuple;
     public class Runner implements Callable<Integer> {
 
     private static final Logger logger = LogManager.getLogger(Runner.class);
-
-    /** Floor on the staying / movement weight contributions, keeping log weights finite. */
     private static final double WEIGHT_EPSILON = 1e-5;
-
-    /** Mean round trip size of the binomial prior. */
     private static final double BINOMIAL_PRIOR_MEAN_ROUND_TRIP_SIZE = 3.125;
 
     @Mixin Options opts;
