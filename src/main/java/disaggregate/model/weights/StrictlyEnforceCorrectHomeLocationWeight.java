@@ -5,27 +5,27 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import disaggregate.model.nodes.ActivityNode;
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
+import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.single.RoundTrip;
 import se.vti.utils.misc.metropolishastings.MHWeight;
 
-public class StrictlyEnforceCorrectHomeLocationWeight implements MHWeight<RoundTrip<NodeWithActivity>> {
+public class StrictlyEnforceCorrectHomeLocationWeight implements MHWeight<RoundTrip<ActivityNode>> {
     private final static Logger logger = LogManager.getLogger(StrictlyEnforceCorrectHomeLocationWeight.class);
-    private final List<NodeWithActivity> enforcedHomeNodes;
+    private final List<ActivityNode> enforcedHomeNodes;
     private final double forbiddenPenalty = Double.NEGATIVE_INFINITY;
     // private final boolean forceHome = true;
 
-    public StrictlyEnforceCorrectHomeLocationWeight(List<NodeWithActivity> enforcedHomeNodes) {
+    public StrictlyEnforceCorrectHomeLocationWeight(List<ActivityNode> enforcedHomeNodes) {
         this.enforcedHomeNodes = enforcedHomeNodes;
         logger.info("Initialized home location constraint weights for {} roundtrips", enforcedHomeNodes.size());
     }
     
     @Override
-    public double logWeight(RoundTrip<NodeWithActivity> rt) {
+    public double logWeight(RoundTrip<ActivityNode> rt) {
         // for (int ii = 0; ii < mrt.size(); ii++) {
-        //     RoundTrip<NodeWithActivity> rt = mrt.getRoundTrip(ii);
+        //     RoundTrip<ActivityNode> rt = mrt.getRoundTrip(ii);
 
             if (rt.size() == 0) {
                 // if (forceHome) {
@@ -35,7 +35,7 @@ public class StrictlyEnforceCorrectHomeLocationWeight implements MHWeight<RoundT
                 // }
             }
 
-            NodeWithActivity firstNode = rt.getNodesView().getFirst();
+            ActivityNode firstNode = rt.getNodesView().getFirst();
             ActivityNode enforcedHomeNode = enforcedHomeNodes.get(rt.getIndex());
 
             if (!firstNode.equals(enforcedHomeNode)) {
@@ -51,14 +51,14 @@ public class StrictlyEnforceCorrectHomeLocationWeight implements MHWeight<RoundT
     }
 
 
-    public boolean isValid(MultiRoundTrip<NodeWithActivity> mrt) {
+    public boolean isValid(MultiRoundTrip<ActivityNode> mrt) {
         boolean testResult = false;
-        for (RoundTrip<NodeWithActivity> rt : mrt) {
+        for (RoundTrip<ActivityNode> rt : mrt) {
             testResult = isValid(rt);
         }
         return testResult;
     }
-    public boolean isValid(RoundTrip<NodeWithActivity> rt) {
+    public boolean isValid(RoundTrip<ActivityNode> rt) {
         double lw = logWeight(rt); 
         if (lw == Double.NEGATIVE_INFINITY) {
             throw new IllegalStateException("Invalid home location in multi round trip");

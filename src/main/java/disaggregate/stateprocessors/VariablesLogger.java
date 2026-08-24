@@ -6,7 +6,7 @@ import java.util.Map;
 
 import disaggregate.model.Activity;
 import disaggregate.model.SurveyResponse;
-import disaggregate.model.nodes.ActivityNode;
+import disaggregate.model.ActivityNode;
 import se.vti.utils.misc.metropolishastings.MHToFileLogger;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.simulator.MoveEpisode;

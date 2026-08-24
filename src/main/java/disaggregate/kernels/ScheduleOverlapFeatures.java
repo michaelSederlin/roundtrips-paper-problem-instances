@@ -7,8 +7,8 @@ import java.util.Map;
 
 import disaggregate.model.Activity;
 import disaggregate.model.Person;
-import disaggregate.model.nodes.ActivityNode;
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
+import disaggregate.model.ActivityNode;
 import disaggregate.rvu.Trip;
 import se.vti.roundtrips.simulator.IntervalUtils;
 import se.vti.roundtrips.simulator.StayEpisode;
@@ -77,13 +77,13 @@ public class ScheduleOverlapFeatures implements Features {
      *                      An activity absent from the map is not restricted and all of its
      *                      stays are included.
      */
-    public static  ScheduleOverlapFeatures from(RoundTrip<? extends ActivityNode> rt, double horizon_h, Map<Activity, NodeWithActivity> accruingNodes) {
+    public static  ScheduleOverlapFeatures from(RoundTrip<? extends ActivityNode> rt, double horizon_h, Map<Activity, ActivityNode> accruingNodes) {
         Map<Activity, List<Tuple<Double, Double>>> activityMap = createEmptyActivityIntervals();
 
         var intervalUtils = new IntervalUtils(24.0);
 
         for (Activity act : Activity.values()) {
-            NodeWithActivity accruingNode = accruingNodes.get(act);
+            ActivityNode accruingNode = accruingNodes.get(act);
             List<Tuple<Double, Double>> intervals = intervalUtils.extractIntervals(
                 rt.getEpisodes(),
                 ep -> (ep instanceof StayEpisode<?> se)

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import disaggregate.model.Activity;
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.multiple.MultiRoundTripSummary;
 import se.vti.roundtrips.simulator.Episode;
 import se.vti.roundtrips.simulator.StayEpisode;
@@ -20,20 +20,20 @@ import se.vti.roundtrips.single.RoundTrip;
  *
  * Purely derived state -- contributes no log weight.
  */
-public class UniqueActivityNodeSummary implements MultiRoundTripSummary<NodeWithActivity> {
+public class UniqueActivityNodeSummary implements MultiRoundTripSummary<ActivityNode> {
 
-    private final Map<Integer, Map<Activity, NodeWithActivity>> rt2activitynodemapping = new HashMap<>();
+    private final Map<Integer, Map<Activity, ActivityNode>> rt2activitynodemapping = new HashMap<>();
 
     /**
      * Ranking key only. Raw sigma and log(sigma + eps) give the same argmax, so either
      * may be passed; likewise the normalisations in LoadOpportunityWeights, which are
      * monotone within an activity.
      */
-    private final Map<NodeWithActivity, Double> sigma;
+    private final Map<ActivityNode, Double> sigma;
 
     private final Set<Activity> activities = EnumSet.noneOf(Activity.class);
 
-    public UniqueActivityNodeSummary(Map<NodeWithActivity, Double> sigma) {
+    public UniqueActivityNodeSummary(Map<ActivityNode, Double> sigma) {
         this.sigma = sigma;
     }
 
@@ -60,22 +60,22 @@ public class UniqueActivityNodeSummary implements MultiRoundTripSummary<NodeWith
     }
 
     @Override
-    public void update(int idx, RoundTrip<NodeWithActivity> oldRoundTrip,
-            RoundTrip<NodeWithActivity> newRoundTrip) {
+    public void update(int idx, RoundTrip<ActivityNode> oldRoundTrip,
+            RoundTrip<ActivityNode> newRoundTrip) {
 
         if (newRoundTrip == null) {
             rt2activitynodemapping.remove(idx);
             return;
         }
 
-        Map<Activity, NodeWithActivity> activityNode = new EnumMap<>(Activity.class);
+        Map<Activity, ActivityNode> activityNode = new EnumMap<>(Activity.class);
 
         for (Episode ep : newRoundTrip.getEpisodes()) {
             if (ep instanceof StayEpisode<?> se) {
-                NodeWithActivity node = (NodeWithActivity) se.getLocation();
+                ActivityNode node = (ActivityNode) se.getLocation();
                 Activity nodeAct = node.getActivity();
                 if (activities.contains(nodeAct)) {
-                    NodeWithActivity curNode = activityNode.get(nodeAct);
+                    ActivityNode curNode = activityNode.get(nodeAct);
                     if ((curNode == null) || (sigmaOf(node) > sigmaOf(curNode))) {
                         activityNode.put(nodeAct, node);
                     }
@@ -86,7 +86,7 @@ public class UniqueActivityNodeSummary implements MultiRoundTripSummary<NodeWith
         rt2activitynodemapping.put(idx, activityNode);
     }
 
-    private double sigmaOf(NodeWithActivity node) {
+    private double sigmaOf(ActivityNode node) {
         Double value = sigma.get(node);
         if (value == null) {
             throw new IllegalStateException("Sigma not found for location: " + node);
@@ -98,8 +98,8 @@ public class UniqueActivityNodeSummary implements MultiRoundTripSummary<NodeWith
      * The node that accrues for this activity, or null if the activity is not registered
      * or is not visited in this round trip.
      */
-    public NodeWithActivity getRoundTripActivityNode(int idx, Activity act) {
-        Map<Activity, NodeWithActivity> activityNodes = rt2activitynodemapping.get(idx);
+    public ActivityNode getRoundTripActivityNode(int idx, Activity act) {
+        Map<Activity, ActivityNode> activityNodes = rt2activitynodemapping.get(idx);
         if (activityNodes == null) {
             throw new IllegalStateException(
                 "No unique-activity-node data for RoundTrip index " + idx +
@@ -109,8 +109,8 @@ public class UniqueActivityNodeSummary implements MultiRoundTripSummary<NodeWith
     }
 
     /** All nodes that accrue in this round trip, keyed by activity. Never null. */
-    public Map<Activity, NodeWithActivity> getRoundTripActivityNodes(int idx) {
-        Map<Activity, NodeWithActivity> activityNodes = rt2activitynodemapping.get(idx);
+    public Map<Activity, ActivityNode> getRoundTripActivityNodes(int idx) {
+        Map<Activity, ActivityNode> activityNodes = rt2activitynodemapping.get(idx);
         if (activityNodes == null) {
             throw new IllegalStateException(
                 "No unique-activity-node data for RoundTrip index " + idx +

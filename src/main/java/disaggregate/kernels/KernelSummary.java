@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import disaggregate.model.Activity;
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
 import disaggregate.utils.summaries.UniqueActivityNodeSummary;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.multiple.MultiRoundTripSummary;
@@ -16,7 +16,7 @@ import se.vti.roundtrips.simulator.StayEpisode;
 import se.vti.roundtrips.single.RoundTrip;
 import se.vti.utils.misc.Tuple;
 
-public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
+public class KernelSummary implements MultiRoundTripSummary<ActivityNode> {
     private static final Logger logger = LogManager.getLogger(KernelSummary.class);
     
     private boolean trackActivities = false; 
@@ -32,7 +32,7 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
     private int nextKernelIndex = 0;
     
     private final Map<Integer, Set<Activity>> activitiesPerRT;
-    private final Map<Integer, List<NodeWithActivity>> locationsPerRT;
+    private final Map<Integer, List<ActivityNode>> locationsPerRT;
     private final Map<Integer, Double> tttPerRT;
     private final Map<Integer, Integer> nStopsPerRT;
     private final Map<Integer, Map<Activity, Double>> activityStartTimesPerRT;
@@ -133,14 +133,14 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
     }
 
     @Override
-    public void update(RoundTrip<NodeWithActivity> newRoundTrip, MultiRoundTrip<NodeWithActivity> mrt) {
+    public void update(RoundTrip<ActivityNode> newRoundTrip, MultiRoundTrip<ActivityNode> mrt) {
         this.uniqueActivityNodesSummary = mrt.getSummary(UniqueActivityNodeSummary.class);
         int idx = newRoundTrip.getIndex();
         update(idx, mrt.getRoundTrip(idx), newRoundTrip);
     }
 
     @Override 
-    public void update(int idx, RoundTrip<NodeWithActivity> oldRoundTrip, RoundTrip<NodeWithActivity> newRoundTrip) {
+    public void update(int idx, RoundTrip<ActivityNode> oldRoundTrip, RoundTrip<ActivityNode> newRoundTrip) {
         activitiesPerRT.remove(idx);
         locationsPerRT.remove(idx);
         tttPerRT.remove(idx);
@@ -159,7 +159,7 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
         if (newRoundTrip != null) {
             // Single pass through episodes - extract everything that's tracked
             Set<Activity> activities = trackActivities ? new HashSet<>() : null;
-            List<NodeWithActivity> locations = trackLocations ? new ArrayList<>() : null;
+            List<ActivityNode> locations = trackLocations ? new ArrayList<>() : null;
 
             double ttt = 0.0;
             Map<Activity, List<Tuple<Double, Double>>> actIntervals = new EnumMap<>(Activity.class);
@@ -169,7 +169,7 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
                 double currentTime_h = 0.0; 
                 for (Episode ep : newRoundTrip.getEpisodes()) {
                     if (ep instanceof StayEpisode<?> stayEp) {
-                        NodeWithActivity stayLocation = (NodeWithActivity) stayEp.getLocation();
+                        ActivityNode stayLocation = (ActivityNode) stayEp.getLocation();
                         Activity act = stayLocation.getPrimaryActivity();
                         if (!startTimes.containsKey(act) && !act.equals(Activity.HOME)) {
                             startTimes.put(act, currentTime_h);
@@ -183,7 +183,7 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
             for (Episode e : newRoundTrip.getEpisodes()) {
                 if (e instanceof StayEpisode<?> se) {
                     @SuppressWarnings("unchecked")
-                    NodeWithActivity location = (NodeWithActivity) se.getLocation();
+                    ActivityNode location = (ActivityNode) se.getLocation();
                     
                     if (trackLocations) locations.add(location);
                     if (trackActivities && location != null) {
@@ -199,7 +199,7 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
                 Map<Activity, Double> actDurations = new EnumMap<>(Activity.class);
                 for (int ii = 0; ii < newRoundTrip.size(); ii+=2) {
                     StayEpisode<?> se = (StayEpisode<?>) newRoundTrip.getEpisodes().get(ii);
-                    NodeWithActivity location = (NodeWithActivity) se.getLocation();
+                    ActivityNode location = (ActivityNode) se.getLocation();
                     for (Activity act : location.getAllActivities()) {
                         double prevDuration = actDurations.getOrDefault(act, 0.0);
                         actDurations.put(act, prevDuration + se.getDuration_h());
@@ -209,7 +209,7 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
             }
 
             if (trackActivityIntervals) {
-                Map<Activity, NodeWithActivity> accruingNodes = (uniqueActivityNodesSummary != null) 
+                Map<Activity, ActivityNode> accruingNodes = (uniqueActivityNodesSummary != null) 
                     ? uniqueActivityNodesSummary.getRoundTripActivityNodes(idx)
                     : Map.of();
                 
@@ -231,7 +231,7 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
     }
 
     @Override 
-    public MultiRoundTripSummary<NodeWithActivity> clone() {
+    public MultiRoundTripSummary<ActivityNode> clone() {
         final KernelSummary copy = new KernelSummary(this.populationSize, this.excludedPairs, true);
         
         copy.trackActivities = this.trackActivities;
@@ -266,7 +266,7 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
         return copy;
     }
 
-    public Set<Activity> getActivities(RoundTrip<NodeWithActivity> roundTrip) {
+    public Set<Activity> getActivities(RoundTrip<ActivityNode> roundTrip) {
         Set<Activity> result = activitiesPerRT.get(roundTrip.getIndex());
         if (result == null) {
             throw new IllegalStateException(
@@ -277,7 +277,7 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
         return Collections.unmodifiableSet(result);
     }
 
-    public Map<Activity, Double> getActivityDurations(RoundTrip<NodeWithActivity> roundTrip) {
+    public Map<Activity, Double> getActivityDurations(RoundTrip<ActivityNode> roundTrip) {
         Map<Activity, Double> result = activityDurationsPerRT.get(roundTrip.getIndex());
         if (result == null) {
             throw new IllegalStateException(
@@ -288,7 +288,7 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
         return Collections.unmodifiableMap(result);
     }
 
-    public int getNStops(RoundTrip<NodeWithActivity> roundTrip) {
+    public int getNStops(RoundTrip<ActivityNode> roundTrip) {
         Integer result = nStopsPerRT.get(roundTrip.getIndex());
         if (result == null) {
             throw new IllegalStateException(
@@ -299,8 +299,8 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
         return result;
     }
 
-    public List<NodeWithActivity> getLocations(RoundTrip<NodeWithActivity> roundTrip) {
-        List<NodeWithActivity> result = locationsPerRT.get(roundTrip.getIndex());
+    public List<ActivityNode> getLocations(RoundTrip<ActivityNode> roundTrip) {
+        List<ActivityNode> result = locationsPerRT.get(roundTrip.getIndex());
         if (result == null) {
             throw new IllegalStateException(
                 "No locations data for RoundTrip index " + roundTrip.getIndex() + 
@@ -310,7 +310,7 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
         return Collections.unmodifiableList(result);
     }
 
-    public Map<Activity, Double> getActivityStartTimes(RoundTrip<NodeWithActivity> roundTrip) {
+    public Map<Activity, Double> getActivityStartTimes(RoundTrip<ActivityNode> roundTrip) {
         Map<Activity, Double> result = activityStartTimesPerRT.get(roundTrip.getIndex());
         if (result == null) {
             throw new IllegalStateException(
@@ -321,7 +321,7 @@ public class KernelSummary implements MultiRoundTripSummary<NodeWithActivity> {
         return Collections.unmodifiableMap(result);
     }
 
-    public Map<Activity, List<Tuple<Double, Double>>> getActivityIntervals(RoundTrip<NodeWithActivity> roundTrip) {
+    public Map<Activity, List<Tuple<Double, Double>>> getActivityIntervals(RoundTrip<ActivityNode> roundTrip) {
         Map<Activity, List<Tuple<Double, Double>>> result = activityIntervalsPerRT.get(roundTrip.getIndex());
         if (result == null) {
             throw new IllegalStateException(

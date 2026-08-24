@@ -2,7 +2,7 @@ package disaggregate.model.weights;
 
 import java.util.Map;
 
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.simulator.MoveEpisode;
 import se.vti.roundtrips.simulator.StayEpisode;
 import se.vti.roundtrips.single.RoundTrip;
@@ -54,13 +54,13 @@ public class MovementSummary extends LWSummary {
     }
 
     @Override
-    protected double roundTrip2LW(RoundTrip<NodeWithActivity> rt) {
+    protected double roundTrip2LW(RoundTrip<ActivityNode> rt) {
         if (rt == null) return 0.0;
 
         double rawLW = 0.0;
         if (rt.size() == 1) {
             // single self-loop i -> i
-            NodeWithActivity loc = ((StayEpisode<NodeWithActivity>) rt.getEpisodes().get(0)).getLocation();
+            ActivityNode loc = ((StayEpisode<ActivityNode>) rt.getEpisodes().get(0)).getLocation();
             String locName = loc.getBasicName();
             Tuple<String, String> transition = new Tuple<>(locName, locName);
             double logNum = transitionMatrix.getOrDefault(transition, Math.log(epsilon));
@@ -68,7 +68,7 @@ public class MovementSummary extends LWSummary {
             rawLW = logNum;
         } else {
             for (int jj = 1; jj < rt.getEpisodes().size(); jj += 2) {
-                MoveEpisode<NodeWithActivity> me = (MoveEpisode<NodeWithActivity>) rt.getEpisodes().get(jj);
+                MoveEpisode<ActivityNode> me = (MoveEpisode<ActivityNode>) rt.getEpisodes().get(jj);
                 Tuple<String, String> transition = new Tuple<>(
                     me.getOrigin().getBasicName(), 
                     me.getDestination().getBasicName()

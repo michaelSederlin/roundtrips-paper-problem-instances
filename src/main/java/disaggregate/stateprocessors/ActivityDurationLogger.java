@@ -1,7 +1,7 @@
 package disaggregate.stateprocessors;
 
 import disaggregate.model.Activity;
-import disaggregate.model.nodes.ActivityNode;
+import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.simulator.Episode;
 import se.vti.roundtrips.simulator.StayEpisode;

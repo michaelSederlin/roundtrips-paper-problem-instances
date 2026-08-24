@@ -48,13 +48,12 @@ import disaggregate.kernels.Kernel;
 import disaggregate.kernels.Role;
 import disaggregate.kernels.GaussianScheduleOverlapKernel;
 import disaggregate.kernels.NumberOfStopsKernel;
-import disaggregate.kernels.TotalTravelTimeKernel;
 import disaggregate.kernels.IndicatorTravelerKernel;
 import disaggregate.kernels.TravelerKernel;
 import disaggregate.model.Activity;
 import disaggregate.model.Person;
 import disaggregate.model.SurveyResponse;
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
 import disaggregate.model.weights.ExplainRoundTripsByResponses;
 import disaggregate.model.weights.MovementWeight;
 import disaggregate.model.weights.StrictlyEnforceCorrectHomeLocationWeight;
@@ -265,18 +264,18 @@ public class Runner implements Callable<Integer> {
      * Snapshot of the runner's sampling weights, for MHWeightsToFileLogger.
      * (was CaseRunner.getWeightsContainer)
      */
-    private static MHWeightContainer<MultiRoundTrip<NodeWithActivity>> weightsContainer(
-            se.vti.roundtrips.common.Runner<NodeWithActivity> runner) {
-        MHWeightContainer<MultiRoundTrip<NodeWithActivity>> weights = new MHWeightContainer<>();
-        for (MHWeight<MultiRoundTrip<NodeWithActivity>> w : runner.getSamplingWeightsView()) {
+    private static MHWeightContainer<MultiRoundTrip<ActivityNode>> weightsContainer(
+            se.vti.roundtrips.common.Runner<ActivityNode> runner) {
+        MHWeightContainer<MultiRoundTrip<ActivityNode>> weights = new MHWeightContainer<>();
+        for (MHWeight<MultiRoundTrip<ActivityNode>> w : runner.getSamplingWeightsView()) {
             weights.add(w);
         }
         return weights;
     }
 
     /** (was CaseRunner.constructTerminationCriterion) */
-    private static TerminationCriterion<MultiRoundTrip<NodeWithActivity>> combineTerminationCriteria(
-            List<TerminationCriterion<MultiRoundTrip<NodeWithActivity>>> criteria) {
+    private static TerminationCriterion<MultiRoundTrip<ActivityNode>> combineTerminationCriteria(
+            List<TerminationCriterion<MultiRoundTrip<ActivityNode>>> criteria) {
         return switch (criteria.size()) {
             case 0 -> null;
             case 1 -> criteria.get(0);
@@ -306,7 +305,7 @@ public class Runner implements Callable<Integer> {
         try {
             logger.info("Starting partition {} ({} agents) on thread {}", partName, agents.size(), Thread.currentThread().getName());
 
-            Scenario<NodeWithActivity> scenario = new Scenario<>(new Random(opts.seed));
+            Scenario<ActivityNode> scenario = new Scenario<>(new Random(opts.seed));
             scenario.setNumberOfTimeBins((int) (opts.horizon / opts.timeBinSize));
             scenario.setTimeBinSize_h(opts.timeBinSize);
             ScenarioUtils.loadNetworkFromTSV(scenario, scenarioPath);
@@ -329,7 +328,7 @@ public class Runner implements Callable<Integer> {
                 }
             }
 
-            Map<NodeWithActivity, Double> opportunityWeights = null;
+            Map<ActivityNode, Double> opportunityWeights = null;
             if (opts.with_staying_weight || opts.geometric_mean_staying_weight_flag || !uniqueActivities.isEmpty()) {
                 opportunityWeights = LoadOpportunityWeights.load(scenarioPath.resolve("opportunity_weights.csv"), scenario);
                 if (opts.normalize_weights_across_nodes) opportunityWeights = LoadOpportunityWeights.divideByMaxAcrossNodes(opportunityWeights);
@@ -339,18 +338,18 @@ public class Runner implements Callable<Integer> {
             new PopulationWriter(respondents, partOutputDir.resolve("respondents.tsv").toString()).write();
             new PopulationWriter(agents, partOutputDir.resolve("population.tsv").toString()).write();
 
-            List<NodeWithActivity> homeNodes = ScenarioUtils.findHomes(scenario, agents);
-            MultiRoundTrip<NodeWithActivity> initState;
+            List<ActivityNode> homeNodes = ScenarioUtils.findHomes(scenario, agents);
+            MultiRoundTrip<ActivityNode> initState;
             if (warmStartFile != null) {
                 if (!Files.exists(Path.of(warmStartFile))) {
                     throw new FileNotFoundException("Missing warm start file " + warmStartFile);
                 }
-                MultiRoundTrip<NodeWithActivity> globalState =
+                MultiRoundTrip<ActivityNode> globalState =
                         MultiRoundTripJsonIO.singleton().readFromFile(scenario, warmStartFile);
                 initState = new MultiRoundTrip<>(agents.size());
                 for (int j = 0; j < agents.size(); j++) {
-                    RoundTrip<NodeWithActivity> globalRt = globalState.getRoundTrip(partFrom + j);
-                    RoundTrip<NodeWithActivity> localRt =
+                    RoundTrip<ActivityNode> globalRt = globalState.getRoundTrip(partFrom + j);
+                    RoundTrip<ActivityNode> localRt =
                             new RoundTrip<>(j, globalRt.cloneNodes(), globalRt.cloneDepartures());
                     localRt.setEpisodes(scenario.getOrCreateSimulator().simulate(localRt));
                     initState.setRoundTripAndUpdateSummaries(j, localRt);
@@ -372,13 +371,13 @@ public class Runner implements Callable<Integer> {
                 logger.info("\tRestricting to a single (highest-opportunity) node per round trip for: {}", uniqueActivities);
             }
 
-            List<SurveyResponse<NodeWithActivity>> responses = buildKernelResponses(respondents, opts);
-            se.vti.roundtrips.common.Runner<NodeWithActivity> runner = new se.vti.roundtrips.common.Runner<>(scenario);
+            List<SurveyResponse<ActivityNode>> responses = buildKernelResponses(respondents, opts);
+            se.vti.roundtrips.common.Runner<ActivityNode> runner = new se.vti.roundtrips.common.Runner<>(scenario);
             runner.setInitialState(initState);
 
             // --- termination criteria (was CaseRunner.withBlockConvergence / withMaxIter) ---
-            List<TerminationCriterion<MultiRoundTrip<NodeWithActivity>>> terminationCriteria = new ArrayList<>();
-            var blockCrit = new BlockAverageTerminationCriterion<MultiRoundTrip<NodeWithActivity>>()
+            List<TerminationCriterion<MultiRoundTrip<ActivityNode>>> terminationCriteria = new ArrayList<>();
+            var blockCrit = new BlockAverageTerminationCriterion<MultiRoundTrip<ActivityNode>>()
                     .setConvergenceStatsFileName(partOutputDir.resolve("convergenceStats.tsv").toString());
             blockCrit.setRelativeVarianceTolerance(opts.stationarity_tolerance)
                      .setStandardizedMeanTolerance(opts.stationarity_tolerance);
@@ -455,7 +454,7 @@ public class Runner implements Callable<Integer> {
         }
     }
     
-    List<SurveyResponse<NodeWithActivity>> buildKernelResponses(List<Person> kernelRespondents, RunnerOptions opts) {
+    List<SurveyResponse<ActivityNode>> buildKernelResponses(List<Person> kernelRespondents, RunnerOptions opts) {
         logger.info("Kernel construction: traveler(lAge={}, lInc={}, eta={}) | "
                 + "nStops={} | scheduleOverlap(bw={})",
                 opts.lAge, opts.lInc, opts.eta,
@@ -463,7 +462,7 @@ public class Runner implements Callable<Integer> {
                 opts.schedule_overlap_weight > 0 ? "ON(bw=" + opts.schedule_overlap_weight + ")" : "OFF");
 
         double[] travelerParams = {opts.lAge, opts.lInc, opts.eta};
-        List<SurveyResponse<NodeWithActivity>> responses = new ArrayList<>();
+        List<SurveyResponse<ActivityNode>> responses = new ArrayList<>();
         for (Person person : kernelRespondents) {
             Kernel<? extends Features> kTrav = opts.indicatorTravelerKernel 
                 ? new IndicatorTravelerKernel(person)

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import disaggregate.model.Activity;
 import disaggregate.model.Person;
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.simulator.IntervalUtils;
 import se.vti.roundtrips.single.RoundTrip;
 import se.vti.utils.misc.Tuple;
@@ -57,7 +57,7 @@ public class GaussianScheduleOverlapKernel implements Kernel<ScheduleOverlapFeat
     }
     
     @Override
-    public double compute(RoundTrip<NodeWithActivity> rt, KernelSummary summary) {
+    public double compute(RoundTrip<ActivityNode> rt, KernelSummary summary) {
 
         Double cached = getCached(rt, summary);
         if (cached != null) return cached;
@@ -122,15 +122,15 @@ public class GaussianScheduleOverlapKernel implements Kernel<ScheduleOverlapFeat
         this.lambda2 = this.lambda * this.lambda;
     }
 
-    // @Override
-    // public ScheduleOverlapFeatures extractFeatures(RoundTrip<NodeWithActivity> rt) {
-    //     return ScheduleOverlapFeatures.from(rt);
-    // }
+    @Override
+    public ScheduleOverlapFeatures extractFeatures(RoundTrip<ActivityNode> rt) {
+        return ScheduleOverlapFeatures.from(rt);
+    }
 
-    // @Override
-    // public ScheduleOverlapFeatures extractFeatures(Person p) {
-    //     return ScheduleOverlapFeatures.from(p);
-    // }
+    @Override
+    public ScheduleOverlapFeatures extractFeatures(Person p) {
+        return ScheduleOverlapFeatures.from(p);
+    }
 
     @Override
     public void configureRequiredSummary(KernelSummary summary) {

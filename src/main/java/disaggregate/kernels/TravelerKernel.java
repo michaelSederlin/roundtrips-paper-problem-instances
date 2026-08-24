@@ -1,7 +1,7 @@
 package disaggregate.kernels;
 
 import disaggregate.model.Person;
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.single.RoundTrip;
 
 public class TravelerKernel implements Kernel<TravelerKernel.Features> {
@@ -70,14 +70,14 @@ public class TravelerKernel implements Kernel<TravelerKernel.Features> {
     }
 
     @Override
-    public double compute(RoundTrip<NodeWithActivity> rt, KernelSummary summary) {
+    public double compute(RoundTrip<ActivityNode> rt, KernelSummary summary) {
         // TravelerKernel uses static Person demographics, not RoundTrip data
         // It should be pre-computed in ExplainRoundTripsByResponses constructor
         throw new UnsupportedOperationException("TravelerKernel does not use RoundTrip data - use pre-computed person-response weights");
     }
 
     @Override
-    public Features extractFeatures(RoundTrip<NodeWithActivity> rt) {
+    public Features extractFeatures(RoundTrip<ActivityNode> rt) {
         // TravelerKernel doesn't use RoundTrip for feature extraction
         throw new UnsupportedOperationException("TravelerKernel extracts features from Person objects only");
     }

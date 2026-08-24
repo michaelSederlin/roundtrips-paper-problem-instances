@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import disaggregate.model.Activity;
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.multiple.MultiRoundTripSummary;
 import se.vti.roundtrips.simulator.StayEpisode;
@@ -16,38 +16,38 @@ import se.vti.utils.misc.metropolishastings.MHWeight;
 // Trial to mitigate the bias
 //  */
 
-public class GeometricMeanStayingWeight implements MHWeight<MultiRoundTrip<NodeWithActivity>>{
+public class GeometricMeanStayingWeight implements MHWeight<MultiRoundTrip<ActivityNode>>{
     private double exponent = 1.0;
     private final double epsilon; 
-    private final Map<NodeWithActivity, Double> nodeActivityOpportunities;
-    private final Map<RoundTrip<NodeWithActivity>, Double> roundTripLogWeightsCache;
-    private final Map<NodeWithActivity, Double> logSigma;
+    private final Map<ActivityNode, Double> nodeActivityOpportunities;
+    private final Map<RoundTrip<ActivityNode>, Double> roundTripLogWeightsCache;
+    private final Map<ActivityNode, Double> logSigma;
 
     public GeometricMeanStayingWeight withExponent(double exponent) {
         this.exponent = exponent;
         return this;
     }
 
-    public GeometricMeanStayingWeight(Map<NodeWithActivity, Double> nodeActivityOpportunities) {    
+    public GeometricMeanStayingWeight(Map<ActivityNode, Double> nodeActivityOpportunities) {    
         this(nodeActivityOpportunities, 1e-6);
     }
 
-    public GeometricMeanStayingWeight(Map<NodeWithActivity, Double> nodeActivityOpportunities, double epsilon) {
+    public GeometricMeanStayingWeight(Map<ActivityNode, Double> nodeActivityOpportunities, double epsilon) {
         this.epsilon = epsilon;
         this.nodeActivityOpportunities = nodeActivityOpportunities;
         this.roundTripLogWeightsCache = new HashMap<>();
         this.logSigma = new HashMap<>();
-        for (Map.Entry<NodeWithActivity, Double> entry : nodeActivityOpportunities.entrySet()) {
+        for (Map.Entry<ActivityNode, Double> entry : nodeActivityOpportunities.entrySet()) {
             logSigma.put(entry.getKey(), Math.log(entry.getValue() + epsilon));
         }
     }
 
-    public double logWeight(MultiRoundTrip<NodeWithActivity> state, MultiRoundTripSummary<NodeWithActivity> summary) {
+    public double logWeight(MultiRoundTrip<ActivityNode> state, MultiRoundTripSummary<ActivityNode> summary) {
         // Why do I have this?
         throw new UnsupportedOperationException("Unimplemented method 'logWeight' with summary");
     }
 
-    public void configureRequiredSummary(MultiRoundTrip<NodeWithActivity> mrt) {
+    public void configureRequiredSummary(MultiRoundTrip<ActivityNode> mrt) {
         var staySummary = new StayingSummary(logSigma, false, this.epsilon);
         staySummary.enableGeometric(exponent);
         mrt.addSummary(staySummary);
@@ -55,7 +55,7 @@ public class GeometricMeanStayingWeight implements MHWeight<MultiRoundTrip<NodeW
     }
 
     @Override
-    public double logWeight(MultiRoundTrip<NodeWithActivity> state) {
+    public double logWeight(MultiRoundTrip<ActivityNode> state) {
         return state.getSummary(StayingSummary.class).getTotalLW();
     }
 }

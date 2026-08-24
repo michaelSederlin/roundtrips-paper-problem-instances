@@ -9,13 +9,13 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.utils.misc.Tuple;
 import se.vti.utils.misc.metropolishastings.MHWeight;
 
 
-public class MovementWeight implements MHWeight<MultiRoundTrip<NodeWithActivity>> {
+public class MovementWeight implements MHWeight<MultiRoundTrip<ActivityNode>> {
     static final Logger logger = LogManager.getLogger(MovementWeight.class);
     // --- Variation Flags --- 
     private boolean geometricMean = false;
@@ -81,7 +81,7 @@ public class MovementWeight implements MHWeight<MultiRoundTrip<NodeWithActivity>
     }
 
     @Override
-    public double logWeight(MultiRoundTrip<NodeWithActivity> state) {
+    public double logWeight(MultiRoundTrip<ActivityNode> state) {
         return state.getSummary(MovementSummary.class).getTotalLW();
     }
 
@@ -207,7 +207,7 @@ public class MovementWeight implements MHWeight<MultiRoundTrip<NodeWithActivity>
     }
 
     // -------------------- VALIDATION --------------------
-    public void checkKeysAgainstNodes(List<NodeWithActivity> nodes) {
+    public void checkKeysAgainstNodes(List<ActivityNode> nodes) {
         for (Tuple<String, String> tr : logTransitionCounts.keySet()) {
             if (!nodes.stream().anyMatch(n -> n.getBasicName().equals(tr.getA()))) {
                 throw new IllegalArgumentException("Origin node " + tr.getA() + " not found in scenario");
@@ -216,8 +216,8 @@ public class MovementWeight implements MHWeight<MultiRoundTrip<NodeWithActivity>
                 throw new IllegalArgumentException("Destination node " + tr.getB() + " not found in scenario");
             }
         }
-        for (NodeWithActivity origin : nodes) {
-            for (NodeWithActivity destination : nodes) {
+        for (ActivityNode origin : nodes) {
+            for (ActivityNode destination : nodes) {
                 Tuple<String, String> transition = new Tuple<>(origin.getBasicName(), destination.getBasicName());
                 if (!logTransitionCounts.containsKey(transition)) {
                     throw new IllegalArgumentException("Missing transition" + transition);
@@ -228,7 +228,7 @@ public class MovementWeight implements MHWeight<MultiRoundTrip<NodeWithActivity>
 
     // -------------------- SUMMARY WIRING --------------------
 
-    public void configureRequiredSummary(MultiRoundTrip<NodeWithActivity> mrt) {
+    public void configureRequiredSummary(MultiRoundTrip<ActivityNode> mrt) {
         var summary = new MovementSummary(
                 logTransitionWeight, epsilon, logZ);
         summary.setGeometricmean(geometricMean);

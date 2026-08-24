@@ -3,7 +3,7 @@ package disaggregate.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import disaggregate.model.Activity;
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.common.Scenario;
 
 import java.io.BufferedReader;
@@ -29,17 +29,17 @@ public class LoadOpportunityWeights {
 
         return fields.toArray(new String[0]);
     }
-    public static Map<NodeWithActivity, Double> load(Path fp, Scenario<NodeWithActivity> scenario) {return load(fp.toString(), scenario);}
-    public static Map<NodeWithActivity, Double> load(String fp, Scenario<NodeWithActivity> scenario) {
+    public static Map<ActivityNode, Double> load(Path fp, Scenario<ActivityNode> scenario) {return load(fp.toString(), scenario);}
+    public static Map<ActivityNode, Double> load(String fp, Scenario<ActivityNode> scenario) {
         // Assumes an activity expanded network in the outputs.
 
         Map<String, Map<Activity, Double>> zoneActivityWeights = load(fp);
-        Map<NodeWithActivity, Double> nodeActivityWeights = new HashMap<>();
+        Map<ActivityNode, Double> nodeActivityWeights = new HashMap<>();
 
         Map<Activity, Integer> skipped = new EnumMap<>(Activity.class);
         Map<Activity, Integer> activityNodeCounts = new EnumMap<>(Activity.class);
 
-        for (NodeWithActivity node : scenario.getNodesView()) {
+        for (ActivityNode node : scenario.getNodesView()) {
             String nodeName = node.getBasicName();
             activityNodeCounts.merge(node.getActivity(), 1, Integer::sum);
 
@@ -124,12 +124,12 @@ public class LoadOpportunityWeights {
         return opportunityWeights;
     }
 
-    public static Map<NodeWithActivity, Double> normalizeByMeanSigma(Map<NodeWithActivity, Double> opportunityWeights) {
+    public static Map<ActivityNode, Double> normalizeByMeanSigma(Map<ActivityNode, Double> opportunityWeights) {
         Map<Activity, Double> meanSigma = new EnumMap(Activity.class);
         for (Activity act : Activity.values()) {
             Double sumSigma = 0.0;
             int counter = 0;
-            for (Map.Entry<NodeWithActivity, Double> entry : opportunityWeights.entrySet()){
+            for (Map.Entry<ActivityNode, Double> entry : opportunityWeights.entrySet()){
                 if (entry.getKey().getActivity().equals(act)) {
                     sumSigma += entry.getValue();
                     counter ++;
@@ -138,8 +138,8 @@ public class LoadOpportunityWeights {
             meanSigma.put(act, sumSigma / counter);
         }
 
-        Map<NodeWithActivity, Double> newOppoWeights = new HashMap<>();
-        for (Map.Entry<NodeWithActivity, Double> entry : opportunityWeights.entrySet()) {
+        Map<ActivityNode, Double> newOppoWeights = new HashMap<>();
+        for (Map.Entry<ActivityNode, Double> entry : opportunityWeights.entrySet()) {
             double newSigma = entry.getValue() / meanSigma.get(entry.getKey().getActivity());
             newOppoWeights.put(entry.getKey(), newSigma);
         }
@@ -242,24 +242,24 @@ public class LoadOpportunityWeights {
      * @param weights Map of node -> weight
      * @return New map with scaled weights
      */
-    public static Map<NodeWithActivity, Double> minMaxScaleAcrossNodes(
-            Map<NodeWithActivity, Double> weights) {
+    public static Map<ActivityNode, Double> minMaxScaleAcrossNodes(
+            Map<ActivityNode, Double> weights) {
 
         logger.info("Performing min-max scaling across {} nodes", weights.size());
 
         Map<Activity, Double> minValues = new HashMap<>();
         Map<Activity, Double> maxValues = new HashMap<>();
 
-        for (Map.Entry<NodeWithActivity, Double> entry : weights.entrySet()) {
+        for (Map.Entry<ActivityNode, Double> entry : weights.entrySet()) {
             Activity activity = entry.getKey().getActivity();
             Double weight = entry.getValue();
             minValues.merge(activity, weight, Math::min);
             maxValues.merge(activity, weight, Math::max);
         }
 
-        Map<NodeWithActivity, Double> scaled = new HashMap<>();
-        for (Map.Entry<NodeWithActivity, Double> entry : weights.entrySet()) {
-            NodeWithActivity node = entry.getKey();
+        Map<ActivityNode, Double> scaled = new HashMap<>();
+        for (Map.Entry<ActivityNode, Double> entry : weights.entrySet()) {
+            ActivityNode node = entry.getKey();
             Activity activity = node.getActivity();
             double weight = entry.getValue();
             double min = minValues.get(activity);
@@ -280,18 +280,18 @@ public class LoadOpportunityWeights {
  * Best zone for each activity -> 1; others keep their true fraction (floor stays positive,
  * not pinned to 0 as in min-max). Within-activity ratios are preserved.
  */
-public static Map<NodeWithActivity, Double> divideByMaxAcrossNodes(
-        Map<NodeWithActivity, Double> weights) {
+public static Map<ActivityNode, Double> divideByMaxAcrossNodes(
+        Map<ActivityNode, Double> weights) {
 
     logger.info("Scaling opportunity weights by per-activity max across {} nodes", weights.size());
 
     Map<Activity, Double> maxValues = new HashMap<>();
-    for (Map.Entry<NodeWithActivity, Double> entry : weights.entrySet()) {
+    for (Map.Entry<ActivityNode, Double> entry : weights.entrySet()) {
         maxValues.merge(entry.getKey().getActivity(), entry.getValue(), Math::max);
     }
 
-    Map<NodeWithActivity, Double> scaled = new HashMap<>();
-    for (Map.Entry<NodeWithActivity, Double> entry : weights.entrySet()) {
+    Map<ActivityNode, Double> scaled = new HashMap<>();
+    for (Map.Entry<ActivityNode, Double> entry : weights.entrySet()) {
         Activity activity = entry.getKey().getActivity();
         double max = maxValues.get(activity);
         double scaledWeight = (max > 1e-10) ? entry.getValue() / max : 0.0;
@@ -310,7 +310,7 @@ public static Map<NodeWithActivity, Double> divideByMaxAcrossNodes(
  * length-neutralizing constant for the staying weight is c = -ln(sigma-bar), applied
  * per stage. Average is over the same node set the proposal draws stages from.
  */
-public static double meanSigma(Map<NodeWithActivity, Double> weights) {
+public static double meanSigma(Map<ActivityNode, Double> weights) {
     if (weights.isEmpty()) {
         throw new IllegalArgumentException("empty opportunity weights");
     }

@@ -2,7 +2,7 @@ package disaggregate.kernels;
 
 import java.util.Map;
 
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.single.RoundTrip;
 import disaggregate.model.Activity;
 import disaggregate.model.Person;
@@ -12,7 +12,7 @@ public class NumberOfStopsKernel extends ScalarGaussianKernel<NumberOfStopsKerne
 
     static class NumStopsFeatures implements Features {
         private final int numStops;
-        public NumStopsFeatures(RoundTrip<NodeWithActivity> rt) { this.numStops = rt.size(); }
+        public NumStopsFeatures(RoundTrip<ActivityNode> rt) { this.numStops = rt.size(); }
         public NumStopsFeatures(Person person) { this.numStops = person.getTrip().size(); }
         public int getNumStops() { return numStops; }
     }
@@ -34,7 +34,7 @@ public class NumberOfStopsKernel extends ScalarGaussianKernel<NumberOfStopsKerne
     }
 
     @Override
-    public double compute(RoundTrip<NodeWithActivity> rt, KernelSummary summary) {
+    public double compute(RoundTrip<ActivityNode> rt, KernelSummary summary) {
     //    Double cached = getCached(rt, summary);  // caching actually makes performance worse for this kernel function.
         // if (cached != null) return cached;
         double diff = observedNumStops - summary.getNStops(rt);
@@ -50,7 +50,7 @@ public class NumberOfStopsKernel extends ScalarGaussianKernel<NumberOfStopsKerne
     }
 
     @Override
-    public NumberOfStopsKernel.NumStopsFeatures extractFeatures(RoundTrip<NodeWithActivity> rt) {
+    public NumberOfStopsKernel.NumStopsFeatures extractFeatures(RoundTrip<ActivityNode> rt) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'extractFeatures'");
     }

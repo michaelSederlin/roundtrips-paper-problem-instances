@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.nio.file.Path;
 
-import disaggregate.model.nodes.ActivityNode;
+import disaggregate.model.ActivityNode;
 // import disaggregate.model.weights.ExplainResponsesByRoundTrips;
 import disaggregate.model.weights.ResponseWeight;
 import se.vti.utils.misc.metropolishastings.MHAbstractStateProcessor;

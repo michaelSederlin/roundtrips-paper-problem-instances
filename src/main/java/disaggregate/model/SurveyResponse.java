@@ -2,7 +2,6 @@ package disaggregate.model;
 
 import disaggregate.kernels.CompositeKernel;
 import disaggregate.kernels.TravelerKernel;
-import disaggregate.model.nodes.ActivityNode;
 
 public class SurveyResponse<N extends ActivityNode> {
     private final Person respondent;

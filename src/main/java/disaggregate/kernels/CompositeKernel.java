@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import disaggregate.model.Person;
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.single.RoundTrip;
 
 public class CompositeKernel implements Kernel<CompositeKernel.CompositeFeatures> {
@@ -57,7 +57,7 @@ public class CompositeKernel implements Kernel<CompositeKernel.CompositeFeatures
     }
 
     @Override 
-    public double compute(RoundTrip<NodeWithActivity> rt, KernelSummary summary) {
+    public double compute(RoundTrip<ActivityNode> rt, KernelSummary summary) {
         Double cached = getCached(rt, summary);
         if (cached != null) return cached;
 
@@ -84,7 +84,7 @@ public class CompositeKernel implements Kernel<CompositeKernel.CompositeFeatures
         return cw; 
     }
 
-    public final double computeExcludingRoles(RoundTrip<NodeWithActivity> rt, KernelSummary summary, Role... roles) {
+    public final double computeExcludingRoles(RoundTrip<ActivityNode> rt, KernelSummary summary, Role... roles) {
         double combinedWeight = 1.0;
         List<Role> exclusionList = List.of(roles);
 
@@ -98,7 +98,7 @@ public class CompositeKernel implements Kernel<CompositeKernel.CompositeFeatures
     }    
 
     @SafeVarargs
-    public final double computeExcludingKernelClasses(RoundTrip<NodeWithActivity> rt, KernelSummary summary, Class<? extends Kernel> ... kernelClasses) {
+    public final double computeExcludingKernelClasses(RoundTrip<ActivityNode> rt, KernelSummary summary, Class<? extends Kernel> ... kernelClasses) {
         double combinedWeight = 1.0;
         List<Class<? extends Kernel>> exclusionList = List.of(kernelClasses);
 
@@ -151,7 +151,7 @@ public class CompositeKernel implements Kernel<CompositeKernel.CompositeFeatures
     }
 
     @Override
-    public CompositeFeatures extractFeatures(RoundTrip<NodeWithActivity> rt) {
+    public CompositeFeatures extractFeatures(RoundTrip<ActivityNode> rt) {
         throw new UnsupportedOperationException("Unimplemented method 'extractFeatures'");
     }
 

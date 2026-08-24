@@ -5,14 +5,13 @@ import org.apache.logging.log4j.Logger;
 
 import disaggregate.model.amalTemp.StandardSyntheticPopulation;
 import disaggregate.model.amalTemp.SyntheticPopulation;
-import disaggregate.kernels.CombinedLocationKernel;
 import disaggregate.kernels.CompositeKernel;
 import disaggregate.kernels.Kernel;
 import disaggregate.model.Activity;
 import disaggregate.model.Person;
 import disaggregate.model.SurveyResponse;
-import disaggregate.model.nodes.ActivityNode;
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
+import disaggregate.model.ActivityNode;
 import disaggregate.rvu.MDDR;
 import disaggregate.rvu.MDDRRepository;
 import disaggregate.rvu.Trip;
@@ -99,14 +98,14 @@ public class ScenarioUtils {
         }
     }    
 
-    public static List<Person> simulateSyntheticPopulation(int n, long seed, Map<NodeWithActivity, Double> opportunityWeights) {
+    public static List<Person> simulateSyntheticPopulation(int n, long seed, Map<ActivityNode, Double> opportunityWeights) {
         List<Person> population = new ArrayList<>();
         StandardSyntheticPopulation syntheticPopulation = new StandardSyntheticPopulation(n, seed).assignGroups();
 
         NodeSampler homeNodeSampler = new NodeSampler(opportunityWeights, Activity.HOME, seed);
 
         for (SyntheticPopulation.Person person : syntheticPopulation.getPopulation()) {
-            NodeWithActivity homeNode = homeNodeSampler.sampleActivityNode();
+            ActivityNode homeNode = homeNodeSampler.sampleActivityNode();
             Integer gender = person.gender().equals("female") ? 1 : 0;
             Person agent = new Person(person.idx(), homeNode.getBasicName(), person.age(), (long) person.income(), gender);
             population.add(agent);
@@ -116,12 +115,12 @@ public class ScenarioUtils {
     }
 
     private static class NodeSampler {
-        Map<NodeWithActivity, Double> opportunityWeights; 
-        List<NodeWithActivity> activityNodes;
+        Map<ActivityNode, Double> opportunityWeights; 
+        List<ActivityNode> activityNodes;
         double totalWeight;
         final Random random;
 
-        NodeSampler(Map<NodeWithActivity, Double> nodeMap, Activity act, long seed) {
+        NodeSampler(Map<ActivityNode, Double> nodeMap, Activity act, long seed) {
             this.opportunityWeights = nodeMap;
             this.activityNodes = new ArrayList<>();
             this.random = new Random(seed);
@@ -134,11 +133,11 @@ public class ScenarioUtils {
             totalWeight = activityNodes.stream().mapToDouble(opportunityWeights::get).sum();
         }
 
-        NodeWithActivity sampleActivityNode() {
+        ActivityNode sampleActivityNode() {
             double u = 1.0 - random.nextDouble();
             double cumulative = 0.0;
-            NodeWithActivity chosenNode = activityNodes.get(activityNodes.size() - 1);
-            for (NodeWithActivity node : activityNodes) {
+            ActivityNode chosenNode = activityNodes.get(activityNodes.size() - 1);
+            for (ActivityNode node : activityNodes) {
                 cumulative += opportunityWeights.get(node) / totalWeight;
                 if (u <= cumulative) {
                     chosenNode = node;
@@ -330,13 +329,13 @@ public class ScenarioUtils {
         return population;
     }
 
-    public static void loadNetworkFromTSV(Scenario<NodeWithActivity> scenario, Path networkDir) throws FileNotFoundException {
+    public static void loadNetworkFromTSV(Scenario<ActivityNode> scenario, Path networkDir) throws FileNotFoundException {
         Path nodesPath = networkDir.resolve("nodes.tsv");
         Path edgesPath = networkDir.resolve("edges.tsv");
 
-        Map<String, NodeWithActivity> nodeMap = new HashMap<>();
+        Map<String, ActivityNode> nodeMap = new HashMap<>();
         
-        // Read nodes file - use row/col as x/y coordinates for NodeWithActivity (which extends ActivityNode)
+        // Read nodes file - use row/col as x/y coordinates for ActivityNode (which extends ActivityNode)
         try (Scanner scanner = new Scanner(nodesPath.toFile())) {
             String header = scanner.nextLine();  // skip header: basicName name labels row col
             while (scanner.hasNextLine()) {
@@ -352,12 +351,13 @@ public class ScenarioUtils {
                 String activityString = labels.replace("[", "").replace("]", "");
                 Activity activity = Activity.valueOf(activityString);
                 
-                // NodeWithActivity extends ActivityNode - compatible with location kernels
-                NodeWithActivity node = new NodeWithActivity(basicName, (double)col, (double)row, activity);  // name, x, y, activity
+                // ActivityNode extends ActivityNode - compatible with location kernels
+                ActivityNode node = new ActivityNode(basicName, (double)col, (double)row, activity);  // name, x, y, activity
                 nodeMap.put(fullName, node);
                 scenario.addNode(node);
             }
-        }            
+        }
+
         try (Scanner scanner = new Scanner(edgesPath.toFile())) {
             String header = scanner.nextLine();  // skip header: from to tt dist
             while (scanner.hasNextLine()) {
@@ -368,8 +368,8 @@ public class ScenarioUtils {
                 double travelTime_h = Double.parseDouble(parts[2]);
                 double distance_km = Double.parseDouble(parts[3]);
                 
-                NodeWithActivity fromNode = nodeMap.get(fromName);
-                NodeWithActivity toNode = nodeMap.get(toName);
+                ActivityNode fromNode = nodeMap.get(fromName);
+                ActivityNode toNode = nodeMap.get(toName);
                 
                 if (fromNode != null && toNode != null) {
                     scenario.setTime_h(fromNode, toNode, travelTime_h);
@@ -387,7 +387,7 @@ public class ScenarioUtils {
             int nIter,
             int msgInterval,
             Scenario<?> scenario,
-            List<SurveyResponse<NodeWithActivity>> responses,
+            List<SurveyResponse<ActivityNode>> responses,
             Path dataDir,
             Path upbdPath,
             Path mddrPath,
@@ -478,14 +478,6 @@ private static void appendKernelTree(StringBuilder sb, Kernel kernel, String pad
         return;
     }
 
-    if (kernel instanceof CombinedLocationKernel combinedLocation) {
-        sb.append(pad).append("  components:\n");
-        for (Kernel child : combinedLocation.getKernels()) {
-            appendKernelTree(sb, child, pad + "    ");
-        }
-        return;
-    }
-
     double[] params = kernel.getParameters();
     if (params != null && params.length > 0) {
         sb.append(pad).append("  parameters: [");
@@ -498,12 +490,12 @@ private static void appendKernelTree(StringBuilder sb, Kernel kernel, String pad
 }
 
     public static Map<String, Map<Activity, Double>> toAttractivenessMap(
-            Map<NodeWithActivity, Double> nodeWeights) {
+            Map<ActivityNode, Double> nodeWeights) {
 
         Map<String, Map<Activity, Double>> result = new HashMap<>();
 
         for (var e : nodeWeights.entrySet()) {
-            NodeWithActivity node = e.getKey();
+            ActivityNode node = e.getKey();
             double weight = e.getValue();
 
             result

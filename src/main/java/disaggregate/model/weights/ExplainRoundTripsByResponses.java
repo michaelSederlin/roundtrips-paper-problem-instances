@@ -13,14 +13,14 @@ import disaggregate.kernels.Role;
 import disaggregate.kernels.TravelerKernel;
 import disaggregate.model.Person;
 import disaggregate.model.SurveyResponse;
-import disaggregate.model.nodes.NodeWithActivity;
+import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.multiple.MultiRoundTripSummary;
 import se.vti.roundtrips.single.RoundTrip;
 
-public class ExplainRoundTripsByResponses implements ResponseWeight<NodeWithActivity>{
+public class ExplainRoundTripsByResponses implements ResponseWeight<ActivityNode>{
     private static final Logger logger = LogManager.getLogger(ExplainRoundTripsByResponses.class);
-    private final List<SurveyResponse<NodeWithActivity>> responses;
+    private final List<SurveyResponse<ActivityNode>> responses;
     private final List<Person> syntheticPopulation;
     private final KernelSummary kernelSummary;
     private final ExplainSummary explainSummary;
@@ -37,11 +37,11 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<NodeWithActi
         this.threshold = threshold;
     }
 
-    public ExplainRoundTripsByResponses(List<SurveyResponse<NodeWithActivity>> responses, List<Person> syntheticPopulation) {
+    public ExplainRoundTripsByResponses(List<SurveyResponse<ActivityNode>> responses, List<Person> syntheticPopulation) {
         this(responses, syntheticPopulation, 0.0);
     }
 
-    public ExplainRoundTripsByResponses(List<SurveyResponse<NodeWithActivity>> responses, List<Person> syntheticPopulation, double threshold) {
+    public ExplainRoundTripsByResponses(List<SurveyResponse<ActivityNode>> responses, List<Person> syntheticPopulation, double threshold) {
         this.threshold = threshold;
         this.responses = responses;
         this.syntheticPopulation = syntheticPopulation;
@@ -88,7 +88,7 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<NodeWithActi
         
         this.kernelSummary = new KernelSummary(syntheticPopulation.size(), this.excludedPairs);
 
-        for (SurveyResponse<NodeWithActivity> response : responses) {
+        for (SurveyResponse<ActivityNode> response : responses) {
             response.getKernel().configureRequiredSummary(this.kernelSummary);
         }
 
@@ -96,17 +96,17 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<NodeWithActi
     }
 
     @Override
-    public double logWeight(MultiRoundTrip<NodeWithActivity> multiRoundTrip) {
+    public double logWeight(MultiRoundTrip<ActivityNode> multiRoundTrip) {
         return multiRoundTrip.getSummary(ExplainSummary.class).getTotalLW();
     }
 
-    public void configureRequiredSummary(MultiRoundTrip<NodeWithActivity> mrt) {
+    public void configureRequiredSummary(MultiRoundTrip<ActivityNode> mrt) {
         mrt.addSummary(kernelSummary);   // KernelSummary first — ExplainSummary reads it
         mrt.addSummary(explainSummary);  // ExplainSummary second
         mrt.recomputeSummaries();
     }
 
-    class ExplainSummary implements MultiRoundTripSummary<NodeWithActivity> {
+    class ExplainSummary implements MultiRoundTripSummary<ActivityNode> {
         private final double[] perAgentLogWeight;
         private double totalLW = 0.0;
         private final KernelSummary ksumRef;
@@ -125,18 +125,18 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<NodeWithActi
         // Hot path: called by setRoundTripAndUpdateSummaries. Gets KernelSummary from
         // the container — always correct, even on cloned proposal states.
         @Override
-        public void update(RoundTrip<NodeWithActivity> newRT, MultiRoundTrip<NodeWithActivity> state) {
+        public void update(RoundTrip<ActivityNode> newRT, MultiRoundTrip<ActivityNode> state) {
             recompute(newRT.getIndex(), newRT, state.getSummary(KernelSummary.class));
         }
 
         // Fallback for recomputeSummaries(). Uses stored ksumRef which is correct at
         // startup (the only time recomputeSummaries is called). Never reached on clones.
         @Override
-        public void update(int idx, RoundTrip<NodeWithActivity> oldRT, RoundTrip<NodeWithActivity> newRT) {
+        public void update(int idx, RoundTrip<ActivityNode> oldRT, RoundTrip<ActivityNode> newRT) {
             recompute(idx, newRT, ksumRef);
         }
 
-        private void recompute(int idx, RoundTrip<NodeWithActivity> newRT, KernelSummary ksum) {
+        private void recompute(int idx, RoundTrip<ActivityNode> newRT, KernelSummary ksum) {
             double personWeight = 0.0;
             if (newRT != null) {
                 for (int j = 0; j < responses.size(); j++) {
@@ -186,7 +186,7 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<NodeWithActi
 
     // ======== Getters ======== // 
 
-    public List<SurveyResponse<NodeWithActivity>> getResponses() {
+    public List<SurveyResponse<ActivityNode>> getResponses() {
         return responses;
     }
 
