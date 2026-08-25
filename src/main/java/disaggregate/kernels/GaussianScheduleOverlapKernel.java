@@ -11,7 +11,7 @@ import se.vti.roundtrips.simulator.IntervalUtils;
 import se.vti.roundtrips.single.RoundTrip;
 import se.vti.utils.misc.Tuple;
 
-public class GaussianScheduleOverlapKernel implements Kernel<ScheduleOverlapFeatures>, ScheduleKernelBase {
+public class GaussianScheduleOverlapKernel implements Kernel, ScheduleKernelBase {
     private double MIN_LAM = 0.1;
     private Map<Activity, Double> lambda2PerActivity = new EnumMap<>(Activity.class);
     private double lambda = 1.0;
@@ -25,7 +25,7 @@ public class GaussianScheduleOverlapKernel implements Kernel<ScheduleOverlapFeat
     }
 
     public GaussianScheduleOverlapKernel(Person person) {
-        this.observedActivityIntervals = ScheduleOverlapFeatures.from(person).getActivityIntervals();
+        this.observedActivityIntervals = ActivityIntervals.from(person);
         this.intervalUtils = new IntervalUtils(24.0);
     }
 
@@ -106,10 +106,6 @@ public class GaussianScheduleOverlapKernel implements Kernel<ScheduleOverlapFeat
         return k;
     }
 
-    @Override
-    public double compute(ScheduleOverlapFeatures val) {
-        throw new UnsupportedOperationException("Unimplemented method 'compute'");
-    }
 
     @Override
     public double[] getParameters() {
@@ -122,15 +118,7 @@ public class GaussianScheduleOverlapKernel implements Kernel<ScheduleOverlapFeat
         this.lambda2 = this.lambda * this.lambda;
     }
 
-    @Override
-    public ScheduleOverlapFeatures extractFeatures(RoundTrip<ActivityNode> rt) {
-        return ScheduleOverlapFeatures.from(rt);
-    }
 
-    @Override
-    public ScheduleOverlapFeatures extractFeatures(Person p) {
-        return ScheduleOverlapFeatures.from(p);
-    }
 
     @Override
     public void configureRequiredSummary(KernelSummary summary) {

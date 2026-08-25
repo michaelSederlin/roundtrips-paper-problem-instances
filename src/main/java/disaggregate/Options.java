@@ -7,7 +7,7 @@ import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Option;
 import disaggregate.model.Activity;
 
-public class RunnerOptions {
+public class Options {
     @Option(names = "--name", defaultValue = "null") public String name;
 
     // --- Paths ---
@@ -102,14 +102,8 @@ public class RunnerOptions {
     // --- Traveler kernel ---
     @Option(names = "--indication-traveler-kernel") public boolean indicatorTravelerKernel;
 
-    // --- Activity location kernel ---
-    @Option(names = "--jaccard-activity-location-kernel") public boolean jaccard_activity_location_kernel;
-    @Option(names = "--jaccard-activity-location-kernel-bandwidth", defaultValue = "1.0") public double jaccard_activity_location_kernel_bandwidth;
-    @Option(names = "--location-kernel-weight", defaultValue = "1.0") public double location_kernel_weight;
-
     // --- Schedule kernel ---
     @Option(names = "--tttBandwidth", defaultValue = "0") public double tttBandwidth;
-    @Option(names = "--tttWeight", defaultValue = "1.0") public double ttt_weight;
     @Option(names = "--scheduleOverlapBandwidth", defaultValue = "0") public double scheduleOverlapBandwidth;
     @Option(names = "--schedule-overlap-c") public Double schedule_overlap_c = null;
     @Option(names = "--subtractPartition") public boolean subtractPartition;

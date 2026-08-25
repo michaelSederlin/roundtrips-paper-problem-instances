@@ -14,8 +14,7 @@ public class SurveyResponse<N extends ActivityNode> {
 
     public double matchesRespondentWeight(Person syntheticPerson) {
         TravelerKernel travelerKernel = this.kernel.getKernel(TravelerKernel.class);
-        var feats = travelerKernel.extractFeatures(syntheticPerson);
-        return travelerKernel.compute(feats);
+        return travelerKernel.compute(syntheticPerson);
     }
 
     public CompositeKernel getKernel() {

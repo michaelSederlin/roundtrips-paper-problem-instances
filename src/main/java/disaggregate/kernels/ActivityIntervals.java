@@ -6,24 +6,22 @@ import java.util.List;
 import java.util.Map;
 
 import disaggregate.model.Activity;
+import disaggregate.model.ActivityNode;
 import disaggregate.model.Person;
-import disaggregate.model.ActivityNode;
-import disaggregate.model.ActivityNode;
 import disaggregate.rvu.Trip;
 import se.vti.roundtrips.simulator.IntervalUtils;
 import se.vti.roundtrips.simulator.StayEpisode;
 import se.vti.roundtrips.single.RoundTrip;
 import se.vti.utils.misc.Tuple;
 
-public class ScheduleOverlapFeatures implements Features {
-    private final Map<Activity, List<Tuple<Double, Double>>> activityIntervals;
+/**
+ * Extracts, per activity, the time intervals during which that activity is
+ * performed -- either from an observed {@link Person}'s trip or from a
+ * simulated {@link RoundTrip}.
+ */
+public class ActivityIntervals {
 
-    public ScheduleOverlapFeatures(Map<Activity, List<Tuple<Double, Double>>> activityIntervals) {
-        this.activityIntervals = activityIntervals;
-    }
-
-    public Map<Activity, List<Tuple<Double, Double>>> getActivityIntervals() {
-        return activityIntervals;
+    private ActivityIntervals() {
     }
 
     private static Map<Activity, List<Tuple<Double, Double>>> createEmptyActivityIntervals() {
@@ -34,11 +32,11 @@ public class ScheduleOverlapFeatures implements Features {
         return map;
     }
 
-    public static ScheduleOverlapFeatures from(Person p) {
+    public static Map<Activity, List<Tuple<Double, Double>>> from(Person p) {
         return from(p, 24.0);
     }
 
-    public static ScheduleOverlapFeatures from(Person p, double horizon_h) {
+    public static Map<Activity, List<Tuple<Double, Double>>> from(Person p, double horizon_h) {
         Trip trip = p.getTrip();
         List<Trip.Leg> legs = trip.getLegs();
         Map<Activity, List<Tuple<Double, Double>>> activityMap = createEmptyActivityIntervals();
@@ -65,10 +63,10 @@ public class ScheduleOverlapFeatures implements Features {
             addInterval(activityMap, activity, start_h, end_h);
         }
 
-        return new ScheduleOverlapFeatures(activityMap);
+        return activityMap;
     }
 
-    public static ScheduleOverlapFeatures from(RoundTrip<? extends ActivityNode> rt) {
+    public static Map<Activity, List<Tuple<Double, Double>>> from(RoundTrip<? extends ActivityNode> rt) {
         return from(rt, 24.0, Map.of());
     }
 
@@ -77,7 +75,7 @@ public class ScheduleOverlapFeatures implements Features {
      *                      An activity absent from the map is not restricted and all of its
      *                      stays are included.
      */
-    public static  ScheduleOverlapFeatures from(RoundTrip<? extends ActivityNode> rt, double horizon_h, Map<Activity, ActivityNode> accruingNodes) {
+    public static Map<Activity, List<Tuple<Double, Double>>> from(RoundTrip<? extends ActivityNode> rt, double horizon_h, Map<Activity, ActivityNode> accruingNodes) {
         Map<Activity, List<Tuple<Double, Double>>> activityMap = createEmptyActivityIntervals();
 
         var intervalUtils = new IntervalUtils(24.0);
@@ -94,7 +92,7 @@ public class ScheduleOverlapFeatures implements Features {
             activityMap.put(act, intervals);
         }
 
-        return new ScheduleOverlapFeatures(activityMap);
+        return activityMap;
     }
 
     private static void addInterval(Map<Activity, List<Tuple<Double, Double>>> intervalsMap,

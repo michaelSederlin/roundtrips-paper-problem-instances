@@ -47,7 +47,7 @@ public class KernelSummary implements MultiRoundTripSummary<ActivityNode> {
 
     private double totalLW;
 
-//    private final Map<Kernel<?>, Map<Integer, Double>> kernelValueCache;
+//    private final Map<Kernel, Map<Integer, Double>> kernelValueCache;
 
     private KernelSummary(int populationSize, boolean[][] excludedPairs, boolean skipInit) {
         this.excludedPairs = excludedPairs;
@@ -214,10 +214,10 @@ public class KernelSummary implements MultiRoundTripSummary<ActivityNode> {
                     : Map.of();
                 
                 // TODO: Hard-coded horizon!
-                ScheduleOverlapFeatures overlapFeatures = ScheduleOverlapFeatures.from(newRoundTrip, 24.0, accruingNodes);
+                Map<Activity, List<Tuple<Double, Double>>> extractedIntervals = ActivityIntervals.from(newRoundTrip, 24.0, accruingNodes);
                 for (Activity act : Activity.values()) {
 
-                    List<Tuple<Double, Double>> intervals = overlapFeatures.getActivityIntervals().get(act);
+                    List<Tuple<Double, Double>> intervals = extractedIntervals.get(act);
                     actIntervals.put(act, intervals);
                 }
             }

@@ -1,6 +1,6 @@
 package disaggregate.kernels;
 
-public abstract class ScalarGaussianKernel<F extends Features> implements Kernel<F> {
+public abstract class ScalarGaussianKernel implements Kernel {
     protected double lambda, lambda2, halfInvLambda;
 
     protected ScalarGaussianKernel(double lambda) { setParameters(new double[]{lambda}); }

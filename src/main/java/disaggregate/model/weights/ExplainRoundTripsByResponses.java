@@ -56,13 +56,13 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<ActivityNode
             for (int jj = 0; jj < responses.size(); jj++) {
                 CompositeKernel k = this.responses.get(jj).getKernel();
                 
-                Kernel<?> tkRaw = k.getKernel(Role.TRAVELER);
+                Kernel tkRaw = k.getKernel(Role.TRAVELER);
                 if (tkRaw != null && !(tkRaw instanceof TravelerKernel)) {
                     throw new IllegalStateException("TRAVELER Role must be a TravelerKernel, got " + tkRaw.getClass());
                 }
                 TravelerKernel tk = (TravelerKernel) tkRaw;
                 personWeights[jj] = (tk != null)
-                ? tk.compute(TravelerKernel.Features.from(syntheticPopulation.get(ii)))
+                ? tk.compute(syntheticPopulation.get(ii))
                 : 1.0;
                 
                 if (personWeights[jj] < threshold) {
@@ -142,8 +142,8 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<ActivityNode
                 for (int j = 0; j < responses.size(); j++) {
                     if (excludedPairs[idx][j]) continue;
                     CompositeKernel k = responses.get(j).getKernel();
-                    Kernel<?> sched = k.getKernel(Role.SCHEDULE);
-                    Kernel<?> loc = k.getKernel(Role.LOCATION);
+                    Kernel sched = k.getKernel(Role.SCHEDULE);
+                    Kernel loc = k.getKernel(Role.LOCATION);
                     double sw = (sched != null) ? sched.compute(newRT, ksum) : 1.0;
                     double lw = (loc != null) ? loc.compute(newRT, ksum) : 1.0;
                     lastScheduleKernels[idx][j] = sw;

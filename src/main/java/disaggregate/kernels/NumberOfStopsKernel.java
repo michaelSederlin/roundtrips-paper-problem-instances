@@ -8,14 +8,8 @@ import disaggregate.model.Activity;
 import disaggregate.model.Person;
 
 
-public class NumberOfStopsKernel extends ScalarGaussianKernel<NumberOfStopsKernel.NumStopsFeatures> implements ScheduleKernelBase {
+public class NumberOfStopsKernel extends ScalarGaussianKernel implements ScheduleKernelBase {
 
-    static class NumStopsFeatures implements Features {
-        private final int numStops;
-        public NumStopsFeatures(RoundTrip<ActivityNode> rt) { this.numStops = rt.size(); }
-        public NumStopsFeatures(Person person) { this.numStops = person.getTrip().size(); }
-        public int getNumStops() { return numStops; }
-    }
 
     private final int observedNumStops;
 
@@ -27,11 +21,6 @@ public class NumberOfStopsKernel extends ScalarGaussianKernel<NumberOfStopsKerne
         this.observedNumStops = observedNumStops;
     }
 
-    @Override
-    public double compute(NumberOfStopsKernel.NumStopsFeatures feats) {
-        throw new UnsupportedOperationException("Not implemented. Use compute(RoundTrip, KernelSummary) instead.");
-        // return GaussianKernel.compute(observedNumStops - feats.getNumStops(), lambda);
-    }
 
     @Override
     public double compute(RoundTrip<ActivityNode> rt, KernelSummary summary) {
@@ -49,15 +38,5 @@ public class NumberOfStopsKernel extends ScalarGaussianKernel<NumberOfStopsKerne
         summary.setTrackNumStops(true);
     }
 
-    @Override
-    public NumberOfStopsKernel.NumStopsFeatures extractFeatures(RoundTrip<ActivityNode> rt) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'extractFeatures'");
-    }
 
-    @Override
-    public NumberOfStopsKernel.NumStopsFeatures extractFeatures(Person p) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'extractFeatures'");
-    }
 }

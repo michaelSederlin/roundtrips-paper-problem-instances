@@ -1,35 +1,27 @@
 package disaggregate.kernels;
 
-import disaggregate.model.Person;
 import disaggregate.model.ActivityNode;
+import disaggregate.model.Person;
 import se.vti.roundtrips.single.RoundTrip;
 
-public class TravelerKernel implements Kernel<TravelerKernel.Features> {
+public class TravelerKernel implements Kernel {
 
     private static final double[] calibratedParameters = new double[]{25.64142600118641, 1029636.1920595355, 0.20652283215354872};
-//    private final Person observedPerson;
     private double incomeBW2;
     private double ageBW2;
     private double genderMismatchWeight;
     private double[] parameters;
-    final Features observations;
 
-    public static record Features(Integer age, Long income, Integer gender) 
-        implements disaggregate.kernels.Features {
-        public static Features from(Person p) {
-            return new Features(p.getAge(), p.getIncome(), p.getGender());
-        }
-    }
+    private final Integer observedAge;
+    private final Long observedIncome;
+    private final Integer observedGender;
 
     public TravelerKernel(Person observedPerson) {this(observedPerson, calibratedParameters);}
     public TravelerKernel(Person observedPerson, double[] parameters) {
-        this.observations = new Features(observedPerson.getAge(), observedPerson.getIncome(), observedPerson.getGender());
+        this.observedAge = observedPerson.getAge();
+        this.observedIncome = observedPerson.getIncome();
+        this.observedGender = observedPerson.getGender();
         setParameters(parameters);
-    }
-
-    public TravelerKernel(Features observations) {
-        this.observations = observations;
-        setParameters(calibratedParameters);
     }
 
     public void setAgeBW(double bw) {setParameters(new double[]{bw, parameters[1], parameters[2]});}
@@ -41,27 +33,27 @@ public class TravelerKernel implements Kernel<TravelerKernel.Features> {
     public void setGenderMismatch(double mismatch) {setParameters(new double[]{parameters[0], parameters[1], mismatch});}
     public double getGenderMismatch() {return this.parameters[2];}
 
-    public double compute(TravelerKernel.Features syntheticTraveler) {
+    public double compute(Person syntheticTraveler) {
         double logSimilarity = 0.0;
 
-        if (this.observations.income() != null && syntheticTraveler.income() != null) {
-            double incDiff = Math.abs(observations.income() - syntheticTraveler.income());
+        if (this.observedIncome != null && syntheticTraveler.getIncome() != null) {
+            double incDiff = Math.abs(this.observedIncome - syntheticTraveler.getIncome());
             double incomeWeight = -incDiff * incDiff / (2 * incomeBW2);
             logSimilarity += incomeWeight;
         }
 
-        if (this.observations.age() != null &&  syntheticTraveler.age() != null) {
-            double ageDiff = Math.abs(observations.age() - syntheticTraveler.age());
+        if (this.observedAge != null && syntheticTraveler.getAge() != null) {
+            double ageDiff = Math.abs(this.observedAge - syntheticTraveler.getAge());
             double ageWeight = -ageDiff * ageDiff / (2 * ageBW2);
             logSimilarity += ageWeight;
         }
 
-        if (this.observations.gender() != null &&  syntheticTraveler.gender() != null) {
-            int genderDiff = (observations.gender().equals(syntheticTraveler.gender())) ? 0 : 1;
+        if (this.observedGender != null && syntheticTraveler.getGender() != null) {
+            int genderDiff = (this.observedGender.equals(syntheticTraveler.getGender())) ? 0 : 1;
             double genderWeight = (genderDiff == 0) ? 1.0 : genderMismatchWeight;
             logSimilarity += Math.log(genderWeight);
         }
-        
+
         double result = Math.exp(logSimilarity);
         if (Double.isNaN(result) || Double.isInfinite(result)) {
             throw new RuntimeException("Numerical instability in TravelerKernel.compute: logSimilarity = " + logSimilarity);
@@ -74,17 +66,6 @@ public class TravelerKernel implements Kernel<TravelerKernel.Features> {
         // TravelerKernel uses static Person demographics, not RoundTrip data
         // It should be pre-computed in ExplainRoundTripsByResponses constructor
         throw new UnsupportedOperationException("TravelerKernel does not use RoundTrip data - use pre-computed person-response weights");
-    }
-
-    @Override
-    public Features extractFeatures(RoundTrip<ActivityNode> rt) {
-        // TravelerKernel doesn't use RoundTrip for feature extraction
-        throw new UnsupportedOperationException("TravelerKernel extracts features from Person objects only");
-    }
-
-    @Override
-    public Features extractFeatures(Person p) {
-        return Features.from(p);
     }
 
     @Override

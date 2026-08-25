@@ -4,6 +4,7 @@ C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-pa
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\KernelHelpers.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\stateprocessors\VariablesLogger.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\logging\XMLFileLogger.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\Options.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\rvu\Trip.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\Runner.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\logging\ProgressLogger.java
@@ -16,8 +17,6 @@ C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-pa
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\amalTemp\SyntheticPopulation.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\stateprocessors\ActivityDurationLogger.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\ExplainRoundTripsByResponses.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\RunnerOptions.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\ScheduleOverlapFeatures.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\Person.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\GeometricMeanStayingWeight.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\Role.java
@@ -43,9 +42,9 @@ C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-pa
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\amalTemp\PopulationGroup.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\logging\PerThreadConsole.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\StrictlyEnforceUniqueHomeLocation.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\Features.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\KernelSummary.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\amalTemp\StandardSyntheticPopulation.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\MovementSummary.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\rvu\RvuDataset.java
+C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\ActivityIntervals.java
 C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\rvu\MDDRRepository.java

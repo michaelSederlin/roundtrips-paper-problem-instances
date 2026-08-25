@@ -29,7 +29,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model.CommandSpec;
 
-import disaggregate.RunnerOptions;
+import disaggregate.Options;
 import disaggregate.logging.ProgressLogger;
 import disaggregate.logging.XMLStateLogger;
 import disaggregate.stateprocessors.ActivityDurationLogger;
@@ -41,14 +41,11 @@ import se.vti.utils.misc.metropolishastings.terminationcriteria.BlockAverageTerm
 import se.vti.utils.misc.metropolishastings.terminationcriteria.CombinedAnyTerminationCriterion;
 import se.vti.utils.misc.metropolishastings.terminationcriteria.FixedNumberOfIterationsTerminationCriterion;
 import se.vti.utils.misc.metropolishastings.terminationcriteria.TerminationCriterion;
-import disaggregate.kernels.JaccardActivityLocationKernel;
 import disaggregate.kernels.CompositeKernel;
-import disaggregate.kernels.Features;
 import disaggregate.kernels.Kernel;
 import disaggregate.kernels.Role;
 import disaggregate.kernels.GaussianScheduleOverlapKernel;
 import disaggregate.kernels.NumberOfStopsKernel;
-import disaggregate.kernels.IndicatorTravelerKernel;
 import disaggregate.kernels.TravelerKernel;
 import disaggregate.model.Activity;
 import disaggregate.model.Person;
@@ -85,7 +82,7 @@ public class Runner implements Callable<Integer> {
     static final ZoneId RUN_TIMESTAMP_ZONE = ZoneId.of("Europe/Stockholm");
 
     @CommandLine.Spec CommandSpec spec; 
-    @Mixin RunnerOptions opts;
+    @Mixin Options opts;
     public static void main(String[] args) throws Exception {
         System.exit(new CommandLine(new Runner()).execute(args));
     }
@@ -131,7 +128,6 @@ public class Runner implements Callable<Integer> {
                 opts.lAge, opts.lInc, opts.eta, opts.kernelThreshold, opts.travelerMixWeight);
         logger.info("--- Schedule kernel (withKernelWeights={}, factor={}) ---", opts.withKernelWeights, opts.kernelFactor);
         logger.info("  nStops:  bandwidth={}  |  weight={}", opts.nStopsBandwidth, opts.n_stops_weight);
-        logger.info("  ttt:     bandwidth={}  |  weight={}", opts.tttBandwidth, opts.ttt_weight);
         logger.info("  overlap: bandwidth={}  |  weight={}", opts.scheduleOverlapBandwidth, opts.schedule_overlap_weight);
         logger.info("  scheduleMixWeight={}  |  subtractPartition={}", opts.schedule_mixing_weight, opts.subtractPartition);
         logger.info("--- Staying weight (withStayingWeight={}, geometricMean={}) ---",
@@ -372,24 +368,18 @@ public class Runner implements Callable<Integer> {
             }
 
             List<SurveyResponse<ActivityNode>> responses = buildKernelResponses(respondents, opts);
-            se.vti.roundtrips.common.Runner<ActivityNode> runner = new se.vti.roundtrips.common.Runner<>(scenario);
-            runner.setInitialState(initState);
+            se.vti.roundtrips.common.Runner<ActivityNode> runner = new se.vti.roundtrips.common.Runner<>(scenario)
+                .setInitialState(initState)
+                .setPopulationBinomialPrior(3.125)
+                ;
 
-            // --- termination criteria (was CaseRunner.withBlockConvergence / withMaxIter) ---
             List<TerminationCriterion<MultiRoundTrip<ActivityNode>>> terminationCriteria = new ArrayList<>();
             var blockCrit = new BlockAverageTerminationCriterion<MultiRoundTrip<ActivityNode>>()
-                    .setConvergenceStatsFileName(partOutputDir.resolve("convergenceStats.tsv").toString());
-            blockCrit.setRelativeVarianceTolerance(opts.stationarity_tolerance)
-                     .setStandardizedMeanTolerance(opts.stationarity_tolerance);
-            if (opts.min_number_of_stable_samples > 0) {
-                logger.info("Setting minimum number of stable samples to {}", opts.min_number_of_stable_samples);
-                blockCrit.setMinSamples(opts.min_number_of_stable_samples);
-            }
-            terminationCriteria.add(blockCrit);
+                    .setConvergenceStatsFileName(partOutputDir.resolve("convergenceStats.tsv").toString())
+                    .setRelativeVarianceTolerance(opts.stationarity_tolerance).setStandardizedMeanTolerance(opts.stationarity_tolerance);
 
-            // ADDING DEFAULT PRIORS
-            logger.info("Partition {}: Adding weights:", partName); 
-            runner.setPopulationBinomialPrior(3.125);
+            if (opts.min_number_of_stable_samples > 0) { blockCrit.setMinSamples(opts.min_number_of_stable_samples); }
+            terminationCriteria.add(blockCrit);
 
             if (opts.enforceCorrectHomeLocation) runner.addIndividualWeight(new StrictlyEnforceCorrectHomeLocationWeight(homeNodes));
             if (opts.enforce_unique_home_location) runner.addIndividualWeight(new StrictlyEnforceUniqueHomeLocation());
@@ -423,16 +413,10 @@ public class Runner implements Callable<Integer> {
             if (opts.maxIter != null) {
                 terminationCriteria.add(new FixedNumberOfIterationsTerminationCriterion<>(opts.maxIter));
             }
-            // --- loggers (was CaseRunner.addDefaultLoggers, called from run()) ---
-            // Registered after all weights: weightsContainer() snapshots the runner's
-            // sampling weights, so it must see the complete list.
-            runner.addStateProcessor(new VariablesLogger<>(
-                    effectiveMsgInterval, partOutputDir.resolve("stateVariables.tsv").toString()));
-            runner.addStateProcessor(new MHWeightsToFileLogger<>(
-                    effectiveMsgInterval, weightsContainer(runner), partOutputDir.resolve("weights.tsv").toString()));
+            runner.addStateProcessor(new VariablesLogger<>(effectiveMsgInterval, partOutputDir.resolve("stateVariables.tsv").toString()));
+            runner.addStateProcessor(new MHWeightsToFileLogger<>(effectiveMsgInterval, weightsContainer(runner), partOutputDir.resolve("weights.tsv").toString()));
             runner.addStateProcessor(new XMLStateLogger<>(effectiveMsgInterval, partOutputDir));
-            runner.addStateProcessor(new ActivityDurationLogger<>(
-                    effectiveMsgInterval, partOutputDir.resolve("activityDurations.tsv").toString()));
+            runner.addStateProcessor(new ActivityDurationLogger<>(effectiveMsgInterval, partOutputDir.resolve("activityDurations.tsv").toString()));
             runner.addStateProcessor(new ProgressLogger<>(effectiveMsgInterval, partName));
 
             runner.setTerminationCriterion(combineTerminationCriteria(terminationCriteria));
@@ -454,19 +438,15 @@ public class Runner implements Callable<Integer> {
         }
     }
     
-    List<SurveyResponse<ActivityNode>> buildKernelResponses(List<Person> kernelRespondents, RunnerOptions opts) {
-        logger.info("Kernel construction: traveler(lAge={}, lInc={}, eta={}) | "
-                + "nStops={} | scheduleOverlap(bw={})",
-                opts.lAge, opts.lInc, opts.eta,
-                opts.n_stops_weight > 0 ? "ON(bw=" + opts.n_stops_weight + ")" : "OFF",
+    List<SurveyResponse<ActivityNode>> buildKernelResponses(List<Person> kernelRespondents, Options opts) {
+        logger.info("Kernel construction: traveler(lAge={}, lInc={}, eta={}) | nStops={} | scheduleOverlap(bw={})",
+                opts.lAge, opts.lInc, opts.eta,opts.n_stops_weight > 0 ? "ON(bw=" + opts.n_stops_weight + ")" : "OFF",
                 opts.schedule_overlap_weight > 0 ? "ON(bw=" + opts.schedule_overlap_weight + ")" : "OFF");
 
         double[] travelerParams = {opts.lAge, opts.lInc, opts.eta};
         List<SurveyResponse<ActivityNode>> responses = new ArrayList<>();
         for (Person person : kernelRespondents) {
-            Kernel<? extends Features> kTrav = opts.indicatorTravelerKernel 
-                ? new IndicatorTravelerKernel(person)
-                : new TravelerKernel(person, travelerParams);  // Default is TravelerKernel
+            Kernel kTrav = new TravelerKernel(person, travelerParams);
 
             CompositeKernel kSched = new CompositeKernel();
             if (opts.n_stops_weight > 0) kSched.add(new NumberOfStopsKernel(person.getTrip().getStopCount(), opts.nStopsBandwidth), opts.n_stops_weight);
@@ -474,21 +454,12 @@ public class Runner implements Callable<Integer> {
                 GaussianScheduleOverlapKernel kOverlap = (opts.schedule_overlap_c != null)
                     ? new GaussianScheduleOverlapKernel(person, opts.schedule_overlap_c, opts.median_durations)
                     : new GaussianScheduleOverlapKernel(person, opts.scheduleOverlapBandwidth);
-
                 kSched.add(kOverlap, opts.schedule_overlap_weight);
             }
 
-            CompositeKernel kloc = new CompositeKernel();
-            if (opts.jaccard_activity_location_kernel) {
-                kloc.add(new JaccardActivityLocationKernel(person, opts.jaccard_activity_location_kernel_bandwidth));
-            }
+            CompositeKernel k = new CompositeKernel().add(kTrav, Role.TRAVELER).add(kSched, Role.SCHEDULE);
 
-            CompositeKernel k = new CompositeKernel()
-                    .add(kTrav, Role.TRAVELER)
-                    .add(kSched, Role.SCHEDULE)
-                    .add(kloc, Role.LOCATION)
-                    ;
-            k.setMixtureWeights(new double[] { opts.travelerMixWeight, opts.schedule_mixing_weight, opts.location_kernel_weight});
+            k.setMixtureWeights(new double[] { opts.travelerMixWeight, opts.schedule_mixing_weight});
             responses.add(new SurveyResponse<>(person, k));
         }
         return responses;
