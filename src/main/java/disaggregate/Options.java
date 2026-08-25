@@ -16,7 +16,7 @@ public class Options {
 
     // --- Run config ---
     @Option(names = "--maxProcesses", defaultValue = "-1") public int maxProcesses;
-    @Option(names = "--maxIter") public Integer maxIter;
+    @Option(names = "--max-number-of-iterations") public Integer max_number_of_iterations;
     @Option(names = "--seed", defaultValue = "1084") public long seed;
     @Option(names = "--timeBinSize", defaultValue = "1.0") public double timeBinSize;
     @Option(names = "--horizon", defaultValue = "24.0") public double horizon;

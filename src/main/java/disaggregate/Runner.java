@@ -26,7 +26,6 @@ import se.vti.utils.misc.metropolishastings.MHWeightsToFileLogger;
 import se.vti.utils.misc.metropolishastings.terminationcriteria.BlockAverageTerminationCriterion;
 import se.vti.utils.misc.metropolishastings.terminationcriteria.CombinedAnyTerminationCriterion;
 import se.vti.utils.misc.metropolishastings.terminationcriteria.FixedNumberOfIterationsTerminationCriterion;
-import se.vti.utils.misc.metropolishastings.terminationcriteria.TerminationCriterion;
 import disaggregate.kernels.*;
 import disaggregate.model.*;
 import disaggregate.model.weights.*;
@@ -41,7 +40,6 @@ import disaggregate.utils.summaries.UniqueActivityNodeSummary;
 import se.vti.roundtrips.common.Scenario;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.multiple.MultiRoundTripJsonIO;
-import se.vti.roundtrips.samplingweights.StrictlyPeriodicSchedule;
 import se.vti.roundtrips.samplingweights.StrictlyRequireMinNumberOfStops;
 import se.vti.roundtrips.single.RoundTrip;
 import se.vti.utils.misc.Tuple;
@@ -57,12 +55,14 @@ public class Runner implements Callable<Integer> {
     public static void main(String[] args) throws Exception {
         System.exit(new CommandLine(new Runner()).execute(args));
     }
+
     static Path resolveRunOutputPath(Path outputPath) {
         String runName = System.getenv("RUN_NAME");
         String timestamp = LocalDateTime.now(RUN_TIMESTAMP_ZONE).format(RUN_TIMESTAMP_FORMAT);
         String folderName = (runName == null || runName.isBlank()) ? timestamp : runName + "_" + timestamp;
         return outputPath.resolve(folderName);
     }
+
     static void copyArgumentsFileIfPresent(Path runOutputPath) throws IOException {
         Path argsFile = Path.of("amal-arguments.txt");
         if (Files.exists(argsFile)) {
@@ -75,7 +75,7 @@ public class Runner implements Callable<Integer> {
         Path scenarioPath = Path.of(opts.scenarioDir);
         Path outputPath = Path.of(opts.outputDir).resolve(opts.name);
         Path runOutputPath = resolveRunOutputPath(outputPath);
-        int effectiveMsgInterval = (opts.msgInterval < 0) ? (opts.maxIter != null ? opts.maxIter / 100 : 1000) : opts.msgInterval;
+        int effectiveMsgInterval = (opts.msgInterval < 0) ? (opts.max_number_of_iterations != null ? opts.max_number_of_iterations / 100 : 1000) : opts.msgInterval;
 
         Files.createDirectories(runOutputPath);
         ThreadContext.put("runId", "amal");
@@ -85,7 +85,7 @@ public class Runner implements Callable<Integer> {
         logger.info("===== AMAL Parallel Simulation setup =====");
         logger.info("--- Run ---");
         logger.info("  name={}  |  maxProcesses={}", opts.name, opts.maxProcesses > 0 ? opts.maxProcesses : "auto");
-        logger.info("  maxIter={}  |  seed={}  |  msgInterval={}", opts.maxIter, opts.seed, effectiveMsgInterval);
+        logger.info("  max_number_of_iterations={}  |  seed={}  |  msgInterval={}", opts.max_number_of_iterations, opts.seed, effectiveMsgInterval);
         logger.info("  timeBinSize={}h  |  horizon={}h  |  stationarityTolerance={}", opts.timeBinSize, opts.horizon, opts.stationarity_tolerance);
         logger.info("--- Paths ---");
         logger.info("  scenarioDir:   {}", scenarioPath.toAbsolutePath());
@@ -188,7 +188,6 @@ public class Runner implements Callable<Integer> {
         for (var f : futures) f.get();
 
         mergePartitions(runOutputPath);
-        plotAggregateResults(runOutputPath, scenarioPath);
 
         return 0;
     }
@@ -214,32 +213,6 @@ public class Runner implements Callable<Integer> {
         } else {
             logger.warn("No partition respondents.tsv found under {}; skipping respondents copy", runOutputPath);
         }
-    }
-    /**
-     * Snapshot of the runner's sampling weights, for MHWeightsToFileLogger.
-     * (was CaseRunner.getWeightsContainer)
-     */
-    private static MHWeightContainer<MultiRoundTrip<ActivityNode>> weightsContainer(
-            se.vti.roundtrips.common.Runner<ActivityNode> runner) {
-        MHWeightContainer<MultiRoundTrip<ActivityNode>> weights = new MHWeightContainer<>();
-        for (MHWeight<MultiRoundTrip<ActivityNode>> w : runner.getSamplingWeightsView()) {
-            weights.add(w);
-        }
-        return weights;
-    }
-
-    /** (was CaseRunner.constructTerminationCriterion) */
-    private static TerminationCriterion<MultiRoundTrip<ActivityNode>> combineTerminationCriteria(
-            List<TerminationCriterion<MultiRoundTrip<ActivityNode>>> criteria) {
-        return switch (criteria.size()) {
-            case 0 -> null;
-            case 1 -> criteria.get(0);
-            default -> {
-                var tc = new CombinedAnyTerminationCriterion<>(criteria.get(0));
-                criteria.stream().skip(1).forEach(tc::add);
-                yield tc;
-            }
-        };
     }
 
     void runPartition(
@@ -299,13 +272,11 @@ public class Runner implements Callable<Integer> {
                 if (!Files.exists(Path.of(warmStartFile))) {
                     throw new FileNotFoundException("Missing warm start file " + warmStartFile);
                 }
-                MultiRoundTrip<ActivityNode> globalState =
-                        MultiRoundTripJsonIO.singleton().readFromFile(scenario, warmStartFile);
+                MultiRoundTrip<ActivityNode> globalState = MultiRoundTripJsonIO.singleton().readFromFile(scenario, warmStartFile);
                 initState = new MultiRoundTrip<>(agents.size());
                 for (int j = 0; j < agents.size(); j++) {
                     RoundTrip<ActivityNode> globalRt = globalState.getRoundTrip(partFrom + j);
-                    RoundTrip<ActivityNode> localRt =
-                            new RoundTrip<>(j, globalRt.cloneNodes(), globalRt.cloneDepartures());
+                    RoundTrip<ActivityNode> localRt = new RoundTrip<>(j, globalRt.cloneNodes(), globalRt.cloneDepartures());
                     localRt.setEpisodes(scenario.getOrCreateSimulator().simulate(localRt));
                     initState.setRoundTripAndUpdateSummaries(j, localRt);
                 }
@@ -329,16 +300,11 @@ public class Runner implements Callable<Integer> {
             List<SurveyResponse<ActivityNode>> responses = buildKernelResponses(respondents, opts);
             se.vti.roundtrips.common.Runner<ActivityNode> runner = new se.vti.roundtrips.common.Runner<>(scenario)
                 .setInitialState(initState)
-                .setPopulationBinomialPrior(3.125)
-                ;
+                .setPopulationBinomialPrior(3.125);
 
-            List<TerminationCriterion<MultiRoundTrip<ActivityNode>>> terminationCriteria = new ArrayList<>();
-            var blockCrit = new BlockAverageTerminationCriterion<MultiRoundTrip<ActivityNode>>()
+            BlockAverageTerminationCriterion<MultiRoundTrip<ActivityNode>> blockCrit = new BlockAverageTerminationCriterion<MultiRoundTrip<ActivityNode>>()
                     .setConvergenceStatsFileName(partOutputDir.resolve("convergenceStats.tsv").toString())
                     .setRelativeVarianceTolerance(opts.stationarity_tolerance).setStandardizedMeanTolerance(opts.stationarity_tolerance);
-
-            if (opts.min_number_of_stable_samples > 0) { blockCrit.setMinSamples(opts.min_number_of_stable_samples); }
-            terminationCriteria.add(blockCrit);
 
             if (opts.enforceCorrectHomeLocation) runner.addIndividualWeight(new StrictlyEnforceCorrectHomeLocationWeight(homeNodes));
             if (opts.enforce_unique_home_location) runner.addIndividualWeight(new StrictlyEnforceUniqueHomeLocation());
@@ -348,9 +314,6 @@ public class Runner implements Callable<Integer> {
             var geometricMeanStayingWeight = new GeometricMeanStayingWeight(opportunityWeights, 1e-5)
                 .withExponent(opts.staying_weight_exponent);
             geometricMeanStayingWeight.configureRequiredSummary(initState);
-
-            // var stayingWeight = new StayingWeight(opportunityWeights);
-            // stayingWeight.setC(-Math.log(LoadOpportunityWeights.meanSigma(opportunityWeights)));
 
             runner.addPopulationWeight(geometricMeanStayingWeight, opts.stay_mixing_weight);
             logger.info("Geometric mean staying weight added");
@@ -363,24 +326,26 @@ public class Runner implements Callable<Integer> {
             runner.addPopulationWeight(movementWeight, opts.move_mixing_weight);
             logger.info("Geometric Mean Movement weight added");
             
-            ExplainRoundTripsByResponses kernelWeights =
-            new ExplainRoundTripsByResponses(responses, agents, opts.kernelThreshold);
+            ExplainRoundTripsByResponses kernelWeights = new ExplainRoundTripsByResponses(responses, agents, opts.kernelThreshold);
             runner.addPopulationWeight(kernelWeights, opts.kernelFactor);
             kernelWeights.configureRequiredSummary(initState);
             logger.info("Kernel weights added");
+
+            MHWeightContainer<MultiRoundTrip<ActivityNode>> weightsContainer = new MHWeightContainer<>();
+            for (MHWeight<MultiRoundTrip<ActivityNode>> w : runner.getSamplingWeightsView()) weightsContainer.add(w);
         
-            if (opts.maxIter != null) {
-                terminationCriteria.add(new FixedNumberOfIterationsTerminationCriterion<>(opts.maxIter));
-            }
             runner.addStateProcessor(new VariablesLogger<>(effectiveMsgInterval, partOutputDir.resolve("stateVariables.tsv").toString()));
-            runner.addStateProcessor(new MHWeightsToFileLogger<>(effectiveMsgInterval, weightsContainer(runner), partOutputDir.resolve("weights.tsv").toString()));
+            runner.addStateProcessor(new MHWeightsToFileLogger<>(effectiveMsgInterval, weightsContainer, partOutputDir.resolve("weights.tsv").toString()));
             runner.addStateProcessor(new XMLStateLogger<>(effectiveMsgInterval, partOutputDir));
             runner.addStateProcessor(new ActivityDurationLogger<>(effectiveMsgInterval, partOutputDir.resolve("activityDurations.tsv").toString()));
             runner.addStateProcessor(new ProgressLogger<>(effectiveMsgInterval, partName));
 
-            // runner.setTerminationCriterion(combineTerminationCriteria(terminationCriteria));
-
             if (!opts.verbose) runner.setMessageInterval(0);
+
+            if (opts.min_number_of_stable_samples > 0) blockCrit.setMinSamples(opts.min_number_of_stable_samples); 
+            CombinedAnyTerminationCriterion<MultiRoundTrip<ActivityNode>> tc = new CombinedAnyTerminationCriterion<>(blockCrit);
+            if (opts.max_number_of_iterations != null) tc.add(new FixedNumberOfIterationsTerminationCriterion<>(opts.max_number_of_iterations));
+            runner.setTerminationCriterion(tc);
 
             logger.info("Partition {}: Starting MCMC", partName);
             runner.run();
