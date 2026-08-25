@@ -4,36 +4,28 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import common.XMLStateLogger;
-import disaggregate.model.amalTemp.StandardSyntheticPopulation;
-import disaggregate.model.amalTemp.SyntheticPopulation;
 import disaggregate.kernels.CompositeKernel;
 import disaggregate.kernels.Kernel;
 import disaggregate.model.Activity;
 import disaggregate.model.Person;
 import disaggregate.model.SurveyResponse;
 import disaggregate.model.ActivityNode;
-import disaggregate.model.ActivityNode;
 import disaggregate.rvu.MDDR;
 import disaggregate.rvu.MDDRRepository;
 import disaggregate.rvu.Trip;
 import disaggregate.rvu.UPBD;
 import disaggregate.rvu.UPBDRepository;
-import se.vti.roundtrips.common.Node;
 import se.vti.roundtrips.common.Scenario;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.single.RoundTrip;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -98,56 +90,6 @@ public class ScenarioUtils {
         }
     }    
 
-    public static List<Person> simulateSyntheticPopulation(int n, long seed, Map<ActivityNode, Double> opportunityWeights) {
-        List<Person> population = new ArrayList<>();
-        StandardSyntheticPopulation syntheticPopulation = new StandardSyntheticPopulation(n, seed).assignGroups();
-
-        NodeSampler homeNodeSampler = new NodeSampler(opportunityWeights, Activity.HOME, seed);
-
-        for (SyntheticPopulation.Person person : syntheticPopulation.getPopulation()) {
-            ActivityNode homeNode = homeNodeSampler.sampleActivityNode();
-            Integer gender = person.gender().equals("female") ? 1 : 0;
-            Person agent = new Person(person.idx(), homeNode.getBasicName(), person.age(), (long) person.income(), gender);
-            population.add(agent);
-        }
-
-        return population;
-    }
-
-    private static class NodeSampler {
-        Map<ActivityNode, Double> opportunityWeights; 
-        List<ActivityNode> activityNodes;
-        double totalWeight;
-        final Random random;
-
-        NodeSampler(Map<ActivityNode, Double> nodeMap, Activity act, long seed) {
-            this.opportunityWeights = nodeMap;
-            this.activityNodes = new ArrayList<>();
-            this.random = new Random(seed);
-            for (var e : nodeMap.entrySet()) {
-                if (e.getKey().getActivity().equals(act)) {
-                    activityNodes.add(e.getKey());
-                }
-            }
-            activityNodes.sort(Comparator.comparingDouble(opportunityWeights::get));
-            totalWeight = activityNodes.stream().mapToDouble(opportunityWeights::get).sum();
-        }
-
-        ActivityNode sampleActivityNode() {
-            double u = 1.0 - random.nextDouble();
-            double cumulative = 0.0;
-            ActivityNode chosenNode = activityNodes.get(activityNodes.size() - 1);
-            for (ActivityNode node : activityNodes) {
-                cumulative += opportunityWeights.get(node) / totalWeight;
-                if (u <= cumulative) {
-                    chosenNode = node;
-                    break;
-                }
-            }
-            return chosenNode;
-        }
-    }    
-
     public static <N extends ActivityNode> void writeNetwork(Scenario<N> scenario, String filePath) {
         try (XMLWriter writer = new XMLWriter(
                 Files.newBufferedWriter(Path.of(filePath), StandardCharsets.UTF_8))) {
@@ -162,7 +104,6 @@ public class ScenarioUtils {
                 for (Activity act : n.getAllActivities()) {
                     writer.attribute("activity", act.toString());
                 }
-                // use node.toString() as id; replace with getId() if you have it
                 writer.attribute("id", n.toString());
                 writer.endElement("node");
             }
@@ -215,7 +156,6 @@ public class ScenarioUtils {
 
         if (homes.size() != population.size()) {
             throw new IllegalStateException("Mismatch in number of homes assigned. Have you run removePersonsWithoutValidHomes() or cleaned out the population data?");
-            // log.warn("Some persons could not be assigned a home node.");
         }
         return homes;
     }
@@ -379,7 +319,6 @@ public class ScenarioUtils {
         }        
     }
 
-
     public static void writeRunInfo(
             Path file,
             String name,
@@ -395,14 +334,10 @@ public class ScenarioUtils {
             Path zonePurposeAreasPath,
             Path sampersPopulationPath,
             Path outputDir,
-//            double[] travelerKernelParameters,
-//            int respondentCount,
             int agentCount
-//            int responseCount
     ) throws IOException {
         int timeBinSize = scenario.getNumberOfTimeBins();
         int numTimeBins = scenario.getNumberOfTimeBins();
-//        int horizon = timeBinSize * numTimeBins;
         double horizon = scenario.getPeriodLength_h();
         int nodeCount = scenario.getNodesView().size();
         int respondentCount = responses.size();
@@ -505,103 +440,4 @@ private static void appendKernelTree(StringBuilder sb, Kernel kernel, String pad
 
         return result;
     }
-    // public static List<Person> loadPopulation(java.nio.file.Path fp) {
-    //     return loadPopulation(fp.toString());
-    // }
-    
-    // public static List<Person> loadPopulation(String filePath) {
-    //     try {
-    //         List<String> lines = Files.readAllLines(Path.of(filePath), StandardCharsets.UTF_8);
-            
-    //         if (lines.isEmpty()) {
-    //             throw new RuntimeException("Empty population file: " + filePath);
-    //         }
-            
-    //         String[] header = lines.get(0).split("\t");
-    //         lines.remove(0);
-            
-    //         // Find column indices
-    //         int idxCol = findColumn(header, "idx");
-    //         int nameCol = findColumn(header, "name");
-    //         int ageCol = findColumn(header, "age");
-    //         int incCol = findColumn(header, "inc");
-    //         int genderCol = findColumn(header, "gender");
-    //         int homeZoneCol = findColumn(header, "homeZone");
-    //         int tttCol = findColumn(header, "ttt");
-    //         int nStopsCol = findColumn(header, "nStops");
-    //         int legsCol = findColumn(header, "legs");
-    //         int segmentCol = findColumn(header, "segment");
-            
-    //         List<Person> population = new ArrayList<>();
-            
-    //         for (String line : lines) {
-    //             String[] row = line.split("\t");
-                
-    //             int idx = Integer.parseInt(row[idxCol]);
-    //             String name = row[nameCol];
-    //             int age = Integer.parseInt(row[ageCol]);
-    //             long inc = Long.parseLong(row[incCol]);
-    //             String gender = row[genderCol];
-    //             String homeZone = row[homeZoneCol];
-                
-    //             Person person = new Person(idx, homeZone, age, inc, gender);
-    //             person.setName(name);
-                
-    //             // Load trip if present
-    //             if (tttCol != -1 && !row[tttCol].equals("null")) {
-    //                 double ttt = Double.parseDouble(row[tttCol]);
-    //                 int nStops = Integer.parseInt(row[nStopsCol]);
-    //                 List<Activity> activities = parseActivitiesFromLegs(row[legsCol]);
-                    
-    //                 disaggregate.rvu.Trip trip = new disaggregate.rvu.Trip(name, ttt, nStops, activities);
-    //                 person.assignPersonTrip(trip);
-    //             }
-                
-    //             // Load segment if present
-    //             if (segmentCol != -1 && !row[segmentCol].equals("null")) {
-    //                 person.setSegment(row[segmentCol]);
-    //             }
-                
-    //             population.add(person);
-    //         }
-            
-    //         return population;
-            
-    //     } catch (IOException e) {
-    //         throw new RuntimeException("Failed to read population file: " + filePath, e);
-    //     }
-    // }
-    
-    // private static int findColumn(String[] header, String name) {
-    //     for (int i = 0; i < header.length; i++) {
-    //         if (header[i].equals(name)) {
-    //             return i;
-    //         }
-    //     }
-    //     return -1;
-    // }
-    
-    // /**
-    //  * Parse activities from legs format: [{'from': 'A', 'to': 'B', 'start': 0.0, 'end': 1.5, 'duration': 1.5, 'destinationActivity': 'WORK'}]
-    //  * Extracts just the destination activities for each leg.
-    //  */
-    // private static List<Activity> parseActivitiesFromLegs(String legsStr) {
-    //     List<Activity> activities = new ArrayList<>();
-        
-    //     // Remove outer brackets
-    //     legsStr = legsStr.trim();
-    //     if (legsStr.startsWith("[")) legsStr = legsStr.substring(1);
-    //     if (legsStr.endsWith("]")) legsStr = legsStr.substring(0, legsStr.length() - 1);
-        
-    //     // Pattern to match destinationActivity values
-    //     java.util.regex.Pattern activityPattern = java.util.regex.Pattern.compile("'destinationActivity':\\s*'([^']*)'");
-    //     java.util.regex.Matcher matcher = activityPattern.matcher(legsStr);
-        
-    //     while (matcher.find()) {
-    //         String activityStr = matcher.group(1);
-    //         activities.add(Activity.valueOf(activityStr));
-    //     }
-        
-    //     return activities;
-    // }
 }

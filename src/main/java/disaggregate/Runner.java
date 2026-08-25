@@ -318,9 +318,7 @@ public class Runner implements Callable<Integer> {
             runner.addPopulationWeight(stayingWeight, opts.stay_mixing_weight);
             logger.info("Geometric mean staying weight added");
         
-            var movementWeight = new MovementWeight(odMatrix, 1e-5)
-                .withExponent(opts.movement_weight_exponent)
-                .withGeometricMean();
+            var movementWeight = new MovementWeight(odMatrix, 1e-5);
             if (opts.raw_counts_flag) movementWeight.withRawCounts();
             movementWeight.configureRequiredSummary(initState);
             runner.addPopulationWeight(movementWeight, opts.move_mixing_weight);
