@@ -1,4 +1,4 @@
-package disaggregate.logging;
+package common;
 
 import java.io.*;
 

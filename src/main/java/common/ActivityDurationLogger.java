@@ -1,4 +1,4 @@
-package disaggregate.stateprocessors;
+package common;
 
 import disaggregate.model.Activity;
 import disaggregate.model.ActivityNode;

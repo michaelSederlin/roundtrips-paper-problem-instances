@@ -1,4 +1,4 @@
-package disaggregate.stateprocessors;
+package common;
 
 import java.nio.file.Path;
 import java.util.List;

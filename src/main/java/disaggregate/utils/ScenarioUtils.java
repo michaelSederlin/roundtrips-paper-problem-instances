@@ -3,6 +3,7 @@ package disaggregate.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import common.XMLStateLogger;
 import disaggregate.model.amalTemp.StandardSyntheticPopulation;
 import disaggregate.model.amalTemp.SyntheticPopulation;
 import disaggregate.kernels.CompositeKernel;
@@ -17,7 +18,6 @@ import disaggregate.rvu.MDDRRepository;
 import disaggregate.rvu.Trip;
 import disaggregate.rvu.UPBD;
 import disaggregate.rvu.UPBDRepository;
-import disaggregate.logging.XMLStateLogger;
 import se.vti.roundtrips.common.Node;
 import se.vti.roundtrips.common.Scenario;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
@@ -292,7 +292,7 @@ public class ScenarioUtils {
     }    
 
     public static void writePopulation(java.util.List<Person> pop, java.nio.file.Path fp) {
-        new disaggregate.stateprocessors.PopulationWriter(pop, fp.toString()).write();
+        new common.PopulationWriter(pop, fp.toString()).write();
     }
 
     public static List<Person> loadPopulationFromFiles(Path datadir, String upbdFileName, String mddrFileName, Random random) throws Exception {

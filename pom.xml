@@ -12,8 +12,6 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<!-- <maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target> -->
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
@@ -37,27 +35,10 @@
 			<id>java-projects</id>
 			<url>https://maven.pkg.github.com/vtisweden/java-projects</url>
 		</repository>
-		<!-- <repository>
-			<id>java-utils</id>
-			<url>https://maven.pkg.github.com/michaelSederlin/java-utils</url>
-			<releases>
-			  <enabled>false</enabled>
-			</releases>
-			<snapshots>
-			  <enabled>true</enabled>
-			  <updatePolicy>always</updatePolicy>
-			</snapshots>
-		</repository> -->
-		<!-- <repository>
-            <id>matsim-projects-playgrounds</id>
-            <url>https://maven.pkg.github.com/vtisweden/matsim-projects-playgrounds</url>
-        </repository>       -->
-		<!-- for dependencies of osm-network-reader -->
 		<repository>
 			<id>topobyte</id>
 			<url>https://mvn.topobyte.de</url>
 		</repository>
-		<!-- for dependencies of osm-network-reader -->
 		<repository>
 			<id>slimjars</id>
 			<url>https://mvn.slimjars.com</url>
@@ -71,14 +52,6 @@
 	</repositories>
 
 	<dependencies>
-
-		<!-- dependencies on roundtrips, utils already there through ddsutils -->
-
-		<!-- <dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.7.3</version>
-		</dependency> -->
 		<dependency>
 			<groupId>se.vti.java-projects</groupId>
 			<artifactId>roundtrips</artifactId>
@@ -111,17 +84,6 @@
 			<artifactId>commons-csv</artifactId>
 			<version>1.14.1</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>se.java-utils</groupId>
-			<artifactId>java-utils</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
-		</dependency>		 -->
-		<!-- <dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>5.5.0</version>
-			<scope>test</scope>
-		</dependency> -->
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>

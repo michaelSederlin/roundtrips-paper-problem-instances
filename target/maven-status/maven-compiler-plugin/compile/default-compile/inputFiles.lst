@@ -1,50 +1,50 @@
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\StayingSummary.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\ActivityNode.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\rvu\MDDR.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\KernelHelpers.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\stateprocessors\VariablesLogger.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\logging\XMLFileLogger.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\Options.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\rvu\Trip.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\Runner.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\logging\ProgressLogger.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\ScalarGaussianKernel.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\CompositeKernel.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\StrictlyEnforceCorrectHomeLocationWeight.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\utils\summaries\UniqueActivityNodeSummary.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\rvu\UPBDRepository.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\NumberOfStopsKernel.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\amalTemp\SyntheticPopulation.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\stateprocessors\ActivityDurationLogger.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\ExplainRoundTripsByResponses.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\Person.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\GeometricMeanStayingWeight.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\Role.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\utils\XMLWriter.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\GaussianScheduleOverlapKernel.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\utils\ScenarioUtils.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\LWSummary.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\TravelerKernel.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\stateprocessors\PopulationWriter.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\GaussianKernel.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\logging\XMLStateLogger.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\rvu\Repository.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\Kernel.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\utils\MatrixDataReader.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\ResponseWeight.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\stateprocessors\KernelMatrixLogger.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\Activity.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\SurveyResponse.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\ScheduleKernelBase.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\rvu\UPBD.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\MovementWeight.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\utils\LoadOpportunityWeights.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\amalTemp\PopulationGroup.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\logging\PerThreadConsole.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\StrictlyEnforceUniqueHomeLocation.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\KernelSummary.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\amalTemp\StandardSyntheticPopulation.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\model\weights\MovementSummary.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\rvu\RvuDataset.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\kernels\ActivityIntervals.java
-C:\Users\MichaelS\Work Folders\Documents\work\RESEARCH\RENATE\code\roundtrips-paper-problem-instances\src\main\java\disaggregate\rvu\MDDRRepository.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/Runner.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/kernels/ActivityIntervals.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/kernels/CompositeKernel.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/rvu/MDDRRepository.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/Person.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/kernels/GaussianKernel.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/utils/summaries/UniqueActivityNodeSummary.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/rvu/Repository.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/kernels/ScheduleKernelBase.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/weights/MovementWeight.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/rvu/MDDR.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/weights/ResponseWeight.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/rvu/UPBDRepository.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/kernels/TravelerKernel.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/utils/XMLWriter.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/common/ActivityDurationLogger.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/utils/MatrixDataReader.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/common/XMLFileLogger.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/weights/StrictlyEnforceCorrectHomeLocationWeight.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/utils/ScenarioUtils.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/common/ProgressLogger.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/amalTemp/PopulationGroup.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/common/VariablesLogger.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/kernels/KernelHelpers.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/SurveyResponse.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/weights/GeometricMeanStayingWeight.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/utils/LoadOpportunityWeights.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/common/KernelMatrixLogger.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/ActivityNode.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/rvu/Trip.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/Options.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/rvu/RvuDataset.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/common/PerThreadConsole.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/kernels/NumberOfStopsKernel.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/common/XMLStateLogger.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/amalTemp/SyntheticPopulation.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/weights/MovementSummary.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/kernels/Role.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/kernels/GaussianScheduleOverlapKernel.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/kernels/KernelSummary.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/weights/StrictlyEnforceUniqueHomeLocation.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/kernels/ScalarGaussianKernel.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/kernels/Kernel.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/amalTemp/StandardSyntheticPopulation.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/rvu/UPBD.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/weights/StayingSummary.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/weights/ExplainRoundTripsByResponses.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/common/PopulationWriter.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/weights/LWSummary.java
+/Users/michaelsederlin/Documents/work/roundtrips-paper-problem-instances/src/main/java/disaggregate/model/Activity.java

@@ -8,32 +8,18 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.*;
+import java.util.concurrent.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
 
+import common.*;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model.CommandSpec;
-
-import disaggregate.Options;
-import disaggregate.logging.ProgressLogger;
-import disaggregate.logging.XMLStateLogger;
-import disaggregate.stateprocessors.ActivityDurationLogger;
-import disaggregate.stateprocessors.VariablesLogger;
 import se.vti.utils.misc.metropolishastings.MHWeight;
 import se.vti.utils.misc.metropolishastings.MHWeightContainer;
 import se.vti.utils.misc.metropolishastings.MHWeightsToFileLogger;
@@ -41,26 +27,13 @@ import se.vti.utils.misc.metropolishastings.terminationcriteria.BlockAverageTerm
 import se.vti.utils.misc.metropolishastings.terminationcriteria.CombinedAnyTerminationCriterion;
 import se.vti.utils.misc.metropolishastings.terminationcriteria.FixedNumberOfIterationsTerminationCriterion;
 import se.vti.utils.misc.metropolishastings.terminationcriteria.TerminationCriterion;
-import disaggregate.kernels.CompositeKernel;
-import disaggregate.kernels.Kernel;
-import disaggregate.kernels.Role;
-import disaggregate.kernels.GaussianScheduleOverlapKernel;
-import disaggregate.kernels.NumberOfStopsKernel;
-import disaggregate.kernels.TravelerKernel;
-import disaggregate.model.Activity;
-import disaggregate.model.Person;
-import disaggregate.model.SurveyResponse;
-import disaggregate.model.ActivityNode;
-import disaggregate.model.weights.ExplainRoundTripsByResponses;
-import disaggregate.model.weights.MovementWeight;
-import disaggregate.model.weights.StrictlyEnforceCorrectHomeLocationWeight;
-import disaggregate.model.weights.StrictlyEnforceUniqueHomeLocation;
-import disaggregate.model.weights.GeometricMeanStayingWeight;
+import disaggregate.kernels.*;
+import disaggregate.model.*;
+import disaggregate.model.weights.*;
 import disaggregate.rvu.MDDR;
 import disaggregate.rvu.MDDRRepository;
 import disaggregate.rvu.UPBD;
 import disaggregate.rvu.UPBDRepository;
-import disaggregate.stateprocessors.PopulationWriter;
 import disaggregate.utils.LoadOpportunityWeights;
 import disaggregate.utils.MatrixDataReader;
 import disaggregate.utils.ScenarioUtils;
@@ -71,9 +44,7 @@ import se.vti.roundtrips.multiple.MultiRoundTripJsonIO;
 import se.vti.roundtrips.samplingweights.StrictlyPeriodicSchedule;
 import se.vti.roundtrips.samplingweights.StrictlyRequireMinNumberOfStops;
 import se.vti.roundtrips.single.RoundTrip;
-import disaggregate.logging.PerThreadConsole;
 import se.vti.utils.misc.Tuple;
-
 
 @Command(name = "Amal", mixinStandardHelpOptions = true)
 public class Runner implements Callable<Integer> {
@@ -419,7 +390,7 @@ public class Runner implements Callable<Integer> {
             runner.addStateProcessor(new ActivityDurationLogger<>(effectiveMsgInterval, partOutputDir.resolve("activityDurations.tsv").toString()));
             runner.addStateProcessor(new ProgressLogger<>(effectiveMsgInterval, partName));
 
-            runner.setTerminationCriterion(combineTerminationCriteria(terminationCriteria));
+            // runner.setTerminationCriterion(combineTerminationCriteria(terminationCriteria));
 
             if (!opts.verbose) runner.setMessageInterval(0);
 
