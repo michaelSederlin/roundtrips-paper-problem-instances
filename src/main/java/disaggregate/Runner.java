@@ -197,8 +197,6 @@ public class Runner implements Callable<Integer> {
         logger.info("Merging partitions into {}", runOutputPath.resolve("partitions_merged"));
         Files.createDirectories(runOutputPath.resolve("partitions_merged"));
 
-
-
         Path firstPartitionRespondents;
         try (var partitionDirs = Files.list(runOutputPath)) {
             firstPartitionRespondents = partitionDirs
@@ -217,12 +215,6 @@ public class Runner implements Callable<Integer> {
             logger.warn("No partition respondents.tsv found under {}; skipping respondents copy", runOutputPath);
         }
     }
-
-    void plotAggregateResults(Path runOutputPath, Path scenarioPath) throws IOException, InterruptedException {
-        // Plotting is handled outside this repository; the run writes its raw
-        // outputs (states.xml, population.tsv, convergence stats) to runOutputPath.
-    }
-
     /**
      * Snapshot of the runner's sampling weights, for MHWeightsToFileLogger.
      * (was CaseRunner.getWeightsContainer)
