@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import disaggregate.model.ActivityNode;
-import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.single.RoundTrip;
 import se.vti.utils.misc.metropolishastings.MHWeight;
@@ -15,7 +14,6 @@ public class StrictlyEnforceCorrectHomeLocationWeight implements MHWeight<RoundT
     private final static Logger logger = LogManager.getLogger(StrictlyEnforceCorrectHomeLocationWeight.class);
     private final List<ActivityNode> enforcedHomeNodes;
     private final double forbiddenPenalty = Double.NEGATIVE_INFINITY;
-    // private final boolean forceHome = true;
 
     public StrictlyEnforceCorrectHomeLocationWeight(List<ActivityNode> enforcedHomeNodes) {
         this.enforcedHomeNodes = enforcedHomeNodes;
@@ -24,29 +22,17 @@ public class StrictlyEnforceCorrectHomeLocationWeight implements MHWeight<RoundT
     
     @Override
     public double logWeight(RoundTrip<ActivityNode> rt) {
-        // for (int ii = 0; ii < mrt.size(); ii++) {
-        //     RoundTrip<ActivityNode> rt = mrt.getRoundTrip(ii);
-
-            if (rt.size() == 0) {
-                // if (forceHome) {
+            if (rt.size() == 0) { // not actually needed when coupled with min size constraint
                     return forbiddenPenalty;
-                // } else {
-                    // continue;
-                // }
             }
 
             ActivityNode firstNode = rt.getNodesView().getFirst();
             ActivityNode enforcedHomeNode = enforcedHomeNodes.get(rt.getIndex());
 
             if (!firstNode.equals(enforcedHomeNode)) {
-                // logger.warn("A roundtrip {} does not start at a valid home location. RT: {}", rt.getIndex(), rt.toString());
                 return forbiddenPenalty;
-                // throw new IllegalStateException(
-                //       "Roundtrip " + rt.getIndex() + " violates home location constraint. RT: " + rt.toString()
-                // );
             }
-        // }
-        // All home node constraints are satisfied!
+        // All home nodes valid 
         return 0.0;
     }
 

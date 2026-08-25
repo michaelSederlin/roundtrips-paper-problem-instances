@@ -49,7 +49,6 @@ public class StayingWeight implements MHWeight<MultiRoundTrip<ActivityNode>>{
 
     public void configureRequiredSummary(MultiRoundTrip<ActivityNode> mrt) {
         var staySummary = new StayingSummary(logSigma, false, this.epsilon);
-        staySummary.enableGeometric(exponent);
         mrt.addSummary(staySummary);
         mrt.recomputeSummaries();
     }
