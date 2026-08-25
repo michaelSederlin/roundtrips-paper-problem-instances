@@ -187,12 +187,8 @@ public class Runner implements Callable<Integer> {
         pool.shutdown();
         for (var f : futures) f.get();
 
-        // if (partitions.size() > 1) {
         mergePartitions(runOutputPath);
         plotAggregateResults(runOutputPath, scenarioPath);
-        // } else {
-        //     logger.info("Single partition run -- skipping partition merge ({} already holds the run's output)", runOutputPath);
-        // }
 
         return 0;
     }
