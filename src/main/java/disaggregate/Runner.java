@@ -311,11 +311,11 @@ public class Runner implements Callable<Integer> {
             logger.info("\tAdded StrictlyEnforeCorrectHomeLocationWeight as individualWeight");
             runner.addIndividualWeight(new StrictlyRequireMinNumberOfStops<>(1));
 
-            var geometricMeanStayingWeight = new GeometricMeanStayingWeight(opportunityWeights, 1e-5)
+            var stayingWeight = new StayingWeight(opportunityWeights, 1e-5)
                 .withExponent(opts.staying_weight_exponent);
-            geometricMeanStayingWeight.configureRequiredSummary(initState);
+            stayingWeight.configureRequiredSummary(initState);
 
-            runner.addPopulationWeight(geometricMeanStayingWeight, opts.stay_mixing_weight);
+            runner.addPopulationWeight(stayingWeight, opts.stay_mixing_weight);
             logger.info("Geometric mean staying weight added");
         
             var movementWeight = new MovementWeight(odMatrix, 1e-5)
