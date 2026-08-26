@@ -2,3 +2,4 @@
 /.vscode/
 dependency-reduced-pom.xml
 run_amal_ws.sh
+output/

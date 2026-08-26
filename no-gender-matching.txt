@@ -10,7 +10,6 @@
 ### ===========================
 ### === === RUN CONFIG ===  ===
 ### ===========================
-#--maxProcesses 2
 
 --seed 1084
 --time-bin-size 1
@@ -31,7 +30,7 @@
 --kernel-mixing-weight 1.0
 --lambda-age 3.0
 --lambda-income 60.0
---eta -1 # 0.3
+--eta -1
 --traveler-kernel-threshold 0.00005
 --traveler-kernel-mixing-weight 1.0
 
