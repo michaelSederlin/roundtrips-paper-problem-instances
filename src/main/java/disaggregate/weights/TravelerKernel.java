@@ -34,17 +34,18 @@ public class TravelerKernel implements Kernel {
     public double compute(Person syntheticTraveler) {
         double logSimilarity = 0.0;
 
-        if (parameters[0] > 0 && this.observedIncome != null && syntheticTraveler.getIncome() != null) {
+        if (parameters[0] >  0 && this.observedAge != null && syntheticTraveler.getAge() != null) {
+            double ageDiff = Math.abs(this.observedAge - syntheticTraveler.getAge());
+            double ageWeight = -ageDiff * ageDiff / (2 * ageBW2);
+            logSimilarity += ageWeight;
+        }
+
+        if (parameters[1] > 0 && this.observedIncome != null && syntheticTraveler.getIncome() != null) {
             double incDiff = Math.abs(this.observedIncome - syntheticTraveler.getIncome());
             double incomeWeight = -incDiff * incDiff / (2 * incomeBW2);
             logSimilarity += incomeWeight;
         }
 
-        if (parameters[1] >  0 && this.observedAge != null && syntheticTraveler.getAge() != null) {
-            double ageDiff = Math.abs(this.observedAge - syntheticTraveler.getAge());
-            double ageWeight = -ageDiff * ageDiff / (2 * ageBW2);
-            logSimilarity += ageWeight;
-        }
 
         if (parameters[2] > 0 && this.observedGender != null && syntheticTraveler.getGender() != null) {
             int genderDiff = (this.observedGender.equals(syntheticTraveler.getGender())) ? 0 : 1;
