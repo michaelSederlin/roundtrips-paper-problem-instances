@@ -1,3 +1,5 @@
 /target/
 /.vscode/
 dependency-reduced-pom.xml
+docker-compose.yml
+run_amal_ws.sh
