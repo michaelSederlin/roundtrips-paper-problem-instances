@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
 
 import common.*;
+import common.SplitPopulationJoiner;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
@@ -45,6 +46,7 @@ public class Runner implements Callable<Integer> {
     static final Logger logger = LogManager.getLogger(Runner.class);
     static final DateTimeFormatter RUN_TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
     static final ZoneId RUN_TIMESTAMP_ZONE = ZoneId.of("Europe/Stockholm");
+    static final int MINIMUM_WINDOW = 10;
 
     @CommandLine.Spec CommandSpec spec; 
     @Mixin Options opts;
@@ -171,6 +173,10 @@ public class Runner implements Callable<Integer> {
     void mergePartitions(Path runOutputPath) throws IOException, InterruptedException {
         logger.info("Merging partitions into {}", runOutputPath.resolve("partitions_merged"));
         Files.createDirectories(runOutputPath.resolve("partitions_merged"));
+
+
+        new SplitPopulationJoiner(runOutputPath, "population.tsv", "population_merged.tsv").join();
+        new SplitStatesJoiner(runOutputPath, "population.tsv", "convergenceStats.tsv", MINIMUM_WINDOW).join();
 
         Path firstPartitionRespondents;
         try (var partitionDirs = Files.list(runOutputPath)) {
