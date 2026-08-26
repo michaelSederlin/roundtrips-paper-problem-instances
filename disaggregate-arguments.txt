@@ -3,9 +3,9 @@
 # =====================================================================================
 
 --name disaggregate-calibration
---scenario-dir "data/scenarios/amal/results_paper/2026 08 07/full"
---output-dir output/amal/
---warm-start-file "data/scenarios/amal/results_paper/2026 08 07/full/finalState.json" # Starting from prior
+--scenario-dir data/survey
+--output-dir output/
+--warm-start-file data/survey/finalState.json 
 
 ### ===========================
 ### === === RUN CONFIG ===  ===
@@ -19,7 +19,7 @@
 --stationarity-tolerance 0.20
 --min-number-of-stable-samples 30
 
---n-responses 100
+--n-respondents 100
 
 --enforce-correct-home-location
 

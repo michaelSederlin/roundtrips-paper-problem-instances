@@ -10,5 +10,5 @@ COPY data/survey/ data/survey/
 
 ENV RUN_NAME=docker
 
-ENTRYPOINT ["java", "-cp", "app.jar", "disaggregate.Runner"]
-CMD ["--scenarioDir", "data/survey", "--name", "amal", "--outputDir", "output/"]
+ENTRYPOINT ["java", "-cp", "app.jar"]
+CMD ["disaggregate.Runner"]

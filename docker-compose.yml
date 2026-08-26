@@ -5,6 +5,6 @@ services:
     environment:
       - RUN_NAME=disaggregate-run
     volumes:
-      - ./output/:/app/renate/output/
-      - ./${ARGS:-disaggregate-arguments.txt}:/app/renate/disaggregate-arguments.txt:ro
+      - ./output:/app/output/
+      - ./${ARGS:-disaggregate-arguments.txt}:/app/disaggregate-arguments.txt:ro
     command: ["disaggregate.Runner", "@disaggregate-arguments.txt"]
