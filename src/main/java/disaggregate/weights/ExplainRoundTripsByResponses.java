@@ -142,7 +142,7 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<ActivityNode
     @Override 
     public String toString() {
         String str = "ExplainRoundTripsByResponses: " + this.responses.size() + " responses, " + this.syntheticPopulation.size() + " persons";
-        str += "\n Kernels: " + this.responses.getFirst().getKernel().toString();
+        str += "\n Kernels: " + this.responses.get(0).getKernel().toString();
         return str;
     }
 

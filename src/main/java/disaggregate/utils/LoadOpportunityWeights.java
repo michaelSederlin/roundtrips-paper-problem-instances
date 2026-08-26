@@ -93,8 +93,8 @@ public class LoadOpportunityWeights {
             throw new RuntimeException("Failed to read CSV file: " + fp, e);
         }
 
-        String[] header = rows.getFirst();
-        rows.removeFirst();
+        String[] header = rows.get(0);
+        rows.remove(0);
 
         int zoneIdx = -1;
         int purposeIdx = -1;
