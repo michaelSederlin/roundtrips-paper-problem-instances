@@ -48,8 +48,8 @@ public class TravelerKernel implements Kernel {
 
         if (this.observedGender != null && syntheticTraveler.getGender() != null) {
             int genderDiff = (this.observedGender.equals(syntheticTraveler.getGender())) ? 0 : 1;
-            double genderWeight = (genderDiff == 0) ? 1.0 : genderMismatchWeight;
-            logSimilarity += Math.log(genderWeight);
+            double genderWeight = - genderDiff * genderDiff / (2 * genderMismatchWeight);
+            logSimilarity += genderWeight;
         }
 
         double result = Math.exp(logSimilarity);

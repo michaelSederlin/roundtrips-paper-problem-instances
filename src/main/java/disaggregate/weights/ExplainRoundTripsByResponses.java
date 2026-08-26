@@ -25,18 +25,12 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<ActivityNode
     private double[][] lastLocationKernel;
 
     private final boolean[][] excludedPairs;
-    private double threshold = 0.0;
-
-    public void setThreshold(double threshold) {
-        this.threshold = threshold;
-    }
 
     public ExplainRoundTripsByResponses(List<SurveyResponse<ActivityNode>> responses, List<Person> syntheticPopulation) {
         this(responses, syntheticPopulation, 0.0);
     }
 
-    public ExplainRoundTripsByResponses(List<SurveyResponse<ActivityNode>> responses, List<Person> syntheticPopulation, double threshold) {
-        this.threshold = threshold;
+    public ExplainRoundTripsByResponses(List<SurveyResponse<ActivityNode>> responses, List<Person> syntheticPopulation, double personDifferenceThreshold) {
         this.responses = responses;
         this.syntheticPopulation = syntheticPopulation;
         this.lastLocationKernel = new double[syntheticPopulation.size()][responses.size()];
@@ -58,7 +52,8 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<ActivityNode
                 ? tk.compute(syntheticPopulation.get(ii))
                 : 1.0;
                 
-                if (personWeights[jj] < threshold) {
+                // Computation speed can be helped if pairs with negligible similarity are excluded from subsequent computations
+                if (personWeights[jj] < personDifferenceThreshold) {
                     this.excludedPairs[ii][jj] = true;
                 } 
             }
