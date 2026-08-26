@@ -242,7 +242,7 @@ public class Trip {
 
             // We can assume that the person is at home before their first departure.
             if (homeBeforeFirst) {
-                double firstStart = legs.getFirst().start;
+                double firstStart = legs.get(0).start;
                 if (!Double.isNaN(firstStart) && firstStart > 0) {
                     totals.merge(Activity.HOME, firstStart, Double::sum);
                 }
@@ -259,7 +259,7 @@ public class Trip {
 
             // The person should return home at the end.
             if (homeAfterLast) {
-                var last = legs.getLast();
+                var last = legs.get(legs.size() - 1);
                 if (!Double.isNaN(last.end)) {
                     double endAdj = last.end % DayMin;
                     double tail = (endAdj <= DayMin) ? (DayMin - endAdj) : 0.0;

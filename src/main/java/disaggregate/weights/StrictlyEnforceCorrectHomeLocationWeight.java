@@ -26,7 +26,7 @@ public class StrictlyEnforceCorrectHomeLocationWeight implements MHWeight<RoundT
                     return forbiddenPenalty;
             }
 
-            ActivityNode firstNode = rt.getNodesView().getFirst();
+            ActivityNode firstNode = rt.getNodesView().get(0);
             ActivityNode enforcedHomeNode = enforcedHomeNodes.get(rt.getIndex());
 
             if (!firstNode.equals(enforcedHomeNode)) {
