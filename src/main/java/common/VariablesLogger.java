@@ -1,11 +1,9 @@
 package common;
 
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 
 import disaggregate.model.Activity;
-import disaggregate.model.SurveyResponse;
 import disaggregate.model.ActivityNode;
 import se.vti.utils.misc.metropolishastings.MHToFileLogger;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
