@@ -70,8 +70,8 @@ public class Runner implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        Path scenarioPath = Path.of(opts.scenarioDir);
-        Path outputPath = Path.of(opts.outputDir).resolve(opts.name);
+        Path scenarioPath = Path.of(opts.scenario_dir);
+        Path outputPath = Path.of(opts.output_dir).resolve(opts.name);
         Path runOutputPath = resolveRunOutputPath(outputPath);
         int effectiveMsgInterval = (opts.msg_interval < 0) ? (opts.max_number_of_iterations != null ? opts.max_number_of_iterations / 100 : 1000) : opts.msg_interval;
 

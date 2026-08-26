@@ -9,11 +9,9 @@ import disaggregate.model.Activity;
 
 public class Options {
     @Option(names = "--name", defaultValue = "null") public String name;
-
-    @Option(names = "--scenarioDir") public String scenarioDir;
-    @Option(names = "--outputDir", defaultValue = "output/") public String outputDir;
-
-    @Option(names = "--convergenceStatsFilename", defaultValue = "convergenceStats.tsv") public String convergenceStatsFilename;
+    @Option(names = "--scenario-dir") public String scenario_dir;
+    @Option(names = "--output-dir", defaultValue = "output/") public String output_dir;
+    @Option(names = "--convergence-stats-filename", defaultValue = "convergenceStats.tsv") public String convergence_stats_filename;
     @Option(names = "--enforce-unique-home-location") public boolean enforce_unique_home_location;
     @Option(names = "--n-respondents") public Integer n_respondents;
 
@@ -29,7 +27,7 @@ public class Options {
             description = "Minimum number of msgInterval-spaced samples to draw after stationarity is detected (0 = terminate immediately on stationarity)")
     public int min_number_of_stable_samples;
 
-    // Prior 
+    // Prior
     @Option(names = "--enforce-correct-home-location") public boolean enforce_correct_home_location;
     @Option(names = "--strictly-periodic-schedule") public boolean strictly_periodic_schedule;
 
@@ -62,10 +60,7 @@ public class Options {
     // --- AMAL Optional weights ---
     @Option(names = "--with-staying-weight") public boolean with_staying_weight;
     @Option(names = "--stay-mixing-weight", defaultValue="1.0") public double stay_mixing_weight;
-    
-    @Option(names = "--normalizeWeightsAcrossNodes") public boolean normalize_weights_across_nodes;
-    // @Option(names = "--normalize-by-mean-sigma") public boolean normalize_by_mean_sigma;
-
+    @Option(names = "--normalize-weights-across-nodes") public boolean normalize_weights_across_nodes;
     @Option(names = "--with-movement-weight") public boolean with_movement_weight;
     @Option(names = "--move-mixing-weight", defaultValue = "1.0") public double move_mixing_weight;
     @Option(names = "--with-raw-movement-counts") public boolean raw_counts_flag;
