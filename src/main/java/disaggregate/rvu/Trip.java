@@ -10,9 +10,7 @@ public class Trip {
         private String id;
         private List<Leg> legs;
         private Double cachedTotalTravelTime;
-        private Double cachedActivityTime;
         private Integer cachedStopCount;
-        // private Integer cachedStopCount;
 
         public class Leg implements Comparable<Leg> {
             public final String from; 
@@ -313,7 +311,6 @@ public class Trip {
         double ttt_m = ttt_h * 60.0;
         this.cachedTotalTravelTime = ttt_m;
         this.cachedStopCount = nStops;
-        this.cachedActivityTime = ttt_m; // or 0.0 if you prefer "no activity time"
 
         // create dummy legs so getActivities()/getLegs() still work
         for (int i = 0; i < nStops; i++) {
