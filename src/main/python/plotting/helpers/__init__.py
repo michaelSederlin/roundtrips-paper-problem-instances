@@ -1,1 +1,1 @@
-from ddsutils.plotting.argument_parser import ArgumentParser
+from ..argument_parser import ArgumentParser

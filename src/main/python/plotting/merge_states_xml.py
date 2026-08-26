@@ -5,6 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
+from .helpers import ArgumentParser
 from .merge_population_csv import _delimiter
 from .helpers.burn_in import read_burn_in_iteration
 
@@ -41,7 +42,7 @@ def _partition_post_burn_in_count(xml_path, convergence_stats_fp):
     return int((iterations >= burn_in_iteration).sum())
 
 
-def _effective_window(partition_dirs, args):
+def _effective_window(partition_dirs, convergence_stats_filename, window):
     """Number of most-recent logged iterations to merge per partition. Uses the
     minimum post-burn-in iteration count across partitions (so every partition
     contributes equally to each merged relative position) when every partition's
@@ -53,23 +54,26 @@ def _effective_window(partition_dirs, args):
             counts.append(None)
             continue
         counts.append(_partition_post_burn_in_count(
-            xml_path, partition_dir / args.convergence_stats_filename))
+            xml_path, partition_dir / convergence_stats_filename))
 
     if any(c is None for c in counts):
         print("WARNING: burn-in unusable for at least one partition; "
-              f"falling back to fixed --window={args.window}.")
-        return args.window
+              f"falling back to fixed --window={window}.")
+        return window
 
     return max(1, min(counts))
 
 
-def main(args):
-    base_dir = Path(args.results_dir)
+def main(results_dir: Path,
+         population_filename: str = "population.tsv",
+         convergence_stats_filename: str = "convergenceStats.tsv",
+         window: int = 1) -> Path:
+    base_dir = Path(results_dir)
     joined_root = ET.Element("MultiRoundTrips")
 
     partition_dirs = [p for p in sorted(base_dir.iterdir()) if p.is_dir() and p.name.isdigit()]
 
-    window_size = _effective_window(partition_dirs, args)
+    window_size = _effective_window(partition_dirs, convergence_stats_filename, window)
     window_groups = {i: [] for i in range(1, window_size + 1)}
 
     latest_sampling_weights = None
@@ -80,11 +84,11 @@ def main(args):
             print(f"States file for partition {partition_dir} does not exist")
             continue
 
-        population_path = partition_dir / args.population_filename
+        population_path = partition_dir / population_filename
         if not population_path.exists():
             print(f"Population file for partition {partition_dir} does not exist; skipping")
             continue
-        local_to_global = _load_local_to_global_index(population_path, args.population_filename)
+        local_to_global = _load_local_to_global_index(population_path, population_filename)
 
         tree = _load_states_tree(xml_path)
         root = tree.getroot()
@@ -131,10 +135,15 @@ def main(args):
     ET.indent(joined_tree, space="    ", level=0)
     joined_tree.write(joined_xml_path, encoding="utf-8", xml_declaration=True)
 
+    return joined_xml_path
+
 
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--population-filename", default="population.tsv")
     args = parser.parse()
 
-    main(args)
+    main(results_dir=args.results_dir,
+         population_filename=args.population_filename,
+         convergence_stats_filename=args.convergence_stats_filename,
+         window=args.window)

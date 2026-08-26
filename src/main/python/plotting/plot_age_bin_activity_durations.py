@@ -16,8 +16,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from renate import get_environment_root
-from ddsutils.plotting.helpers.od_transition_helpers import save_show
+from .helpers import ArgumentParser
+from .helpers.od_transition_helpers import save_show
 
 ACTIVITIES = ["HOME", "WORK", "EDUCATION", "OTHER"]
 NON_HOME_ACTIVITIES = [a for a in ACTIVITIES if a != "HOME"]
@@ -81,7 +81,8 @@ def parse_states(root, last=False):
 
     return pd.DataFrame(rows)
 
-def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, fname, args):
+def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
+              save: bool = True, show: bool = False, output_suffix: str = ".pdf"):
     """Verbatim styling from plot_population_reproduction.plot_bars."""
     x = np.arange(len(index))
     width = 0.26
@@ -101,7 +102,7 @@ def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, fname, args):
     ax.grid(axis="y", linestyle="--", alpha=0.5)
     sort_legend_entries(ax)
     fig.tight_layout()
-    save_show(fig, args.save_dir / fname, args)
+    save_show(fig, path, save=save, show=show, output_suffix=output_suffix)
 
 def _by_age_bin(df, cols: str | list[str], age_by_name, bins):
     """Mean of `col` per age bin, after averaging over iterations per agent."""
@@ -129,11 +130,21 @@ def _by_gender(df, cols, gender_by_name):
     return per_agent.groupby('gender', observed=False)[cols].mean().sum(axis = 1)
 
 
-def main(args):
-    if args.measurement_states_xml is None:
-        raise ValueError("--measurement-states-xml is required")
+def main(results_dir: Path,
+         measurement_states_xml: Path,
+         save_dir: Path = None,
+         validation_states_xml: Path = None,
+         save: bool = True,
+         show: bool = False,
+         output_suffix: str = ".pdf"):
+    if measurement_states_xml is None:
+        raise ValueError("measurement_states_xml is required")
 
-    merged = Path(args.results_dir) / 'partitions_merged'
+    results_dir = Path(results_dir)
+    save_dir = results_dir if save_dir is None else Path(save_dir)
+    save_kwds = dict(save=save, show=show, output_suffix=output_suffix)
+
+    merged = results_dir / 'partitions_merged'
     pop = pd.read_csv(merged / 'population_merged.tsv', sep='\t')
     pop['acts'] = pop['legs'].apply(lambda l: {d['destinationActivity'] for d in literal_eval(l)})
     idx2name = pop.set_index('idx')['name'].to_dict()
@@ -145,12 +156,12 @@ def main(args):
     est = parse_states(_parse_states_xml(merged / 'final_states_merged.xml').getroot())
     est['name'] = est['idx'].astype(int).map(idx2name)
 
-    meas = parse_states(_parse_states_xml(args.measurement_states_xml).getroot(), last=True)
+    meas = parse_states(_parse_states_xml(measurement_states_xml).getroot(), last=True)
     meas['name'] = meas['idx']
 
     val = None
-    if getattr(args, 'validation_states_xml', None) is not None:
-        val = parse_states(_parse_states_xml(args.validation_states_xml).getroot(), last=True)
+    if validation_states_xml is not None:
+        val = parse_states(_parse_states_xml(validation_states_xml).getroot(), last=True)
         val['name'] = val['idx']
 
     cats = pd.IntervalIndex.from_breaks(AGE_BINS)
@@ -167,7 +178,7 @@ def main(args):
                   _by_age_bin(meas, act, age_by_name, AGE_BINS),
                   _by_age_bin(val, act, age_by_name, AGE_BINS) if val is not None else None,
                   cats, "Age", f"{act} Duration [h]", ticklabels,
-                  f"08_age_duration_{act}.pdf", args)
+                  save_dir / f"08_age_duration_{act}.pdf", **save_kwds)
         
 
         # participation rate per age bin
@@ -176,35 +187,35 @@ def main(args):
                   (_by_age_bin(val, f'{act}_part', age_by_name, AGE_BINS) * 100)
                   if val is not None else None,
                   cats, "Age", f"{act} Participation [%]", ticklabels,
-                  f"08_age_participation_{act}.pdf", args)
+                  save_dir / f"08_age_participation_{act}.pdf", **save_kwds)
 
         plot_bars(_by_inc_bin(est, act, inc_by_name, INC_BINS), 
                   _by_inc_bin(meas, act, inc_by_name, INC_BINS),
                   _by_inc_bin(val, act, inc_by_name, INC_BINS)
                     if val is not None else None, 
                     inc_cats, "Inc", f"{act} Duration [h]", inc_ticklabels,
-                    f"09_inc_duration_{act}.pdf", args)
+                    save_dir / f"09_inc_duration_{act}.pdf", **save_kwds)
         
         plot_bars(_by_inc_bin(est, f'{act}_part', inc_by_name, INC_BINS) * 100, 
                   _by_inc_bin(meas, f'{act}_part', inc_by_name, INC_BINS) * 100,
                   _by_inc_bin(val, f'{act}_part', inc_by_name, INC_BINS) * 100
                     if val is not None else None, 
                     inc_cats, "Inc", f"{act} Participation [%]", inc_ticklabels,
-                    f"09_inc_participation_{act}.pdf", args)
+                    save_dir / f"09_inc_participation_{act}.pdf", **save_kwds)
 
         plot_bars(_by_gender(est, act, gender_by_name), 
                   _by_gender(meas, act, gender_by_name),
                   _by_gender(val, act, gender_by_name)
                         if val is not None else None, 
                     gender_cats, "Gender", f"{act} Duration [h]", gender_ticklabels,
-                    f"10_gender_duration_{act}.pdf", args)
+                    save_dir / f"10_gender_duration_{act}.pdf", **save_kwds)
 
     # total non-HOME duration per age bin
     plot_bars(_by_age_bin(est, NON_HOME_ACTIVITIES, age_by_name, AGE_BINS),
               _by_age_bin(meas, NON_HOME_ACTIVITIES, age_by_name, AGE_BINS),
               _by_age_bin(val, NON_HOME_ACTIVITIES, age_by_name, AGE_BINS) if val is not None else None,
               cats, "Age", "Away-from-Home Duration [h]", ticklabels,
-              "08_age_duration_away_from_home.pdf", args)
+              save_dir / "08_age_duration_away_from_home.pdf", **save_kwds)
 
 
     # total non-HOME duration per age bin
@@ -212,53 +223,32 @@ def main(args):
             _by_inc_bin(meas, NON_HOME_ACTIVITIES, inc_by_name, INC_BINS),
             _by_inc_bin(val, NON_HOME_ACTIVITIES, inc_by_name, INC_BINS) if val is not None else None,
             inc_cats, "Inc", "Away-from-Home Duration [h]", inc_ticklabels,  
-            "09_inc_duration_away_from_home.pdf", args)
+            save_dir / "09_inc_duration_away_from_home.pdf", **save_kwds)
 
     plot_bars(_by_gender(est, NON_HOME_ACTIVITIES, gender_by_name), 
                 _by_gender(meas, NON_HOME_ACTIVITIES, gender_by_name),
                 _by_gender(val, NON_HOME_ACTIVITIES, gender_by_name)
                     if val is not None else None, 
                 gender_cats, "Gender", "Away-from-Home Duration [h]", gender_ticklabels,
-                f"10_gender_duration_away_from_home.pdf", args)
+                save_dir / f"10_gender_duration_away_from_home.pdf", **save_kwds)
     
     # nStops per age bin
     plot_bars(_by_age_bin(est, 'nstops', age_by_name, AGE_BINS),
               _by_age_bin(meas, 'nstops', age_by_name, AGE_BINS),
               _by_age_bin(val, 'nstops', age_by_name, AGE_BINS) if val is not None else None,
               cats, "Age", "Number of Stops", ticklabels,
-              "08_age_nStops.pdf", args)
+              save_dir / "08_age_nStops.pdf", **save_kwds)
 
-    print(f"Done. Age-binned reproduction plots written to: {args.save_dir}")
-
-
-dds_root = get_environment_root()
-
-
-class Args:
-    measurement_states_xml = dds_root / "amal/Results_Paper/2026 08 07/amal_measurement/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml"
-    validation_states_xml = dds_root / "amal/Results_Paper/2026 08 07/amal_validation/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml"
-    data_dir = dds_root / "renate/data/scenarios/amal/results_paper/2026 08 07/full"
-    time_bin_size_h = 1
-    horizon = 24
-    convergence_stats_filename = 'convergenceStats.tsv'
-    window = 1
-    save = True
-    show = False
-    output_suffix = '.pdf'
-    msg_interval = 10000
-
-    def __init__(self, scenario):
-        self.results_dir = scenario
-        self.save_dir = Path(f"{scenario}_plots")
-        self.save_dir.mkdir(parents=True, exist_ok=True)
+    print(f"Done. Age-binned reproduction plots written to: {save_dir}")
 
 
 if __name__ == "__main__":
-    args = Args(Path('n-responses-100'))
-    args.save = True
-    args.show = False
-    main(args)
-
-# for scenario in ['base', 'n-responses-20', 'n-responses-100', 'n-responses-500']:
-#     args = Args(Path(scenario))
-#     main(args)
+    parser = ArgumentParser()
+    args = parser.parse()
+    main(results_dir=args.results_dir,
+         measurement_states_xml=args.measurement_states_xml,
+         save_dir=args.save_dir,
+         validation_states_xml=args.validation_states_xml,
+         save=args.save,
+         show=args.show,
+         output_suffix=args.output_suffix)

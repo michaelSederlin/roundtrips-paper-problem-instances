@@ -7,10 +7,11 @@ import re
 from ast import literal_eval
 import numpy as np
 
-def save_show(fig, path: Path, args):
-    if args.save:
-        fig.savefig(path.with_suffix(args.output_suffix), dpi=300, bbox_inches="tight")
-    if args.show:
+def save_show(fig, path: Path, save: bool = True, show: bool = False,
+              output_suffix: str = ".pdf"):
+    if save:
+        fig.savefig(path.with_suffix(output_suffix), dpi=300, bbox_inches="tight")
+    if show:
         plt.show()
     plt.close(fig)
 

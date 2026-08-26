@@ -8,8 +8,8 @@ import numpy as np
 import pandas as pd
 from xml.etree import ElementTree as ET 
 
-from ddsutils.plotting.helpers import ArgumentParser
-from ddsutils.plotting.plotting_utilities import save_show
+from .helpers import ArgumentParser
+from .plotting_utilities import save_show
 
 # Globals
 fontsize = 10 
@@ -113,19 +113,30 @@ def load_tree(fp: Path) -> ET.ElementTree:
     else:
         return ET.parse(fp)
     
-def main(args):
-    if args.results_dir is None:
-        raise ValueError("--results-dir is required")
-    if args.measurement_states_xml is None:
-        raise ValueError("--measurement-states-xml is required")
+def main(results_dir: Path,
+         measurement_states_xml: Path,
+         save_dir: Path = None,
+         validation_states_xml: Path = None,
+         convergence_stats_filename: str = "convergenceStats.tsv",
+         msg_interval: int = 5000,
+         save: bool = True,
+         show: bool = False,
+         output_suffix: str = ".pdf"):
+    if results_dir is None:
+        raise ValueError("results_dir is required")
+    if measurement_states_xml is None:
+        raise ValueError("measurement_states_xml is required")
 
-    results_dir = Path(args.results_dir)
+    results_dir = Path(results_dir)
     if not results_dir.exists():
         raise FileNotFoundError(f"Results directory not found: {results_dir}")
 
-    od_meas = extract_od_matrix(load_tree(args.measurement_states_xml))
-    od_val = None if args.validation_states_xml is None else extract_od_matrix(load_tree(args.validation_states_xml))
-    od_est = extract_estimated_od_matrix(args.results_dir, args.convergence_stats_filename, args.msg_interval)
+    save_dir = results_dir if save_dir is None else Path(save_dir)
+    save_kwds = dict(save=save, show=show, output_suffix=output_suffix)
+
+    od_meas = extract_od_matrix(load_tree(measurement_states_xml))
+    od_val = None if validation_states_xml is None else extract_od_matrix(load_tree(validation_states_xml))
+    od_est = extract_estimated_od_matrix(results_dir, convergence_stats_filename, msg_interval)
 
     od_dict = {
         "measurement OD": od_meas.stack(), 
@@ -150,7 +161,7 @@ def main(args):
 
     ax.legend(fontsize = fontsize)
     format_axis(ax, "Estimated", 'Ground truth')
-    save_show(fig, args.save_dir / "02_od.pdf", args)
+    save_show(fig, save_dir / "02_od.pdf", **save_kwds)
 
     fit_cols = ['measurement OD'] + (['validation OD'] if od_val is not None else [])
     x_fit = np.array([df_plot_od[fit_cols].min().min(), df_plot_od[fit_cols].max().max()])
@@ -166,7 +177,7 @@ def main(args):
                   label=f'Regression (validation): y={slope_val:.2f}x+{intercept_val:.2f}', **kwds)
 
     ax.legend(fontsize=fontsize)
-    save_show(fig, args.save_dir / "02_od_with_regression.pdf", args)
+    save_show(fig, save_dir / "02_od_with_regression.pdf", **save_kwds)
 
     # --- Plot Transition probabilities
     P_meas = to_transition(od_meas)
@@ -196,7 +207,7 @@ def main(args):
 
 
     format_axis(ax, "Estimated", 'Ground truth')
-    save_show(fig, args.save_dir / "03_transition_probabilities.pdf", args)
+    save_show(fig, save_dir / "03_transition_probabilities.pdf", **save_kwds)
 
     kwds = {'linestyle': '--'}
 
@@ -208,10 +219,18 @@ def main(args):
               label=f'Regression (measurement): y={slope_meas:.2f}x+{intercept_meas:.2f}', **kwds)
 
     ax.legend(fontsize=fontsize)
-    save_show(fig, args.save_dir / "03_transition_probabilities_with_regression.pdf", args)
+    save_show(fig, save_dir / "03_transition_probabilities_with_regression.pdf", **save_kwds)
 
 
 if __name__ == "__main__":
     parser = ArgumentParser()
     args = parser.parse()
-    main(args)
+    main(results_dir=args.results_dir,
+         measurement_states_xml=args.measurement_states_xml,
+         save_dir=args.save_dir,
+         validation_states_xml=args.validation_states_xml,
+         convergence_stats_filename=args.convergence_stats_filename,
+         msg_interval=args.msg_interval,
+         save=args.save,
+         show=args.show,
+         output_suffix=args.output_suffix)

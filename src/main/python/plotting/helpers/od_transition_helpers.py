@@ -11,9 +11,9 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ddsutils.plotting.helpers.partition_discovery import discover_partition_dirs, states_xml_path
-from ddsutils.plotting.helpers.burn_in import post_burn_in_iterations, equalize_post_burn_in
-from ddsutils.plotting.plotting_utilities import save_show
+from .partition_discovery import discover_partition_dirs, states_xml_path
+from .burn_in import post_burn_in_iterations, equalize_post_burn_in
+from ..plotting_utilities import save_show
 
 
 
@@ -364,7 +364,8 @@ def plot_transition_scatter(
         bbox=dict(boxstyle="round,pad=0.25", facecolor="white", alpha=0.85, edgecolor="0.7"),
     )
 
-    save_show(fig, out_dir / "transition_probability_scatter.pdf", args)
+    save_show(fig, out_dir / "transition_probability_scatter.pdf", save=args.save, show=args.show,
+              output_suffix=args.output_suffix)
     print(f"Transition scatter metrics: Pearson={corr:.4f}, MAE={mae:.6f}, RMSE={rmse:.6f}")
 
 
@@ -485,7 +486,8 @@ def plot_transition_heatmaps(summary: dict, out_dir: Path, args):
     sns.heatmap(summary["p_tru"], ax=ax[1])
     sns.heatmap(summary["p_mean"] - summary["p_tru"], ax=ax[2])
     fig.tight_layout()
-    save_show(fig, out_dir / "transition_probability_heatmaps.pdf", args)
+    save_show(fig, out_dir / "transition_probability_heatmaps.pdf", save=args.save, show=args.show,
+              output_suffix=args.output_suffix)
 
 
 def plot_od_count_heatmaps(summary: dict, out_dir: Path, args):
@@ -497,4 +499,5 @@ def plot_od_count_heatmaps(summary: dict, out_dir: Path, args):
     sns.heatmap(summary["od_mean"] - summary["tru_od"], ax=ax[2])
     ax[2].set_title("Difference (sim - target)")
     fig.tight_layout()
-    save_show(fig, out_dir / "od_count_heatmaps.pdf", args)
+    save_show(fig, out_dir / "od_count_heatmaps.pdf", save=args.save, show=args.show,
+              output_suffix=args.output_suffix)

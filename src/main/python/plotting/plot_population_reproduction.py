@@ -16,11 +16,11 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ddsutils.plotting.argument_parser import ArgumentParser
-from ddsutils.plotting.helpers.burn_in import post_burn_in_iterations, equalize_post_burn_in
-from ddsutils.plotting.helpers.od_transition_helpers import save_show
-from ddsutils.plotting.helpers.partition_discovery import discover_partition_dirs, states_xml_path
-from ddsutils.plotting.plotting_utilities import process_states
+from .argument_parser import ArgumentParser
+from .helpers.burn_in import post_burn_in_iterations, equalize_post_burn_in
+from .helpers.od_transition_helpers import save_show
+from .helpers.partition_discovery import discover_partition_dirs, states_xml_path
+from .plotting_utilities import process_states
 
 MAX_NSTOPS = 10
 LOCATION_ACTIVITIES = ["HOME", "WORK", "EDUCATION", "OTHER"]
@@ -176,7 +176,9 @@ def ground_truth_marginal_durations(xml_path, activities):
     return _marginal_durations_of_sample(mrt, activities)
 
 
-def plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, args):
+def plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, save_dir,
+                                     horizon: float = 24.0, save: bool = True,
+                                     show: bool = False, output_suffix: str = ".pdf"):
     """One panel per activity: overlaid marginal duration densities of estimation
     vs measurement (vs validation), pooled across agents/samples. Each activity
     panel is a grouped bar histogram over shared hourly duration bins, styled to
@@ -186,7 +188,7 @@ def plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, 
     if val_durs is not None:
         series.append(("Validation Data Set", val_durs, VALIDATION_COLOR))
 
-    bins = np.arange(0, int(args.horizon) + 1)  # hourly duration bins over the horizon
+    bins = np.arange(0, int(horizon) + 1)  # hourly duration bins over the horizon
     centers = bins[:-1] + 0.5
     width = 0.8 / len(series)
     offsets = (np.arange(len(series)) - (len(series) - 1) / 2) * width
@@ -218,10 +220,12 @@ def plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, 
         #     fig.legend(handles, labels, loc="upper right")
         # fig.suptitle("Population marginal activity-duration reproduction")
         # fig.tight_layout(rect=[0, 0, 1, 0.97])
-        save_show(fig, args.save_dir / f"06_activity_durations_{act}.pdf", args)
+        save_show(fig, save_dir / f"06_activity_durations_{act}.pdf",
+                  save=save, show=show, output_suffix=output_suffix)
 
 
-def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, fname, args):
+def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
+              save: bool = True, show: bool = False, output_suffix: str = ".pdf"):
     x = np.arange(len(index))
     width = 0.26
     fig, ax = plt.subplots()
@@ -240,7 +244,7 @@ def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, fname, args):
     ax.grid(axis="y", linestyle="--", alpha=0.5)
     ax.legend()
     fig.tight_layout()
-    save_show(fig, args.save_dir / fname, args)
+    save_show(fig, path, save=save, show=show, output_suffix=output_suffix)
 
 
 def _zone_counts(datasets, act):
@@ -258,7 +262,8 @@ def _zone_counts(datasets, act):
     return df
 
 
-def plot_location_reproduction(est, meas, val, args):
+def plot_location_reproduction(est, meas, val, save_dir, save: bool = True,
+                              show: bool = False, output_suffix: str = ".pdf"):
     datasets = {"estimation": est, "measurement": meas}
     if val is not None:
         datasets["validation"] = val
@@ -291,7 +296,8 @@ def plot_location_reproduction(est, meas, val, args):
         ax.set_ylabel("Locations per Zone — Estimation")
         ax.grid(True)
         ax.legend(loc="upper left")
-        save_show(fig, args.save_dir / f"03_location_reproduction_{act}.pdf", args)
+        save_show(fig, save_dir / f"03_location_reproduction_{act}.pdf",
+                  save=save, show=show, output_suffix=output_suffix)
 
     total_df = pd.concat(total, axis = 1).fillna(0)
     fig, ax = plt.subplots()
@@ -312,10 +318,12 @@ def plot_location_reproduction(est, meas, val, args):
     ax.grid(True)
     ax.legend(loc="upper left")
 
-    save_show(fig, args.save_dir / "03_location_reproduction_TOTAL.pdf", args)    
+    save_show(fig, save_dir / "03_location_reproduction_TOTAL.pdf",
+              save=save, show=show, output_suffix=output_suffix)
 
 
-def plot_location_maps(est, meas, val, args):
+def plot_location_maps(est, meas, val, save_dir, save: bool = True,
+                       show: bool = False, output_suffix: str = ".pdf"):
     """Per-activity heatmaps of visits per zone on the (row, col) grid, with
     estimation, measurement and validation side by side on a shared color
     scale (same map style as activity_location_plotter.py)."""
@@ -346,7 +354,8 @@ def plot_location_maps(est, meas, val, args):
             ax.set_ylabel("row")
         fig.suptitle(f"Locations per Zone – activity: {act}")
         fig.tight_layout(rect=[0, 0, 1, 0.96])
-        save_show(fig, args.save_dir / f"03_location_map_{act}.pdf", args)
+        save_show(fig, save_dir / f"03_location_map_{act}.pdf",
+                  save=save, show=show, output_suffix=output_suffix)
 
 
 ACTIVITY_SHARE_ACTIVITIES = ["WORK", "EDUCATION", "OTHER"]
@@ -378,8 +387,10 @@ def _ground_truth_share_vs_sigma(gt_visits, activity, opp_act):
     return merged if not merged.empty else None
 
 
-def plot_activity_share_vs_opportunity(results_dir, data_dir, args,
-                                       meas_visits=None, val_visits=None):
+def plot_activity_share_vs_opportunity(results_dir, data_dir, save_dir,
+                                       meas_visits=None, val_visits=None,
+                                       save: bool = True, show: bool = False,
+                                       output_suffix: str = ".pdf"):
     """Per-activity scatter of visit share vs opportunity weight over the joined
     (partitions_merged) states. Unlike the per-partition evaluation plot, this does
     NOT average across window iterations: every (iteration, location) pair is a
@@ -469,55 +480,83 @@ def plot_activity_share_vs_opportunity(results_dir, data_dir, args,
         ax.spines["right"].set_visible(False)
         ax.legend()
 
-    save_show(fig, args.save_dir / "activity_visit_share_vs_opportunity_weight.pdf", args)
+    save_show(fig, save_dir / "activity_visit_share_vs_opportunity_weight.pdf",
+              save=save, show=show, output_suffix=output_suffix)
 
 
-def main(args):
-    if args.measurement_states_xml is None:
-        raise ValueError("--measurement-states-xml is required")
+def main(results_dir: Path,
+         measurement_states_xml: Path,
+         data_dir: Path,
+         save_dir: Path = None,
+         validation_states_xml: Path = None,
+         convergence_stats_filename: str = "convergenceStats.tsv",
+         window: int = 1,
+         time_bin_size_h: float = 1.0,
+         horizon: float = 24.0,
+         save: bool = True,
+         show: bool = False,
+         output_suffix: str = ".pdf"):
+    if measurement_states_xml is None:
+        raise ValueError("measurement_states_xml is required")
 
-    est = estimation_metrics(args.results_dir, args.convergence_stats_filename,
-                             args.window, args.time_bin_size_h)
-    meas = ground_truth_metrics(args.measurement_states_xml, 1)
-    val = (ground_truth_metrics(args.validation_states_xml, 1)
-           if args.validation_states_xml is not None else None)
+    results_dir = Path(results_dir)
+    save_dir = results_dir if save_dir is None else Path(save_dir)
+    save_kwds = dict(save=save, show=show, output_suffix=output_suffix)
+
+    est = estimation_metrics(results_dir, convergence_stats_filename,
+                             window, time_bin_size_h)
+    meas = ground_truth_metrics(measurement_states_xml, 1)
+    val = (ground_truth_metrics(validation_states_xml, 1)
+           if validation_states_xml is not None else None)
 
     def v(key):
         return val[key] if val is not None else None
 
-    hours = list(range(int(args.horizon)))
+    hours = list(range(int(horizon)))
     plot_bars(est["departures"], meas["departures"], v("departures"), hours,
               "Hour", "Frequency", [str(h) if h % 2 == 0 else "" for h in hours],
-              "05_departures.pdf", args)
+              save_dir / "05_departures.pdf", **save_kwds)
 
     n = min(MAX_NSTOPS, int(est["nstops"].index.max())) + 1
     plot_bars(est["nstops"], meas["nstops"], v("nstops"), range(n),
               "Number of Stops", "Frequency", [str(i) if i % 2 == 0 else "" for i in range(n)],
-              "01_nStops_histogram.pdf", args)
+              save_dir / "01_nStops_histogram.pdf", **save_kwds)
     print(f"Avg nStops (estimation): {(est['nstops'].index * est['nstops']).sum() / est['nstops'].sum()}")
 
     activities = ([a for a in LOCATION_ACTIVITIES if a in est["participation"].index]
                   + sorted(set(est["participation"].index) - set(LOCATION_ACTIVITIES)))
     plot_bars(est["participation"], meas["participation"], v("participation"), activities,
               "Activity", "Number of Activity Episodes", activities,
-              "04_activity_participation.pdf", args)
+              save_dir / "04_activity_participation.pdf", **save_kwds)
 
-    plot_location_reproduction(est["visits"], meas["visits"], v("visits"), args)
-    plot_location_maps(est["visits"], meas["visits"], v("visits"), args)
-    plot_activity_share_vs_opportunity(args.results_dir, args.data_dir, args,
-                                       meas["visits"], v("visits"))
+    plot_location_reproduction(est["visits"], meas["visits"], v("visits"), save_dir, **save_kwds)
+    plot_location_maps(est["visits"], meas["visits"], v("visits"), save_dir, **save_kwds)
+    plot_activity_share_vs_opportunity(results_dir, data_dir, save_dir,
+                                       meas["visits"], v("visits"), **save_kwds)
 
-    est_durs = estimation_marginal_durations(args.results_dir, args.convergence_stats_filename,
-                                             args.window, activities)
-    meas_durs = ground_truth_marginal_durations(args.measurement_states_xml, activities)
-    val_durs = (ground_truth_marginal_durations(args.validation_states_xml, activities)
-                if args.validation_states_xml is not None else None)
-    plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, args)
+    est_durs = estimation_marginal_durations(results_dir, convergence_stats_filename,
+                                             window, activities)
+    meas_durs = ground_truth_marginal_durations(measurement_states_xml, activities)
+    val_durs = (ground_truth_marginal_durations(validation_states_xml, activities)
+                if validation_states_xml is not None else None)
+    plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, save_dir,
+                                     horizon=horizon, **save_kwds)
 
-    print(f"Done. Population-level reproduction plots written to: {args.save_dir}")
+    print(f"Done. Population-level reproduction plots written to: {save_dir}")
 
 
 if __name__ == "__main__":
     parser = ArgumentParser()
     args = parser.parse()
-    main(args)
+    main(results_dir=args.results_dir,
+         measurement_states_xml=args.measurement_states_xml,
+         data_dir=args.data_dir,
+         save_dir=args.save_dir,
+         validation_states_xml=args.validation_states_xml,
+         convergence_stats_filename=args.convergence_stats_filename,
+         window=args.window,
+         time_bin_size_h=args.time_bin_size_h,
+         horizon=args.horizon,
+         save=args.save,
+         show=args.show,
+         output_suffix=args.output_suffix)
