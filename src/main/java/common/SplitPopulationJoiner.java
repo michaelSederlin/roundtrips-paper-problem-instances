@@ -23,7 +23,6 @@ public class SplitPopulationJoiner {
         this.baseDir = baseDir;
         this.populationFileName = populationFileName;
 
-
         outputPath = baseDir.resolve("partitions_merged").resolve(targetFileName);
         try {
             Files.createDirectories(outputPath.getParent());
