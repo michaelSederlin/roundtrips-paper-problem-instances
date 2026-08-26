@@ -5,9 +5,8 @@ from pathlib import Path
 
 import numpy as np
 
-from ddsutils.merge_population_csv import _delimiter
-from ddsutils.plotting.helpers import ArgumentParser
-from ddsutils.plotting.helpers.burn_in import read_burn_in_iteration
+from .merge_population_csv import _delimiter
+from .helpers.burn_in import read_burn_in_iteration
 
 
 def _load_states_tree(xml_path):
