@@ -75,11 +75,6 @@
 		</dependency>
 		<!-- brings in se.vti.java-projects:roundtrips -> se.vti.java-projects:utils transitively -->
 		<dependency>
-			<groupId>se.vti.dynamic-demand-sampling</groupId>
-			<artifactId>ddsutils</artifactId>
-			<version>0.0.3</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
 			<version>1.14.1</version>
