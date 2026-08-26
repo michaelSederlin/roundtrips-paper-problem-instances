@@ -71,4 +71,23 @@ public class Options {
 
     // --- Output ---
     @Option(names = "--write-final-state", negatable = true) public boolean write_final_state = true;
+
+    public void saveArgs(String path) {
+    try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(path))) {
+        for (var f : this.getClass().getDeclaredFields()) {
+            var opt = f.getAnnotation(Option.class);
+            if (opt == null) continue;
+            f.setAccessible(true);
+            Object val = f.get(this);
+            String name = opt.names()[0];
+            if (val instanceof Map<?, ?> map) {
+                for (var e : map.entrySet()) pw.println(name + " " + e.getKey() + "=" + e.getValue());
+            } else {
+                pw.println(name + "=" + val);
+            }
+        }
+    } catch (Exception e) {
+        throw new RuntimeException("Failed to save args to " + path, e);
+    }
+}
 }

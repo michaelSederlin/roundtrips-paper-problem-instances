@@ -1,0 +1,264 @@
+"""Age-binned per-activity reproduction: mean activity duration and activity
+participation per age band, estimation vs measurement/validation ground truth.
+
+Styling is taken verbatim from plot_population_reproduction.py (plot_bars):
+same colors, bar width/offsets, alpha, edgecolor, grid, legend ordering and
+save_show plumbing.
+"""
+import gzip
+import re
+from ast import literal_eval
+from collections import defaultdict
+from pathlib import Path
+
+import lxml.etree
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+from renate import get_environment_root
+from ddsutils.plotting.helpers.od_transition_helpers import save_show
+
+ACTIVITIES = ["HOME", "WORK", "EDUCATION", "OTHER"]
+NON_HOME_ACTIVITIES = [a for a in ACTIVITIES if a != "HOME"]
+AGE_BINS = np.arange(15, 91, 5)
+INC_BINS = np.arange(0, 500, 50)
+
+# Same palette as plot_population_reproduction.plot_bars
+ESTIMATION_COLOR = "steelblue"
+MEASUREMENT_COLOR = "mediumseagreen"
+VALIDATION_COLOR = "coral"
+
+
+def sort_legend_entries(ax: plt.Axes):
+    handles, labels = ax.get_legend_handles_labels()
+    order = ['Measurement Data Set', 'Validation Data Set', 'Estimation']
+    ordered_handles = [handles[labels.index(label)] for label in order if label in labels]
+    ordered_labels = [label for label in order if label in labels]
+    ax.legend(ordered_handles, ordered_labels)
+    return ax
+
+
+def _parse_states_xml(xml_path: Path):
+    xml_path = Path(xml_path)
+    if xml_path.suffix == ".gz":
+        with gzip.open(xml_path) as f:
+            return lxml.etree.parse(f)
+    return lxml.etree.parse(str(xml_path))
+
+def stay_activity(stay):
+    # Handles differently formatted states.xml between renate and amal.
+    return (stay.get('activity')
+            or (stay.get('labels') or '').strip('[]')
+            or re.sub(r'.*\[|\]', '', stay.get('loc') or ''))
+
+def parse_states(root, last=False):
+    """Per (iteration, RoundTrip): activity set, nstops and per-activity durations."""
+    rows = []
+    mrts = root.findall('.//MultiRoundTrip')
+    if last:
+        mrts = mrts[-1:]
+
+    for mrt in mrts:
+        it = int(mrt.get('iteration'))
+        for rt in mrt.findall('./RoundTrip'):
+            nodes = rt.findtext('Nodes')
+            if nodes is None:
+                m = re.search(r'nodes\[(.*?)\],bins', rt.findtext('State') or '')
+                nodes = m.group(1) if m else ''
+            idx = rt.get('index')
+
+            per_act = defaultdict(float)
+            for stay in rt.findall('.//StayEpisode'):
+                per_act[stay_activity(stay)] += float(stay.get('end')) - float(stay.get('start'))
+
+            acts = re.findall(r'\[([A-Z]+)\]', nodes)
+            row = {'iteration': it, 'idx': idx, 'nstops': len(acts)}
+            for a in ACTIVITIES:
+                row[a] = per_act.get(a, 0.0)                 # marginal duration (0 when absent)
+                row[f'{a}_part'] = float(a in per_act)       # participation indicator
+            rows.append(row)
+
+    return pd.DataFrame(rows)
+
+def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, fname, args):
+    """Verbatim styling from plot_population_reproduction.plot_bars."""
+    x = np.arange(len(index))
+    width = 0.26
+    fig, ax = plt.subplots()
+    ax.bar(x + width, est.reindex(index, fill_value=0), width=width, color=ESTIMATION_COLOR,
+           alpha=0.75, edgecolor="black", label="Estimation")
+    if val is not None:
+        ax.bar(x, val.reindex(index, fill_value=0), width=width, color=VALIDATION_COLOR,
+               alpha=0.75, edgecolor="black", label="Validation Data Set")
+    ax.bar(x - width, meas.reindex(index, fill_value=0), width=width, color=MEASUREMENT_COLOR,
+           alpha=0.75, edgecolor="black", label="Measurement Data Set")
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    ax.set_xticks(x)
+    ax.set_xticklabels(xticklabels)
+    ax.set_ylim(bottom=0)
+    ax.grid(axis="y", linestyle="--", alpha=0.5)
+    sort_legend_entries(ax)
+    fig.tight_layout()
+    save_show(fig, args.save_dir / fname, args)
+
+def _by_age_bin(df, cols: str | list[str], age_by_name, bins):
+    """Mean of `col` per age bin, after averaging over iterations per agent."""
+    if isinstance(cols, str):
+        cols = [cols]
+    per_agent = df.groupby('name', as_index=False)[cols].mean()
+    per_agent['age'] = per_agent['name'].map(age_by_name)
+    per_agent['age_bin'] = pd.cut(per_agent['age'], bins)
+    return per_agent.groupby('age_bin', observed=False)[cols].mean().sum(axis = 1)
+
+def _by_inc_bin(df, cols, inc_by_name, bins):
+    """Mean of `col` per age bin, after averaging over iterations per agent."""
+    if isinstance(cols, str):
+        cols = [cols]
+    per_agent = df.groupby('name', as_index=False)[cols].mean()
+    per_agent['inc'] = per_agent['name'].map(inc_by_name)
+    per_agent['inc_bin'] = pd.cut(per_agent['inc'], bins)
+    return per_agent.groupby('inc_bin', observed=False)[cols].mean().sum(axis = 1)
+
+def _by_gender(df, cols, gender_by_name):
+    if isinstance(cols, str): 
+        cols = [cols]
+    per_agent = df.groupby('name', as_index = False)[cols].mean()
+    per_agent['gender'] = per_agent['name'].map(gender_by_name)
+    return per_agent.groupby('gender', observed=False)[cols].mean().sum(axis = 1)
+
+
+def main(args):
+    if args.measurement_states_xml is None:
+        raise ValueError("--measurement-states-xml is required")
+
+    merged = Path(args.results_dir) / 'partitions_merged'
+    pop = pd.read_csv(merged / 'population_merged.tsv', sep='\t')
+    pop['acts'] = pop['legs'].apply(lambda l: {d['destinationActivity'] for d in literal_eval(l)})
+    idx2name = pop.set_index('idx')['name'].to_dict()
+
+    age_by_name = pop.set_index('name')['age'].to_dict()
+    inc_by_name = pop.set_index('name')['inc'].to_dict()
+    gender_by_name = pop.set_index('name')['gender'].to_dict()
+
+    est = parse_states(_parse_states_xml(merged / 'final_states_merged.xml').getroot())
+    est['name'] = est['idx'].astype(int).map(idx2name)
+
+    meas = parse_states(_parse_states_xml(args.measurement_states_xml).getroot(), last=True)
+    meas['name'] = meas['idx']
+
+    val = None
+    if getattr(args, 'validation_states_xml', None) is not None:
+        val = parse_states(_parse_states_xml(args.validation_states_xml).getroot(), last=True)
+        val['name'] = val['idx']
+
+    cats = pd.IntervalIndex.from_breaks(AGE_BINS)
+    inc_cats = pd.IntervalIndex.from_breaks(INC_BINS)
+    ticklabels = [f"{int(c.left)}" if i % 2 == 0 else "" for i, c in enumerate(cats)]
+    inc_ticklabels = [f"{int(c.left)}" if i % 2 == 0 else "" for i, c in enumerate(inc_cats)]
+
+    gender_cats = pd.Index(sorted(pop['gender'].dropna().unique()))
+    gender_ticklabels = gender_cats.astype(str).tolist()    
+
+    for act in ACTIVITIES:
+        # mean marginal duration per age bin
+        plot_bars(_by_age_bin(est, act, age_by_name, AGE_BINS),
+                  _by_age_bin(meas, act, age_by_name, AGE_BINS),
+                  _by_age_bin(val, act, age_by_name, AGE_BINS) if val is not None else None,
+                  cats, "Age", f"{act} Duration [h]", ticklabels,
+                  f"08_age_duration_{act}.pdf", args)
+        
+
+        # participation rate per age bin
+        plot_bars(_by_age_bin(est, f'{act}_part', age_by_name, AGE_BINS) * 100,
+                  _by_age_bin(meas, f'{act}_part', age_by_name, AGE_BINS) * 100,
+                  (_by_age_bin(val, f'{act}_part', age_by_name, AGE_BINS) * 100)
+                  if val is not None else None,
+                  cats, "Age", f"{act} Participation [%]", ticklabels,
+                  f"08_age_participation_{act}.pdf", args)
+
+        plot_bars(_by_inc_bin(est, act, inc_by_name, INC_BINS), 
+                  _by_inc_bin(meas, act, inc_by_name, INC_BINS),
+                  _by_inc_bin(val, act, inc_by_name, INC_BINS)
+                    if val is not None else None, 
+                    inc_cats, "Inc", f"{act} Duration [h]", inc_ticklabels,
+                    f"09_inc_duration_{act}.pdf", args)
+        
+        plot_bars(_by_inc_bin(est, f'{act}_part', inc_by_name, INC_BINS) * 100, 
+                  _by_inc_bin(meas, f'{act}_part', inc_by_name, INC_BINS) * 100,
+                  _by_inc_bin(val, f'{act}_part', inc_by_name, INC_BINS) * 100
+                    if val is not None else None, 
+                    inc_cats, "Inc", f"{act} Participation [%]", inc_ticklabels,
+                    f"09_inc_participation_{act}.pdf", args)
+
+        plot_bars(_by_gender(est, act, gender_by_name), 
+                  _by_gender(meas, act, gender_by_name),
+                  _by_gender(val, act, gender_by_name)
+                        if val is not None else None, 
+                    gender_cats, "Gender", f"{act} Duration [h]", gender_ticklabels,
+                    f"10_gender_duration_{act}.pdf", args)
+
+    # total non-HOME duration per age bin
+    plot_bars(_by_age_bin(est, NON_HOME_ACTIVITIES, age_by_name, AGE_BINS),
+              _by_age_bin(meas, NON_HOME_ACTIVITIES, age_by_name, AGE_BINS),
+              _by_age_bin(val, NON_HOME_ACTIVITIES, age_by_name, AGE_BINS) if val is not None else None,
+              cats, "Age", "Away-from-Home Duration [h]", ticklabels,
+              "08_age_duration_away_from_home.pdf", args)
+
+
+    # total non-HOME duration per age bin
+    plot_bars(_by_inc_bin(est, NON_HOME_ACTIVITIES, inc_by_name, INC_BINS),
+            _by_inc_bin(meas, NON_HOME_ACTIVITIES, inc_by_name, INC_BINS),
+            _by_inc_bin(val, NON_HOME_ACTIVITIES, inc_by_name, INC_BINS) if val is not None else None,
+            inc_cats, "Inc", "Away-from-Home Duration [h]", inc_ticklabels,  
+            "09_inc_duration_away_from_home.pdf", args)
+
+    plot_bars(_by_gender(est, NON_HOME_ACTIVITIES, gender_by_name), 
+                _by_gender(meas, NON_HOME_ACTIVITIES, gender_by_name),
+                _by_gender(val, NON_HOME_ACTIVITIES, gender_by_name)
+                    if val is not None else None, 
+                gender_cats, "Gender", "Away-from-Home Duration [h]", gender_ticklabels,
+                f"10_gender_duration_away_from_home.pdf", args)
+    
+    # nStops per age bin
+    plot_bars(_by_age_bin(est, 'nstops', age_by_name, AGE_BINS),
+              _by_age_bin(meas, 'nstops', age_by_name, AGE_BINS),
+              _by_age_bin(val, 'nstops', age_by_name, AGE_BINS) if val is not None else None,
+              cats, "Age", "Number of Stops", ticklabels,
+              "08_age_nStops.pdf", args)
+
+    print(f"Done. Age-binned reproduction plots written to: {args.save_dir}")
+
+
+dds_root = get_environment_root()
+
+
+class Args:
+    measurement_states_xml = dds_root / "amal/Results_Paper/2026 08 07/amal_measurement/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml"
+    validation_states_xml = dds_root / "amal/Results_Paper/2026 08 07/amal_validation/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml"
+    data_dir = dds_root / "renate/data/scenarios/amal/results_paper/2026 08 07/full"
+    time_bin_size_h = 1
+    horizon = 24
+    convergence_stats_filename = 'convergenceStats.tsv'
+    window = 1
+    save = True
+    show = False
+    output_suffix = '.pdf'
+    msg_interval = 10000
+
+    def __init__(self, scenario):
+        self.results_dir = scenario
+        self.save_dir = Path(f"{scenario}_plots")
+        self.save_dir.mkdir(parents=True, exist_ok=True)
+
+
+if __name__ == "__main__":
+    args = Args(Path('n-responses-100'))
+    args.save = True
+    args.show = False
+    main(args)
+
+# for scenario in ['base', 'n-responses-20', 'n-responses-100', 'n-responses-500']:
+#     args = Args(Path(scenario))
+#     main(args)

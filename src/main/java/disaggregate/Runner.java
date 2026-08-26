@@ -80,6 +80,8 @@ public class Runner implements Callable<Integer> {
         ThreadContext.put("logDir", runOutputPath.toString());
         copyArgumentsFileIfPresent(runOutputPath);
 
+        opts.saveArgs(runOutputPath.resolve("resolved-arguments.txt").toString());
+
         logger.info("===== AMAL Parallel Simulation setup =====");
         logger.info("--- Run ---");
         logger.info("  name={}  |  maxProcesses={}", opts.name, opts.max_processes > 0 ? opts.max_processes : "auto");
