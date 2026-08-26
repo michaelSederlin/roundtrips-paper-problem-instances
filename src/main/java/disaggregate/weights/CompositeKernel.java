@@ -86,4 +86,10 @@ public class CompositeKernel implements Kernel {
         }
         return kernels;
     }
+
+    public enum Role {
+        TRAVELER,
+        SCHEDULE,
+        LOCATION
+    }
 }

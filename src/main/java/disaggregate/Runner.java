@@ -355,7 +355,9 @@ public class Runner implements Callable<Integer> {
                 kSched.add(kOverlap, opts.schedule_overlap_mixing_weight);
             }
 
-            CompositeKernel k = new CompositeKernel().add(kTrav, Role.TRAVELER).add(kSched, Role.SCHEDULE);
+            CompositeKernel k = new CompositeKernel()
+                .add(kTrav, CompositeKernel.Role.TRAVELER)
+                .add(kSched, CompositeKernel.Role.SCHEDULE);
 
             k.setMixtureWeights(new double[] { opts.traveler_kernel_mixing_weight, opts.schedule_mixing_weight});
             responses.add(new SurveyResponse<>(person, k));
