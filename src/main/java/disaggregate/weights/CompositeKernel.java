@@ -1,25 +1,17 @@
-package disaggregate.kernels;
+package disaggregate.weights;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import disaggregate.model.ActivityNode;
-import se.vti.roundtrips.single.RoundTrip;
-
 public class CompositeKernel implements Kernel {
-    private int kernelIndex = -1;
     private final List<Kernel> kernels = new ArrayList<>(); 
     private final List<Double> kernelWeights = new ArrayList<>(); 
     private final List<Role> kernelRoles = new ArrayList<>();
 
     public CompositeKernel(Kernel ... kernels) {
         for (Kernel k : kernels) add(k, null, 1.0);
-    }
-
-    public int getKernelIndex() {
-        return kernelIndex;
     }
 
     public CompositeKernel add(Kernel k, Role role, double weight) { 
@@ -43,54 +35,14 @@ public class CompositeKernel implements Kernel {
     }
 
     @Override 
-    public double compute(RoundTrip<ActivityNode> rt, KernelSummary summary) {
-        Double cached = getCached(rt, summary);
-        if (cached != null) return cached;
-
+    public double compute(KernelFeatures features) {
         double combinedWeight = 1.0; 
         for (int ii = 0; ii < kernels.size(); ii++) {
             double weight = kernelWeights.get(ii);
-            double kw = kernels.get(ii).compute(rt, summary); 
+            double kw = kernels.get(ii).compute(features); 
             combinedWeight *= (weight == 1) ? kw : Math.pow(kw, weight);
         }
-        setCached(rt, summary, combinedWeight);
         return combinedWeight; 
-    }
-
-    public final double computeExcludingRoles(RoundTrip<ActivityNode> rt, KernelSummary summary, Role... roles) {
-        double combinedWeight = 1.0;
-        List<Role> exclusionList = List.of(roles);
-
-        for (int ii = 0; ii < kernels.size(); ii++) {
-            if (exclusionList.contains(kernelRoles.get(ii))) continue;
-
-            double kw = kernels.get(ii).compute(rt, summary);
-            combinedWeight *= Math.pow(kw, kernelWeights.get(ii));
-        }
-        return combinedWeight;
-    }    
-
-    @SafeVarargs
-    public final double computeExcludingKernelClasses(RoundTrip<ActivityNode> rt, KernelSummary summary, Class<? extends Kernel> ... kernelClasses) {
-        double combinedWeight = 1.0;
-        List<Class<? extends Kernel>> exclusionList = List.of(kernelClasses);
-
-        for (int ii = 0; ii < kernels.size(); ii++) {
-            Kernel kernel = kernels.get(ii);
-            if (exclusionList.stream().anyMatch(ex -> ex.isInstance(kernel))) continue;
-
-            double kw = kernel.compute(rt, summary);
-            combinedWeight *= Math.pow(kw, kernelWeights.get(ii));
-        }
-        return combinedWeight;
-    }
-
-    @Override 
-    public void configureRequiredSummary(KernelSummary summary) {
-        this.kernelIndex = summary.registerKernel();
-        for (Kernel kernel : kernels) {
-            kernel.configureRequiredSummary(summary);
-        }
     }
 
     public List<Kernel> getKernels() { return this.kernels; }

@@ -8,7 +8,6 @@ public class MDDRRepository extends Repository{
         super();
 	}
 
-
 	@Override 
 	public MDDRRepository withRandom(Random random) {
 		setRandom(random);

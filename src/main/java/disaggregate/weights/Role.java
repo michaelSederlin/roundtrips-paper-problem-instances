@@ -1,4 +1,4 @@
-package disaggregate.kernels;
+package disaggregate.weights;
 
 public enum Role {
     TRAVELER,

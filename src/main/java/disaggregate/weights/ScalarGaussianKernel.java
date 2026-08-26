@@ -1,4 +1,4 @@
-package disaggregate.kernels;
+package disaggregate.weights;
 
 public abstract class ScalarGaussianKernel implements Kernel {
     protected double lambda, lambda2, halfInvLambda;

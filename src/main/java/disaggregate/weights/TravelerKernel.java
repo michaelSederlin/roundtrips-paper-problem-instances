@@ -1,8 +1,6 @@
-package disaggregate.kernels;
+package disaggregate.weights;
 
-import disaggregate.model.ActivityNode;
 import disaggregate.model.Person;
-import se.vti.roundtrips.single.RoundTrip;
 
 public class TravelerKernel implements Kernel {
 
@@ -62,7 +60,7 @@ public class TravelerKernel implements Kernel {
     }
 
     @Override
-    public double compute(RoundTrip<ActivityNode> rt, KernelSummary summary) {
+    public double compute(KernelFeatures features) {
         // TravelerKernel uses static Person demographics, not RoundTrip data
         // It should be pre-computed in ExplainRoundTripsByResponses constructor
         throw new UnsupportedOperationException("TravelerKernel does not use RoundTrip data - use pre-computed person-response weights");
@@ -80,9 +78,5 @@ public class TravelerKernel implements Kernel {
         this.incomeBW2 = parameters[1] * parameters[1];
         this.genderMismatchWeight = parameters[2];
 
-    }
-    @Override
-    public void configureRequiredSummary(KernelSummary summary) {
-        // TODO Auto-generated method stub
     }
 }

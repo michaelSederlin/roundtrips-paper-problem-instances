@@ -1,4 +1,4 @@
-package disaggregate.model.weights;
+package disaggregate.weights;
 
 import java.util.List;
 

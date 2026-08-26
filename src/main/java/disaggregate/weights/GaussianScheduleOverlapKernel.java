@@ -1,4 +1,4 @@
-package disaggregate.kernels;
+package disaggregate.weights;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -6,12 +6,10 @@ import java.util.Map;
 
 import disaggregate.model.Activity;
 import disaggregate.model.Person;
-import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.simulator.IntervalUtils;
-import se.vti.roundtrips.single.RoundTrip;
 import se.vti.utils.misc.Tuple;
 
-public class GaussianScheduleOverlapKernel implements Kernel, ScheduleKernelBase {
+public class GaussianScheduleOverlapKernel implements Kernel {
     private double MIN_LAM = 0.1;
     private Map<Activity, Double> lambda2PerActivity = new EnumMap<>(Activity.class);
     private double lambda = 1.0;
@@ -29,23 +27,22 @@ public class GaussianScheduleOverlapKernel implements Kernel, ScheduleKernelBase
         this.intervalUtils = new IntervalUtils(24.0);
     }
 
-    public GaussianScheduleOverlapKernel(Person person, Double c, Map<Activity, Double> medianDurations) {
+    public GaussianScheduleOverlapKernel(Person person, Map<Activity, Double> medianDurations) {
         this(person);
         for (Map.Entry<Activity, Double> entry : medianDurations.entrySet()) {
             Double median = entry.getValue();
             if (median == null || median <= 0) {
                 throw new IllegalArgumentException("Invalid median duration for activity " + entry.getKey() + ": " + median);
             }
-            double lam = Math.max(MIN_LAM, c * median);
+            double lam = Math.max(MIN_LAM, median);
             this.lambda2PerActivity.put(entry.getKey(), lam * lam);
         }
-        // The provided medians define the active activity set; an observed activity outside it
-        // would silently go unscored, so treat it as a configuration error.
+
         for (Map.Entry<Activity, List<Tuple<Double, Double>>> obs : observedActivityIntervals.entrySet()) {
             if (obs.getKey() != Activity.HOME && !obs.getValue().isEmpty()
                     && !this.lambda2PerActivity.containsKey(obs.getKey())) {
-                throw new IllegalArgumentException("Observed activity " + obs.getKey()
-                        + " has no --median-duration entry (person " + person.getName() + ")");
+                throw new IllegalArgumentException("Observed activity " + obs.getKey() 
+                    + " has no --median-duration entry (person " + person.getName() + ")");
             }
         }
     }
@@ -57,12 +54,9 @@ public class GaussianScheduleOverlapKernel implements Kernel, ScheduleKernelBase
     }
     
     @Override
-    public double compute(RoundTrip<ActivityNode> rt, KernelSummary summary) {
+    public double compute(KernelFeatures features) {
 
-        Double cached = getCached(rt, summary);
-        if (cached != null) return cached;
-
-        Map<Activity, List<Tuple<Double, Double>>> simActivityIntervals = summary.getActivityIntervals(rt);
+        Map<Activity, List<Tuple<Double, Double>>> simActivityIntervals = features.activityIntervals();
 
         double acc = 0.0;
 
@@ -73,11 +67,6 @@ public class GaussianScheduleOverlapKernel implements Kernel, ScheduleKernelBase
                 : lambda2PerActivity.keySet();
 
         for (Activity act : activeActivities) {
-
-            // if (act.equals(Activity.HOME)) {
-            //     continue;
-            // }
-            
             List<Tuple<Double, Double>> sim = simActivityIntervals.get(act);
             List<Tuple<Double, Double>> obs = observedActivityIntervals.get(act);
 
@@ -100,12 +89,8 @@ public class GaussianScheduleOverlapKernel implements Kernel, ScheduleKernelBase
             acc += (d * d) / lambda2PerActivity.getOrDefault(act, lambda2);
         }
 
-        double k = Math.exp(-0.5 * acc);
-
-        setCached(rt, summary, k);
-        return k;
+        return Math.exp(-0.5 * acc);
     }
-
 
     @Override
     public double[] getParameters() {
@@ -116,12 +101,5 @@ public class GaussianScheduleOverlapKernel implements Kernel, ScheduleKernelBase
     public void setParameters(double[] p) {
         this.lambda = p[0];
         this.lambda2 = this.lambda * this.lambda;
-    }
-
-
-
-    @Override
-    public void configureRequiredSummary(KernelSummary summary) {
-        summary.setTrackActivityIntervals(true);
     }
 }

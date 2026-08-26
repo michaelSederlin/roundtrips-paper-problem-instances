@@ -1,4 +1,4 @@
-package disaggregate.kernels;
+package disaggregate.weights;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +48,6 @@ public class ActivityIntervals {
             addInterval(activityMap, Activity.HOME, 0.0, firstDep_h);
         }
 
-        // Add interval for each destination activity occurrence
         for (int ii = 0; ii < legs.size(); ii++) {
             Trip.Leg leg = legs.get(ii);
             Activity activity = leg.destinationActivity;
@@ -56,7 +55,6 @@ public class ActivityIntervals {
             double start_h = leg.end / 60.0;
             double end_h = (ii < legs.size() - 1) ? (legs.get(ii + 1).start / 60.0) : horizon_h;
 
-            // clamp observed times into [0, horizon].
             start_h = Math.max(0.0, Math.min(horizon_h, start_h));
             end_h   = Math.max(0.0, Math.min(horizon_h, end_h));
 
@@ -74,7 +72,10 @@ public class ActivityIntervals {
      * @param accruingNodes for activities restricted to a single node, the node that counts.
      *                      An activity absent from the map is not restricted and all of its
      *                      stays are included.
+     *
+     * this aims to ensure that activities are not distributed across nodes excessively
      */
+
     public static Map<Activity, List<Tuple<Double, Double>>> from(RoundTrip<? extends ActivityNode> rt, double horizon_h, Map<Activity, ActivityNode> accruingNodes) {
         Map<Activity, List<Tuple<Double, Double>>> activityMap = createEmptyActivityIntervals();
 

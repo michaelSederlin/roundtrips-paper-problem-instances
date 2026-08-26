@@ -1,4 +1,4 @@
-package disaggregate.model.weights;
+package disaggregate.weights;
 
 import disaggregate.model.Activity;
 import disaggregate.model.ActivityNode;

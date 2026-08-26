@@ -6,8 +6,7 @@ import java.io.PrintWriter;
 import java.nio.file.Path;
 
 import disaggregate.model.ActivityNode;
-// import disaggregate.model.weights.ExplainResponsesByRoundTrips;
-import disaggregate.model.weights.ResponseWeight;
+import disaggregate.weights.ResponseWeight;
 import se.vti.utils.misc.metropolishastings.MHAbstractStateProcessor;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.utils.misc.metropolishastings.MHWeight;

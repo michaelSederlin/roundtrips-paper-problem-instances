@@ -4,8 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import common.XMLStateLogger;
-import disaggregate.kernels.CompositeKernel;
-import disaggregate.kernels.Kernel;
 import disaggregate.model.Activity;
 import disaggregate.model.Person;
 import disaggregate.model.SurveyResponse;
@@ -15,6 +13,8 @@ import disaggregate.rvu.MDDRRepository;
 import disaggregate.rvu.Trip;
 import disaggregate.rvu.UPBD;
 import disaggregate.rvu.UPBDRepository;
+import disaggregate.weights.CompositeKernel;
+import disaggregate.weights.Kernel;
 import se.vti.roundtrips.common.Scenario;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.single.RoundTrip;

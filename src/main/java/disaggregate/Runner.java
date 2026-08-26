@@ -26,9 +26,8 @@ import se.vti.utils.misc.metropolishastings.MHWeightsToFileLogger;
 import se.vti.utils.misc.metropolishastings.terminationcriteria.BlockAverageTerminationCriterion;
 import se.vti.utils.misc.metropolishastings.terminationcriteria.CombinedAnyTerminationCriterion;
 import se.vti.utils.misc.metropolishastings.terminationcriteria.FixedNumberOfIterationsTerminationCriterion;
-import disaggregate.kernels.*;
 import disaggregate.model.*;
-import disaggregate.model.weights.*;
+import disaggregate.weights.*;
 import disaggregate.rvu.MDDR;
 import disaggregate.rvu.MDDRRepository;
 import disaggregate.rvu.UPBD;
@@ -36,7 +35,7 @@ import disaggregate.rvu.UPBDRepository;
 import disaggregate.utils.LoadOpportunityWeights;
 import disaggregate.utils.MatrixDataReader;
 import disaggregate.utils.ScenarioUtils;
-import disaggregate.utils.summaries.UniqueActivityNodeSummary;
+import disaggregate.utils.UniqueActivityNodeSummary;
 import se.vti.roundtrips.common.Scenario;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.multiple.MultiRoundTripJsonIO;
@@ -75,7 +74,7 @@ public class Runner implements Callable<Integer> {
         Path scenarioPath = Path.of(opts.scenarioDir);
         Path outputPath = Path.of(opts.outputDir).resolve(opts.name);
         Path runOutputPath = resolveRunOutputPath(outputPath);
-        int effectiveMsgInterval = (opts.msgInterval < 0) ? (opts.max_number_of_iterations != null ? opts.max_number_of_iterations / 100 : 1000) : opts.msgInterval;
+        int effectiveMsgInterval = (opts.msg_interval < 0) ? (opts.max_number_of_iterations != null ? opts.max_number_of_iterations / 100 : 1000) : opts.msg_interval;
 
         Files.createDirectories(runOutputPath);
         ThreadContext.put("runId", "amal");
@@ -84,40 +83,28 @@ public class Runner implements Callable<Integer> {
 
         logger.info("===== AMAL Parallel Simulation setup =====");
         logger.info("--- Run ---");
-        logger.info("  name={}  |  maxProcesses={}", opts.name, opts.maxProcesses > 0 ? opts.maxProcesses : "auto");
+        logger.info("  name={}  |  maxProcesses={}", opts.name, opts.max_processes > 0 ? opts.max_processes : "auto");
         logger.info("  max_number_of_iterations={}  |  seed={}  |  msgInterval={}", opts.max_number_of_iterations, opts.seed, effectiveMsgInterval);
-        logger.info("  timeBinSize={}h  |  horizon={}h  |  stationarityTolerance={}", opts.timeBinSize, opts.horizon, opts.stationarity_tolerance);
+        logger.info("  timeBinSize={}h  |  horizon={}h  |  stationarityTolerance={}", opts.time_bin_size, opts.horizon, opts.stationarity_tolerance);
         logger.info("--- Paths ---");
         logger.info("  scenarioDir:   {}", scenarioPath.toAbsolutePath());
         logger.info("  outputDir:     {}", outputPath.toAbsolutePath());
         logger.info("  runOutputDir:  {}", runOutputPath.toAbsolutePath());
-        logger.info("  warmStartFile: {}", opts.warmStartFile != null ? opts.warmStartFile : "none");
-        logger.info("--- Prior ---");
-        logger.info("  binomialPrior={}", opts.binomialPrior);
+        logger.info("  warmStartFile: {}", opts.warm_start_file != null ? opts.warm_start_file : "none");
         logger.info("--- Traveler kernel ---");
         logger.info("  lAge={}  |  lInc={}  |  eta={}  |  threshold={}  |  travelerMixWeight={}",
-                opts.lAge, opts.lInc, opts.eta, opts.kernelThreshold, opts.travelerMixWeight);
-        logger.info("--- Schedule kernel (withKernelWeights={}, factor={}) ---", opts.withKernelWeights, opts.kernelFactor);
-        logger.info("  nStops:  bandwidth={}  |  weight={}", opts.nStopsBandwidth, opts.n_stops_weight);
-        logger.info("  overlap: bandwidth={}  |  weight={}", opts.scheduleOverlapBandwidth, opts.schedule_overlap_weight);
-        logger.info("  scheduleMixWeight={}  |  subtractPartition={}", opts.schedule_mixing_weight, opts.subtractPartition);
-        logger.info("--- Staying weight (withStayingWeight={}, geometricMean={}) ---",
-                opts.with_staying_weight, opts.geometric_mean_staying_weight_flag);
-        logger.info("  withCenterStay={}  |  stayMixingWeight={}  |  normalizeWeightsAcrossNodes={}  |  normalizeByMeanSigma={}",
-                opts.with_center_stay, opts.stay_mixing_weight, opts.normalize_weights_across_nodes, opts.normalize_by_mean_sigma);
+                opts.lambda_age, opts.lambda_income, opts.eta, opts.traveler_kernel_threshold, opts.traveler_kernel_mixing_weight);
+        logger.info("--- Schedule kernel (withKernelWeights={}, factor={}) ---", opts.with_kernel_weights, opts.kernel_mixing_weight);
+        logger.info("  nStops:  bandwidth={}  |  weight={}", opts.n_stops_bandwidth, opts.n_stops_mixing_weight);
+        logger.info("  overlap:  weight={}", opts.schedule_overlap_mixing_weight);
+        logger.info("  scheduleMixWeight={}", opts.schedule_mixing_weight);
+        logger.info("--- Staying weight (withStayingWeight={}) ---",
+                opts.with_staying_weight);
+        logger.info("  stayMixingWeight={}  |  normalizeWeightsAcrossNodes={} ",
+                opts.stay_mixing_weight, opts.normalize_weights_across_nodes);
         logger.info("--- Movement weight (withMovementWeight={}) ---", opts.with_movement_weight);
-        logger.info("  geometricMean={}  |  traceNormalized={}  |  moveMixingWeight={}",
-                opts.geometric_mean_movement_weight, opts.trace_normalized_movement_weight, opts.move_mixing_weight);
-        logger.info("--- Output ---");
-        logger.info("  writeFinalState={}  |  verbose={}", opts.writeFinalState, opts.verbose);
-        logger.info("--- Plotting ---");
-        logger.info("  weights={}  |  convergenceStats={}  |  evaluationPlots={}  |  surveyTimeStructure={}",
-                opts.plot_weights, opts.plot_convergence_stats, opts.plot_evaluation_plots, opts.plot_survey_time_structure);
-        logger.info("  activityLocation={}  |  activityDurationReproduction={}  |  kernelMatrices={}  |  reproduction={}",
-                opts.activity_location_plotter, opts.plot_activity_duration_reproduction, opts.plot_kernel_matrices, opts.plot_reproduction);
-        logger.info("  odAndTransitions={}", opts.plot_od_and_transitions);
-        logger.info("  populationReproduction={}", opts.plot_population_reproduction);
-        logger.info("  individualReproduction={}", opts.plot_individual_reproduction);
+        logger.info("  moveMixingWeight={}",
+                opts.move_mixing_weight);
         logger.info("===========================================");
 
         // LOAD FULL POPULATION
@@ -127,15 +114,9 @@ public class Runner implements Callable<Integer> {
         List<Person> completeAgents = new ArrayList<>();
         List<Person> completeRespondents = new ArrayList<>();
 
-        for (Person p : population) {
-            if ((opts.respondentSelection.wanted_respondents != null) && (!opts.respondentSelection.wanted_respondents.contains(p.getName()))) continue;
-            completeRespondents.add(p);
-        }
+        for (Person p : population) completeRespondents.add(p);
 
-        for (Person p : population) {
-            if ((opts.wanted_agents != null) && (!opts.wanted_agents.contains(p.getName()))) continue;
-            completeAgents.add(p);
-        }
+        for (Person p : population) completeAgents.add(p);
 
         logger.info("Loaded {} respondents and {} agents from {} persons", completeRespondents.size(), completeAgents.size(), population.size());
 
@@ -147,18 +128,16 @@ public class Runner implements Callable<Integer> {
         final Map<Tuple<String, String>, Double> finalOdMatrix = odMatrix;
 
         final List<Person> finalCompleteRespondents;
-        // List<Person> kernelRespondents = ;
-        if (opts.respondentSelection.n_respondents != null) {
+        if (opts.n_respondents != null) {
             List<Person> shuffled = new ArrayList<>(completeRespondents);
             Collections.shuffle(shuffled, new Random(opts.seed));
-            finalCompleteRespondents = shuffled.subList(0, Math.min(opts.respondentSelection.n_respondents, shuffled.size()));
+            finalCompleteRespondents = shuffled.subList(0, Math.min(opts.n_respondents, shuffled.size()));
         } else {
             finalCompleteRespondents = completeRespondents;
         }
-        // final List<Person> finalKernelRespondents = finalCompleteRespondents;
         logger.info("Kernel respondents: {} of {}", finalCompleteRespondents.size(), population.size());
 
-        int nParts = (opts.maxProcesses > 0) ? opts.maxProcesses : Runtime.getRuntime().availableProcessors();
+        int nParts = (opts.max_processes > 0) ? opts.max_processes : Runtime.getRuntime().availableProcessors();
         List<List<Person>> partitions = splitEvenly(completeAgents, nParts);
         logger.info("Split {} persons into {} partitions", completeAgents.size(), partitions.size());
 
@@ -176,7 +155,7 @@ public class Runner implements Callable<Integer> {
                 try {
                     runPartition(partName, agents, finalCompleteRespondents,
                             finalOdMatrix,
-                            effectiveMsgInterval, partOutputDir, scenarioPath, opts.warmStartFile, partFrom);
+                            effectiveMsgInterval, partOutputDir, scenarioPath, opts.warm_start_file, partFrom);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -234,8 +213,8 @@ public class Runner implements Callable<Integer> {
             logger.info("Starting partition {} ({} agents) on thread {}", partName, agents.size(), Thread.currentThread().getName());
 
             Scenario<ActivityNode> scenario = new Scenario<>(new Random(opts.seed));
-            scenario.setNumberOfTimeBins((int) (opts.horizon / opts.timeBinSize));
-            scenario.setTimeBinSize_h(opts.timeBinSize);
+            scenario.setNumberOfTimeBins((int) (opts.horizon / opts.time_bin_size));
+            scenario.setTimeBinSize_h(opts.time_bin_size);
             ScenarioUtils.loadNetworkFromTSV(scenario, scenarioPath);
 
             // Activities restricted to a single (highest-opportunity) node per round trip.
@@ -243,7 +222,7 @@ public class Runner implements Callable<Integer> {
             for (Map.Entry<Activity, Boolean> entry : opts.unique_activity_nodes.entrySet()) {
                 if (Boolean.TRUE.equals(entry.getValue())) uniqueActivities.add(entry.getKey());
             }
-            if (!uniqueActivities.isEmpty() && opts.schedule_overlap_c != null) {
+            if (!uniqueActivities.isEmpty()) {
                 // lambda2PerActivity.keySet() is the schedule overlap kernel's scored activity
                 // set, so a restricted activity without a median duration would be collapsed
                 // here but never scored there.
@@ -257,10 +236,9 @@ public class Runner implements Callable<Integer> {
             }
 
             Map<ActivityNode, Double> opportunityWeights = null;
-            if (opts.with_staying_weight || opts.geometric_mean_staying_weight_flag || !uniqueActivities.isEmpty()) {
+            if (opts.with_staying_weight || !uniqueActivities.isEmpty()) {
                 opportunityWeights = LoadOpportunityWeights.load(scenarioPath.resolve("opportunity_weights.csv"), scenario);
                 if (opts.normalize_weights_across_nodes) opportunityWeights = LoadOpportunityWeights.divideByMaxAcrossNodes(opportunityWeights);
-                if (opts.normalize_by_mean_sigma) opportunityWeights = LoadOpportunityWeights.normalizeByMeanSigma(opportunityWeights);
             }
 
             new PopulationWriter(respondents, partOutputDir.resolve("respondents.tsv").toString()).write();
@@ -286,7 +264,7 @@ public class Runner implements Callable<Integer> {
             }
 
             // Must be registered before any weight registers its own summary: summaries are
-            // updated in registration order, and both StayingSummary and KernelSummary read
+            // updated in registration order, and both StayingSummary and ExplainSummary read
             // this one during their own update. Registering it here is also what switches the
             // feature on -- both look it up on the MultiRoundTrip and treat absence as "off".
             if (!uniqueActivities.isEmpty()) {
@@ -306,13 +284,12 @@ public class Runner implements Callable<Integer> {
                     .setConvergenceStatsFileName(partOutputDir.resolve("convergenceStats.tsv").toString())
                     .setRelativeVarianceTolerance(opts.stationarity_tolerance).setStandardizedMeanTolerance(opts.stationarity_tolerance);
 
-            if (opts.enforceCorrectHomeLocation) runner.addIndividualWeight(new StrictlyEnforceCorrectHomeLocationWeight(homeNodes));
+            if (opts.enforce_correct_home_location) runner.addIndividualWeight(new StrictlyEnforceCorrectHomeLocationWeight(homeNodes));
             if (opts.enforce_unique_home_location) runner.addIndividualWeight(new StrictlyEnforceUniqueHomeLocation());
             logger.info("\tAdded StrictlyEnforeCorrectHomeLocationWeight as individualWeight");
             runner.addIndividualWeight(new StrictlyRequireMinNumberOfStops<>(1));
 
-            var stayingWeight = new StayingWeight(opportunityWeights, 1e-5)
-                .withExponent(opts.staying_weight_exponent);
+            var stayingWeight = new StayingWeight(opportunityWeights, 1e-5);
             stayingWeight.configureRequiredSummary(initState);
 
             runner.addPopulationWeight(stayingWeight, opts.stay_mixing_weight);
@@ -324,8 +301,8 @@ public class Runner implements Callable<Integer> {
             runner.addPopulationWeight(movementWeight, opts.move_mixing_weight);
             logger.info("Geometric Mean Movement weight added");
             
-            ExplainRoundTripsByResponses kernelWeights = new ExplainRoundTripsByResponses(responses, agents, opts.kernelThreshold);
-            runner.addPopulationWeight(kernelWeights, opts.kernelFactor);
+            ExplainRoundTripsByResponses kernelWeights = new ExplainRoundTripsByResponses(responses, agents, opts.traveler_kernel_threshold);
+            runner.addPopulationWeight(kernelWeights, opts.kernel_mixing_weight);
             kernelWeights.configureRequiredSummary(initState);
             logger.info("Kernel weights added");
 
@@ -338,7 +315,7 @@ public class Runner implements Callable<Integer> {
             runner.addStateProcessor(new ActivityDurationLogger<>(effectiveMsgInterval, partOutputDir.resolve("activityDurations.tsv").toString()));
             runner.addStateProcessor(new ProgressLogger<>(effectiveMsgInterval, partName));
 
-            if (!opts.verbose) runner.setMessageInterval(0);
+            runner.setMessageInterval(0);
 
             if (opts.min_number_of_stable_samples > 0) blockCrit.setMinSamples(opts.min_number_of_stable_samples); 
             CombinedAnyTerminationCriterion<MultiRoundTrip<ActivityNode>> tc = new CombinedAnyTerminationCriterion<>(blockCrit);
@@ -348,7 +325,7 @@ public class Runner implements Callable<Integer> {
             logger.info("Partition {}: Starting MCMC", partName);
             runner.run();
 
-            if (opts.writeFinalState) {
+            if (opts.write_final_state) {
                 MultiRoundTripJsonIO.singleton().writeToFile(
                         runner.getFinalState(),
                         partOutputDir.resolve("finalState.json").toString());
@@ -362,26 +339,25 @@ public class Runner implements Callable<Integer> {
     
     List<SurveyResponse<ActivityNode>> buildKernelResponses(List<Person> kernelRespondents, Options opts) {
         logger.info("Kernel construction: traveler(lAge={}, lInc={}, eta={}) | nStops={} | scheduleOverlap(bw={})",
-                opts.lAge, opts.lInc, opts.eta,opts.n_stops_weight > 0 ? "ON(bw=" + opts.n_stops_weight + ")" : "OFF",
-                opts.schedule_overlap_weight > 0 ? "ON(bw=" + opts.schedule_overlap_weight + ")" : "OFF");
+                opts.lambda_age, opts.lambda_income, opts.eta,opts.n_stops_mixing_weight > 0 ? "ON(bw=" + opts.n_stops_mixing_weight + ")" : "OFF",
+                opts.schedule_overlap_mixing_weight > 0 ? "ON(bw=" + opts.schedule_overlap_mixing_weight + ")" : "OFF");
 
-        double[] travelerParams = {opts.lAge, opts.lInc, opts.eta};
+        double[] travelerParams = {opts.lambda_age, opts.lambda_income, opts.eta};
         List<SurveyResponse<ActivityNode>> responses = new ArrayList<>();
+
         for (Person person : kernelRespondents) {
             Kernel kTrav = new TravelerKernel(person, travelerParams);
 
             CompositeKernel kSched = new CompositeKernel();
-            if (opts.n_stops_weight > 0) kSched.add(new NumberOfStopsKernel(person.getTrip().getStopCount(), opts.nStopsBandwidth), opts.n_stops_weight);
-            if (opts.schedule_overlap_weight > 0) {
-                GaussianScheduleOverlapKernel kOverlap = (opts.schedule_overlap_c != null)
-                    ? new GaussianScheduleOverlapKernel(person, opts.schedule_overlap_c, opts.median_durations)
-                    : new GaussianScheduleOverlapKernel(person, opts.scheduleOverlapBandwidth);
-                kSched.add(kOverlap, opts.schedule_overlap_weight);
+            if (opts.n_stops_mixing_weight > 0) kSched.add(new NumberOfStopsKernel(person.getTrip().getStopCount(), opts.n_stops_bandwidth), opts.n_stops_mixing_weight);
+            if (opts.schedule_overlap_mixing_weight > 0) {
+                GaussianScheduleOverlapKernel kOverlap = new GaussianScheduleOverlapKernel(person, opts.median_durations);
+                kSched.add(kOverlap, opts.schedule_overlap_mixing_weight);
             }
 
             CompositeKernel k = new CompositeKernel().add(kTrav, Role.TRAVELER).add(kSched, Role.SCHEDULE);
 
-            k.setMixtureWeights(new double[] { opts.travelerMixWeight, opts.schedule_mixing_weight});
+            k.setMixtureWeights(new double[] { opts.traveler_kernel_mixing_weight, opts.schedule_mixing_weight});
             responses.add(new SurveyResponse<>(person, k));
         }
         return responses;

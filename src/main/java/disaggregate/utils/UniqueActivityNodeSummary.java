@@ -1,4 +1,4 @@
-package disaggregate.utils.summaries;
+package disaggregate.utils;
 
 import java.util.EnumMap;
 import java.util.EnumSet;
