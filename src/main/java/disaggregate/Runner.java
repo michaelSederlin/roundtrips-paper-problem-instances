@@ -28,10 +28,7 @@ import se.vti.utils.misc.metropolishastings.terminationcriteria.CombinedAnyTermi
 import se.vti.utils.misc.metropolishastings.terminationcriteria.FixedNumberOfIterationsTerminationCriterion;
 import disaggregate.model.*;
 import disaggregate.weights.*;
-import disaggregate.rvu.MDDR;
-import disaggregate.rvu.MDDRRepository;
-import disaggregate.rvu.UPBD;
-import disaggregate.rvu.UPBDRepository;
+import disaggregate.rvu.SurveyReader;
 import disaggregate.utils.LoadOpportunityWeights;
 import disaggregate.utils.MatrixDataReader;
 import disaggregate.utils.ScenarioUtils;
@@ -108,9 +105,9 @@ public class Runner implements Callable<Integer> {
         logger.info("===========================================");
 
         // LOAD FULL POPULATION
-        UPBD upbd = new UPBDRepository().fromCSV(scenarioPath.resolve("upbd.csv")).load();
-        MDDR mddr = new MDDRRepository().fromCSV(scenarioPath.resolve("mddr.csv")).load();
-        List<Person> population = ScenarioUtils.loadRespondents(upbd, mddr, upbd.size());
+        List<Person> population = SurveyReader.readPopulation(
+                scenarioPath.resolve("upbd.csv"),
+                scenarioPath.resolve("mddr.csv"));
         List<Person> completeAgents = new ArrayList<>();
         List<Person> completeRespondents = new ArrayList<>();
 

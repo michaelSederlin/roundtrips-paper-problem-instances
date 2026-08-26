@@ -8,11 +8,6 @@ import disaggregate.model.Activity;
 import disaggregate.model.Person;
 import disaggregate.model.SurveyResponse;
 import disaggregate.model.ActivityNode;
-import disaggregate.rvu.MDDR;
-import disaggregate.rvu.MDDRRepository;
-import disaggregate.rvu.Trip;
-import disaggregate.rvu.UPBD;
-import disaggregate.rvu.UPBDRepository;
 import disaggregate.weights.CompositeKernel;
 import disaggregate.weights.Kernel;
 import se.vti.roundtrips.common.Scenario;
@@ -36,33 +31,6 @@ import java.util.Set;
 
 public class ScenarioUtils {
     static Logger logger = LogManager.getLogger(ScenarioUtils.class);
-    public static List<Person> loadRespondents(UPBD upbd, MDDR mddr, int n) {
-        List<Person> population = new ArrayList<>();
-
-        for (String id : upbd.getIds()) {
-            if (population.size() >= n) break;
-
-            Trip trip = mddr.getTripById(id);
-            Person p = new Person(population.size(),
-                    upbd.getPersonHome(id),
-                    upbd.getPersonAge(id),
-                    upbd.getPersonIncome(id),
-                    upbd.getPersonGender(id)
-            );
-
-            p.setName(id);
-            p.assignPersonTrip(trip);
-            try {
-                p.validate();
-                population.add(p);
-            } catch (IllegalArgumentException e) {
-                logger.warn("Skipping person {} due to validation error: {}", id, e.getMessage());
-            }
-        }
-
-        return population;
-    }
-
     public static <N extends ActivityNode> void writeNetwork(Scenario<N> scenario, Path filePath) {
         writeNetwork(scenario, filePath.toString());
     }
@@ -233,40 +201,6 @@ public class ScenarioUtils {
 
     public static void writePopulation(java.util.List<Person> pop, java.nio.file.Path fp) {
         new common.PopulationWriter(pop, fp.toString()).write();
-    }
-
-    public static List<Person> loadPopulationFromFiles(Path datadir, String upbdFileName, String mddrFileName, Random random) throws Exception {
-        UPBD upbd = new UPBDRepository()
-        .fromCSV(datadir.resolve(upbdFileName).toString())
-        .withRandom(random)
-        .load();
-        
-        MDDR mddr = new MDDRRepository()
-        .fromCSV(datadir.resolve(mddrFileName).toString())
-        .withRandom(random)
-        .load();
-        
-        List<Person> population = new ArrayList<>();
-        int idx = 0;
-
-        for (String personId : upbd.getIds()) {
-            Person person = new Person(
-                idx++,
-                upbd.getPersonHome(personId),
-                upbd.getPersonAge(personId),
-                upbd.getPersonIncome(personId),
-                upbd.getPersonGender(personId)
-            );
-            person.setName(personId);
-            
-            Trip trip = mddr.getTripById(personId);
-            if (trip != null) {
-                person.assignPersonTrip(trip);
-            }
-            
-            population.add(person);
-        }
-        return population;
     }
 
     public static void loadNetworkFromTSV(Scenario<ActivityNode> scenario, Path networkDir) throws FileNotFoundException {
