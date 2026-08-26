@@ -29,9 +29,10 @@ public class Options {
 
     // Prior
     @Option(names = "--enforce-correct-home-location") public boolean enforce_correct_home_location;
-    @Option(names = "--strictly-periodic-schedule") public boolean strictly_periodic_schedule;
 
     @Option(names = "--with-kernel-weights") public boolean with_kernel_weights;
+    @Option(names = "--kernel-mixing-weight", defaultValue = "1.0") public double kernel_mixing_weight;
+
     // --- Traveler kernel ---
     @Option(names = "--lambda-age", defaultValue = "3.0") public double lambda_age;
     @Option(names = "--lambda-income", defaultValue = "75.0") public double lambda_income;
@@ -41,11 +42,10 @@ public class Options {
 
     // --- Schedule kernel ---
     @Option(names = "--n-stops-bandwidth", defaultValue = "0") public double n_stops_bandwidth;
-    @Option(names = "--kernel-mixing-weight", defaultValue = "1.0") public double kernel_mixing_weight;
-    @Option(names = "--schedule-mixing-weight",  defaultValue = "1.0") public double schedule_mixing_weight;
-
+    
     @Option(names = "--n-stops-mixing-weight", defaultValue = "1.0") public double n_stops_mixing_weight;
     @Option(names = "--schedule-overlap-mixing-weight", defaultValue = "1.0") public double schedule_overlap_mixing_weight;
+    @Option(names = "--schedule-kernel-mixing-weight",  defaultValue = "1.0") public double schedule_kernel_mixing_weight;
 
     // ==== Activity Median Durations ===
     @Option(names = "--median-duration") public Map<Activity, Double> median_durations = new EnumMap<>(Activity.class);
@@ -61,6 +61,7 @@ public class Options {
     @Option(names = "--with-staying-weight") public boolean with_staying_weight;
     @Option(names = "--stay-mixing-weight", defaultValue="1.0") public double stay_mixing_weight;
     @Option(names = "--normalize-weights-across-nodes") public boolean normalize_weights_across_nodes;
+
     @Option(names = "--with-movement-weight") public boolean with_movement_weight;
     @Option(names = "--move-mixing-weight", defaultValue = "1.0") public double move_mixing_weight;
     @Option(names = "--with-raw-movement-counts") public boolean raw_counts_flag;

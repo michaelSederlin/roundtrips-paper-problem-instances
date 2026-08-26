@@ -96,7 +96,7 @@ public class Runner implements Callable<Integer> {
         logger.info("--- Schedule kernel (withKernelWeights={}, factor={}) ---", opts.with_kernel_weights, opts.kernel_mixing_weight);
         logger.info("  nStops:  bandwidth={}  |  weight={}", opts.n_stops_bandwidth, opts.n_stops_mixing_weight);
         logger.info("  overlap:  weight={}", opts.schedule_overlap_mixing_weight);
-        logger.info("  scheduleMixWeight={}", opts.schedule_mixing_weight);
+        logger.info("  scheduleMixWeight={}", opts.schedule_kernel_mixing_weight);
         logger.info("--- Staying weight (withStayingWeight={}) ---",
                 opts.with_staying_weight);
         logger.info("  stayMixingWeight={}  |  normalizeWeightsAcrossNodes={} ",
@@ -362,7 +362,7 @@ public class Runner implements Callable<Integer> {
                 .add(kTrav, CompositeKernel.Role.TRAVELER)
                 .add(kSched, CompositeKernel.Role.SCHEDULE);
 
-            k.setMixtureWeights(new double[] { opts.traveler_kernel_mixing_weight, opts.schedule_mixing_weight});
+            k.setMixtureWeights(new double[] { opts.traveler_kernel_mixing_weight, opts.schedule_kernel_mixing_weight});
             responses.add(new SurveyResponse<>(person, k));
         }
         return responses;

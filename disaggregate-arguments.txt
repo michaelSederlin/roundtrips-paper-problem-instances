@@ -3,9 +3,9 @@
 # =====================================================================================
 
 --name disaggregate-calibration
---scenarioDir "data/scenarios/amal/results_paper/2026 08 07/full"
---outputDir output/amal/
---warmStartFile "data/scenarios/amal/results_paper/2026 08 07/full/finalState.json" # Starting from prior
+--scenario-dir "data/scenarios/amal/results_paper/2026 08 07/full"
+--output-dir output/amal/
+--warm-start-file "data/scenarios/amal/results_paper/2026 08 07/full/finalState.json" # Starting from prior
 
 ### ===========================
 ### === === RUN CONFIG ===  ===
@@ -13,9 +13,9 @@
 #--maxProcesses 2
 
 --seed 1084
---timeBinSize 1
+--time-bin-size 1
 --horizon 24
---msgInterval 10000
+--msg-interval 10000
 --stationarity-tolerance 0.20
 --min-number-of-stable-samples 30
 
@@ -27,36 +27,35 @@
 ### ===== TRAVELER KERNEL ====
 ### ==========================
 
---withKernelWeights
---kernelFactor 1.0
---lAge 3.0
---lInc 60.0
---eta 0.3
---travelerKernelThreshold 0.00005
---travelerMixWeight 1.0
+--with-kernel-weights
+--kernel-mixing-weight 1.0
+--lambda-age 3.0
+--lambda-income 60.0
+--eta -1 # 0.3
+--traveler-kernel-threshold 0.00005
+--traveler-kernel-mixing-weight 1.0
 
 ### ==========================
 ### ===== SCHEDULE KERNEL ====
 ### ==========================
 
---nStopsBandwidth 0.3
+--n-stops-bandwidth 0.3
 
---schedule-overlap-c 1.0
 --median-duration EDUCATION=0.3
 --median-duration HOME=2.5
 --median-duration OTHER=0.3
 --median-duration WORK=0.75
 
---nStopsWeight 1
---scheduleOverlapWeight 1
---scheduleMixWeight 1
+--n-stops-mixing-weight 1
+--schedule-overlap-mixing-weight 1
+--schedule-kernel-mixing-weight 1
 
 ### ==========================
 ### ===== STAYING WEIGHT ===== 
 ### ==========================
 
---withStayingWeight
---stayMixingWeight 1.5
+--with-staying-weight
+--stay-mixing-weight 1.5
 
 --unique-activity-node HOME=true
 --unique-activity-node WORK=true
@@ -66,11 +65,9 @@
 ### ===== MOVEMENT WEIGHT ===== 
 ### ===========================
 
-# OFF # --withMovementWeight
-# OFF # --geometricMeanMovementWeight
-# OFF # --movement-weight-exponent 1.0
-# OFF # --moveMixingWeight 1.5
-# OFF # --with-raw-movement-counts
+--with-movement-weight
+--move-mixing-weight 1.5
+--with-raw-movement-counts
 
 ### ==========================
 ### ======== PLOTTING ========
@@ -80,6 +77,3 @@
 #--validationStatesXml "../amal/Results_Paper/2026 08 07/amal_validation/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml"
 
 #--output-suffix .png
-
---no-activity-location-plotter
---no-plot-kernel-matrices
