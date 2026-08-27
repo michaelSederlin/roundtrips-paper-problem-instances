@@ -54,13 +54,6 @@ public class Runner implements Callable<Integer> {
         System.exit(new CommandLine(new Runner()).execute(args));
     }
 
-    static Path resolveRunOutputPath(Path outputPath) {
-        String runName = System.getenv("RUN_NAME");
-        String timestamp = LocalDateTime.now(RUN_TIMESTAMP_ZONE).format(RUN_TIMESTAMP_FORMAT);
-        String folderName = (runName == null || runName.isBlank()) ? timestamp : runName + "_" + timestamp;
-        return outputPath.resolve(folderName);
-    }
-
     static void copyArgumentsFileIfPresent(Path runOutputPath) throws IOException {
         Path argsFile = Path.of("amal-arguments.txt");
         if (Files.exists(argsFile)) {
@@ -71,8 +64,14 @@ public class Runner implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         Path scenarioPath = Path.of(opts.scenario_dir);
-        Path outputPath = Path.of(opts.output_dir).resolve(opts.name);
-        Path runOutputPath = resolveRunOutputPath(outputPath);
+        Path runOutputPath = Path.of(opts.output_dir).resolve(opts.name);
+        if (Files.exists(runOutputPath)) {
+            try (var files = Files.list(runOutputPath)) {
+                if (files.findAny().isPresent()) {
+                    throw new IllegalStateException("runOutputPath " + runOutputPath + " exists and is not empty");
+                }
+            }
+        }
         int effectiveMsgInterval = (opts.msg_interval < 0) ? (opts.max_number_of_iterations != null ? opts.max_number_of_iterations / 100 : 1000) : opts.msg_interval;
 
         Files.createDirectories(runOutputPath);
@@ -89,7 +88,6 @@ public class Runner implements Callable<Integer> {
         logger.info("  timeBinSize={}h  |  horizon={}h  |  stationarityTolerance={}", opts.time_bin_size, opts.horizon, opts.stationarity_tolerance);
         logger.info("--- Paths ---");
         logger.info("  scenarioDir:   {}", scenarioPath.toAbsolutePath());
-        logger.info("  outputDir:     {}", outputPath.toAbsolutePath());
         logger.info("  runOutputDir:  {}", runOutputPath.toAbsolutePath());
         logger.info("  warmStartFile: {}", opts.warm_start_file != null ? opts.warm_start_file : "none");
         logger.info("--- Traveler kernel ---");

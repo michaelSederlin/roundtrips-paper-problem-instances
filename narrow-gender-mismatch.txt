@@ -2,7 +2,7 @@
 # AMAL arguments estimation (ParallellAmalRunner / renate.cases.RunnerOptions)
 # =====================================================================================
 
---name disaggregate-calibration
+--name disaggregate-calibration-narrow-gender-matching
 --scenario-dir data/survey
 --output-dir output/
 --warm-start-file data/survey/finalState.json 
@@ -29,7 +29,7 @@
 --kernel-mixing-weight 1.0
 --lambda-age 3.0
 --lambda-income 60.0
---eta 0.2
+--eta 0.1
 --traveler-kernel-threshold 0.00005
 --traveler-kernel-mixing-weight 1.0
 
