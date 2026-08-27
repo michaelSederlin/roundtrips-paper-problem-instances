@@ -12,9 +12,9 @@ from plotting.plot_age_bin_activity_durations import main as age_bins_main
 
 dds_root = get_environment_root()
 
-MEASUREMENT_STATES_XML = dds_root / "amal/Results_Paper/2026 08 07/amal_measurement/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml"
-VALIDATION_STATES_XML = dds_root / "amal/Results_Paper/2026 08 07/amal_validation/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml"
-DATA_DIR = dds_root / "renate/data/scenarios/amal/results_paper/2026 08 07/full"
+MEASUREMENT_STATES_XML = Path("data/ground_truth/amal_measurement/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml")
+VALIDATION_STATES_XML = Path("data/ground_truth/amal_validation/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml")
+DATA_DIR = Path("data/survey")
 
 POPULATION_FILENAME = 'population.tsv'
 TARGET_FILENAME = 'population_merged.tsv'
@@ -26,20 +26,6 @@ MSG_INTERVAL = 10000
 SAVE = True
 SHOW = False
 OUTPUT_SUFFIX = '.pdf'
-
-# scenario = 'test'
-SCENARIOS = [
-    # 'narrow-n-100'
-    # 'n-responses-500',
-    # 'n-responses-100',
-    # 'n-responses-20',
-    # 'base',
-    # 'B2-schedov3',
-    # 'B1-schedov2'
-    # 'new'
-    'narrow-gaussian-gender'
-    ]
-
 
 def plot_scenario(scenario):
     results_dir = Path(scenario)
@@ -86,6 +72,5 @@ def plot_scenario(scenario):
                   output_suffix=OUTPUT_SUFFIX)
 
 
-if __name__ == "__main__":
-    for scenario in SCENARIOS:
-        plot_scenario(scenario)
+if __name__ == "__main__":    
+    plot_scenario("output/disaggregate-calibration/20260826-213731")
