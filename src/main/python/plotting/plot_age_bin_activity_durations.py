@@ -32,7 +32,7 @@ VALIDATION_COLOR = "coral"
 
 def sort_legend_entries(ax: plt.Axes):
     handles, labels = ax.get_legend_handles_labels()
-    order = ['Measurement Data Set', 'Validation Data Set', 'Estimation']
+    order = ['Measurement Data Set', 'Validation Data Set', 'Calibration']
     ordered_handles = [handles[labels.index(label)] for label in order if label in labels]
     ordered_labels = [label for label in order if label in labels]
     ax.legend(ordered_handles, ordered_labels)

@@ -32,7 +32,7 @@ LOCATION_EXTRA_BURN = 0
 def sort_legend_entries(ax: plt.Axes):
     # fontsize = ax.get_legend().get_texts()[0].get_fontsize()
     handles, labels = ax.get_legend_handles_labels()
-    order = ['Measurement Data Set', 'Validation Data Set', 'Estimation']
+    order = ['Measurement Data Set', 'Validation Data Set', 'Calibration']
     ordered_handles = [handles[labels.index(label)] for label in order if label in labels]
     ordered_labels = [label for label in order if label in labels]
     ax.legend(ordered_handles, ordered_labels)
@@ -53,7 +53,7 @@ def stay_activity(stay):
 
 
 def departure_hours(rt, time_bin_size):
-    """Departure hour-of-day of one RoundTrip, from <Departures> (estimation
+    """Departure hour-of-day of one RoundTrip, from <Departures> (calibration
     output) or, failing that, <State> bins[...] (merged/measurement files).
     The raw values are bin indices (hour = index * time_bin_size); convert
     before binning so the histogram is correct for any time_bin_size."""
@@ -80,7 +80,7 @@ def sample_metrics(mrt, time_bin_size):
     return counts
 
 
-def estimation_metrics(results_dir, convergence_filename, window, time_bin_size):
+def calibration_metrics(results_dir, convergence_filename, window, time_bin_size):
     """Post-burn-in mean of each metric per partition, summed across partitions
     (partitions are disjoint subpopulations, so population-level expected
     values are the sums of the per-partition expected values)."""
@@ -137,10 +137,10 @@ def _marginal_durations_of_sample(mrt, activities):
     return out
 
 
-def estimation_marginal_durations(results_dir, convergence_filename, window, activities):
+def calibration_marginal_durations(results_dir, convergence_filename, window, activities):
     """Per-activity flat list of marginal per-agent durations pooled over all
     kept post-burn-in samples of all partitions. Same two-pass partition/burn-in
-    aggregation as estimation_metrics; absences contribute 0.0 (marginal)."""
+    aggregation as calibration_metrics; absences contribute 0.0 (marginal)."""
     pooled = {a: [] for a in activities}
 
     # Pass 1: parse partitions and collect post-burn-in iteration arrays so the
@@ -179,11 +179,11 @@ def ground_truth_marginal_durations(xml_path, activities):
 def plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, save_dir,
                                      horizon: float = 24.0, save: bool = True,
                                      show: bool = False, output_suffix: str = ".pdf"):
-    """One panel per activity: overlaid marginal duration densities of estimation
+    """One panel per activity: overlaid marginal duration densities of calibration
     vs measurement (vs validation), pooled across agents/samples. Each activity
     panel is a grouped bar histogram over shared hourly duration bins, styled to
     match the other population bar plots (plot_bars)."""
-    series = [("Estimation", est_durs, "steelblue"),
+    series = [("Calibration", est_durs, "steelblue"),
               ("Measurement Data Set", meas_durs, MEASUREMENT_COLOR)]
     if val_durs is not None:
         series.append(("Validation Data Set", val_durs, VALIDATION_COLOR))
@@ -243,6 +243,7 @@ def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
     ax.set_ylim(bottom=0)
     ax.grid(axis="y", linestyle="--", alpha=0.5)
     ax.legend()
+    sort_legend_entries(ax)
     fig.tight_layout()
     save_show(fig, path, save=save, show=show, output_suffix=output_suffix)
 
@@ -264,7 +265,7 @@ def _zone_counts(datasets, act):
 
 def plot_location_reproduction(est, meas, val, save_dir, save: bool = True,
                               show: bool = False, output_suffix: str = ".pdf"):
-    datasets = {"estimation": est, "measurement": meas}
+    datasets = {"calibration": est, "measurement": meas}
     if val is not None:
         datasets["validation"] = val
 
@@ -284,16 +285,16 @@ def plot_location_reproduction(est, meas, val, save_dir, save: bool = True,
 
         fig, ax = plt.subplots()
         if "validation" in sub.columns:
-            ax.scatter(sub["validation"], sub["estimation"], alpha=0.6, color="coral",
-                       label="Estimation vs. Validation")
-        ax.scatter(sub["measurement"], sub["estimation"], alpha=0.4, facecolor="none",
-                   color="steelblue", label="Estimation vs. Measurement")
+            ax.scatter(sub["validation"], sub["calibration"], alpha=0.6, color="coral",
+                       label="Calibration vs. Validation")
+        ax.scatter(sub["measurement"], sub["calibration"], alpha=0.4, facecolor="none",
+                   color="steelblue", label="Calibration vs. Measurement")
         lim = sub.max().max() * 1.05
         ax.plot([0, lim], [0, lim], ":", color="gray", label="y = x")
         ax.set_xlim(0, lim)
         ax.set_ylim(0, lim)
         ax.set_xlabel("Locations per Zone — Measurement / Validation")
-        ax.set_ylabel("Locations per Zone — Estimation")
+        ax.set_ylabel("Locations per Zone — Calibration")
         ax.grid(True)
         ax.legend(loc="upper left")
         save_show(fig, save_dir / f"03_location_reproduction_{act}.pdf",
@@ -302,10 +303,10 @@ def plot_location_reproduction(est, meas, val, save_dir, save: bool = True,
     total_df = pd.concat(total, axis = 1).fillna(0)
     fig, ax = plt.subplots()
     if "validation" in total_df.columns:
-        ax.scatter(total_df["validation"], total_df["estimation"],
+        ax.scatter(total_df["validation"], total_df["calibration"],
                    alpha=0.6, color="coral",
                    label="Validation")
-    ax.scatter(total_df["measurement"], total_df["estimation"],
+    ax.scatter(total_df["measurement"], total_df["calibration"],
                alpha=0.4, facecolor="none", color="steelblue",
                label="Calibration")
 
@@ -325,9 +326,9 @@ def plot_location_reproduction(est, meas, val, save_dir, save: bool = True,
 def plot_location_maps(est, meas, val, save_dir, save: bool = True,
                        show: bool = False, output_suffix: str = ".pdf"):
     """Per-activity heatmaps of visits per zone on the (row, col) grid, with
-    estimation, measurement and validation side by side on a shared color
+    calibration, measurement and validation side by side on a shared color
     scale (same map style as activity_location_plotter.py)."""
-    datasets = {"Estimation": est, "Measurement": meas}
+    datasets = {"calibration": est, "Measurement": meas}
     if val is not None:
         datasets["Validation"] = val
 
@@ -503,7 +504,7 @@ def main(results_dir: Path,
     save_dir = results_dir if save_dir is None else Path(save_dir)
     save_kwds = dict(save=save, show=show, output_suffix=output_suffix)
 
-    est = estimation_metrics(results_dir, convergence_stats_filename,
+    est = calibration_metrics(results_dir, convergence_stats_filename,
                              window, time_bin_size_h)
     meas = ground_truth_metrics(measurement_states_xml, 1)
     val = (ground_truth_metrics(validation_states_xml, 1)
@@ -521,7 +522,7 @@ def main(results_dir: Path,
     plot_bars(est["nstops"], meas["nstops"], v("nstops"), range(n),
               "Number of Stops", "Frequency", [str(i) if i % 2 == 0 else "" for i in range(n)],
               save_dir / "01_nStops_histogram.pdf", **save_kwds)
-    print(f"Avg nStops (estimation): {(est['nstops'].index * est['nstops']).sum() / est['nstops'].sum()}")
+    print(f"Avg nStops (calibration): {(est['nstops'].index * est['nstops']).sum() / est['nstops'].sum()}")
 
     activities = ([a for a in LOCATION_ACTIVITIES if a in est["participation"].index]
                   + sorted(set(est["participation"].index) - set(LOCATION_ACTIVITIES)))
@@ -534,7 +535,7 @@ def main(results_dir: Path,
     plot_activity_share_vs_opportunity(results_dir, data_dir, save_dir,
                                        meas["visits"], v("visits"), **save_kwds)
 
-    est_durs = estimation_marginal_durations(results_dir, convergence_stats_filename,
+    est_durs = calibration_marginal_durations(results_dir, convergence_stats_filename,
                                              window, activities)
     meas_durs = ground_truth_marginal_durations(measurement_states_xml, activities)
     val_durs = (ground_truth_marginal_durations(validation_states_xml, activities)
