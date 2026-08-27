@@ -2,7 +2,7 @@
 /.vscode/
 dependency-reduced-pom.xml
 run_amal_ws.sh
-output/
+output/**/*.xml
 
 # Byte-compiled / optimized / DLL files
 **/__pycache__/
