@@ -1,4 +1,4 @@
-package common;
+package common.logging;
 
 import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
@@ -10,6 +10,8 @@ import java.nio.file.Path;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+
+import common.Activity;
 
 /*
 Author: Michael Sederlin

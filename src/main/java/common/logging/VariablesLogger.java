@@ -1,8 +1,9 @@
-package common;
+package common.logging;
 
 import java.util.EnumMap;
 import java.util.Map;
 
+import common.Activity;
 import disaggregate.model.ActivityNode;
 import se.vti.utils.misc.metropolishastings.MHToFileLogger;
 import se.vti.roundtrips.multiple.MultiRoundTrip;

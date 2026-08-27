@@ -1,4 +1,4 @@
-package disaggregate.model;
+package common;
 
 import java.util.Map;
 import java.util.HashMap;
