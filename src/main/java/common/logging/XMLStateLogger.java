@@ -1,4 +1,4 @@
-package common;
+package common.logging;
 
 import java.nio.file.Path;
 

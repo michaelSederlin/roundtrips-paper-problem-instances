@@ -8,3 +8,13 @@ services:
       - ./output:/app/output/
       - ./${ARGS:-disaggregate-arguments.txt}:/app/disaggregate-arguments.txt:ro
     command: ["disaggregate.Runner", "@disaggregate-arguments.txt"]
+
+  synthesis:
+    image: disaggregate:latest
+    container_name: synthesis-run
+    environment:
+      - RUN_NAME=synthesis-run
+    volumes:
+      - ./output:/app/output/
+      - ./${ARGS:-synthesis-arguments.txt}:/app/synthesis-arguments.txt:ro
+    command: ["synthesis.SynthesisRunner", "@synthesis-arguments.txt"]

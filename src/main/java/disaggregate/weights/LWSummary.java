@@ -1,15 +1,17 @@
 package disaggregate.weights;
 
-import disaggregate.model.ActivityNode;
+
 import se.vti.roundtrips.multiple.MultiRoundTripSummary;
 import se.vti.roundtrips.single.RoundTrip;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-abstract class LWSummary implements MultiRoundTripSummary<ActivityNode> {
+import common.GridNodeWithActivity;
+
+abstract class LWSummary implements MultiRoundTripSummary<GridNodeWithActivity> {
     private double totalLW = 0.0;
-    private final Map<RoundTrip<ActivityNode>, Double> rtLWCache;
+    private final Map<RoundTrip<GridNodeWithActivity>, Double> rtLWCache;
 
     LWSummary() {
         this.rtLWCache = new IdentityHashMap<>();
@@ -28,13 +30,13 @@ abstract class LWSummary implements MultiRoundTripSummary<ActivityNode> {
         rtLWCache.clear();
     }
 
-    protected abstract double roundTrip2LW(RoundTrip<ActivityNode> rt);
+    protected abstract double roundTrip2LW(RoundTrip<GridNodeWithActivity> rt);
 
     @Override
     public abstract LWSummary clone();
 
     @Override
-    public void update(int roundTripIndex, RoundTrip<ActivityNode> oldRT, RoundTrip<ActivityNode> newRT) {
+    public void update(int roundTripIndex, RoundTrip<GridNodeWithActivity> oldRT, RoundTrip<GridNodeWithActivity> newRT) {
         double oldLW; 
         if (oldRT == null) {
             oldLW = 0.0;

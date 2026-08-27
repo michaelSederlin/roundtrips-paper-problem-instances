@@ -2,15 +2,17 @@ package disaggregate.utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.checkerframework.checker.units.qual.N;
 
-import common.XMLStateLogger;
-import disaggregate.model.Activity;
+import common.Activity;
+import common.GridNodeWithActivity;
+import common.logging.XMLStateLogger;
 import disaggregate.model.Person;
 import disaggregate.model.SurveyResponse;
-import disaggregate.model.ActivityNode;
 import disaggregate.weights.CompositeKernel;
 import disaggregate.weights.Kernel;
 import se.vti.roundtrips.common.Scenario;
+
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.single.RoundTrip;
 
@@ -31,7 +33,7 @@ import java.util.Set;
 
 public class ScenarioUtils {
     static Logger logger = LogManager.getLogger(ScenarioUtils.class);
-    public static <N extends ActivityNode> void writeNetwork(Scenario<N> scenario, Path filePath) {
+    public static <N extends GridNodeWithActivity> void writeNetwork(Scenario<N> scenario, Path filePath) {
         writeNetwork(scenario, filePath.toString());
     }
 
@@ -58,7 +60,7 @@ public class ScenarioUtils {
         }
     }    
 
-    public static <N extends ActivityNode> void writeNetwork(Scenario<N> scenario, String filePath) {
+    public static <N extends GridNodeWithActivity> void writeNetwork(Scenario<N> scenario, String filePath) {
         try (XMLWriter writer = new XMLWriter(
                 Files.newBufferedWriter(Path.of(filePath), StandardCharsets.UTF_8))) {
 
@@ -69,9 +71,7 @@ public class ScenarioUtils {
             writer.startElement("nodes");
             for (N n : scenario.getNodesView()) {
                 writer.startElement("node");
-                for (Activity act : n.getAllActivities()) {
-                    writer.attribute("activity", act.toString());
-                }
+                writer.attribute("activity", n.getActivity().toString());
                 writer.attribute("id", n.toString());
                 writer.endElement("node");
             }
@@ -103,7 +103,7 @@ public class ScenarioUtils {
         }
     }
 
-    public static <N extends ActivityNode> List<N> findHomes(Scenario<N> scenario, List<Person> population) {
+    public static <N extends GridNodeWithActivity> List<N> findHomes(Scenario<N> scenario, List<Person> population) {
 //        public List<N> findHomes() {
         if (population.isEmpty() || scenario == null) return List.of();
 
@@ -111,7 +111,7 @@ public class ScenarioUtils {
         for (Person p : population) {
             boolean assigned = false;
             for (N node : scenario.getNodesView()) {
-                if (node.getAllActivities().contains(Activity.HOME) && node.getBasicName().equals(p.getHomeZone())) {
+                if (node.getActivity().equals(Activity.HOME) && node.getBasicName().equals(p.getHomeZone())) {
                     homes.add(node);
                     assigned = true;
                     break;
@@ -127,13 +127,13 @@ public class ScenarioUtils {
         }
         return homes;
     }
-    public static <N extends ActivityNode> List<Person> getPersonsWithoutValidHome(Scenario<N> scenario, List<Person> population) {
+    public static <N extends GridNodeWithActivity> List<Person> getPersonsWithoutValidHome(Scenario<N> scenario, List<Person> population) {
         List<Person> toRemove = new ArrayList<>();
         for (Person p : population) {
             boolean homeFound = false;
             for (N node : scenario.getNodesView()) {
                 if (node.getBasicName().equals(p.getHomeZone())) {
-                    if (!node.getAllActivities().contains(Activity.HOME)) {
+                    if (!node.getActivity().equals(Activity.HOME)) {
                         continue;
                     }
                     homeFound = true;
@@ -146,7 +146,7 @@ public class ScenarioUtils {
         }
         return toRemove;
     }
-    public static <N extends ActivityNode> MultiRoundTrip<N> createInitialMultiRoundTrip(Scenario<N> scenario, List<N> homes, List<Person> population) {
+    public static <N extends GridNodeWithActivity> MultiRoundTrip<N> createInitialMultiRoundTrip(Scenario<N> scenario, List<N> homes, List<Person> population) {
         MultiRoundTrip<N> result = new MultiRoundTrip<>(population.size());
         for (int ii = 0; ii < result.size(); ii++) {
             RoundTrip<N> rt = new RoundTrip<>(ii, List.of(homes.get(ii)), List.of(0));
@@ -174,12 +174,12 @@ public class ScenarioUtils {
         return sampled;
     }
 
-    public static <N extends ActivityNode> boolean allActivitiesExists(Scenario<N> scenario, List<Person> population){
+    public static <N extends GridNodeWithActivity> boolean allActivitiesExists(Scenario<N> scenario, List<Person> population){
         Set<Activity> networkActivities = new HashSet<>();
         Set<Activity> surveyActivities = new HashSet<>();
 
         for (N node : scenario.getNodesView()) {
-            networkActivities.addAll(node.getAllActivities());
+            networkActivities.add(node.getActivity());
         }
 
         for (Person person : population) {
@@ -192,7 +192,7 @@ public class ScenarioUtils {
         return networkActivities.containsAll(surveyActivities);
     }
 
-    public static <N extends ActivityNode> void writeStateXML(java.nio.file.Path outputDir, MultiRoundTrip<N> mrt) {
+    public static <N extends GridNodeWithActivity> void writeStateXML(java.nio.file.Path outputDir, MultiRoundTrip<N> mrt) {
         XMLStateLogger finalStateLogger = new XMLStateLogger(0, outputDir.resolve("finalState.xml"));
         finalStateLogger.start();
         finalStateLogger.processStateHook(mrt, 0.0);
@@ -203,13 +203,13 @@ public class ScenarioUtils {
         new common.PopulationWriter(pop, fp.toString()).write();
     }
 
-    public static void loadNetworkFromTSV(Scenario<ActivityNode> scenario, Path networkDir) throws FileNotFoundException {
+    public static void loadNetworkFromTSV(Scenario<GridNodeWithActivity> scenario, Path networkDir) throws FileNotFoundException {
         Path nodesPath = networkDir.resolve("nodes.tsv");
         Path edgesPath = networkDir.resolve("edges.tsv");
 
-        Map<String, ActivityNode> nodeMap = new HashMap<>();
+        Map<String, GridNodeWithActivity> nodeMap = new HashMap<>();
         
-        // Read nodes file - use row/col as x/y coordinates for ActivityNode (which extends ActivityNode)
+        // Read nodes file - use row/col as x/y coordinates for GridNodeWithActivity (which extends GridNodeWithActivity)
         try (Scanner scanner = new Scanner(nodesPath.toFile())) {
             String header = scanner.nextLine();  // skip header: basicName name labels row col
             while (scanner.hasNextLine()) {
@@ -225,8 +225,8 @@ public class ScenarioUtils {
                 String activityString = labels.replace("[", "").replace("]", "");
                 Activity activity = Activity.valueOf(activityString);
                 
-                // ActivityNode extends ActivityNode - compatible with location kernels
-                ActivityNode node = new ActivityNode(basicName, (double)col, (double)row, activity);  // name, x, y, activity
+                // GridNodeWithActivity extends GridNodeWithActivity - compatible with location kernels
+                GridNodeWithActivity node = new GridNodeWithActivity(col, row, activity);  // name, x, y, activity
                 nodeMap.put(fullName, node);
                 scenario.addNode(node);
             }
@@ -242,8 +242,8 @@ public class ScenarioUtils {
                 double travelTime_h = Double.parseDouble(parts[2]);
                 double distance_km = Double.parseDouble(parts[3]);
                 
-                ActivityNode fromNode = nodeMap.get(fromName);
-                ActivityNode toNode = nodeMap.get(toName);
+                GridNodeWithActivity fromNode = nodeMap.get(fromName);
+                GridNodeWithActivity toNode = nodeMap.get(toName);
                 
                 if (fromNode != null && toNode != null) {
                     scenario.setTime_h(fromNode, toNode, travelTime_h);
@@ -260,7 +260,7 @@ public class ScenarioUtils {
             int nIter,
             int msgInterval,
             Scenario<?> scenario,
-            List<SurveyResponse<ActivityNode>> responses,
+            List<SurveyResponse> responses,
             Path dataDir,
             Path upbdPath,
             Path mddrPath,
@@ -359,12 +359,12 @@ private static void appendKernelTree(StringBuilder sb, Kernel kernel, String pad
 }
 
     public static Map<String, Map<Activity, Double>> toAttractivenessMap(
-            Map<ActivityNode, Double> nodeWeights) {
+            Map<GridNodeWithActivity, Double> nodeWeights) {
 
         Map<String, Map<Activity, Double>> result = new HashMap<>();
 
         for (var e : nodeWeights.entrySet()) {
-            ActivityNode node = e.getKey();
+            GridNodeWithActivity node = e.getKey();
             double weight = e.getValue();
 
             result

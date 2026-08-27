@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import disaggregate.model.Activity;
-import disaggregate.model.ActivityNode;
+
 import disaggregate.model.Person;
 import disaggregate.rvu.Trip;
+import common.Activity;
+import common.GridNodeWithActivity;
 import se.vti.roundtrips.simulator.IntervalUtils;
 import se.vti.roundtrips.simulator.StayEpisode;
 import se.vti.roundtrips.single.RoundTrip;
@@ -32,6 +33,7 @@ public class ActivityIntervals {
         return map;
     }
 
+    
     public static Map<Activity, List<Tuple<Double, Double>>> from(Person p) {
         return from(p, 24.0);
     }
@@ -64,7 +66,7 @@ public class ActivityIntervals {
         return activityMap;
     }
 
-    public static Map<Activity, List<Tuple<Double, Double>>> from(RoundTrip<? extends ActivityNode> rt) {
+    public static Map<Activity, List<Tuple<Double, Double>>> from(RoundTrip<? extends GridNodeWithActivity> rt) {
         return from(rt, 24.0, Map.of());
     }
 
@@ -76,18 +78,18 @@ public class ActivityIntervals {
      * this aims to ensure that activities are not distributed across nodes excessively
      */
 
-    public static Map<Activity, List<Tuple<Double, Double>>> from(RoundTrip<? extends ActivityNode> rt, double horizon_h, Map<Activity, ActivityNode> accruingNodes) {
+    public static Map<Activity, List<Tuple<Double, Double>>> from(RoundTrip<? extends GridNodeWithActivity> rt, double horizon_h, Map<Activity, GridNodeWithActivity> accruingNodes) {
         Map<Activity, List<Tuple<Double, Double>>> activityMap = createEmptyActivityIntervals();
 
         var intervalUtils = new IntervalUtils(24.0);
 
         for (Activity act : Activity.values()) {
-            ActivityNode accruingNode = accruingNodes.get(act);
+            GridNodeWithActivity accruingNode = accruingNodes.get(act);
             List<Tuple<Double, Double>> intervals = intervalUtils.extractIntervals(
                 rt.getEpisodes(),
                 ep -> (ep instanceof StayEpisode<?> se)
                 && (
-                    ((ActivityNode) se.getLocation()).getPrimaryActivity().equals(act)
+                    ((GridNodeWithActivity) se.getLocation()).getActivity().equals(act)
                     && ((accruingNode == null) || (accruingNode.equals(se.getLocation()))))
                 );
             activityMap.put(act, intervals);

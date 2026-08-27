@@ -3,9 +3,9 @@ package disaggregate.weights;
 import java.util.Map;
 import java.util.HashMap;
 
-import disaggregate.model.Activity;
-import disaggregate.model.ActivityNode;
-import disaggregate.utils.UniqueActivityNodeSummary;
+import disaggregate.utils.UniqueNodeSummary;
+import common.Activity;
+import common.GridNodeWithActivity;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.multiple.MultiRoundTripSummary;
 import se.vti.roundtrips.simulator.StayEpisode;
@@ -17,52 +17,47 @@ import se.vti.utils.misc.metropolishastings.MHWeight;
 // Trial to mitigate the bias
 //  */
 
-public class StayingWeight implements MHWeight<MultiRoundTrip<ActivityNode>>{
-    private double exponent = 1.0;
+public class StayingWeight implements MHWeight<MultiRoundTrip<GridNodeWithActivity>>{
     private final double epsilon; 
-    private final Map<ActivityNode, Double> nodeActivityOpportunities;
-    private final Map<RoundTrip<ActivityNode>, Double> roundTripLogWeightsCache;
-    private final Map<ActivityNode, Double> logSigma;
+    private final Map<GridNodeWithActivity, Double> nodeActivityOpportunities;
+    private final Map<RoundTrip<GridNodeWithActivity>, Double> roundTripLogWeightsCache;
+    private final Map<GridNodeWithActivity, Double> logSigma;
 
-    public StayingWeight withExponent(double exponent) {
-        this.exponent = exponent;
-        return this;
-    }
 
-    public StayingWeight(Map<ActivityNode, Double> nodeActivityOpportunities) {    
+    public StayingWeight(Map<GridNodeWithActivity, Double> nodeActivityOpportunities) {    
         this(nodeActivityOpportunities, 1e-6);
     }
 
-    public StayingWeight(Map<ActivityNode, Double> nodeActivityOpportunities, double epsilon) {
+    public StayingWeight(Map<GridNodeWithActivity, Double> nodeActivityOpportunities, double epsilon) {
         this.epsilon = epsilon;
         this.nodeActivityOpportunities = nodeActivityOpportunities;
         this.roundTripLogWeightsCache = new HashMap<>();
         this.logSigma = new HashMap<>();
-        for (Map.Entry<ActivityNode, Double> entry : nodeActivityOpportunities.entrySet()) {
+        for (Map.Entry<GridNodeWithActivity, Double> entry : nodeActivityOpportunities.entrySet()) {
             logSigma.put(entry.getKey(), Math.log(entry.getValue() + epsilon));
         }
     }
 
-    public double logWeight(MultiRoundTrip<ActivityNode> state, MultiRoundTripSummary<ActivityNode> summary) {
+    public double logWeight(MultiRoundTrip<GridNodeWithActivity> state, MultiRoundTripSummary<GridNodeWithActivity> summary) {
         // Why do I have this?
         throw new UnsupportedOperationException("Unimplemented method 'logWeight' with summary");
     }
 
-    public void configureRequiredSummary(MultiRoundTrip<ActivityNode> mrt) {
+    public void configureRequiredSummary(MultiRoundTrip<GridNodeWithActivity> mrt) {
         var staySummary = new StayingSummary(this.epsilon);
         mrt.addSummary(staySummary);
         mrt.recomputeSummaries();
     }
 
     @Override
-    public double logWeight(MultiRoundTrip<ActivityNode> state) {
+    public double logWeight(MultiRoundTrip<GridNodeWithActivity> state) {
         return state.getSummary(StayingSummary.class).getTotalLW();
     }
 
 class StayingSummary extends LWSummary {
-    // private final Map<ActivityNode, Double> logSigma;
+    // private final Map<GridNodeWithActivity, Double> logSigma;
     private final double epsilon; 
-    private UniqueActivityNodeSummary uniqueActivityNodeSummary;
+    private UniqueNodeSummary uniqueNodeSummary;
 
     public StayingSummary(double epsilon) {
         // this.logSigma = logSigma;
@@ -76,27 +71,27 @@ class StayingSummary extends LWSummary {
     }
 
     @Override 
-    public void update(RoundTrip<ActivityNode> newRT, MultiRoundTrip<ActivityNode> mrt){
-        this.uniqueActivityNodeSummary = mrt.getSummary(UniqueActivityNodeSummary.class);
+    public void update(RoundTrip<GridNodeWithActivity> newRT, MultiRoundTrip<GridNodeWithActivity> mrt){
+        this.uniqueNodeSummary = mrt.getSummary(UniqueNodeSummary.class);
         int idx = newRT.getIndex();
         update(idx, mrt.getRoundTrip(idx), newRT);
     }
 
     @Override
-    protected double roundTrip2LW(RoundTrip<ActivityNode> rt) {
+    protected double roundTrip2LW(RoundTrip<GridNodeWithActivity> rt) {
         if (rt == null) return 0.0;
         
         double lw = 0.0;
 
-        Map<Activity, ActivityNode> accruingNodes = (uniqueActivityNodeSummary != null) 
-            ? uniqueActivityNodeSummary.getRoundTripActivityNodes(rt.getIndex())
+        Map<Activity, GridNodeWithActivity> accruingNodes = (uniqueNodeSummary != null) 
+            ? uniqueNodeSummary.getRoundTripNodes(rt.getIndex())
             : Map.of();
 
         int countedNodes = 0;
 
         for (int jj = 0; jj < rt.getEpisodes().size(); jj+=2) {
-            ActivityNode loc = ((StayEpisode<ActivityNode>) rt.getEpisodes().get(jj)).getLocation();
-            ActivityNode accruingNode = accruingNodes.get(loc.getActivity());
+            GridNodeWithActivity loc = ((StayEpisode<GridNodeWithActivity>) rt.getEpisodes().get(jj)).getLocation();
+            GridNodeWithActivity accruingNode = accruingNodes.get(loc.getActivity());
             if ((accruingNode != null) && !accruingNode.equals(loc)) continue;
 
             Double ls = logSigma.get(loc);

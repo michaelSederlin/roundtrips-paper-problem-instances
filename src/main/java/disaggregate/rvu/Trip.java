@@ -2,8 +2,7 @@ package disaggregate.rvu;
 
 import java.util.*;
 
-
-import disaggregate.model.Activity;
+import common.Activity;
 
 public class Trip {
         public final String[] TRIP_VARIABLES = {"idx", "ttt", "nStops", "legs"};
@@ -20,19 +19,16 @@ public class Trip {
             public final double duration;
             public final Activity destinationActivity;
 
-            Leg(Map<String, String> row) {
-                this(row, false);
-            }
+            // Leg(Map<String, String> row) {
+            //     this(row, false);
+            // }
             Leg(Map<String, String> row, boolean usingRVUCodes) {
                 this(
                     row.get("D_A_S"), 
                     row.get("D_B_S"),
                     Trip.clockTimeToMinutes(row.get("D_A_KL")),
                     Trip.clockTimeToMinutes(row.get("D_B_KL")),
-                    // Activity.fromRVUCode(String.valueOf(row.get("D_ARE"))) -- A little jig for the amal data
-                        (usingRVUCodes)
-                                ? Activity.fromRVUCode(String.valueOf(row.get("D_ARE")))
-                                : Activity.fromString(String.valueOf(row.get("activity")))
+                    Activity.fromString(String.valueOf(row.get("activity")))
                     );
             }
 
@@ -294,7 +290,7 @@ public class Trip {
 
         // Getters and toString() method
 
-    public Trip(String id, double ttt_h, int nStops, java.util.List<disaggregate.model.Activity> activities) {
+    public Trip(String id, double ttt_h, int nStops, java.util.List<Activity> activities) {
         if (nStops < 0) {
             throw new IllegalArgumentException("nStops cannot be negative");
         }
@@ -314,7 +310,7 @@ public class Trip {
 
         // create dummy legs so getActivities()/getLegs() still work
         for (int i = 0; i < nStops; i++) {
-            disaggregate.model.Activity act = activities.get(i);
+            Activity act = activities.get(i);
             String fromId = "L" + i;
             String toId   = "L" + (i + 1);
             Leg leg = new Leg(fromId, toId, 0.0, 0.0, act); // duration = 0

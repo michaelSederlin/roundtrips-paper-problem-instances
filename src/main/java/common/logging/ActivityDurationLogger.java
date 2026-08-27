@@ -1,7 +1,7 @@
-package common;
+package common.logging;
 
-import disaggregate.model.Activity;
-import disaggregate.model.ActivityNode;
+import common.Activity;
+import common.GridNodeWithActivity;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.simulator.Episode;
 import se.vti.roundtrips.simulator.StayEpisode;
@@ -12,6 +12,9 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+import org.checkerframework.checker.units.qual.N;
+
+
 /*
 Author: Michael Sederlin
 2025 
@@ -20,7 +23,7 @@ Made to log the simulated activity duration over iterations
 
  */
 
-public class ActivityDurationLogger<N extends ActivityNode> extends MHToFileLogger<MultiRoundTrip<N>> {
+public class ActivityDurationLogger<N extends GridNodeWithActivity> extends MHToFileLogger<MultiRoundTrip<N>> {
     public ActivityDurationLogger(long samplingInterval, Path logFileName) { this(samplingInterval, logFileName.toString()); }
     public ActivityDurationLogger(long samplingInterval, String logFileName) {
         super(samplingInterval, logFileName);
@@ -40,7 +43,7 @@ public class ActivityDurationLogger<N extends ActivityNode> extends MHToFileLogg
             for (int ii = 0; ii < episodes.size(); ii += 2) {
                 var stay = (StayEpisode<N>) episodes.get(ii);
                 act2totalDur_h.merge(
-                        stay.getLocation().getPrimaryActivity(),
+                        stay.getLocation().getActivity(),
                         stay.getDuration_h(),
                         Double::sum
                 );

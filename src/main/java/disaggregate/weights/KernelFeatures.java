@@ -3,8 +3,8 @@ package disaggregate.weights;
 import java.util.List;
 import java.util.Map;
 
-import disaggregate.model.Activity;
-import disaggregate.model.ActivityNode;
+import common.Activity;
+import common.GridNodeWithActivity;
 import se.vti.roundtrips.single.RoundTrip;
 import se.vti.utils.misc.Tuple;
 
@@ -18,20 +18,20 @@ import se.vti.utils.misc.Tuple;
  */
 public final class KernelFeatures {
 
-    private final RoundTrip<ActivityNode> roundTrip;
-    private final Map<Activity, ActivityNode> accruingNodes;
+    private final RoundTrip<GridNodeWithActivity> roundTrip;
+    private final Map<Activity, GridNodeWithActivity> accruingNodes;
     private final double horizon_h;
 
     private Map<Activity, List<Tuple<Double, Double>>> activityIntervals;
 
-    public KernelFeatures(RoundTrip<ActivityNode> roundTrip, Map<Activity, ActivityNode> accruingNodes,
+    public KernelFeatures(RoundTrip<GridNodeWithActivity> roundTrip, Map<Activity, GridNodeWithActivity> accruingNodes,
             double horizon_h) {
         this.roundTrip = roundTrip;
         this.accruingNodes = accruingNodes;
         this.horizon_h = horizon_h;
     }
 
-    public RoundTrip<ActivityNode> roundTrip() {
+    public RoundTrip<GridNodeWithActivity> roundTrip() {
         return this.roundTrip;
     }
 
