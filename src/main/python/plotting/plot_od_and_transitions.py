@@ -157,7 +157,7 @@ def main(results_dir: Path,
 
     ax.errorbar(
         df_plot_od['measurement OD'], df_plot_od['estimated OD'], markerfacecolor='none', markeredgecolor='steelblue',
-        color='none', ecolor='gray', label='Estimation', **scatter_kwds)
+        color='none', ecolor='gray', label='Calibration', **scatter_kwds)
 
     ax.legend(fontsize = fontsize)
     format_axis(ax, "Estimated", 'Ground truth')
@@ -203,7 +203,7 @@ def main(results_dir: Path,
         ax.errorbar(df_prob['validation OD'], df_prob['estimated OD'], color='coral', alpha=0.6, label='Validation', **scatter_kwds)
         
     ax.errorbar(df_prob['measurement OD'], df_prob['estimated OD'], markerfacecolor='none', markeredgecolor='steelblue',
-                color='none', ecolor='gray', label='Estimation', **scatter_kwds)
+                color='none', ecolor='gray', label='Calibration', **scatter_kwds)
 
 
     format_axis(ax, "Estimated", 'Ground truth')

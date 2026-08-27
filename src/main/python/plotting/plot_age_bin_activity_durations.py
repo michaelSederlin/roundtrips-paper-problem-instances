@@ -88,7 +88,7 @@ def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
     width = 0.26
     fig, ax = plt.subplots()
     ax.bar(x + width, est.reindex(index, fill_value=0), width=width, color=ESTIMATION_COLOR,
-           alpha=0.75, edgecolor="black", label="Estimation")
+           alpha=0.75, edgecolor="black", label="Calibration")
     if val is not None:
         ax.bar(x, val.reindex(index, fill_value=0), width=width, color=VALIDATION_COLOR,
                alpha=0.75, edgecolor="black", label="Validation Data Set")

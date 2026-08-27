@@ -1,16 +1,12 @@
 """Driver for the plotting scripts: merges the partition output of each finished
 scenario run and then produces the reproduction plots for it."""
+
 from pathlib import Path
-
-from renate import get_environment_root
-
 from plotting.merge_population_csv import main as population_merge_main
 from plotting.merge_states_xml import main as states_merge_main
 from plotting.plot_population_reproduction import main as population_reproduction_main
 from plotting.plot_od_and_transitions import main as plot_od_main
 from plotting.plot_age_bin_activity_durations import main as age_bins_main
-
-dds_root = get_environment_root()
 
 MEASUREMENT_STATES_XML = Path("data/ground_truth/amal_measurement/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml")
 VALIDATION_STATES_XML = Path("data/ground_truth/amal_validation/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml")
@@ -27,14 +23,20 @@ SAVE = True
 SHOW = False
 OUTPUT_SUFFIX = '.pdf'
 
+
 def plot_scenario(scenario):
     results_dir = Path(scenario)
+    if not results_dir.exists():
+        print("Results dir doesn't exist")
+        raise FileNotFoundError("Results directory doesn't exist!")
+    
     save_dir = results_dir / 'new_plots'
     save_dir.mkdir(parents=True, exist_ok=True)
 
     population_merge_main(results_dir=results_dir,
                           population_filename=POPULATION_FILENAME,
                           target_filename=TARGET_FILENAME)
+    
     states_merge_main(results_dir=results_dir,
                       population_filename=POPULATION_FILENAME,
                       convergence_stats_filename=CONVERGENCE_STATS_FILENAME,
@@ -72,5 +74,8 @@ def plot_scenario(scenario):
                   output_suffix=OUTPUT_SUFFIX)
 
 
-if __name__ == "__main__":    
-    plot_scenario("output/disaggregate-calibration/20260826-213731")
+if __name__ == "__main__":
+    scenario = Path("output/no-gender-matching")
+    plot_scenario(scenario)
+    print("SCRIPT FINISHED")
+

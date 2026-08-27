@@ -230,7 +230,7 @@ def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
     width = 0.26
     fig, ax = plt.subplots()
     ax.bar(x + width, est.reindex(index, fill_value=0), width=width, color="steelblue",
-           alpha=0.75, edgecolor="black", label="Estimation")
+           alpha=0.75, edgecolor="black", label="Calibration")
     if val is not None:
         ax.bar(x, val.reindex(index, fill_value=0), width=width, color="coral",
                alpha=0.75, edgecolor="black", label="Validation Data Set")
@@ -307,7 +307,7 @@ def plot_location_reproduction(est, meas, val, save_dir, save: bool = True,
                    label="Validation")
     ax.scatter(total_df["measurement"], total_df["estimation"],
                alpha=0.4, facecolor="none", color="steelblue",
-               label="Estimation")
+               label="Calibration")
 
     lim = total_df.max().max() * 1.05
     ax.plot([0, lim], [0, lim], ":", color="gray")
@@ -447,7 +447,7 @@ def plot_activity_share_vs_opportunity(results_dir, data_dir, save_dir,
             merged["sigma"], merged["visit_share"],
             s=30, alpha=0.45, color=ACTIVITY_SHARE_COLORS[activity],
             edgecolors="white", linewidths=0.4, zorder=2,
-            label="Estimation",
+            label="Calibration",
         )
 
         if len(merged) > 1 and merged["sigma"].std() > 0:
