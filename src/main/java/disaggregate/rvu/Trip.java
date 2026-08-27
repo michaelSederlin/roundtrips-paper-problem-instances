@@ -3,7 +3,7 @@ package disaggregate.rvu;
 import java.util.*;
 
 
-import disaggregate.model.Activity;
+import common.Activity;
 
 public class Trip {
         public final String[] TRIP_VARIABLES = {"idx", "ttt", "nStops", "legs"};
@@ -294,7 +294,7 @@ public class Trip {
 
         // Getters and toString() method
 
-    public Trip(String id, double ttt_h, int nStops, java.util.List<disaggregate.model.Activity> activities) {
+    public Trip(String id, double ttt_h, int nStops, java.util.List<common.Activity> activities) {
         if (nStops < 0) {
             throw new IllegalArgumentException("nStops cannot be negative");
         }
@@ -314,7 +314,7 @@ public class Trip {
 
         // create dummy legs so getActivities()/getLegs() still work
         for (int i = 0; i < nStops; i++) {
-            disaggregate.model.Activity act = activities.get(i);
+            common.Activity act = activities.get(i);
             String fromId = "L" + i;
             String toId   = "L" + (i + 1);
             Leg leg = new Leg(fromId, toId, 0.0, 0.0, act); // duration = 0
