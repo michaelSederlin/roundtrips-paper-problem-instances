@@ -17,6 +17,8 @@ import numpy as np
 import pandas as pd
 
 from .helpers import ArgumentParser
+from .plotting_utilities import (stay_activity,
+                                 parse_states_xml as _parse_states_xml)
 from .helpers.od_transition_helpers import save_show
 
 ACTIVITIES = ["HOME", "WORK", "EDUCATION", "OTHER"]
@@ -38,19 +40,6 @@ def sort_legend_entries(ax: plt.Axes):
     ax.legend(ordered_handles, ordered_labels)
     return ax
 
-
-def _parse_states_xml(xml_path: Path):
-    xml_path = Path(xml_path)
-    if xml_path.suffix == ".gz":
-        with gzip.open(xml_path) as f:
-            return lxml.etree.parse(f)
-    return lxml.etree.parse(str(xml_path))
-
-def stay_activity(stay):
-    # Handles differently formatted states.xml between renate and amal.
-    return (stay.get('activity')
-            or (stay.get('labels') or '').strip('[]')
-            or re.sub(r'.*\[|\]', '', stay.get('loc') or ''))
 
 def parse_states(root, last=False):
     """Per (iteration, RoundTrip): activity set, nstops and per-activity durations."""
@@ -147,14 +136,14 @@ def main(results_dir: Path,
     merged = results_dir / 'partitions_merged'
     pop = pd.read_csv(merged / 'population_merged.tsv', sep='\t')
     pop['acts'] = pop['legs'].apply(lambda l: {d['destinationActivity'] for d in literal_eval(l)})
-    idx2name = pop.set_index('idx')['name'].to_dict()
+    idx2name = pop.set_index(pop['idx'].astype(str))['name'].to_dict()
 
     age_by_name = pop.set_index('name')['age'].to_dict()
     inc_by_name = pop.set_index('name')['inc'].to_dict()
     gender_by_name = pop.set_index('name')['gender'].to_dict()
 
     est = parse_states(_parse_states_xml(merged / 'final_states_merged.xml').getroot())
-    est['name'] = est['idx'].astype(int).map(idx2name)
+    est['name'] = est['idx'].astype(str).map(idx2name)
 
     meas = parse_states(_parse_states_xml(measurement_states_xml).getroot(), last=True)
     meas['name'] = meas['idx']

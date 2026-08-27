@@ -20,7 +20,8 @@ from .argument_parser import ArgumentParser
 from .helpers.burn_in import post_burn_in_iterations, equalize_post_burn_in
 from .helpers.od_transition_helpers import save_show
 from .helpers.partition_discovery import discover_partition_dirs, states_xml_path
-from .plotting_utilities import process_states
+from .plotting_utilities import (process_states, stay_activity, departure_hours,
+                                 parse_states_xml as _parse_states_xml)
 
 MAX_NSTOPS = 10
 LOCATION_ACTIVITIES = ["HOME", "WORK", "EDUCATION", "OTHER"]
@@ -37,33 +38,6 @@ def sort_legend_entries(ax: plt.Axes):
     ordered_labels = [label for label in order if label in labels]
     ax.legend(ordered_handles, ordered_labels)
     return ax 
-
-def _parse_states_xml(xml_path: Path):
-    if xml_path.suffix == ".gz":
-        with gzip.open(xml_path) as f:
-            return lxml.etree.parse(f)
-    return lxml.etree.parse(xml_path)
-
-
-def stay_activity(stay):
-    # Handles differently formatted states.xml between renate and amal.
-    return (stay.get('activity')
-            or (stay.get('labels') or '').strip('[]')
-            or re.sub(r'.*\[|\]', '', stay.get('loc') or ''))
-
-
-def departure_hours(rt, time_bin_size):
-    """Departure hour-of-day of one RoundTrip, from <Departures> (calibration
-    output) or, failing that, <State> bins[...] (merged/measurement files).
-    The raw values are bin indices (hour = index * time_bin_size); convert
-    before binning so the histogram is correct for any time_bin_size."""
-    raw = rt.findtext("Departures") or ""
-    if not raw.strip():
-        m = re.search(r"bins\[(.*?)\]", rt.findtext("State") or "")
-        raw = m.group(1) if m else ""
-    idx = [float(v) for v in re.findall(r"-?\d+(?:\.\d+)?", raw)]
-    return [int(i * time_bin_size) % 24 for i in idx]
-
 
 def sample_metrics(mrt, time_bin_size):
     """Population-level counts of one MultiRoundTrip sample."""

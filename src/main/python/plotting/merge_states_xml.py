@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .helpers import ArgumentParser
+from .argument_parser import ArgumentParser
 from .merge_population_csv import _delimiter
 from .helpers.burn_in import read_burn_in_iteration
 
@@ -24,11 +24,13 @@ def _find_states_xml(partition_dir):
     return xml_path if xml_path.exists() else None
 
 
-def _load_local_to_global_index(population_path, population_filename):
+def _load_local_to_global_index(population_path, population_filename, partition):
+    """Maps a partition-local RoundTrip index to a strict global key. Partitions each
+    number their people from 0, so the local idx is qualified with the partition name."""
     delimiter = _delimiter(population_filename)
     with open(population_path, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f, delimiter=delimiter)
-        return {i: int(row["idx"]) for i, row in enumerate(reader)}
+        return {i: f"{partition}_{row['idx']}" for i, row in enumerate(reader)}
 
 
 def _partition_post_burn_in_count(xml_path, convergence_stats_fp):
@@ -88,7 +90,8 @@ def main(results_dir: Path,
         if not population_path.exists():
             print(f"Population file for partition {partition_dir} does not exist; skipping")
             continue
-        local_to_global = _load_local_to_global_index(population_path, population_filename)
+        local_to_global = _load_local_to_global_index(
+            population_path, population_filename, partition_dir.name)
 
         tree = _load_states_tree(xml_path)
         root = tree.getroot()

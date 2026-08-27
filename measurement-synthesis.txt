@@ -7,7 +7,6 @@
 --horizon 24.0 
 --time-bin-size 1.0 
 --grid-size 5 
---max-processes 5 
 --base-seed 100 
 --scenario-seed 2900 
 --grid-world-seed 3900 

@@ -6,46 +6,13 @@ import matplotlib.pyplot as plt
 ACTIVITIES = ["HOME", "WORK", "EDUCATION", "OTHER"]
 
 import pandas as pd 
-import lxml.etree
 import re 
-from ast import literal_eval
 import numpy as np 
 from time import sleep
 
+from .merge_population_csv import _delimiter
+from .plotting_utilities import process_states
 
-def process_states(fp, separate_trips_and_stays:bool = True):
-    states = lxml.etree.parse(fp)
-    data = []
-    for mrt in states.findall("MultiRoundTrip"):
-        for rt in mrt.findall("RoundTrip"):
-            idx = rt.get("index")
-            for e in rt.findall("Episodes/"):
-                if e.tag == "MoveEpisode":
-                    ii = 0
-                data.append({
-                    "type": e.tag,
-                    'iteration': int(mrt.get("iteration")), 
-                    'index': rt.get("index"),
-                    'start': float(e.get("start")), 
-                    'end': float(e.get("end")), 
-                    "loc": e.get("loc", ""),
-                    "from": e.get("from", ""), 
-                    "to": e.get("to", ""), 
-                    "duration": float(e.get("duration", np.nan)),
-                    # "coords": literal_eval(e.get("loc", "()")),
-                    "activity": e.get("activity")
-                })
-    states_df = pd.DataFrame(data)  
-    states_df['basicName'] = states_df['loc'].apply(lambda x: re.sub("\[.*", "", x))
-    states_df['coords'] = states_df['basicName'].apply(lambda x: () if not x else literal_eval(x))
-    # states_df['duration'] = states_df['end'] - states_df['start']
-
-    if not separate_trips_and_stays:        
-        return states_df
-    else:
-        trips = states_df[states_df["type"] == "MoveEpisode"]
-        stays = states_df[states_df["type"] == "StayEpisode"]    
-        return trips.drop(columns = ["loc", "activity", "coords"]), stays.drop(columns = ["from", "to"])
 
 def safe_row_normalize(df):
     s = df.sum(axis=1)
@@ -81,6 +48,7 @@ def main(results_dir: Path, save_dir: Path, states_xml: None | Path = None, popu
     # Added converters for age to tolerate string header lines using pd.to_numeric logic.
     df = pd.read_csv(
         population_csv,
+        sep=_delimiter(population_csv),
         dtype={"idx": str, "gender": str},
         converters={
             "age": lambda x: int(pd.to_numeric(x, errors='coerce') or 0),
@@ -188,9 +156,24 @@ def main(results_dir: Path, save_dir: Path, states_xml: None | Path = None, popu
     plt.tight_layout()
 
     if save:
+        save_dir = Path(save_dir)
+        save_dir.mkdir(parents=True, exist_ok=True)
         fig_prefs.savefig(save_dir / "preference_matching.pdf", dpi=300, bbox_inches='tight')
         fig_lines.savefig(save_dir / "preference_diff_lines.pdf", dpi=300, bbox_inches='tight')
     if show:
         plt.show()
 
     return fig_prefs
+
+
+if __name__ == "__main__":
+    from .argument_parser import ArgumentParser
+    parser = ArgumentParser()
+    args = parser.parse()
+    main(results_dir=args.results_dir,
+         save_dir=args.save_dir,
+         states_xml=args.states_xml,
+         population_csv=args.population_csv,
+         window=args.window,
+         save=args.save,
+         show=args.show)
