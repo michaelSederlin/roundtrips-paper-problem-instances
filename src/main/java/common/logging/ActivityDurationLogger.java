@@ -1,6 +1,7 @@
 package common.logging;
 
-import disaggregate.model.ActivityNode;
+import common.Activity;
+import common.GridNodeWithActivity;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.simulator.Episode;
 import se.vti.roundtrips.simulator.StayEpisode;
@@ -11,7 +12,8 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import common.Activity;
+import org.checkerframework.checker.units.qual.N;
+
 
 /*
 Author: Michael Sederlin
@@ -21,7 +23,7 @@ Made to log the simulated activity duration over iterations
 
  */
 
-public class ActivityDurationLogger<N extends ActivityNode> extends MHToFileLogger<MultiRoundTrip<N>> {
+public class ActivityDurationLogger<N extends GridNodeWithActivity> extends MHToFileLogger<MultiRoundTrip<N>> {
     public ActivityDurationLogger(long samplingInterval, Path logFileName) { this(samplingInterval, logFileName.toString()); }
     public ActivityDurationLogger(long samplingInterval, String logFileName) {
         super(samplingInterval, logFileName);

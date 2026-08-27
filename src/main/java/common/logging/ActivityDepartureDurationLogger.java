@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import se.vti.roundtrips.examples.activityExpandedGridNetwork.Activity;
-import se.vti.roundtrips.examples.activityExpandedGridNetwork.GridNodeWithActivity;
+import common.Activity;
+import common.GridNodeWithActivity;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.simulator.Episode;
 import se.vti.roundtrips.simulator.StayEpisode;

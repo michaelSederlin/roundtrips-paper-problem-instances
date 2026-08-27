@@ -22,8 +22,8 @@ import org.apache.logging.log4j.ThreadContext;
 
 import se.vti.roundtrips.common.Runner;
 import se.vti.roundtrips.common.Scenario;
-import se.vti.roundtrips.examples.activityExpandedGridNetwork.Activity;
-import se.vti.roundtrips.examples.activityExpandedGridNetwork.GridNodeWithActivity;
+import common.Activity;
+import common.GridNodeWithActivity;
 import common.logging.*;
 import common.IterationCounter;
 import se.vti.roundtrips.multiple.MultiRoundTrip;

@@ -3,15 +3,15 @@ package common.logging;
 import java.util.EnumMap;
 import java.util.Map;
 
-import common.Activity;
-import disaggregate.model.ActivityNode;
 import se.vti.utils.misc.metropolishastings.MHToFileLogger;
+import common.Activity;
+import common.GridNodeWithActivity;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.simulator.MoveEpisode;
 import se.vti.roundtrips.simulator.StayEpisode;
 import se.vti.roundtrips.single.RoundTrip;
 
-public class VariablesLogger<N extends ActivityNode> extends MHToFileLogger<MultiRoundTrip<N>> {
+public class VariablesLogger extends MHToFileLogger<MultiRoundTrip<GridNodeWithActivity>> {
 
     public VariablesLogger(long samplingInterval, String logFile) {
         super(samplingInterval, logFile);
@@ -37,9 +37,9 @@ public class VariablesLogger<N extends ActivityNode> extends MHToFileLogger<Mult
     }
 
     @Override
-    public String createDataLine(MultiRoundTrip<N> mrt, double lw) {
+    public String createDataLine(MultiRoundTrip<GridNodeWithActivity> mrt, double lw) {
         StringBuilder dataLine = new StringBuilder();
-        for (RoundTrip<N> rt : mrt) {
+        for (RoundTrip<GridNodeWithActivity> rt : mrt) {
             dataLine.append(this.iteration());
 
             Map<Activity, Double> activityTime = new EnumMap<>(Activity.class);
@@ -58,7 +58,7 @@ public class VariablesLogger<N extends ActivityNode> extends MHToFileLogger<Mult
             double ttt = 0.0;
             for (var ep : rt.getEpisodes()) {
                 if (ep instanceof MoveEpisode) {
-                    MoveEpisode<N> moveEpisode = (MoveEpisode<N>) ep;
+                    MoveEpisode<GridNodeWithActivity> moveEpisode = (MoveEpisode<GridNodeWithActivity>) ep;
 
                     ttt += moveEpisode.getDuration_h();
                     double endTime = moveEpisode.getEndTime_h();
@@ -71,10 +71,10 @@ public class VariablesLogger<N extends ActivityNode> extends MHToFileLogger<Mult
                     lastReturn = Math.max(lastReturn, endTime);
                     
                 } else if (ep instanceof StayEpisode) {
-                    StayEpisode<N> step = (StayEpisode<N>) ep;
+                    StayEpisode<GridNodeWithActivity> step = (StayEpisode<GridNodeWithActivity>) ep;
                     
                     for (Activity act : Activity.values()) {
-                        if (step.getLocation().getAllActivities().contains(act)) {
+                        if (step.getLocation().getActivity().equals(act)) {
                             activityTime.put(act, activityTime.get(act) + step.getDuration_h());
                             activityCounts.put(act, activityCounts.get(act) + 1);
                         }

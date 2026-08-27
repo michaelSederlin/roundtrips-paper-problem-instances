@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import se.vti.roundtrips.common.Scenario;
-import se.vti.roundtrips.examples.activityExpandedGridNetwork.Activity;
-import se.vti.roundtrips.examples.activityExpandedGridNetwork.GridNodeWithActivity;
+import common.Activity;
+import common.GridNodeWithActivity;
 import se.vti.utils.misc.Tuple;
 
 public class GridWorld{

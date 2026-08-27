@@ -8,7 +8,7 @@ import java.util.Random;
 import org.w3c.dom.NodeList;
 
 import jj2000.j2k.NotImplementedError;
-import se.vti.roundtrips.examples.activityExpandedGridNetwork.Activity;
+import common.Activity;
 import common.XMLReader;
 import se.vti.utils.misc.Tuple;
 

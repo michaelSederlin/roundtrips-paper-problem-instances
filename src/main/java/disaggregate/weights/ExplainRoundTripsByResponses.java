@@ -4,19 +4,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import common.Activity;
 import disaggregate.model.Person;
 import disaggregate.model.SurveyResponse;
-import disaggregate.model.ActivityNode;
-import disaggregate.utils.UniqueActivityNodeSummary;
+import disaggregate.utils.UniqueNodeSummary;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.multiple.MultiRoundTripSummary;
 import se.vti.roundtrips.single.RoundTrip;
+import common.Activity;
+import common.GridNodeWithActivity;
 
-public class ExplainRoundTripsByResponses implements ResponseWeight<ActivityNode>{
+public class ExplainRoundTripsByResponses implements ResponseWeight {
     private static final double HORIZON_H = 24.0;
 
-    private final List<SurveyResponse<ActivityNode>> responses;
+    private final List<SurveyResponse> responses;
     private final List<Person> syntheticPopulation;
     private final ExplainSummary explainSummary;
 
@@ -26,11 +26,11 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<ActivityNode
 
     private final boolean[][] excludedPairs;
 
-    public ExplainRoundTripsByResponses(List<SurveyResponse<ActivityNode>> responses, List<Person> syntheticPopulation) {
+    public ExplainRoundTripsByResponses(List<SurveyResponse> responses, List<Person> syntheticPopulation) {
         this(responses, syntheticPopulation, 0.0);
     }
 
-    public ExplainRoundTripsByResponses(List<SurveyResponse<ActivityNode>> responses, List<Person> syntheticPopulation, double personDifferenceThreshold) {
+    public ExplainRoundTripsByResponses(List<SurveyResponse> responses, List<Person> syntheticPopulation, double personDifferenceThreshold) {
         this.responses = responses;
         this.syntheticPopulation = syntheticPopulation;
         this.lastLocationKernel = new double[syntheticPopulation.size()][responses.size()];
@@ -63,16 +63,16 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<ActivityNode
     }
 
     @Override
-    public double logWeight(MultiRoundTrip<ActivityNode> multiRoundTrip) {
+    public double logWeight(MultiRoundTrip<GridNodeWithActivity> multiRoundTrip) {
         return multiRoundTrip.getSummary(ExplainSummary.class).getTotalLW();
     }
 
-    public void configureRequiredSummary(MultiRoundTrip<ActivityNode> mrt) {
+    public void configureRequiredSummary(MultiRoundTrip<GridNodeWithActivity> mrt) {
         mrt.addSummary(explainSummary);
         mrt.recomputeSummaries();
     }
 
-    class ExplainSummary implements MultiRoundTripSummary<ActivityNode> {
+    class ExplainSummary implements MultiRoundTripSummary<GridNodeWithActivity> {
         private final double[] perAgentLogWeight;
         private double totalLW = 0.0;
 
@@ -88,22 +88,22 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<ActivityNode
         // Requires UniqueActivityNodeSummary to be registered first when the feature is in use --
         // summaries are updated in registration order. Absence means the feature is off.
         @Override
-        public void update(RoundTrip<ActivityNode> newRT, MultiRoundTrip<ActivityNode> state) {
+        public void update(RoundTrip<GridNodeWithActivity> newRT, MultiRoundTrip<GridNodeWithActivity> state) {
             int idx = newRT.getIndex();
-            UniqueActivityNodeSummary uniq = state.getSummary(UniqueActivityNodeSummary.class);
-            recompute(idx, newRT, (uniq != null) ? uniq.getRoundTripActivityNodes(idx) : Map.of());
+            UniqueNodeSummary uniq = state.getSummary(UniqueNodeSummary.class);
+            recompute(idx, newRT, (uniq != null) ? uniq.getRoundTripNodes(idx) : Map.of());
         }
 
         // Unreachable: MultiRoundTrip only ever calls the two-argument update, which is
         // overridden above. Without the MultiRoundTrip there is no way to reach
         // UniqueActivityNodeSummary, so fail loudly rather than score against the wrong nodes.
         @Override
-        public void update(int idx, RoundTrip<ActivityNode> oldRT, RoundTrip<ActivityNode> newRT) {
+        public void update(int idx, RoundTrip<GridNodeWithActivity> oldRT, RoundTrip<GridNodeWithActivity> newRT) {
             throw new UnsupportedOperationException(
                     "ExplainSummary requires the MultiRoundTrip to resolve accruing activity nodes");
         }
 
-        private void recompute(int idx, RoundTrip<ActivityNode> newRT, Map<Activity, ActivityNode> accruingNodes) {
+        private void recompute(int idx, RoundTrip<GridNodeWithActivity> newRT, Map<Activity, GridNodeWithActivity> accruingNodes) {
             double personWeight = 0.0;
             if (newRT != null) {
                 // Built once per round trip, so the interval extraction is shared by all responses.
@@ -148,7 +148,7 @@ public class ExplainRoundTripsByResponses implements ResponseWeight<ActivityNode
 
     // ======== Getters ======== // 
 
-    public List<SurveyResponse<ActivityNode>> getResponses() {
+    public List<SurveyResponse> getResponses() {
         return responses;
     }
 
