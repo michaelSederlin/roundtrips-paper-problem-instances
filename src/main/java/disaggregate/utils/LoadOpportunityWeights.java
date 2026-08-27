@@ -2,7 +2,7 @@ package disaggregate.utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import disaggregate.model.Activity;
+import common.Activity;
 import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.common.Scenario;
 

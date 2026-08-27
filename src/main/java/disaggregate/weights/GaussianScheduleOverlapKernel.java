@@ -4,7 +4,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import disaggregate.model.Activity;
+import common.Activity;
 import disaggregate.model.Person;
 import se.vti.roundtrips.simulator.IntervalUtils;
 import se.vti.utils.misc.Tuple;

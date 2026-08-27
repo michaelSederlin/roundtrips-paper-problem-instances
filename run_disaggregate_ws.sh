@@ -54,9 +54,9 @@ run() {
   local service="${1:-disaggregate}"
   echo
   echo "=== Launch detached on WS ${HOST} (${service}) ==="
-  scp "${ARGS_FILE}" "${HOST}:${WS_DIR}/disaggregate-arguments.txt"
+  scp "${ARGS_FILE}" "${HOST}:${WS_DIR}/${service}-arguments.txt"
   scp docker-compose.yml "${HOST}:${WS_DIR}/docker-compose.yml"
-  ssh_ws "mkdir -p '${WS_DIR}/output/disaggregate'"
+  ssh_ws "mkdir -p '${WS_DIR}/output/${service}'"
   ssh_ws "cd '${WS_DIR}' && docker compose up -d ${service}"
 
   echo
@@ -64,6 +64,7 @@ run() {
   echo "  Check progress: $0 status   (or: $0 logs)"
   echo "  Fetch results:  $0 collect  (once status shows it has exited)"
 }
+
 
 status() {
   echo "=== Status of disaggregate on WS ${HOST} ==="

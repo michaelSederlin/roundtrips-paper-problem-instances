@@ -10,7 +10,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.stream.Collectors;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -20,51 +19,27 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
 
-// import se.vti.logger.VariablesLogger;
-import se.vti.roundtrips.common.NodeWithCoords;
+
 import se.vti.roundtrips.common.Runner;
 import se.vti.roundtrips.common.Scenario;
 import se.vti.roundtrips.examples.activityExpandedGridNetwork.Activity;
 import se.vti.roundtrips.examples.activityExpandedGridNetwork.GridNodeWithActivity;
-// import se.vti.roundtrips.logging.ActivityDepartureDurationLogger;
-// import se.vti.roundtrips.logging.ActivityDurationLogger;
-// import se.vti.roundtrips.logging.TimingLogger;
-// import se.vti.roundtrips.logging.ActivityLocationSetsWriter;
-// import se.vti.roundtrips.logging.SettingsLogger;
+import common.logging.*;
 import common.IterationCounter;
-// import se.vti.roundtrips.logging.SimpleStatsLogger;
-// import se.vti.roundtrips.logging.XMLStateLogger;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.multiple.MultiRoundTripJsonIO;
-import se.vti.roundtrips.samplingweights.StrictlyRequireMaxNumberOfStops;
 import se.vti.roundtrips.samplingweights.timeUse.LogarithmicTimeMultiplePersonsSingleDay;
 import se.vti.roundtrips.simulator.DefaultSimulator;
-import se.vti.roundtrips.simulator.Episode;
-import se.vti.roundtrips.simulator.StayEpisode;
 import se.vti.roundtrips.single.RoundTrip;
-// import se.vti.utils.Env;
 import common.PerThreadConsole;
-import common.XMLStateLogger;
-// import se.vti.utils.XMLCompressor;
-import se.vti.utils.misc.Tuple;
 import se.vti.utils.misc.metropolishastings.*;
 import se.vti.utils.misc.metropolishastings.terminationcriteria.BlockAverageTerminationCriterion;
 
 @Command(name = "synthesis", mixinStandardHelpOptions = true )    
 public class SynthesisRunner implements Callable<Integer> {
 	static final int DEFAULT_MSG_INTERVAL = 200_000;
-    // static record DurationParams (
-	// 	Tuple<Double, Double> workOpeningHours,
-	// 	Tuple<Double, Double> educationOpeningHours,
-	// 	Tuple<Double, Double> otherOpeningHours,
-	// 	Double homeMinDuration, 
-	// 	Double potentialShiftMagnitude            ) {}
-		
-		private static String[] validArgs = new String[]{"--N", "--M", "--maxIter", "--workWindow", "--otherWindow", "--eduWindow"}; // TODO: Validate args
-		
-		public static Logger logger = LogManager.getLogger(SynthesisRunner.class);
-		
-		// ----------------- Main method -----------------
+		   
+    public static Logger logger = LogManager.getLogger(SynthesisRunner.class);
 	@Mixin private Options opts = new Options();
     public static void main(String[] args) throws Exception {
 		int exitCode = new CommandLine(new SynthesisRunner()).execute(args);
@@ -73,44 +48,20 @@ public class SynthesisRunner implements Callable<Integer> {
 
 	@Override
 	public Integer call() throws Exception {
-//      int N = findIntegerArgument("--N", args, 100);
-//      int M = findIntegerArgument("--M", args, 100);
-        // int maxIter = findIntegerArgument("--maxIter", args, (int) 20e6);
-        // int populationSize = 1000;
-
-//      int msgInt = 1000;
+        Files.createDirectories(opts.output_dir);
+        opts.save();
         int msgInt = (opts.max_iter >= DEFAULT_MSG_INTERVAL) ? DEFAULT_MSG_INTERVAL : Math.max(1, opts.max_iter / 100);
 
-//      ------------ Paths ------------
-//      Path root = Env.getEnvRoot("amal");
-//      Path baseOutputDir = root.resolve("output/ProductionRun_N" + N + "M" + M + "/");
-//      Path preferencesPath = root.resolve("configs/spread_preferences_evenMoreHome.xml");
-//      Path opportunitiesPath = baseOutputDir.resolve("opportunity_weights.csv");
-
-        // Path baseOutputDir = Path.of("output/ProductionRun_" + opts.population_size + "/");
-        // Path preferencesPath = Path.of("configs/spread_preferences_evenMoreHome_retired.xml");
-        // Path opportunitiesPath = baseOutputDir.resolve("opportunity_weights.csv");
-
-        Files.createDirectories(opts.output_dir);
-        
-        // ----------------- Setup parameters -----------------
-        Tuple<Double, Double> workOpeningHours = new Tuple<>(6.0, 18.0);
-        Tuple<Double, Double> educationOpeningHours = new Tuple<>(7.0, 18.0);
-        Tuple<Double, Double> otherOpeningHours = new Tuple<>(8.0, 20.0);
-        double homeMinDuration = 9.0;
-        double potentialShiftMagnitude = 0.0;
-
-        // DurationParams params = new DurationParams(workOpeningHours, educationOpeningHours, otherOpeningHours, homeMinDuration, potentialShiftMagnitude);
         
         // ------------ Threads ------------ 
-        int numProc = Math.max(Runtime.getRuntime().availableProcessors(), opts.max_processes);
+        int availProcs = Runtime.getRuntime().availableProcessors();
+        int numProc = (opts.max_processes <= 0) ?
+            availProcs : 
+            Math.min(availProcs, opts.max_processes);
 
         int basePopulationSize = opts.population_size / numProc;
         int remainderPopulationSize = opts.population_size % numProc;
-        // int baseSeed = 100;
-//      int scenarioSeed = baseSeed * 19;   // measurement data seed
-        // int scenarioSeed = baseSeed * 29;   // validation data seed
-        // int gridWorldSeed = baseSeed * 39;
+
         List<Integer> partitionsSeeds = new ArrayList<>(numProc);
         
         List<Integer> populationPartitionsSizes = new ArrayList<>(numProc);
@@ -164,18 +115,17 @@ public class SynthesisRunner implements Callable<Integer> {
         logger.info("Time bin size (h): {}", opts.time_bin_size);
         logger.info("Number of time bins: {}", (int) (opts.horizon / opts.time_bin_size));
 
-        logger.info("Work opening hours: {}", opts.opening_hours.get(Activity.WORK).toString());
-        logger.info("EDUCATION opening hours: {}", opts.opening_hours.get(Activity.EDUCATION).toString());
-        logger.info("OTHER opening hours: {}", opts.opening_hours.get(Activity.OTHER).toString());
-        logger.info("Minimum home duration opening hours: {}", homeMinDuration);
-        logger.info("Maximum opening hour shift: {}", potentialShiftMagnitude);
+        logger.info("Work opening hours: ({}, {})", opts.work_open, opts.work_close);
+        logger.info("EDUCATION opening hours: ({}, {})", opts.education_open, opts.education_close);
+        logger.info("OTHER opening hours: ({}, {})", opts.other_open, opts.other_close);
+        logger.info("Minimum home duration opening hours: {}", opts.min_home_duration);
+        // logger.info("Maximum opening hour shift: {}", potentialShiftMagnitude);
 
         logger.info("Saved opportunity weights to: {}", opts.opportunities_path);
         logger.info("============================");
         
         
         // ------------ Run threads ------------ 
-        
         ExecutorService pool = Executors.newFixedThreadPool(numProc);
         List<Future<?>> futures = new ArrayList<>();
 
@@ -183,25 +133,19 @@ public class SynthesisRunner implements Callable<Integer> {
 
         for (int ii = 0; ii < numProc; ii++) {
             final int idx = ii;
-            int finalNIter = maxIter;
+            int finalNIter = opts.max_iter;
             futures.add(pool.submit(() -> {
                 try {
                     run(
-                            String.valueOf(idx),
-                            partitionsSeeds.get(idx),
-                            scenarioSeed + idx,
-                            finalNIter,
-                            scenarios.get(idx),
-                            gridWorlds.get(idx),
+                            String.valueOf(idx), partitionsSeeds.get(idx), opts.scenario_seed + idx,
+                            scenarios.get(idx), gridWorlds.get(idx),
                             populationPartitionsSizes.get(idx),
-                            baseOutputDir,
-                            preferencesPath,
-                            params,
+                            opts, 
                             msgInt
                             );
                 } finally {
                     ThreadContext.put("runId", "main");
-                    ThreadContext.put("logDir", baseOutputDir.toString());
+                    ThreadContext.put("logDir", opts.output_dir.toString());
                     logger.info("Partition {} finished!", idx);
                     ThreadContext.clearAll();
                 }
@@ -211,39 +155,18 @@ public class SynthesisRunner implements Callable<Integer> {
         pool.shutdown();
         for (var f : futures) f.get();
 
-        
-
-        // ----------------- Merging & plotting merged partitions -----------------
-        
-        // String[] plottingArgs = new String[]{
-        //      "--results-dir", baseOutputDir.toString(),
-        //      "--states-xml", baseOutputDir.resolve("partitions_merged/final_states_merged.xml").toString(),
-        //      "--save-dir", baseOutputDir.resolve("partitions_merged").toString(),
-        //      "--preferences-xml", preferencesPath.toString(),
-        //      "--population-csv", baseOutputDir.resolve("partitions_merged/population_merged.csv").toString(),
-        //      "--window", "10",
-        //      "--reference-activity", "HOME"
-        // };
-
-        // String[] plottingScripts = new String[]{ 
-        //      "concatenate_pdfs.py",
-        //      "merge_states_xml.py",
-        //      "merge_population_csv.py",
-        //      "plot_time_structure_histogram.py",                   
-        //      "plot_activity_locations_usage.py", 
-        //      "plot_preference_matching.py",                        
-        // };
+        return 0;
     }
 
     // ----------------- Static run method  -----------------
     static void run(
-            String partition, long partitionSeed, int activityLocationSeed, int maxIter,
+            String partition, long partitionSeed, int activityLocationSeed,
             Scenario<GridNodeWithActivity> scenario, GridWorld gridWorld,
-            int populationSize, Path baseOutputDir, Path preferencesPath,
-            DurationParams durationParams,
+            int partitionPopulationSize,
+            Options opts,
             int msgInt
             ) throws Exception {
-        Path partitionOutputDir = baseOutputDir.resolve(partition);
+        Path partitionOutputDir = opts.output_dir.resolve(partition);
         Files.createDirectories(partitionOutputDir);
         ThreadContext.put("runId", partition);
         ThreadContext.put("logDir", partitionOutputDir.getParent().toString());
@@ -255,24 +178,21 @@ public class SynthesisRunner implements Callable<Integer> {
 
         
         // ----------------- Setup the population & compute Time-use preferences-----------------
-        
-        StandardSyntheticPopulation population = new StandardSyntheticPopulation(populationSize, partitionSeed).identifyUniqueGroups();   
-        logger.info("Partition {}: Loaded population of size {}", partition, population.size());
+        StandardSyntheticPopulation population = new StandardSyntheticPopulation(partitionPopulationSize, partitionSeed).identifyUniqueGroups();   
+        logger.info("Partition {}: Loaded population of size {}", partition, partitionPopulationSize);
 
-        TimeUsePreferences prefs = new TimeUsePreferences(preferencesPath, partitionRNG).setUniformRandomMixing(true);
+        TimeUsePreferences prefs = new TimeUsePreferences(opts.preferences_path, partitionRNG).setUniformRandomMixing(true);
         prefs.computeAndSetPreferences(population);
         prefs.moveWorkHoursOfElderlyToHome(population);
 
         population.writePopulation(partitionPath);
 
         LogarithmicTimeMultiplePersonsSingleDay<GridNodeWithActivity> timeUseWeight =
-                new LogarithmicTimeMultiplePersonsSingleDay<>(scenario.getPeriodLength_h(), population.size());
+                new LogarithmicTimeMultiplePersonsSingleDay<>(scenario.getPeriodLength_h(), partitionPopulationSize);
 
-//      List<String> sampledHomeLocations = new ArrayList<>();
-//      List<String> sampledWorkLocations = new ArrayList<>();
-        List<Set<GridNodeWithActivity>> homeLocationsPerPerson = new ArrayList<>(populationSize);
+        List<Set<GridNodeWithActivity>> homeLocationsPerPerson = new ArrayList<>(partitionPopulationSize);
 
-        logger.info("Partition {}: Sampling activity locations for {} persons", partition, population.size());
+        logger.info("Partition {}: Sampling activity locations for {} persons", partition, partitionPopulationSize);
         for (SyntheticPerson person : population.getPopulation()) {
             double shift = 0;
 
@@ -281,7 +201,6 @@ public class SynthesisRunner implements Callable<Integer> {
                 var emptyComponent = timeUseWeight.createComponent(0.0, person.getIdx());
                 Set<GridNodeWithActivity> homeSet = gridWorld.sampleActivityLocations(Activity.HOME, locationRNG);
                 homeLocationsPerPerson.add(homeSet);
-//              sampledHomeLocations.add(homeSet.iterator().next().getBasicName());
                 for (GridNodeWithActivity node : scenario.getNodesView()) {
                     if (homeSet.contains(node)) {
                         component.addObservedNode(node);
@@ -289,7 +208,7 @@ public class SynthesisRunner implements Callable<Integer> {
                         emptyComponent.addObservedNode(node);
                     }
                 }
-                component.setMinEnBlockDurationAtLeastOnce_h(durationParams.homeMinDuration);
+                component.setMinEnBlockDurationAtLeastOnce_h(opts.min_home_duration);
                 timeUseWeight.addConfiguredComponent(component);
                 timeUseWeight.addConfiguredComponent(emptyComponent);
                 logger.debug("Person {} activity {} prefs: {} component: {}",
@@ -299,7 +218,6 @@ public class SynthesisRunner implements Callable<Integer> {
                 var component = timeUseWeight.createComponent(person.getWorkPreference(), person.getIdx());
                 var emptyComponent = timeUseWeight.createComponent(0.0, person.getIdx());
                 Set<GridNodeWithActivity> workSet = gridWorld.sampleActivityLocations(Activity.WORK, locationRNG);
-//              sampledWorkLocations.add(workSet.iterator().next().getBasicName());
                 for (GridNodeWithActivity node : scenario.getNodesView()) {
                     if (workSet.contains(node)) {
                         component.addObservedNode(node);
@@ -307,7 +225,7 @@ public class SynthesisRunner implements Callable<Integer> {
                         emptyComponent.addObservedNode(node);
                     }
                 }
-                component.setOpeningTimes_h(durationParams.workOpeningHours.getA() + shift, durationParams.workOpeningHours.getB() + shift);
+                component.setOpeningTimes_h(opts.work_open, opts.work_close);
                 timeUseWeight.addConfiguredComponent(component);
                 timeUseWeight.addConfiguredComponent(emptyComponent);
                 logger.debug("Person {} activity {} prefs: {} component {}",
@@ -324,7 +242,7 @@ public class SynthesisRunner implements Callable<Integer> {
                         emptyComponent.addObservedNode(node);
                     }
                 }
-                component.setOpeningTimes_h(durationParams.educationOpeningHours.getA() + shift, durationParams.educationOpeningHours.getB() + shift);
+                component.setOpeningTimes_h(opts.education_open, opts.education_close);
                 timeUseWeight.addConfiguredComponent(component);
                 timeUseWeight.addConfiguredComponent(emptyComponent);
                 logger.debug("Person {} activity {} prefs: {} component {}",
@@ -341,7 +259,7 @@ public class SynthesisRunner implements Callable<Integer> {
                         emptyComponent.addObservedNode(node);
                     }
                 }
-                component.setOpeningTimes_h(durationParams.otherOpeningHours.getA() + shift, durationParams.otherOpeningHours.getB() + shift);
+                component.setOpeningTimes_h(opts.other_open, opts.other_close);
                 timeUseWeight.addConfiguredComponent(component);
                 timeUseWeight.addConfiguredComponent(emptyComponent);
                 logger.debug("Person {} activity {} prefs: {} component {}",
@@ -349,46 +267,28 @@ public class SynthesisRunner implements Callable<Integer> {
             }
         }
 
-
-        int opts.grid_sizeLocal = gridWorld.getGridSize();
-
-        
-        // ----------------- Write sampled activity location sets to file -----------------
-        
-//      ActivityLocationSetsWriter.write(sampledHomeLocations, partitionOutputDir.resolve(opts.grid_sizeLocal*opts.grid_sizeLocal + "_homeLocations.csv"), opts.grid_sizeLocal);
-//      ActivityLocationSetsWriter.write(sampledWorkLocations, partitionOutputDir.resolve(opts.grid_sizeLocal*opts.grid_sizeLocal + "_workLocations.csv"), opts.grid_sizeLocal);
-//      logger.info("Partition {}: Saved home and work locations to dir: {}", partition, partitionOutputDir);
-
-        
         // ----------------- Set up mh -----------------
-        MultiRoundTrip<GridNodeWithActivity> initState = createInitialMultiRoundTrip(scenario, homeLocationsPerPerson, populationSize);
+        MultiRoundTrip<GridNodeWithActivity> initState = createInitialMultiRoundTrip(scenario, homeLocationsPerPerson, partitionPopulationSize);
 
         logger.info("Partition {}: Initializing runner...", partition);
 
         Runner<GridNodeWithActivity> runner = new Runner<>(scenario)
-                .setInitialState(initState).setMessageInterval(msgInt)
-                .setNumberOfIterations(maxIter);
+                .setInitialState(initState).setMessageInterval(msgInt);
 
         logger.info("Partition {}: Adding weights:", partition);
-        runner.addIndividualWeight(new StrictlyEnforceCorrectHomeLocationWeight<>(homeLocationsPerPerson));
-        logger.info("\tAdded StrictlyEnforceCorrectHomeLocationWeight as individualWeight");
+        if (opts.enforce_correct_home_location) runner.addIndividualWeight(new StrictlyEnforceCorrectHomeLocationWeight<>(homeLocationsPerPerson));
         runner.setPopulationUniformPrior();
-        logger.info("\tUniform prior added");
-        runner.addPopulationWeight(timeUseWeight, 5);
-        logger.info("\tAdded timeUseWeight as populationWeight with factor {}", 5);
-//      runner.addIndividualWeight(new StrictlyRequireMaxNumberOfStops<>(5));
-//      logger.info("\tAdded StrictlyRequireMaxNumberOfStops({}) as individualWeight", 5);
+        if (opts.time_use_mixing_weight > 0) runner.addPopulationWeight(timeUseWeight, opts.time_use_mixing_weight);
 
         MHWeightContainer<MultiRoundTrip<GridNodeWithActivity>> weights =  new MHWeightContainer<>();
         for (MHWeight<MultiRoundTrip<GridNodeWithActivity>> w : runner.getSamplingWeightsView()) weights.add(w);
 
         runner.addStateProcessor(new MHWeightsToFileLogger<>(msgInt, weights, partitionOutputDir.resolve("weights.tsv").toString()));
-        runner.addStateProcessor(new XMLStateLogger(msgInt, partitionOutputDir.resolve("states.xml")));
-        // runner.addStateProcessor(new ActivityDurationLogger(msgInt, partitionOutputDir.resolve("activityDurations.xml")));
-        // runner.addStateProcessor(new ActivityDepartureDurationLogger(msgInt, partitionOutputDir.resolve("activityDeparturesDurations.xml").toString()));
-        // runner.addStateProcessor(new VariablesLogger<>(msgInt, partitionOutputDir.resolve("stateVariables.tsv")));
-//      runner.addStateProcessor(new TimingLogger(msgInt, partitionOutputDir.resolve("timing.log").toString(), maxIter).setVerbose(true));
-        // runner.addStateProcessor(new SimpleStatsLogger<>(scenario, msgInt, partitionOutputDir));
+        runner.addStateProcessor(new XMLStateLogger<>(msgInt, partitionOutputDir.resolve("states.xml")));
+        runner.addStateProcessor(new ActivityDurationLogger(msgInt, partitionOutputDir.resolve("activityDurations.xml")));
+        runner.addStateProcessor(new ActivityDepartureDurationLogger(msgInt, partitionOutputDir.resolve("activityDeparturesDurations.xml").toString()));
+        runner.addStateProcessor(new VariablesLogger(msgInt, partitionOutputDir.resolve("stateVariables.tsv")));
+        runner.addStateProcessor(new SimpleStatsLogger<>(scenario, msgInt, partitionOutputDir));
         runner.addStateProcessor(new MHAbstractStateProcessor<MultiRoundTrip<GridNodeWithActivity>>(0, msgInt) {
             private long iter = 0;
             private final long  t0 = System.currentTimeMillis();
@@ -404,64 +304,21 @@ public class SynthesisRunner implements Callable<Integer> {
         var iterCounter = new IterationCounter<MultiRoundTrip<GridNodeWithActivity>>();
         runner.addStateProcessor(iterCounter);
 
-//      long nIter = 1000 * 1000;
-//      runner.setNumberOfIterations(nIter);
         var terminationCriterion = new BlockAverageTerminationCriterion<MultiRoundTrip<GridNodeWithActivity>>()
                 .setCheckInterval(10_000).setMinSamples(10_000)
+                .setRelativeVarianceTolerance(opts.variance_tolerance).setStandardizedMeanTolerance(opts.mean_tolerance)
                 .setConvergenceStatsFileName(partitionOutputDir.resolve("convergenceStats.tsv").toString());
         runner.setTerminationCriterion(terminationCriterion);
 
         logger.info("Partition {}: Starting MCMC", partition);
         runner.run();
             
-        var finalState = runner.getFinalState();
-
         MultiRoundTripJsonIO.singleton().writeToFile(runner.getFinalState(), partitionOutputDir.resolve("final_state.json").toString());
         logger.info("Partition {}: Wrote final state to file {}", partition, partitionOutputDir.resolve("final_state.json"));
         logger.info("Partition {}: Simulation finished. Plotting results ...", partition);
 
-        
-        // ------------------ Write Settings and Runtime to file ------------------
-        SettingsLogger settingsLogger = new SettingsLogger(partitionOutputDir.resolve("settings.log").toString(), LocalDateTime.now());
-        settingsLogger.writeSettings(opts.grid_sizeLocal, populationSize, maxIter, runner.getSamplingWeightsView().size());
-        settingsLogger.writeRuntimeInfo(maxIter);
-
-        
-        // ----------------- Plotting Partitions  -----------------
-        gridWorld.writeGridWorldToJson(partitionOutputDir + "/grid_world.json");
-        String[] plottingArgs = new String[]{
-                "--results-dir", partitionOutputDir.toString(),
-                "--states-xml", partitionOutputDir.resolve("states.xml").toString(),
-                "--save-dir", partitionOutputDir.resolve("plots").toString(),
-                "--preferences-xml", preferencesPath.toString(),
-                "--population-csv", partitionOutputDir.resolve("population.csv").toString(),
-                "--window", "10",
-                "--reference-activity", "HOME"
-        };
-
-        String[] plottingScripts = new String[]{            
-                "plot_activity_durations_histogram.py", 
-                "plot_activity_locations_heatmap.py",
-                "plot_activity_locations_usage.py", 
-//              "plot_convergence_stats.py",
-                "plot_log_weights.py",
-
-//              "plot_network.py",
-                "plot_nStop_distribution.py",
-                "plot_population_grouping.py",
-                "plot_preference_matching.py",
-                "plot_time_structure_histogram.py"
-        };
-
-//      se.vti.utils.Plotter.plot(
-//              "src/main/python/plotting/",
-//              plottingScripts,
-//              plottingArgs
-//              );
-        XMLCompressor.compressXML(partitionOutputDir.resolve("states.xml"), 5, true);
         logger.info("Done!");
     }
-
     
     
     // ----------------- Other Static methods  -----------------
@@ -513,7 +370,7 @@ public class SynthesisRunner implements Callable<Integer> {
 
     public static MultiRoundTrip<GridNodeWithActivity> loadInitialMRT(Scenario<GridNodeWithActivity> scenario, Path fp) throws Exception {
         try {
-            MultiRoundTrip<GridNodeWithActivity> mrt = MultiRoundTripJsonIO.readFromFile(scenario, fp.toString());
+            MultiRoundTrip<GridNodeWithActivity> mrt = MultiRoundTripJsonIO.singleton().readFromFile(scenario, fp.toString());
             mrt.simulateAll(new DefaultSimulator<>(scenario));
             mrt.recomputeSummaries();
             logger.info("Loaded initial state from file " + fp.toString());

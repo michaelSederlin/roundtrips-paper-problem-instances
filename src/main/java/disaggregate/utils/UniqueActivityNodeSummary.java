@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import disaggregate.model.Activity;
+import common.Activity;
 import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.multiple.MultiRoundTripSummary;
 import se.vti.roundtrips.simulator.Episode;

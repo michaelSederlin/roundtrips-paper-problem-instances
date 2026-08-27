@@ -17,6 +17,9 @@ import org.apache.logging.log4j.ThreadContext;
 
 import common.*;
 import common.SplitPopulationJoiner;
+import common.logging.ActivityDurationLogger;
+import common.logging.VariablesLogger;
+import common.logging.XMLStateLogger;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;

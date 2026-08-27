@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Preferences>
-    <!-- <GenderPreferences>
-        <Gender type="male">
-            <Activity name="WORK">8.0</Activity>
-            <Activity name="EDUCATION">0.0</Activity>
-            <Activity name="OTHER">1.5</Activity>
-            <Activity name="HOME">14.5</Activity>
-        </Gender>
-        <Gender type="female">
-            <Activity name="WORK">2.5</Activity>
-            <Activity name="EDUCATION">0.0</Activity>
-            <Activity name="OTHER">3.75</Activity>
-            <Activity name="HOME">17.75</Activity>
-        </Gender>
-    </GenderPreferences> -->
-
     <AgePreferences>
         <AgeGroup minAge="0" maxAge="17">
             <Activity name="WORK">0.0</Activity>

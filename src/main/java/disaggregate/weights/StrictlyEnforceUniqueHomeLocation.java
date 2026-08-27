@@ -1,6 +1,6 @@
 package disaggregate.weights;
 
-import disaggregate.model.Activity;
+import common.Activity;
 import disaggregate.model.ActivityNode;
 import se.vti.roundtrips.single.RoundTrip;
 import se.vti.utils.misc.metropolishastings.MHWeight;

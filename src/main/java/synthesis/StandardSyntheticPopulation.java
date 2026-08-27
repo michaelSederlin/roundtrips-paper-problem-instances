@@ -62,7 +62,7 @@ public class StandardSyntheticPopulation extends SyntheticPopulation {
 
         
     // Annual median income in kSEK, 2024
-    NavigableMap<Integer, Double> ageIncomeMedian = new TreeMap<>(Map.of(
+    private static final NavigableMap<Integer, Double> ageIncomeMedian = new TreeMap<>(Map.of(
         17, 9.0,    // 17–23
         24, 159.7,  // 24–33 (approx.)
         34, 405.0,  // 34–43 (approx.)
@@ -92,8 +92,10 @@ public class StandardSyntheticPopulation extends SyntheticPopulation {
         for (int ii = 0; ii < n; ii++) {
             Tuple<Integer, Integer> ageGroup = ageDist.ceilingEntry(getRandom().nextDouble()).getValue();
             int age = getRandom().nextInt(ageGroup.getA(), ageGroup.getB() + 1);
+
+            double medianIncome = ageIncomeMedian.ceilingEntry(age).getValue();
            
-            double income = Math.max(getRandom().nextGaussian(ageIncomeMedian.get(age), incomeScale), 0.0);
+            double income = Math.max(getRandom().nextGaussian(medianIncome, incomeScale), 0.0);
 
             SyntheticPerson newPerson = new SyntheticPerson(ii, age, income);
             addPerson(newPerson);

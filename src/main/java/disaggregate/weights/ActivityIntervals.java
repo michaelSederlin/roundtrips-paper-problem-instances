@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import disaggregate.model.Activity;
+import common.Activity;
 import disaggregate.model.ActivityNode;
 import disaggregate.model.Person;
 import disaggregate.rvu.Trip;

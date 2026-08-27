@@ -3,8 +3,8 @@ package disaggregate.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import common.XMLStateLogger;
-import disaggregate.model.Activity;
+import common.Activity;
+import common.logging.XMLStateLogger;
 import disaggregate.model.Person;
 import disaggregate.model.SurveyResponse;
 import disaggregate.model.ActivityNode;

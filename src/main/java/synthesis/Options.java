@@ -1,11 +1,8 @@
 package synthesis;
+
 import java.nio.file.Path;
-import java.util.EnumMap;
-
 import java.util.Map;
-
 import picocli.CommandLine.Option;
-import common.Activity;
 
 public class Options {
     @Option(names = "--maxIter", defaultValue = "20e6") public int max_iter;
@@ -21,69 +18,31 @@ public class Options {
     @Option(names = "--scenario-seed") public Integer scenario_seed;
     @Option(names = "--opportunities-path") public Path opportunities_path;
 
-    @Option(names = "--opening-hours") public Map<Activity, Double> opening_hours = new EnumMap<>(Activity.class);
-    @Option(names = "--min-activity-duration") public Map<Activity, Double> min_activity_duration = new EnumMap<>(Activity.class);
+    @Option(names = "--work-open") public Double work_open;
+    @Option(names = "--work-close") public Double work_close;
+    @Option(names = "--min-work-duration") public Double min_work_duration;
 
+    @Option(names = "--education-open") public Double education_open;
+    @Option(names = "--education-close") public Double education_close;
+    @Option(names = "--min-education-duration") public Double min_education_duration;
 
-    @Option(names = "--convergence-stats-filename", defaultValue = "convergenceStats.tsv") public String convergence_stats_filename;
-    @Option(names = "--enforce-unique-home-location") public boolean enforce_unique_home_location;
-    @Option(names = "--n-respondents") public Integer n_respondents;
+    @Option(names = "--other-open") public Double other_open;
+    @Option(names = "--other-close") public Double other_close;
+    @Option(names = "--min-other-duration") public Double min_other_duration;
 
-    // --- Run config ---
-    @Option(names = "--max-number-of-iterations") public Integer max_number_of_iterations;
-    @Option(names = "--msg-interval", defaultValue = "-1") public int msg_interval;
-    @Option(names = "--stationarity-tolerance", defaultValue = "0.1") public double stationarity_tolerance;
-    @Option(names = "--min-number-of-stable-samples", defaultValue = "0",
-            description = "Minimum number of msgInterval-spaced samples to draw after stationarity is detected (0 = terminate immediately on stationarity)")
-    public int min_number_of_stable_samples;
+    @Option(names = "--home-open") public Double home_open;
+    @Option(names = "--home-close") public Double home_close;
+    @Option(names = "--min-home-duration") public Double min_home_duration;
 
-    // Prior
-    @Option(names = "--enforce-correct-home-location") public boolean enforce_correct_home_location;
+    @Option(names = "--time-use-mixing-weight", defaultValue = "1.0") public double time_use_mixing_weight;
+    @Option(names = "--enforce-correct-home-location", defaultValue = "true", negatable = true) public boolean enforce_correct_home_location = true;
 
-    @Option(names = "--with-kernel-weights") public boolean with_kernel_weights;
-    @Option(names = "--kernel-mixing-weight", defaultValue = "1.0") public double kernel_mixing_weight;
+    @Option(names = "--variance-tolerance", defaultValue = "0.1") public Double variance_tolerance;
+    @Option(names = "--mean-tolerance", defaultValue = "0.1") public Double mean_tolerance;
 
-    // --- Traveler kernel ---
-    @Option(names = "--lambda-age", defaultValue = "3.0") public double lambda_age;
-    @Option(names = "--lambda-income", defaultValue = "75.0") public double lambda_income;
-    @Option(names = "--eta", defaultValue = "0.2") public double eta;
-    @Option(names = "--traveler-kernel-threshold", defaultValue = "1e-6") public double traveler_kernel_threshold;
-    @Option(names = "--traveler-kernel-mixing-weight", defaultValue = "1.0") public double traveler_kernel_mixing_weight;
-
-    // --- Schedule kernel ---
-    @Option(names = "--n-stops-bandwidth", defaultValue = "0") public double n_stops_bandwidth;
-    
-    @Option(names = "--n-stops-mixing-weight", defaultValue = "1.0") public double n_stops_mixing_weight;
-    @Option(names = "--schedule-overlap-mixing-weight", defaultValue = "1.0") public double schedule_overlap_mixing_weight;
-    @Option(names = "--schedule-kernel-mixing-weight",  defaultValue = "1.0") public double schedule_kernel_mixing_weight;
-
-    // ==== Activity Median Durations ===
-    @Option(names = "--median-duration") public Map<Activity, Double> median_durations = new EnumMap<>(Activity.class);
-
-    // ==== Unique activity nodes ====
-    // Activities restricted to a single node per round trip: only the visited node with the
-    // highest opportunity weight accrues, in the staying weight and the schedule overlap
-    // kernel alike. Visiting other nodes is allowed, it just earns nothing.
-    // Usage: --unique-activity-node WORK=true
-    @Option(names = "--unique-activity-node") public Map<Activity, Boolean> unique_activity_nodes = new EnumMap<>(Activity.class);
-
-    // --- AMAL Optional weights ---
-    @Option(names = "--with-staying-weight") public boolean with_staying_weight;
-    @Option(names = "--stay-mixing-weight", defaultValue="1.0") public double stay_mixing_weight;
-    @Option(names = "--normalize-weights-across-nodes") public boolean normalize_weights_across_nodes;
-
-    @Option(names = "--with-movement-weight") public boolean with_movement_weight;
-    @Option(names = "--move-mixing-weight", defaultValue = "1.0") public double move_mixing_weight;
-    @Option(names = "--with-raw-movement-counts") public boolean raw_counts_flag;
-
-    // --- Warm start ---
-    @Option(names = "--warm-start-file") public String warm_start_file;
-
-    // --- Output ---
-    @Option(names = "--write-final-state", negatable = true) public boolean write_final_state = true;
-
-    public void saveArgs(String path) {
-    try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(path))) {
+    public void save() {
+    String fp = this.output_dir.resolve("options.log").toString();
+    try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(fp))) {
         for (var f : this.getClass().getDeclaredFields()) {
             var opt = f.getAnnotation(Option.class);
             if (opt == null) continue;
@@ -97,7 +56,7 @@ public class Options {
             }
         }
     } catch (Exception e) {
-        throw new RuntimeException("Failed to save args to " + path, e);
+        throw new RuntimeException("Failed to save args to " + fp, e);
     }
 }
 }

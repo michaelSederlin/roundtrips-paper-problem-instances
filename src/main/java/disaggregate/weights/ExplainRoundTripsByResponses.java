@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import disaggregate.model.Activity;
+import common.Activity;
 import disaggregate.model.Person;
 import disaggregate.model.SurveyResponse;
 import disaggregate.model.ActivityNode;

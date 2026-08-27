@@ -1,6 +1,7 @@
 package disaggregate.model;
 
 import java.util.List;
+import common.Activity;
 
 import se.vti.roundtrips.common.Node;
 

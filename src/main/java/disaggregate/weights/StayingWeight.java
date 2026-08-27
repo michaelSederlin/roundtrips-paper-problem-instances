@@ -3,7 +3,7 @@ package disaggregate.weights;
 import java.util.Map;
 import java.util.HashMap;
 
-import disaggregate.model.Activity;
+import common.Activity;
 import disaggregate.model.ActivityNode;
 import disaggregate.utils.UniqueActivityNodeSummary;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
