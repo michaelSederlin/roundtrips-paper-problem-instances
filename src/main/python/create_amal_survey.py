@@ -5,29 +5,61 @@
 
 # Needs documentation 
 
+import gzip
 import json
 from pathlib import Path
 import shutil
 
-from renate import get_environment_root
-from renate.utils.helpers import decimal_to_hhmm
-from renate.data.utils import load_mrts, create_od_matrix
 import pandas as pd
-from renate import setup_logging
 import logging
 
-setup_logging()
+
 logger = logging.getLogger(__name__)
+
+def decimal_to_hhmm(t: float) -> str:
+    t = max(0.0, min(24.0, t))
+    h = int(t) 
+    m = int((t - h) * 60) 
+    return f"{h:02d}{m:02d}"
+
+
+def load_mrts(states_fp: Path, idx: None | int = None) -> list: 
+    from lxml import etree
+    opener = gzip.open if states_fp.suffix == ".gz" else open
+    with opener(states_fp, 'rb') as fid:
+        states = etree.parse(fid)
+
+    mrts = states.xpath("//MultiRoundTrip")
+    if idx is not None: 
+        return [mrts[idx]]
+    else: 
+        return mrts
+
+def create_od_matrix(mrt: 'lxml.etree.Element', nodes: list) -> pd.DataFrame:
+    def parse_node_names(*nodes): 
+        out = []
+        for n in nodes:
+            out.append(n[:n.find(")") + 1])
+        return out
+
+    od_matrix = pd.DataFrame(0, index = nodes, columns = nodes)
+
+    for rt in mrt.findall("RoundTrip"):
+        mes = rt.xpath("Episodes/MoveEpisode")
+        for me in mes:
+            o, d = parse_node_names(me.get("from"), me.get("to"))
+            od_matrix.loc[o, d] += 1
+    return od_matrix
 
 def get_basic_name(node):
     return node[:node.find(")") + 1]
 
 
 def load_respondents(fp: Path, home_map: dict, n: int | None = None,
-                     random_state: int | None = None, gender_mapping: None|dict = None) -> pd.DataFrame:
+                     random_state: int | None = None) -> pd.DataFrame:
 
     logger.info("Loading respondents from %s (n=%s, random_state=%s)", fp, n, random_state)
-    population = pd.read_csv(fp)
+    population = pd.read_csv(fp, sep="\t" if fp.suffix.lower() == ".tsv" else ",")
     logger.info("Loaded population: %d rows", len(population))
     population['home'] = population['idx'].astype(str).map(home_map)
     n_missing_home = population['home'].isna().sum()
@@ -36,7 +68,6 @@ def load_respondents(fp: Path, home_map: dict, n: int | None = None,
 
     upbd = population.rename(columns={
         "idx": "UENR", 
-        "gender": "SEX", 
         "age": "AGE",
         "income": "INKUP",
         "home": "BOST_S"
@@ -46,9 +77,6 @@ def load_respondents(fp: Path, home_map: dict, n: int | None = None,
         upbd = upbd.sample(n=min(n, len(upbd)), random_state=random_state).sort_values("UENR")
         logger.info("Sampled %d respondents", len(upbd))
 
-    if gender_mapping is not None and not pd.api.types.is_numeric_dtype(upbd['SEX']):
-        upbd['SEX'] = upbd['SEX'].map(gender_mapping)
-        logger.info("Applied gender_mapping to SEX column")
     logger.info("Returning %d respondents", len(upbd))
     return upbd
 
@@ -58,8 +86,15 @@ def build_mddr(data_mrt) -> pd.DataFrame:
     rows = []
     for rt in data_mrt.findall("RoundTrip"):
         uenr = rt.get("index")
-        for me in rt.findall("Episodes/MoveEpisode"):
-            dest_activity = me.get("to")[me.get("to").find("[") + 1:-1]
+        eps = list(rt.findall('Episodes/'))
+
+        for ii, me in enumerate(eps):
+            if me.tag != 'MoveEpisode':
+                continue
+
+            dest = eps[ii+1] if ii < len(eps) - 1 else eps[0]
+            # dest_activity = me.get("to")[me.get("to").find("[") + 1:-1]
+            dest_activity = dest.get('labels').strip("[]").strip()
             d_b_s = get_basic_name(me.get("to"))
             d_a_s = get_basic_name(me.get("from"))
             t0, t1 = float(me.get("start")), float(me.get("end"))
@@ -83,7 +118,7 @@ def build_home_map(data_mrt) -> dict:
 def write_survey(out_dir: Path, upbd: pd.DataFrame, mddr: pd.DataFrame):
     logger.info("Writing survey -> %s", out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    sub_mddr = mddr[mddr["UENR"].astype(int).isin(upbd["UENR"].astype(int))]
+    sub_mddr = mddr[mddr["UENR"].astype(str).isin(upbd["UENR"].astype(str))]
     upbd.to_csv(out_dir / "upbd.csv", index=False)
     sub_mddr.to_csv(out_dir / "mddr.csv", index=False)
     logger.info("Wrote survey (%d persons, %d trips) -> %s",
@@ -105,38 +140,62 @@ def write_filtered_states(data_mrt, selected_uenrs: set, output: Path):
         mrt_out.append(copy.deepcopy(sw))
 
     for rt in data_mrt.findall("RoundTrip"):
-        if int(rt.get("index")) in selected_uenrs:
+        if rt.get("index") in selected_uenrs:
             mrt_out.append(copy.deepcopy(rt))
 
-    out_path = output / "states.xml.gz"
-    with gzip.open(out_path, 'wb') as f:
+    out_path = output / "states.xml"
+    # with gzip.open(out_path, 'wb') as f:
+    with open(out_path, 'wb') as f:
         etree.ElementTree(root).write(f, encoding="utf-8", xml_declaration=True, pretty_print=True)
     logger.info("Wrote filtered states (%d respondents) -> %s", len(selected_uenrs), out_path)
-    
+
+
+def _parse_bracketed_list(text: str) -> list:
+    # "[(1,4)[HOME], (1,3)[WORK]]" -> ["(1,4)[HOME]", "(1,3)[WORK]"]
+    inner = text.strip()[1:-1].strip()
+    return [p.strip() for p in inner.split(", ")] if inner else []
+
+
+def write_warm_start(data_mrt, selected_uenrs: set, output: Path):
+    """Write a global warm-start state for --warm-start-file.
+
+    The runner slices this by position (getRoundTrip(partFrom + j)), so the round
+    trips must be indexed 0..n-1 in the same order as the respondents in upbd.csv.
+    """
+    logger.info("Writing warm start state -> %s", output)
+    states = []
+    for rt in data_mrt.findall("RoundTrip"):
+        if rt.get("index") not in selected_uenrs:
+            continue
+        states.append({
+            "index": len(states),
+            "nodes": _parse_bracketed_list(rt.find("Nodes").text),
+            "dptBins": [int(d) for d in _parse_bracketed_list(rt.find("Departures").text)],
+        })
+
+    out_path = output / "finalState.json"
+    with open(out_path, "w") as fid:
+        json.dump(states, fid, indent=2)
+    logger.info("Wrote warm start state (%d roundtrips) -> %s", len(states), out_path)
+
+
 DEFAULT_INPUT = Path("amal/Results_Paper/2026 08 07/amal_measurement/out/ProductionRun_1000")
 DEFAULT_OUTPUT = Path("renate/data/scenarios/amal/results_paper/2026 08 07/full")
 
 
-def parse_args(argv=None):
+def parse_args():
     import argparse
-
-    parser = argparse.ArgumentParser(
-        description="Generate a survey (upbd/mddr) from simulated states.xml.")
-    parser.add_argument("-i", "--input", type=Path, default=DEFAULT_INPUT,
-                        help="Run directory containing partitions_merged/, nodes.tsv, edges.tsv "
-                             "and opportunity_weights.csv (default: %(default)s)")
-    parser.add_argument("-o", "--output", type=Path, default=DEFAULT_OUTPUT,
-                        help="Directory to write the survey into (default: %(default)s)")
-    parser.add_argument("-n", "--n-respondents", type=int, default=None,
-                        help="If given, sample this many respondents instead of using all.")
-    parser.add_argument("--random-state", type=int, default=1084,
-                        help="Seed used when --n-respondents is given (default: %(default)s)")
-    return parser.parse_args(argv)
+    parser = argparse.ArgumentParser(description="Generate a survey (upbd/mddr) from simulated states.xml.")
+    parser.add_argument("-i", "--input", type=Path, default=DEFAULT_INPUT)
+    parser.add_argument("--states-xml-filename", type = str, default = "_final_states_merged.xml")
+    parser.add_argument("--population-filename", type = str, default = "population_merged.csv")
+    parser.add_argument("-o", "--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("-n", "--n-respondents", type=int, default=None)
+    parser.add_argument("--random-state", type=int, default=1084)
+    return parser.parse_args()
 
 
-def main(argv=None):
-    args = parse_args(argv)
-    root = get_environment_root()
+def main(args):
     input = args.input
     output = args.output
     output.mkdir(parents=True, exist_ok=True)
@@ -148,7 +207,7 @@ def main(argv=None):
     #     logger.error("No states file found in %s", input)
     #     raise FileNotFoundError(f"No states file found")
     # logger.info("Found %d states file(s); using %s", len(candidates), candidates[0].name)
-    states_xml = input / "partitions_merged/_final_states_merged.xml"
+    states_xml = input / "partitions_merged" / args.states_xml_filename
     # states_xml = input / "0/states.xml.gz"
 
     logger.info("Loading MultiRoundTrip (idx=-1) from %s", states_xml.name)
@@ -175,17 +234,13 @@ def main(argv=None):
                 len(mddr), mddr['UENR'].nunique() if len(mddr) else 0)
 
     # Full survey
-    logger.info("Loading gender_mapping from %s", root / 'renate/data/metadata/gender_mapping.json')
-    with open(root / 'renate/data/metadata/gender_mapping.json', 'r') as fid:
-        gender_mapping = json.load(fid)
-    logger.info("Loaded gender_mapping with %d entries", len(gender_mapping))
-
-    upbd_full = load_respondents(input / "partitions_merged/population_meas_merged.csv", home_map, gender_mapping = gender_mapping)
+    upbd_full = load_respondents(input / "partitions_merged/" / args.population_filename, home_map)
     upbd_save = upbd_full
 
     # upbd_save = upbd_full.sample(n = 400, random_state = 1084)
     write_survey(output, upbd_save, mddr)
     write_filtered_states(data_mrt, set(upbd_save["UENR"]), output)
+    write_warm_start(data_mrt, set(upbd_save["UENR"]), output)
 
     logger.info("Copying nodes")
     shutil.copyfile(input / "nodes.tsv", output / "nodes.tsv")
@@ -210,3 +265,11 @@ def main(argv=None):
     oppo_weights.to_csv(output / "opportunity_weights.csv", index=False)
     logger.info("Wrote opportunity_weights (%d rows) -> %s",
                 len(oppo_weights), output / "opportunity_weights.csv")
+
+
+if __name__ == "__main__":
+    args = parse_args()
+    main(args)
+    
+
+    
