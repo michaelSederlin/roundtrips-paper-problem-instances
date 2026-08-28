@@ -1,11 +1,15 @@
 package disaggregate.model;
 
-import disaggregate.rvu.Trip;
-import common.Activity; 
+import common.Activity;
+import disaggregate.utils.Trip;
 
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Person {
+    static Logger logger = LogManager.getLogger(Person.class);
     public final String[] VARIABLES = {"idx", "name", "age", "income", "homeZone", "gender"};
 
     private String segment;
@@ -17,28 +21,28 @@ public class Person {
     private String name; 
     private Trip trip;
 
-    public Person(int idx) {
-        this(idx, null, null, null, null);
-    }
+    // public Person(int idx) {
+    //     this(idx, null, null, null, null);
+    // }
 
-    public Person(int idx, String homeZone) {
-        this(idx, homeZone, null, null, null);
-    }
+    // public Person(int idx, String homeZone) {
+    //     this(idx, homeZone, null, null, null);
+    // }
 
-    public Person(int idx, Integer age) {
-        this(idx, null, age, null, null);
-    }
+    // public Person(int idx, Integer age) {
+    //     this(idx, null, age, null, null);
+    // }
 
-    public Person(int idx, String homeZone, Integer age) {
-        this(idx, homeZone, age, null, null);
-    }
+    // public Person(int idx, String homeZone, Integer age) {
+    //     this(idx, homeZone, age, null, null);
+    // }
 
-    public Person(int idx, String homeZone, Integer age, Long inc) {
+    // public Person(int idx, String homeZone, Integer age, Long inc) {
+    //     this(idx, homeZone, age, inc, null);
+    // }
+
+    public Person(Integer idx, String homeZone, Integer age, Long inc) {
         this(idx, homeZone, age, inc, null);
-    }
-
-    public Person(Integer idx, Integer age, Long inc, Integer gender) {
-        this(idx, null, age, inc, gender);
     }
 
     public Person(int idx, String homeZone, Integer age, Long inc, Integer gender)  {
@@ -104,11 +108,11 @@ public class Person {
         if (homeZone == null) throw new IllegalArgumentException("homeZone cannot be null");
         if (age == null) throw new IllegalArgumentException("age cannot be null");
         if (income == null) throw new IllegalArgumentException("income cannot be null");
-        if (gender == null) throw new IllegalArgumentException("gender cannot be null");
+        if (gender == null) logger.warn("Person {} is missing gender attribute", this.idx);
 
         if (age < 0) throw new IllegalArgumentException("age cannot be negative");
         if (income < 0) throw new IllegalArgumentException("income cannot be negative");
-        if (!(gender == 1 || gender == 2)) throw new IllegalArgumentException("gender must be either 1 or 2");
+        if ((gender != null) && !(gender == 1 || gender == 2)) throw new IllegalArgumentException("gender must be either 1 or 2");
 
         if (hasTrip()) {
 //            if (trip.getTotalTravelTime_h() > 4.0) throw new IllegalArgumentException("ttt must be less than 4 hours");

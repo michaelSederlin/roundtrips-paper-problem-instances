@@ -7,7 +7,7 @@ import java.util.Map;
 
 
 import disaggregate.model.Person;
-import disaggregate.rvu.Trip;
+import disaggregate.utils.Trip;
 import common.Activity;
 import common.GridNodeWithActivity;
 import se.vti.roundtrips.simulator.IntervalUtils;

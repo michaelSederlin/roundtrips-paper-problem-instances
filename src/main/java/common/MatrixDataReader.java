@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see <https://www.gnu.org/licenses/>. See also COPYING and WARRANTY file.
  */
-package disaggregate.utils;
+package common;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -27,9 +27,6 @@ import java.util.Map;
 import se.vti.utils.misc.Tuple;
 import se.vti.utils.misc.tabularfileparser.AbstractTabularFileHandlerWithHeaderLine;
 import se.vti.utils.misc.tabularfileparser.TabularFileParser;
-
-import static java.io.File.separator;
-
 
 public class MatrixDataReader {
 

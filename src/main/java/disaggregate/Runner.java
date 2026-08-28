@@ -31,14 +31,11 @@ import se.vti.utils.misc.metropolishastings.terminationcriteria.CombinedAnyTermi
 import se.vti.utils.misc.metropolishastings.terminationcriteria.FixedNumberOfIterationsTerminationCriterion;
 import disaggregate.model.*;
 import disaggregate.weights.*;
-import disaggregate.rvu.SurveyReader;
 import disaggregate.utils.LoadOpportunityWeights;
-import disaggregate.utils.MatrixDataReader;
 import disaggregate.utils.ScenarioUtils;
+import disaggregate.utils.SurveyReader;
 import disaggregate.utils.UniqueNodeSummary;
 import se.vti.roundtrips.common.Scenario;
-import common.Activity;
-import common.GridNodeWithActivity;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.multiple.MultiRoundTripJsonIO;
 import se.vti.roundtrips.samplingweights.StrictlyRequireMinNumberOfStops;

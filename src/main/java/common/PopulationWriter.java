@@ -6,7 +6,7 @@ import java.util.Map;
 
 import common.Activity;
 import disaggregate.model.Person;
-import disaggregate.rvu.Trip;
+import disaggregate.utils.Trip;
 // import disaggregate.model.SurveyResponse;
 import se.vti.utils.misc.metropolishastings.MHToFileLogger;
 

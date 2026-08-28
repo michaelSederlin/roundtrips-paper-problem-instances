@@ -1,4 +1,4 @@
-package disaggregate.rvu;
+package disaggregate.utils;
 
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -50,7 +50,7 @@ public final class SurveyReader {
                 continue;
             }
 
-            Person person = new Person(population.size(), home(row), age(row), income(row), gender(row));
+            Person person = new Person(population.size(), home(row), age(row), income(row));
             person.setName(id);
             person.assignPersonTrip(new Trip(legs));
 
@@ -118,7 +118,7 @@ public final class SurveyReader {
         try {
             return Integer.parseInt(row.get("SEX"));
         } catch (RuntimeException e) {
-            return -1;
+            return null;
         }
     }
 }
