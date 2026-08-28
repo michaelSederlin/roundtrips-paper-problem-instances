@@ -1,3 +1,4 @@
+import gzip
 from pathlib import Path
 
 from matplotlib import pyplot as plt
@@ -18,6 +19,34 @@ def save_show(fig, path: Path, save: bool = True, show: bool = False,
 
 def loc2activity(loc):
     return re.sub(".*\[|\]", "", loc)
+
+
+def parse_states_xml(xml_path: Path):
+    xml_path = Path(xml_path)
+    if xml_path.suffix == ".gz":
+        with gzip.open(xml_path) as f:
+            return lxml.etree.parse(f)
+    return lxml.etree.parse(str(xml_path))
+
+
+def stay_activity(stay):
+    # Handles differently formatted states.xml between renate and amal.
+    return (stay.get('activity')
+            or (stay.get('labels') or '').strip('[]')
+            or re.sub(r'.*\[|\]', '', stay.get('loc') or ''))
+
+
+def departure_hours(rt, time_bin_size):
+    """Departure hour-of-day of one RoundTrip, from <Departures> (calibration
+    output) or, failing that, <State> bins[...] (merged/measurement files).
+    The raw values are bin indices (hour = index * time_bin_size); convert
+    before binning so the histogram is correct for any time_bin_size."""
+    raw = rt.findtext("Departures") or ""
+    if not raw.strip():
+        m = re.search(r"bins\[(.*?)\]", rt.findtext("State") or "")
+        raw = m.group(1) if m else ""
+    idx = [float(v) for v in re.findall(r"-?\d+(?:\.\d+)?", raw)]
+    return [int(i * time_bin_size) % 24 for i in idx]
 
 def process_states(states, separate_trips_and_stays:bool = True):
     if isinstance(states, (Path, str)):

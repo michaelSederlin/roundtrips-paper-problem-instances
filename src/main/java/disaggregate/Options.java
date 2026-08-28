@@ -5,7 +5,7 @@ import java.util.Map;
 
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Option;
-import disaggregate.model.Activity;
+import common.Activity;
 
 public class Options {
     @Option(names = "--name", defaultValue = "null") public String name;

@@ -1,6 +1,7 @@
 package disaggregate.model;
 
 import disaggregate.rvu.Trip;
+import common.Activity; 
 
 import java.util.Map;
 

@@ -39,6 +39,10 @@ def main(results_dir: Path,
                     writer.writeheader()
 
                 for row in reader:
+                    # Partitions each number their people from 0, so the local idx is
+                    # not unique across the merged population. Qualify it with the
+                    # partition name to get a strict global key.
+                    row["idx"] = f"{partition_dir.name}_{row['idx']}"
                     writer.writerow(row)
 
     return output_path

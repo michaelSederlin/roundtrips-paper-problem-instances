@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import disaggregate.model.ActivityNode;
+import common.GridNodeWithActivity;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.simulator.MoveEpisode;
 import se.vti.roundtrips.simulator.StayEpisode;
@@ -16,7 +16,7 @@ import se.vti.utils.misc.Tuple;
 import se.vti.utils.misc.metropolishastings.MHWeight;
 
 
-public class MovementWeight implements MHWeight<MultiRoundTrip<ActivityNode>> {
+public class MovementWeight implements MHWeight<MultiRoundTrip<GridNodeWithActivity>> {
     static final Logger logger = LogManager.getLogger(MovementWeight.class);
     private final double epsilon;
     private final Map<Tuple<String, String>, Double> logTransitionCounts;
@@ -45,7 +45,7 @@ public class MovementWeight implements MHWeight<MultiRoundTrip<ActivityNode>> {
     }
 
     @Override
-    public double logWeight(MultiRoundTrip<ActivityNode> state) {
+    public double logWeight(MultiRoundTrip<GridNodeWithActivity> state) {
         return state.getSummary(MovementSummary.class).getTotalLW();
     }
 
@@ -85,7 +85,7 @@ public class MovementWeight implements MHWeight<MultiRoundTrip<ActivityNode>> {
     }
 
     // -------------------- VALIDATION --------------------
-    public void checkKeysAgainstNodes(List<ActivityNode> nodes) {
+    public void checkKeysAgainstNodes(List<GridNodeWithActivity> nodes) {
         for (Tuple<String, String> tr : logTransitionCounts.keySet()) {
             if (!nodes.stream().anyMatch(n -> n.getBasicName().equals(tr.getA()))) {
                 throw new IllegalArgumentException("Origin node " + tr.getA() + " not found in scenario");
@@ -94,8 +94,8 @@ public class MovementWeight implements MHWeight<MultiRoundTrip<ActivityNode>> {
                 throw new IllegalArgumentException("Destination node " + tr.getB() + " not found in scenario");
             }
         }
-        for (ActivityNode origin : nodes) {
-            for (ActivityNode destination : nodes) {
+        for (GridNodeWithActivity origin : nodes) {
+            for (GridNodeWithActivity destination : nodes) {
                 Tuple<String, String> transition = new Tuple<>(origin.getBasicName(), destination.getBasicName());
                 if (!logTransitionCounts.containsKey(transition)) {
                     throw new IllegalArgumentException("Missing transition" + transition);
@@ -106,7 +106,7 @@ public class MovementWeight implements MHWeight<MultiRoundTrip<ActivityNode>> {
 
     // -------------------- SUMMARY WIRING --------------------
 
-    public void configureRequiredSummary(MultiRoundTrip<ActivityNode> mrt) {
+    public void configureRequiredSummary(MultiRoundTrip<GridNodeWithActivity> mrt) {
         var summary = new MovementSummary(logTransitionWeight, epsilon);
         mrt.addSummary(summary);
         mrt.recomputeSummaries();
@@ -134,19 +134,19 @@ class MovementSummary extends LWSummary {
     }
 
     @Override
-    protected double roundTrip2LW(RoundTrip<ActivityNode> rt) {
+    protected double roundTrip2LW(RoundTrip<GridNodeWithActivity> rt) {
         if (rt == null) return 0.0;
 
         double rawLW = 0.0;
         if (rt.size() == 1) {  // single self-loop i -> i
-            ActivityNode loc = ((StayEpisode<ActivityNode>) rt.getEpisodes().get(0)).getLocation();
+            GridNodeWithActivity loc = ((StayEpisode<GridNodeWithActivity>) rt.getEpisodes().get(0)).getLocation();
             String locName = loc.getBasicName();
             Tuple<String, String> transition = new Tuple<>(locName, locName);
             double logNum = transitionMatrix.getOrDefault(transition, Math.log(epsilon));
             rawLW = logNum;
         } else {
             for (int jj = 1; jj < rt.getEpisodes().size(); jj += 2) {
-                MoveEpisode<ActivityNode> me = (MoveEpisode<ActivityNode>) rt.getEpisodes().get(jj);
+                MoveEpisode<GridNodeWithActivity> me = (MoveEpisode<GridNodeWithActivity>) rt.getEpisodes().get(jj);
                 Tuple<String, String> transition = new Tuple<>(
                     me.getOrigin().getBasicName(), 
                     me.getDestination().getBasicName()

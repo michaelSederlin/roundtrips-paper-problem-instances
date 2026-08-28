@@ -1,0 +1,20 @@
+--population-size 1000 
+--preferences-path data/synthesis/preferences.xml 
+--output-dir output/ProductionRun_1000 
+--opportunities-path output/ProductionRun_1000/opportunity_weights.csv 
+--maxIter 2000000
+
+--horizon 24.0 
+--time-bin-size 1.0 
+--grid-size 5 
+--base-seed 100 
+--scenario-seed 2900 
+--grid-world-seed 3900 
+
+--work-open 6.0         --work-close 18.0 
+--education-open 7.0    --education-close 18.0 
+--other-open 8.0        --other-close 20.0 
+--min-home-duration 9.0 
+--time-use-mixing-weight 5.0 
+
+--enforce-correct-home-location

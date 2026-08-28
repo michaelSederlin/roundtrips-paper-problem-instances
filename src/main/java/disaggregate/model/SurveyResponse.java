@@ -3,7 +3,7 @@ package disaggregate.model;
 import disaggregate.weights.CompositeKernel;
 import disaggregate.weights.TravelerKernel;
 
-public class SurveyResponse<N extends ActivityNode> {
+public class SurveyResponse {
     private final Person respondent;
     private final CompositeKernel kernel;
 

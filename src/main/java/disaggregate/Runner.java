@@ -16,7 +16,9 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
 
 import common.*;
-import common.SplitPopulationJoiner;
+import common.logging.ActivityDurationLogger;
+import common.logging.VariablesLogger;
+import common.logging.XMLStateLogger;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
@@ -33,8 +35,10 @@ import disaggregate.rvu.SurveyReader;
 import disaggregate.utils.LoadOpportunityWeights;
 import disaggregate.utils.MatrixDataReader;
 import disaggregate.utils.ScenarioUtils;
-import disaggregate.utils.UniqueActivityNodeSummary;
+import disaggregate.utils.UniqueNodeSummary;
 import se.vti.roundtrips.common.Scenario;
+import common.Activity;
+import common.GridNodeWithActivity;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.multiple.MultiRoundTripJsonIO;
 import se.vti.roundtrips.samplingweights.StrictlyRequireMinNumberOfStops;
@@ -215,7 +219,7 @@ public class Runner implements Callable<Integer> {
         try {
             logger.info("Starting partition {} ({} agents) on thread {}", partName, agents.size(), Thread.currentThread().getName());
 
-            Scenario<ActivityNode> scenario = new Scenario<>(new Random(opts.seed));
+            Scenario<GridNodeWithActivity> scenario = new Scenario<>(new Random(opts.seed));
             scenario.setNumberOfTimeBins((int) (opts.horizon / opts.time_bin_size));
             scenario.setTimeBinSize_h(opts.time_bin_size);
             ScenarioUtils.loadNetworkFromTSV(scenario, scenarioPath);
@@ -238,7 +242,7 @@ public class Runner implements Callable<Integer> {
                 }
             }
 
-            Map<ActivityNode, Double> opportunityWeights = null;
+            Map<GridNodeWithActivity, Double> opportunityWeights = null;
             if (opts.with_staying_weight || !uniqueActivities.isEmpty()) {
                 opportunityWeights = LoadOpportunityWeights.load(scenarioPath.resolve("opportunity_weights.csv"), scenario);
                 if (opts.normalize_weights_across_nodes) opportunityWeights = LoadOpportunityWeights.divideByMaxAcrossNodes(opportunityWeights);
@@ -247,17 +251,17 @@ public class Runner implements Callable<Integer> {
             new PopulationWriter(respondents, partOutputDir.resolve("respondents.tsv").toString()).write();
             new PopulationWriter(agents, partOutputDir.resolve("population.tsv").toString()).write();
 
-            List<ActivityNode> homeNodes = ScenarioUtils.findHomes(scenario, agents);
-            MultiRoundTrip<ActivityNode> initState;
+            List<GridNodeWithActivity> homeNodes = ScenarioUtils.findHomes(scenario, agents);
+            MultiRoundTrip<GridNodeWithActivity> initState;
             if (warmStartFile != null) {
                 if (!Files.exists(Path.of(warmStartFile))) {
                     throw new FileNotFoundException("Missing warm start file " + warmStartFile);
                 }
-                MultiRoundTrip<ActivityNode> globalState = MultiRoundTripJsonIO.singleton().readFromFile(scenario, warmStartFile);
+                MultiRoundTrip<GridNodeWithActivity> globalState = MultiRoundTripJsonIO.singleton().readFromFile(scenario, warmStartFile);
                 initState = new MultiRoundTrip<>(agents.size());
                 for (int j = 0; j < agents.size(); j++) {
-                    RoundTrip<ActivityNode> globalRt = globalState.getRoundTrip(partFrom + j);
-                    RoundTrip<ActivityNode> localRt = new RoundTrip<>(j, globalRt.cloneNodes(), globalRt.cloneDepartures());
+                    RoundTrip<GridNodeWithActivity> globalRt = globalState.getRoundTrip(partFrom + j);
+                    RoundTrip<GridNodeWithActivity> localRt = new RoundTrip<>(j, globalRt.cloneNodes(), globalRt.cloneDepartures());
                     localRt.setEpisodes(scenario.getOrCreateSimulator().simulate(localRt));
                     initState.setRoundTripAndUpdateSummaries(j, localRt);
                 }
@@ -271,19 +275,19 @@ public class Runner implements Callable<Integer> {
             // this one during their own update. Registering it here is also what switches the
             // feature on -- both look it up on the MultiRoundTrip and treat absence as "off".
             if (!uniqueActivities.isEmpty()) {
-                UniqueActivityNodeSummary uniqueActivityNodes = new UniqueActivityNodeSummary(opportunityWeights);
+                UniqueNodeSummary uniqueActivityNodes = new UniqueNodeSummary(opportunityWeights);
                 uniqueActivityNodes.addActivities(uniqueActivities.toArray(new Activity[0]));
                 initState.addSummary(uniqueActivityNodes);
                 initState.recomputeSummaries();
                 logger.info("\tRestricting to a single (highest-opportunity) node per round trip for: {}", uniqueActivities);
             }
 
-            List<SurveyResponse<ActivityNode>> responses = buildKernelResponses(respondents, opts);
-            se.vti.roundtrips.common.Runner<ActivityNode> runner = new se.vti.roundtrips.common.Runner<>(scenario)
+            List<SurveyResponse> responses = buildKernelResponses(respondents, opts);
+            se.vti.roundtrips.common.Runner<GridNodeWithActivity> runner = new se.vti.roundtrips.common.Runner<>(scenario)
                 .setInitialState(initState)
                 .setPopulationBinomialPrior(3.125);
 
-            BlockAverageTerminationCriterion<MultiRoundTrip<ActivityNode>> blockCrit = new BlockAverageTerminationCriterion<MultiRoundTrip<ActivityNode>>()
+            BlockAverageTerminationCriterion<MultiRoundTrip<GridNodeWithActivity>> blockCrit = new BlockAverageTerminationCriterion<MultiRoundTrip<GridNodeWithActivity>>()
                     .setConvergenceStatsFileName(partOutputDir.resolve("convergenceStats.tsv").toString())
                     .setRelativeVarianceTolerance(opts.stationarity_tolerance).setStandardizedMeanTolerance(opts.stationarity_tolerance);
 
@@ -309,10 +313,10 @@ public class Runner implements Callable<Integer> {
             kernelWeights.configureRequiredSummary(initState);
             logger.info("Kernel weights added");
 
-            MHWeightContainer<MultiRoundTrip<ActivityNode>> weightsContainer = new MHWeightContainer<>();
-            for (MHWeight<MultiRoundTrip<ActivityNode>> w : runner.getSamplingWeightsView()) weightsContainer.add(w);
+            MHWeightContainer<MultiRoundTrip<GridNodeWithActivity>> weightsContainer = new MHWeightContainer<>();
+            for (MHWeight<MultiRoundTrip<GridNodeWithActivity>> w : runner.getSamplingWeightsView()) weightsContainer.add(w);
         
-            runner.addStateProcessor(new VariablesLogger<>(effectiveMsgInterval, partOutputDir.resolve("stateVariables.tsv").toString()));
+            runner.addStateProcessor(new VariablesLogger(effectiveMsgInterval, partOutputDir.resolve("stateVariables.tsv").toString()));
             runner.addStateProcessor(new MHWeightsToFileLogger<>(effectiveMsgInterval, weightsContainer, partOutputDir.resolve("weights.tsv").toString()));
             runner.addStateProcessor(new XMLStateLogger<>(effectiveMsgInterval, partOutputDir));
             runner.addStateProcessor(new ActivityDurationLogger<>(effectiveMsgInterval, partOutputDir.resolve("activityDurations.tsv").toString()));
@@ -321,7 +325,7 @@ public class Runner implements Callable<Integer> {
             runner.setMessageInterval(0);
 
             if (opts.min_number_of_stable_samples > 0) blockCrit.setMinSamples(opts.min_number_of_stable_samples); 
-            CombinedAnyTerminationCriterion<MultiRoundTrip<ActivityNode>> tc = new CombinedAnyTerminationCriterion<>(blockCrit);
+            CombinedAnyTerminationCriterion<MultiRoundTrip<GridNodeWithActivity>> tc = new CombinedAnyTerminationCriterion<>(blockCrit);
             if (opts.max_number_of_iterations != null) tc.add(new FixedNumberOfIterationsTerminationCriterion<>(opts.max_number_of_iterations));
             runner.setTerminationCriterion(tc);
 
@@ -340,13 +344,13 @@ public class Runner implements Callable<Integer> {
         }
     }
     
-    List<SurveyResponse<ActivityNode>> buildKernelResponses(List<Person> kernelRespondents, Options opts) {
+    List<SurveyResponse> buildKernelResponses(List<Person> kernelRespondents, Options opts) {
         logger.info("Kernel construction: traveler(lAge={}, lInc={}, eta={}) | nStops={} | scheduleOverlap(bw={})",
                 opts.lambda_age, opts.lambda_income, opts.eta,opts.n_stops_mixing_weight > 0 ? "ON(bw=" + opts.n_stops_mixing_weight + ")" : "OFF",
                 opts.schedule_overlap_mixing_weight > 0 ? "ON(bw=" + opts.schedule_overlap_mixing_weight + ")" : "OFF");
 
         double[] travelerParams = {opts.lambda_age, opts.lambda_income, opts.eta};
-        List<SurveyResponse<ActivityNode>> responses = new ArrayList<>();
+        List<SurveyResponse> responses = new ArrayList<>();
 
         for (Person person : kernelRespondents) {
             Kernel kTrav = new TravelerKernel(person, travelerParams);
@@ -363,7 +367,7 @@ public class Runner implements Callable<Integer> {
                 .add(kSched, CompositeKernel.Role.SCHEDULE);
 
             k.setMixtureWeights(new double[] { opts.traveler_kernel_mixing_weight, opts.schedule_kernel_mixing_weight});
-            responses.add(new SurveyResponse<>(person, k));
+            responses.add(new SurveyResponse(person, k));
         }
         return responses;
     }
