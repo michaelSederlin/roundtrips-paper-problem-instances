@@ -11,11 +11,12 @@ cd "$(dirname "$0")"
 # ----------------------------- configuration -----------------------------
 PY=/opt/homebrew/Caskroom/miniconda/base/envs/renate/bin/python
 
-RESULTS_DIR=output/ProductionRun_1000
-SAVE_DIR=output/ProductionRun_1000/plots
-MERGED_DIR=output/ProductionRun_1000/partitions_merged
-MERGED_STATES_XML=output/ProductionRun_1000/partitions_merged/final_states_merged.xml
-MERGED_POPULATION=output/ProductionRun_1000/partitions_merged/population_merged.tsv
+# RESULTS_DIR=output/ProductionRun_1000
+RESULTS_DIR=output/validation_data
+SAVE_DIR=${RESULTS_DIR}/plots
+MERGED_DIR=${RESULTS_DIR}/partitions_merged
+MERGED_STATES_XML=${RESULTS_DIR}/partitions_merged/final_states_merged.xml
+MERGED_POPULATION=${RESULTS_DIR}/partitions_merged/population_merged.tsv
 
 POPULATION_FILENAME=population.csv
 TARGET_FILENAME=population_merged.tsv

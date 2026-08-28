@@ -113,14 +113,32 @@ def write_filtered_states(data_mrt, selected_uenrs: set, output: Path):
         etree.ElementTree(root).write(f, encoding="utf-8", xml_declaration=True, pretty_print=True)
     logger.info("Wrote filtered states (%d respondents) -> %s", len(selected_uenrs), out_path)
     
-if __name__ == "__main__":
-    print("INSIDE MAIN")
+DEFAULT_INPUT = Path("amal/Results_Paper/2026 08 07/amal_measurement/out/ProductionRun_1000")
+DEFAULT_OUTPUT = Path("renate/data/scenarios/amal/results_paper/2026 08 07/full")
+
+
+def parse_args(argv=None):
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Generate a survey (upbd/mddr) from simulated states.xml.")
+    parser.add_argument("-i", "--input", type=Path, default=DEFAULT_INPUT,
+                        help="Run directory containing partitions_merged/, nodes.tsv, edges.tsv "
+                             "and opportunity_weights.csv (default: %(default)s)")
+    parser.add_argument("-o", "--output", type=Path, default=DEFAULT_OUTPUT,
+                        help="Directory to write the survey into (default: %(default)s)")
+    parser.add_argument("-n", "--n-respondents", type=int, default=None,
+                        help="If given, sample this many respondents instead of using all.")
+    parser.add_argument("--random-state", type=int, default=1084,
+                        help="Seed used when --n-respondents is given (default: %(default)s)")
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
     root = get_environment_root()
-    # ddir = root / "renate/data"
-    # input = Path("amal/Results_Paper/2026 06 18/amal_measurementData/out/ProductionRun_1000")
-    # input = Path("amal/Results_Paper/2026 06 29_2/amal_measurement/out/ProductionRun_1000")
-    input = Path("amal/Results_Paper/2026 08 07/amal_measurement/out/ProductionRun_1000")c
-    output = Path("renate/data/scenarios/amal/results_paper/2026 08 07/full")
+    input = args.input
+    output = args.output
     output.mkdir(parents=True, exist_ok=True)
     logger.info("Input dir: %s", input)
     logger.info("Output dir: %s", output)
@@ -174,7 +192,7 @@ if __name__ == "__main__":
 
     logger.info("Copying edges")
     shutil.copyfile(input / "edges.tsv", output / "edges.tsv")
-    
+
     # write_survey(output, upbd_full, mddr)
     # # Subsets
     # SUBSET_SIZES = [50, 100, 200]
