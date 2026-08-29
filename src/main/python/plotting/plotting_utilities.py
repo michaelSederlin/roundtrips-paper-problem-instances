@@ -2,20 +2,48 @@ import gzip
 from pathlib import Path
 
 from matplotlib import pyplot as plt
+from matplotlib.transforms import Bbox
+
 import pandas as pd
 import lxml.etree
 import re
 from ast import literal_eval
 import numpy as np
 
+from .common_parameters import figure_width, savefig_pad, axes_rect
+
+def fixed_width_bbox(fig, width=None, pad=None):
+    """Bbox that is tight vertically but a fixed `width` horizontally, anchored
+    so every figure puts its axes box at the same offset from the left edge.
+
+    Centring the padding instead would shift each panel by a different amount
+    and the frames would not line up. Never clips: if the ink is wider than
+    `width` the bbox is widened to contain it.
+    """
+    width = figure_width if width is None else width
+    pad = savefig_pad if pad is None else pad
+    raw = fig.get_tightbbox(fig.canvas.get_renderer()).padded(pad)
+    axes = fig.get_axes()
+    if not axes:
+        return raw
+    fw, _ = fig.get_size_inches()
+    x0 = axes[0].get_position().x0 * fw - axes_rect["left"] * width
+    bbox = Bbox.from_extents(x0, raw.y0, x0 + width, raw.y1)
+    if bbox.x0 > raw.x0 or bbox.x1 < raw.x1:
+        bbox = Bbox.from_extents(min(bbox.x0, raw.x0), raw.y0,
+                                 max(bbox.x1, raw.x1), raw.y1)
+    return bbox
+
+
 def save_show(fig, path: Path, save: bool = True, show: bool = False,
               output_suffix: str = ".pdf"):
     if save:
-        fig.savefig(path.with_suffix(output_suffix), dpi=300, bbox_inches="tight")
+        fig.canvas.draw()          # required before get_tightbbox
+        fig.savefig(path.with_suffix(output_suffix), dpi=300,
+                    bbox_inches=fixed_width_bbox(fig))
     if show:
         plt.show()
     plt.close(fig)
-
 
 def loc2activity(loc):
     return re.sub(".*\[|\]", "", loc)

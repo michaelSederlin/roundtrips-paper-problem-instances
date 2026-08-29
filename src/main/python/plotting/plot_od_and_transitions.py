@@ -10,10 +10,9 @@ from xml.etree import ElementTree as ET
 
 from .helpers import ArgumentParser
 from .plotting_utilities import save_show
-from .common_parameters import scatterplot_size
+from .common_parameters import scatterplot_size, format_axis, legend_fontsize
 
 # Globals
-fontsize = 10 
 scatter_kwds = dict(fmt = 'o', markersize = 6, capsize = 3)
 _node_pat = re.compile(r"\(([^)]*)\)\[[^\]]*\]")
 
@@ -21,16 +20,6 @@ _node_pat = re.compile(r"\(([^)]*)\)\[[^\]]*\]")
 def to_transition(mat):
     return mat.div(mat.sum(axis=1).replace(0, np.nan), axis=0).fillna(0)
 
-def format_axis(ax, xlabel: str, ylabel: str):
-    xlabel, ylabel = xlabel.capitalize(), ylabel.capitalize()
-    ax.set_ylabel(xlabel, fontsize=fontsize)
-    ax.set_xlabel(ylabel, fontsize=fontsize)
-    ax.set_xlim(left=0)
-    ax.set_ylim(bottom=0)
-    ax.grid(True)
-    ax.tick_params(axis='x', labelsize=fontsize)
-    ax.tick_params(axis='y', labelsize=fontsize)
-    return ax 
 
 def get_burn_in_iteration_from_convergence_statistics(fp: Path, msg_interval: int = 5000) -> int:
     df_convergence = pd.read_csv(fp, sep='\t')
@@ -161,8 +150,8 @@ def main(results_dir: Path,
         df_plot_od['measurement OD'], df_plot_od['calibrated OD'], markerfacecolor='none', markeredgecolor='steelblue',
         color='none', ecolor='gray', label='Calibration', **scatter_kwds)
 
-    ax.legend(fontsize = fontsize)
-    format_axis(ax, "Calibrated", 'Ground truth')
+    ax.legend(fontsize=legend_fontsize)
+    format_axis(ax, 'Ground truth', "Calibrated", equal_lims=True)
     save_show(fig, save_dir / "02_od.pdf", **save_kwds)
 
     fit_cols = ['measurement OD'] + (['validation OD'] if od_val is not None else [])
@@ -178,7 +167,7 @@ def main(results_dir: Path,
         ax.plot(x_fit, slope_val * x_fit + intercept_val, color='coral',
                   label=f'Regression (validation): y={slope_val:.2f}x+{intercept_val:.2f}', **kwds)
 
-    ax.legend(fontsize=fontsize)
+    ax.legend(fontsize=legend_fontsize)
     save_show(fig, save_dir / "02_od_with_regression.pdf", **save_kwds)
 
     # --- Plot Transition probabilities
@@ -207,7 +196,7 @@ def main(results_dir: Path,
     ax.errorbar(df_prob['measurement OD'], df_prob['calibrated OD'], markerfacecolor='none', markeredgecolor='steelblue',
                 color='none', ecolor='gray', label='Calibration', **scatter_kwds)
 
-    format_axis(ax, "calibrated", 'Ground truth')
+    format_axis(ax, 'Ground truth', "Calibrated")
     save_show(fig, save_dir / "03_transition_probabilities.pdf", **save_kwds)
 
     kwds = {'linestyle': '--'}
@@ -219,7 +208,7 @@ def main(results_dir: Path,
     ax.plot(x_fit, slope_meas * x_fit + intercept_meas, color='steelblue',
               label=f'Regression (measurement): y={slope_meas:.2f}x+{intercept_meas:.2f}', **kwds)
 
-    ax.legend(fontsize=fontsize)
+    ax.legend(fontsize=legend_fontsize)
     save_show(fig, save_dir / "03_transition_probabilities_with_regression.pdf", **save_kwds)
 
 

@@ -1,9 +1,8 @@
 """Age-binned per-activity reproduction: mean activity duration and activity
 participation per age band, estimation vs measurement/validation ground truth.
 
-Styling is taken verbatim from plot_population_reproduction.py (plot_bars):
-same colors, bar width/offsets, alpha, edgecolor, grid, legend ordering and
-save_show plumbing.
+Figure sizes, font sizes, bar colors/width and legend ordering all come from
+common_parameters, so the paper figures can be retuned in one place.
 """
 import gzip
 import re
@@ -20,26 +19,22 @@ from .helpers import ArgumentParser
 from .plotting_utilities import (stay_activity,
                                  parse_states_xml as _parse_states_xml)
 from .helpers.od_transition_helpers import save_show
-from .common_parameters import barplot_size
+from .common_parameters import (
+    barplot_size, 
+    bar_width, 
+    bar_alpha, 
+    bar_edgecolor, 
+    ESTIMATION_COLOR, 
+    VALIDATION_COLOR, 
+    MEASUREMENT_COLOR,
+    sort_legend_entries, 
+    format_categorical_axis
+)
 
 ACTIVITIES = ["HOME", "WORK", "EDUCATION", "OTHER"]
 NON_HOME_ACTIVITIES = [a for a in ACTIVITIES if a != "HOME"]
 AGE_BINS = np.arange(15, 91, 5)
 INC_BINS = np.arange(0, 500, 50)
-
-# Same palette as plot_population_reproduction.plot_bars
-ESTIMATION_COLOR = "steelblue"
-MEASUREMENT_COLOR = "mediumseagreen"
-VALIDATION_COLOR = "coral"
-
-
-def sort_legend_entries(ax: plt.Axes):
-    handles, labels = ax.get_legend_handles_labels()
-    order = ['Measurement Data Set', 'Validation Data Set', 'Calibration']
-    ordered_handles = [handles[labels.index(label)] for label in order if label in labels]
-    ordered_labels = [label for label in order if label in labels]
-    ax.legend(ordered_handles, ordered_labels)
-    return ax
 
 
 def parse_states(root, last=False):
@@ -73,25 +68,21 @@ def parse_states(root, last=False):
 
 def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
               save: bool = True, show: bool = False, output_suffix: str = ".pdf"):
-    """Verbatim styling from plot_population_reproduction.plot_bars."""
+    """Shared bar styling from common_parameters."""
     x = np.arange(len(index))
-    width = 0.26
     fig, ax = plt.subplots(figsize=barplot_size)
-    ax.bar(x + width, est.reindex(index, fill_value=0), width=width, color=ESTIMATION_COLOR,
-           alpha=0.75, edgecolor="black", label="Calibration")
+    ax.bar(x + bar_width, est.reindex(index, fill_value=0), width=bar_width,
+           color=ESTIMATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Calibration")
     if val is not None:
-        ax.bar(x, val.reindex(index, fill_value=0), width=width, color=VALIDATION_COLOR,
-               alpha=0.75, edgecolor="black", label="Validation Data Set")
-    ax.bar(x - width, meas.reindex(index, fill_value=0), width=width, color=MEASUREMENT_COLOR,
-           alpha=0.75, edgecolor="black", label="Measurement Data Set")
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
-    ax.set_xticks(x)
-    ax.set_xticklabels(xticklabels)
-    ax.set_ylim(bottom=0)
-    ax.grid(axis="y", linestyle="--", alpha=0.5)
+        ax.bar(x, val.reindex(index, fill_value=0), width=bar_width,
+               color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+               label="Validation Data Set")
+    ax.bar(x - bar_width, meas.reindex(index, fill_value=0), width=bar_width,
+           color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Measurement Data Set")
+    format_categorical_axis(ax, xlabel, ylabel, xticks=x, xticklabels=xticklabels)
     sort_legend_entries(ax)
-    fig.tight_layout()
     save_show(fig, path, save=save, show=show, output_suffix=output_suffix)
 
 def _by_age_bin(df, cols: str | list[str], age_by_name, bins):

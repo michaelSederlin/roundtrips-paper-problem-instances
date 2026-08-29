@@ -19,7 +19,11 @@ import seaborn as sns
 from .argument_parser import ArgumentParser
 from .helpers.burn_in import post_burn_in_iterations, equalize_post_burn_in
 from .helpers.od_transition_helpers import save_show
-from .common_parameters import barplot_size, scatterplot_size
+from .common_parameters import (barplot_size, scatterplot_size, format_axis,
+                                format_categorical_axis, sort_legend_entries,
+                                bar_width, bar_alpha, bar_edgecolor,
+                                ESTIMATION_COLOR, MEASUREMENT_COLOR, VALIDATION_COLOR,
+                                legend_fontsize)
 from .helpers.partition_discovery import discover_partition_dirs, states_xml_path
 from .plotting_utilities import (process_states, stay_activity, departure_hours,
                                  parse_states_xml as _parse_states_xml)
@@ -30,15 +34,6 @@ LOCATION_ACTIVITIES = ["HOME", "WORK", "EDUCATION", "OTHER"]
 # location reproduction specifically.
 LOCATION_EXTRA_BURN = 0
 
-
-def sort_legend_entries(ax: plt.Axes):
-    # fontsize = ax.get_legend().get_texts()[0].get_fontsize()
-    handles, labels = ax.get_legend_handles_labels()
-    order = ['Measurement Data Set', 'Validation Data Set', 'Calibration']
-    ordered_handles = [handles[labels.index(label)] for label in order if label in labels]
-    ordered_labels = [label for label in order if label in labels]
-    ax.legend(ordered_handles, ordered_labels)
-    return ax 
 
 def sample_metrics(mrt, time_bin_size):
     """Population-level counts of one MultiRoundTrip sample."""
@@ -181,10 +176,7 @@ def plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, 
             ax.bar(centers + off, heights, width=width, color=color,
                    alpha=0.75, edgecolor="black", label=label)
         # ax.set_title(act)
-        ax.set_xlabel("Duration [h]")
-        ax.set_ylabel("Density")
-        ax.set_ylim(bottom=0)
-        ax.grid(axis="y", linestyle="--", alpha=0.5)
+        format_categorical_axis(ax, "Duration [h]", "Density")
 
         # for ax in axes.flat[len(activities):]:
         #     ax.set_visible(False)
@@ -200,26 +192,21 @@ def plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, 
 
 
 def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
-              save: bool = True, show: bool = False, output_suffix: str = ".pdf"):
+              save: bool = True, show: bool = False, output_suffix: str = ".pdf", legend_placement: str = None):
     x = np.arange(len(index))
-    width = 0.26
     fig, ax = plt.subplots(figsize=barplot_size)
-    ax.bar(x + width, est.reindex(index, fill_value=0), width=width, color="steelblue",
-           alpha=0.75, edgecolor="black", label="Calibration")
+    ax.bar(x + bar_width, est.reindex(index, fill_value=0), width=bar_width,
+           color=ESTIMATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Calibration")
     if val is not None:
-        ax.bar(x, val.reindex(index, fill_value=0), width=width, color="coral",
-               alpha=0.75, edgecolor="black", label="Validation Data Set")
-    ax.bar(x - width, meas.reindex(index, fill_value=0), width=width, color="mediumseagreen",
-           alpha=0.75, edgecolor="black", label="Measurement Data Set")
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
-    ax.set_xticks(x)
-    ax.set_xticklabels(xticklabels)
-    ax.set_ylim(bottom=0)
-    ax.grid(axis="y", linestyle="--", alpha=0.5)
-    ax.legend()
-    sort_legend_entries(ax)
-    fig.tight_layout()
+        ax.bar(x, val.reindex(index, fill_value=0), width=bar_width,
+               color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+               label="Validation Data Set")
+    ax.bar(x - bar_width, meas.reindex(index, fill_value=0), width=bar_width,
+           color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Measurement Data Set")
+    format_categorical_axis(ax, xlabel, ylabel, xticks=x, xticklabels=xticklabels)
+    sort_legend_entries(ax, loc = legend_placement)
     save_show(fig, path, save=save, show=show, output_suffix=output_suffix)
 
 
@@ -266,12 +253,8 @@ def plot_location_reproduction(est, meas, val, save_dir, save: bool = True,
                    color="steelblue", label="Calibration vs. Measurement")
         lim = sub.max().max() * 1.05
         ax.plot([0, lim], [0, lim], ":", color="gray", label="y = x")
-        ax.set_xlim(0, lim)
-        ax.set_ylim(0, lim)
-        ax.set_xlabel("Locations per Zone — Measurement / Validation")
-        ax.set_ylabel("Locations per Zone — Calibration")
-        ax.grid(True)
-        ax.legend(loc="upper left")
+        format_axis(ax, xlabel = "Locations per Zone — Measurement / Validation", ylabel = "Locations per Zone — Calibration", equal_lims = True)
+        ax.legend(loc="upper left", fontsize=legend_fontsize)
         save_show(fig, save_dir / f"03_location_reproduction_{act}.pdf",
                   save=save, show=show, output_suffix=output_suffix)
 
@@ -287,13 +270,8 @@ def plot_location_reproduction(est, meas, val, save_dir, save: bool = True,
 
     lim = total_df.max().max() * 1.05
     ax.plot([0, lim], [0, lim], ":", color="gray")
-    ax.set_xlim(0, lim)
-    ax.set_ylim(0, lim)
-    ax.set_xlabel("Ground Truth")
-    ax.set_ylabel("Calibrated")
-    ax.grid(True)
-    ax.legend(loc="upper left")
-
+    format_axis(ax, xlabel = "Ground Truth", ylabel = "Calibrated", equal_lims=True)
+    ax.legend(loc="upper left", fontsize=legend_fontsize)
     save_show(fig, save_dir / "03_location_reproduction_TOTAL.pdf",
               save=save, show=show, output_suffix=output_suffix)
 
@@ -456,7 +434,7 @@ def plot_activity_share_vs_opportunity(results_dir, data_dir, save_dir,
         ax.grid(True, linestyle="--", linewidth=0.6, alpha=0.55)
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
-        ax.legend()
+        ax.legend(fontsize=legend_fontsize)
 
     save_show(fig, save_dir / "activity_visit_share_vs_opportunity_weight.pdf",
               save=save, show=show, output_suffix=output_suffix)
@@ -498,14 +476,15 @@ def main(results_dir: Path,
     n = min(MAX_NSTOPS, int(est["nstops"].index.max())) + 1
     plot_bars(est["nstops"], meas["nstops"], v("nstops"), range(n),
               "Number of Stops", "Frequency", [str(i) if i % 2 == 0 else "" for i in range(n)],
-              save_dir / "01_nStops_histogram.pdf", **save_kwds)
+              path = save_dir / "01_nStops_histogram.pdf", legend_placement="upper left", **save_kwds)
     print(f"Avg nStops (calibration): {(est['nstops'].index * est['nstops']).sum() / est['nstops'].sum()}")
 
     activities = ([a for a in LOCATION_ACTIVITIES if a in est["participation"].index]
                   + sorted(set(est["participation"].index) - set(LOCATION_ACTIVITIES)))
     plot_bars(est["participation"], meas["participation"], v("participation"), activities,
               "Activity", "Number of Activity Episodes", activities,
-              save_dir / "04_activity_participation.pdf", **save_kwds)
+              legend_placement="upper left",
+              path = save_dir / "04_activity_participation.pdf", **save_kwds)
 
     plot_location_reproduction(est["visits"], meas["visits"], v("visits"), save_dir, **save_kwds)
     plot_location_maps(est["visits"], meas["visits"], v("visits"), save_dir, **save_kwds)
