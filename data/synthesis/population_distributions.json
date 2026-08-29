@@ -1,0 +1,33 @@
+{
+  "incomeGroupCutoffs": [0, 50, 100, 200, 300],
+
+  "ageGroups": [
+    "16-17",
+    "18-24",
+    "25-34",
+    "35-44",
+    "45-54",
+    "55-64",
+    "65-85"
+  ],
+
+  "ageDistribution": [
+    { "cutoff": 0.035807055, "minAge": 16, "maxAge": 17 },
+    { "cutoff": 0.114746211, "minAge": 18, "maxAge": 24 },
+    { "cutoff": 0.304515587, "minAge": 25, "maxAge": 34 },
+    { "cutoff": 0.487400787, "minAge": 35, "maxAge": 44 },
+    { "cutoff": 0.661458968, "minAge": 45, "maxAge": 54 },
+    { "cutoff": 0.830802417, "minAge": 55, "maxAge": 64 },
+    { "cutoff": 1.0, "minAge": 65, "maxAge": 85 }
+  ],
+
+  "ageIncomeMedian": [
+    { "maxAge": 17, "incomeKsek": 9.0 },
+    { "maxAge": 24, "incomeKsek": 159.7 },
+    { "maxAge": 34, "incomeKsek": 405.0 },
+    { "maxAge": 44, "incomeKsek": 466.0 },
+    { "maxAge": 54, "incomeKsek": 431.7 },
+    { "maxAge": 64, "incomeKsek": 284.4 },
+    { "maxAge": 85, "incomeKsek": 236.1 }
+  ]
+}
