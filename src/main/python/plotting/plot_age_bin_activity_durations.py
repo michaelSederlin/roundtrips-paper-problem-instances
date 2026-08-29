@@ -20,6 +20,7 @@ from .helpers import ArgumentParser
 from .plotting_utilities import (stay_activity,
                                  parse_states_xml as _parse_states_xml)
 from .helpers.od_transition_helpers import save_show
+from .common_parameters import barplot_size
 
 ACTIVITIES = ["HOME", "WORK", "EDUCATION", "OTHER"]
 NON_HOME_ACTIVITIES = [a for a in ACTIVITIES if a != "HOME"]
@@ -75,7 +76,7 @@ def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
     """Verbatim styling from plot_population_reproduction.plot_bars."""
     x = np.arange(len(index))
     width = 0.26
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=barplot_size)
     ax.bar(x + width, est.reindex(index, fill_value=0), width=width, color=ESTIMATION_COLOR,
            alpha=0.75, edgecolor="black", label="Calibration")
     if val is not None:
@@ -182,14 +183,14 @@ def main(results_dir: Path,
                   _by_inc_bin(meas, act, inc_by_name, INC_BINS),
                   _by_inc_bin(val, act, inc_by_name, INC_BINS)
                     if val is not None else None, 
-                    inc_cats, "Inc", f"{act} Duration [h]", inc_ticklabels,
+                    inc_cats, "Income [ksek]", f"{act} Duration [h]", inc_ticklabels,
                     save_dir / f"09_inc_duration_{act}.pdf", **save_kwds)
         
         plot_bars(_by_inc_bin(est, f'{act}_part', inc_by_name, INC_BINS) * 100, 
                   _by_inc_bin(meas, f'{act}_part', inc_by_name, INC_BINS) * 100,
                   _by_inc_bin(val, f'{act}_part', inc_by_name, INC_BINS) * 100
                     if val is not None else None, 
-                    inc_cats, "Inc", f"{act} Participation [%]", inc_ticklabels,
+                    inc_cats, "Income [ksek]", f"{act} Participation [%]", inc_ticklabels,
                     save_dir / f"09_inc_participation_{act}.pdf", **save_kwds)
 
         plot_bars(_by_gender(est, act, gender_by_name), 
@@ -211,7 +212,7 @@ def main(results_dir: Path,
     plot_bars(_by_inc_bin(est, NON_HOME_ACTIVITIES, inc_by_name, INC_BINS),
             _by_inc_bin(meas, NON_HOME_ACTIVITIES, inc_by_name, INC_BINS),
             _by_inc_bin(val, NON_HOME_ACTIVITIES, inc_by_name, INC_BINS) if val is not None else None,
-            inc_cats, "Inc", "Away-from-Home Duration [h]", inc_ticklabels,  
+            inc_cats, "Income [ksek]", "Away-from-Home Duration [h]", inc_ticklabels,  
             save_dir / "09_inc_duration_away_from_home.pdf", **save_kwds)
 
     plot_bars(_by_gender(est, NON_HOME_ACTIVITIES, gender_by_name), 

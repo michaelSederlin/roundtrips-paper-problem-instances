@@ -14,6 +14,7 @@ import seaborn as sns
 from .partition_discovery import discover_partition_dirs, states_xml_path
 from .burn_in import post_burn_in_iterations, equalize_post_burn_in
 from ..plotting_utilities import save_show
+from ..common_parameters import barplot_size, scatterplot_size
 
 
 
@@ -313,7 +314,7 @@ def plot_transition_scatter(
         std_flat = sim_std.stack().rename("sim_std").reset_index(drop=True)
         df["sim_std"] = std_flat
 
-    fig = plt.figure(figsize=(7.2, 7.2))
+    fig = plt.figure(figsize=scatterplot_size)
     if sim_std is not None:
         plt.errorbar(
             df["target"],
@@ -396,7 +397,7 @@ def plot_row_comparisons(
         fig, axes = plt.subplots(
             nrows=nrows_per_page,
             ncols=ncols,
-            figsize=(16, 3.2 * nrows_per_page),
+            figsize=(barplot_size[0], barplot_size[1] * nrows_per_page),
             squeeze=False,
         )
         axes_flat = axes.ravel()
@@ -481,7 +482,7 @@ def evaluate_transition_fit(summary: dict, out_dir: Path, args):
 
 
 def plot_transition_heatmaps(summary: dict, out_dir: Path, args):
-    fig, ax = plt.subplots(1, 3, figsize=(15, 5))
+    fig, ax = plt.subplots(1, 3, figsize=(scatterplot_size[0] * 3, scatterplot_size[1]))
     sns.heatmap(summary["p_mean"], ax=ax[0])
     sns.heatmap(summary["p_tru"], ax=ax[1])
     sns.heatmap(summary["p_mean"] - summary["p_tru"], ax=ax[2])
@@ -491,7 +492,7 @@ def plot_transition_heatmaps(summary: dict, out_dir: Path, args):
 
 
 def plot_od_count_heatmaps(summary: dict, out_dir: Path, args):
-    fig, ax = plt.subplots(1, 3, figsize=(15, 5))
+    fig, ax = plt.subplots(1, 3, figsize=(scatterplot_size[0] * 3, scatterplot_size[1]))
     sns.heatmap(summary["od_mean"], ax=ax[0])
     ax[0].set_title("Simulated OD counts (mean)")
     sns.heatmap(summary["tru_od"], ax=ax[1])

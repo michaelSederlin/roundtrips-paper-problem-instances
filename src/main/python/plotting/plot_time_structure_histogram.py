@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
 from .plotting_utilities import departure_hours, parse_states_xml
+from .common_parameters import barplot_size
 
 
 def main(states_xml: Path, save_dir: Path, save: bool = True, show: bool = False,
@@ -25,7 +26,7 @@ def main(states_xml: Path, save_dir: Path, save: bool = True, show: bool = False
     df_bins = df_bins[[i for i in range(24)]]
 
     ####################### Step 2: Plot time structure #######################
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=barplot_size)
     ax.bar(df_bins.columns, df_bins.iloc[0])
     ax.set_xlabel("Bin")
     ax.set_ylabel("Frequency")

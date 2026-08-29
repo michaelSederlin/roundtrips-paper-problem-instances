@@ -8,9 +8,10 @@ from plotting.plot_population_reproduction import main as population_reproductio
 from plotting.plot_od_and_transitions import main as plot_od_main
 from plotting.plot_age_bin_activity_durations import main as age_bins_main
 
-MEASUREMENT_STATES_XML = Path("data/ground_truth/amal_measurement/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml")
-VALIDATION_STATES_XML = Path("data/ground_truth/amal_validation/out/ProductionRun_1000/partitions_merged/_final_states_merged.xml")
 DATA_DIR = Path("data/survey")
+
+MEASUREMENT_STATES_XML = Path('data/measurement_data/partitions_merged/_final_states_merged.xml')
+VALIDATION_STATES_XML = Path('data/validation_data/partitions_merged/_final_states_merged.xml')
 
 POPULATION_FILENAME = 'population.tsv'
 TARGET_FILENAME = 'population_merged.tsv'
@@ -23,7 +24,6 @@ SAVE = True
 SHOW = False
 OUTPUT_SUFFIX = '.pdf'
 
-
 def plot_scenario(scenario):
     results_dir = Path(scenario)
     if not results_dir.exists():
@@ -33,14 +33,15 @@ def plot_scenario(scenario):
     save_dir = results_dir / 'new_plots'
     save_dir.mkdir(parents=True, exist_ok=True)
 
-    # population_merge_main(results_dir=results_dir,
-    #                       population_filename=POPULATION_FILENAME,
-    #                       target_filename=TARGET_FILENAME)
+    population_merge_main(results_dir=results_dir,
+                          population_filename=POPULATION_FILENAME,
+                          target_filename=TARGET_FILENAME)
     
-    # states_merge_main(results_dir=results_dir,
-    #                   population_filename=POPULATION_FILENAME,
-    #                   convergence_stats_filename=CONVERGENCE_STATS_FILENAME,
-    #                   window=WINDOW)
+    states_merge_main(results_dir=results_dir,
+                      population_filename=POPULATION_FILENAME,
+                      convergence_stats_filename=CONVERGENCE_STATS_FILENAME,
+                      window=WINDOW)
+
 
     population_reproduction_main(results_dir=results_dir,
                                  measurement_states_xml=MEASUREMENT_STATES_XML,
@@ -55,15 +56,15 @@ def plot_scenario(scenario):
                                  show=SHOW,
                                  output_suffix=OUTPUT_SUFFIX)
 
-    # plot_od_main(results_dir=results_dir,
-    #              measurement_states_xml=MEASUREMENT_STATES_XML,
-    #              save_dir=save_dir,
-    #              validation_states_xml=VALIDATION_STATES_XML,
-    #              convergence_stats_filename=CONVERGENCE_STATS_FILENAME,
-    #              msg_interval=MSG_INTERVAL,
-    #              save=SAVE,
-    #              show=SHOW,
-    #              output_suffix=OUTPUT_SUFFIX)
+    plot_od_main(results_dir=results_dir,
+                 measurement_states_xml=MEASUREMENT_STATES_XML,
+                 save_dir=save_dir,
+                 validation_states_xml=VALIDATION_STATES_XML,
+                 convergence_stats_filename=CONVERGENCE_STATS_FILENAME,
+                 msg_interval=MSG_INTERVAL,
+                 save=SAVE,
+                 show=SHOW,
+                 output_suffix=OUTPUT_SUFFIX)
 
     age_bins_main(results_dir=results_dir,
                   measurement_states_xml=MEASUREMENT_STATES_XML,
@@ -75,7 +76,7 @@ def plot_scenario(scenario):
 
 
 if __name__ == "__main__":
-    scenario = Path("output/no-gender-matching")
+    scenario = Path("output/disaggregate-calibration")
     plot_scenario(scenario)
     print("SCRIPT FINISHED")
 

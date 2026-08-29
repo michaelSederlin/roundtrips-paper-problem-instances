@@ -17,6 +17,7 @@ public class Options {
     @Option(names = "--grid-world-seed") public Integer grid_world_seed;
     @Option(names = "--scenario-seed") public Integer scenario_seed;
     @Option(names = "--opportunities-path") public Path opportunities_path;
+    @Option(names = "--population-configs-path") public Path population_configs_path;
 
     @Option(names = "--work-open") public Double work_open;
     @Option(names = "--work-close") public Double work_close;

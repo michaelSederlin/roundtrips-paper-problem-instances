@@ -12,6 +12,7 @@ from time import sleep
 
 from .merge_population_csv import _delimiter
 from .plotting_utilities import process_states
+from .common_parameters import scatterplot_size
 
 
 def safe_row_normalize(df):
@@ -116,8 +117,8 @@ def main(results_dir: Path, save_dir: Path, states_xml: None | Path = None, popu
     df_target_mean = df_target_window.groupby(level="index").mean()
 
     # Plotting
-    fig_prefs, axes_prefs = plt.subplots(2, 2, figsize=(12, 10))
-    fig_lines, axes_lines = plt.subplots(2, 2, figsize=(12, 10))
+    fig_prefs, axes_prefs = plt.subplots(2, 2, figsize=(scatterplot_size[0] * 2, scatterplot_size[1] * 2))
+    fig_lines, axes_lines = plt.subplots(2, 2, figsize=(scatterplot_size[0] * 2, scatterplot_size[1] * 2))
 
     iters = df_sample_window.index.get_level_values("iteration").unique()
     for i, act in enumerate(ACTIVITIES):

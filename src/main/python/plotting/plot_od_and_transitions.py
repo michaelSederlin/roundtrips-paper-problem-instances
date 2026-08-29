@@ -10,6 +10,7 @@ from xml.etree import ElementTree as ET
 
 from .helpers import ArgumentParser
 from .plotting_utilities import save_show
+from .common_parameters import scatterplot_size
 
 # Globals
 fontsize = 10 
@@ -20,7 +21,8 @@ _node_pat = re.compile(r"\(([^)]*)\)\[[^\]]*\]")
 def to_transition(mat):
     return mat.div(mat.sum(axis=1).replace(0, np.nan), axis=0).fillna(0)
 
-def format_axis(ax, xlabel, ylabel):
+def format_axis(ax, xlabel: str, ylabel: str):
+    xlabel, ylabel = xlabel.capitalize(), ylabel.capitalize()
     ax.set_ylabel(xlabel, fontsize=fontsize)
     ax.set_xlabel(ylabel, fontsize=fontsize)
     ax.set_xlim(left=0)
@@ -79,7 +81,7 @@ def extract_od_matrix(states_tree: ET.ElementTree) -> pd.DataFrame:
     od = pd.Series(_sample_od(trip), dtype=float)
     return _od_series_to_matrix(od)
 
-def extract_estimated_od_matrix(estimation_dir: Path, convergence_filename: str,
+def extract_calibrated_od_matrix(estimation_dir: Path, convergence_filename: str,
                                 msg_interval: int) -> pd.DataFrame:
     """Average OD flows across post-burn-in samples within each partition,
     then sum the partition matrices (disjoint trips) into the full OD matrix."""
@@ -136,11 +138,11 @@ def main(results_dir: Path,
 
     od_meas = extract_od_matrix(load_tree(measurement_states_xml))
     od_val = None if validation_states_xml is None else extract_od_matrix(load_tree(validation_states_xml))
-    od_est = extract_estimated_od_matrix(results_dir, convergence_stats_filename, msg_interval)
+    od_est = extract_calibrated_od_matrix(results_dir, convergence_stats_filename, msg_interval)
 
     od_dict = {
         "measurement OD": od_meas.stack(), 
-        "estimated OD": od_est.reindex(index = od_meas.index, columns = od_meas.columns).fillna(0).stack()
+        "calibrated OD": od_est.reindex(index = od_meas.index, columns = od_meas.columns).fillna(0).stack()
     }
 
     if od_val is not None:
@@ -148,31 +150,31 @@ def main(results_dir: Path,
     
     df_plot_od = pd.concat(od_dict, axis = 1).fillna(0).rename_axis(["Origin", 'Destination']).reset_index()
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=scatterplot_size)
 
     if od_val is not None:
         ax.errorbar(
-            df_plot_od['validation OD'], df_plot_od['estimated OD'], color='coral',
+            df_plot_od['validation OD'], df_plot_od['calibrated OD'], color='coral',
             alpha=0.6, label='Validation', **scatter_kwds)
 
     ax.errorbar(
-        df_plot_od['measurement OD'], df_plot_od['estimated OD'], markerfacecolor='none', markeredgecolor='steelblue',
+        df_plot_od['measurement OD'], df_plot_od['calibrated OD'], markerfacecolor='none', markeredgecolor='steelblue',
         color='none', ecolor='gray', label='Calibration', **scatter_kwds)
 
     ax.legend(fontsize = fontsize)
-    format_axis(ax, "Estimated", 'Ground truth')
+    format_axis(ax, "Calibrated", 'Ground truth')
     save_show(fig, save_dir / "02_od.pdf", **save_kwds)
 
     fit_cols = ['measurement OD'] + (['validation OD'] if od_val is not None else [])
     x_fit = np.array([df_plot_od[fit_cols].min().min(), df_plot_od[fit_cols].max().max()])
 
-    slope_meas, intercept_meas = np.polyfit(df_plot_od['measurement OD'], df_plot_od['estimated OD'], 1)
+    slope_meas, intercept_meas = np.polyfit(df_plot_od['measurement OD'], df_plot_od['calibrated OD'], 1)
     kwds = {'linestyle': '--'}
     ax.plot(x_fit, slope_meas * x_fit + intercept_meas, color='steelblue',
               label=f'Regression (measurement): y={slope_meas:.2f}x+{intercept_meas:.2f}', **kwds)
 
     if od_val is not None:
-        slope_val, intercept_val = np.polyfit(df_plot_od['validation OD'], df_plot_od['estimated OD'], 1)
+        slope_val, intercept_val = np.polyfit(df_plot_od['validation OD'], df_plot_od['calibrated OD'], 1)
         ax.plot(x_fit, slope_val * x_fit + intercept_val, color='coral',
                   label=f'Regression (validation): y={slope_val:.2f}x+{intercept_val:.2f}', **kwds)
 
@@ -185,7 +187,7 @@ def main(results_dir: Path,
 
     prob_dict = {
         "measurement OD": P_meas.stack(),
-        "estimated OD": P_est.stack(),
+        "calibrated OD": P_est.stack(),
     }
     if od_val is not None:
         prob_dict["validation OD"] = to_transition(od_val).stack()
@@ -195,18 +197,17 @@ def main(results_dir: Path,
     fit_cols = ['measurement OD'] + (['validation OD'] if od_val is not None else [])
     x_fit = np.array([df_prob[fit_cols].min().min(), df_prob[fit_cols].max().max()])
 
-    slope_meas, intercept_meas = np.polyfit(df_prob['measurement OD'], df_prob['estimated OD'], 1)
+    slope_meas, intercept_meas = np.polyfit(df_prob['measurement OD'], df_prob['calibrated OD'], 1)
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=scatterplot_size)
     if od_val is not None:
-        slope_val, intercept_val = np.polyfit(df_prob['validation OD'], df_prob['estimated OD'], 1)
-        ax.errorbar(df_prob['validation OD'], df_prob['estimated OD'], color='coral', alpha=0.6, label='Validation', **scatter_kwds)
+        slope_val, intercept_val = np.polyfit(df_prob['validation OD'], df_prob['calibrated OD'], 1)
+        ax.errorbar(df_prob['validation OD'], df_prob['calibrated OD'], color='coral', alpha=0.6, label='Validation', **scatter_kwds)
         
-    ax.errorbar(df_prob['measurement OD'], df_prob['estimated OD'], markerfacecolor='none', markeredgecolor='steelblue',
+    ax.errorbar(df_prob['measurement OD'], df_prob['calibrated OD'], markerfacecolor='none', markeredgecolor='steelblue',
                 color='none', ecolor='gray', label='Calibration', **scatter_kwds)
 
-
-    format_axis(ax, "Estimated", 'Ground truth')
+    format_axis(ax, "calibrated", 'Ground truth')
     save_show(fig, save_dir / "03_transition_probabilities.pdf", **save_kwds)
 
     kwds = {'linestyle': '--'}

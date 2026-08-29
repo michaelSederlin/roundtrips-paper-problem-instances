@@ -102,6 +102,7 @@ public class SynthesisRunner implements Callable<Integer> {
         logger.info("Base output dir:  {}", opts.output_dir);
         logger.info("Preferences file: {}", opts.preferences_path);
         logger.info("Opportunities:    {}", opts.opportunities_path);
+        logger.info("Population Configs Path {}", opts.population_configs_path);
 
         // --- Parallelism / partitioning ---
         logger.info("Available processors (numProc): {}", numProc);
@@ -178,7 +179,7 @@ public class SynthesisRunner implements Callable<Integer> {
 
         
         // ----------------- Setup the population & compute Time-use preferences-----------------
-        StandardSyntheticPopulation population = new StandardSyntheticPopulation(partitionPopulationSize, partitionSeed).identifyUniqueGroups();   
+        StandardSyntheticPopulation population = new StandardSyntheticPopulation(opts.population_configs_path, partitionPopulationSize, partitionSeed).identifyUniqueGroups();   
         logger.info("Partition {}: Loaded population of size {}", partition, partitionPopulationSize);
 
         TimeUsePreferences prefs = new TimeUsePreferences(opts.preferences_path, partitionRNG).setUniformRandomMixing(true);

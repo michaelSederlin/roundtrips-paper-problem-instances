@@ -19,6 +19,7 @@ import seaborn as sns
 from .argument_parser import ArgumentParser
 from .helpers.burn_in import post_burn_in_iterations, equalize_post_burn_in
 from .helpers.od_transition_helpers import save_show
+from .common_parameters import barplot_size, scatterplot_size
 from .helpers.partition_discovery import discover_partition_dirs, states_xml_path
 from .plotting_utilities import (process_states, stay_activity, departure_hours,
                                  parse_states_xml as _parse_states_xml)
@@ -171,7 +172,7 @@ def plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, 
     # nrows = -(-len(activities) // ncols)  # ceil
     # fig, axes = plt.subplots(nrows, ncols, figsize=(6 * ncols, 4 * nrows), squeeze=False)
     for act in activities:
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=barplot_size)
     # for ax, act in zip(axes.flat, activities):
         for (label, durs, color), off in zip(series, offsets):
             values = np.asarray(durs.get(act, []), dtype=float)
@@ -202,7 +203,7 @@ def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
               save: bool = True, show: bool = False, output_suffix: str = ".pdf"):
     x = np.arange(len(index))
     width = 0.26
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=barplot_size)
     ax.bar(x + width, est.reindex(index, fill_value=0), width=width, color="steelblue",
            alpha=0.75, edgecolor="black", label="Calibration")
     if val is not None:
@@ -257,7 +258,7 @@ def plot_location_reproduction(est, meas, val, save_dir, save: bool = True,
                 else:
                     total[name] = total[name].add(sub[name], fill_value = 0)
 
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=scatterplot_size)
         if "validation" in sub.columns:
             ax.scatter(sub["validation"], sub["calibration"], alpha=0.6, color="coral",
                        label="Calibration vs. Validation")
@@ -275,7 +276,7 @@ def plot_location_reproduction(est, meas, val, save_dir, save: bool = True,
                   save=save, show=show, output_suffix=output_suffix)
 
     total_df = pd.concat(total, axis = 1).fillna(0)
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=scatterplot_size)
     if "validation" in total_df.columns:
         ax.scatter(total_df["validation"], total_df["calibration"],
                    alpha=0.6, color="coral",
@@ -289,7 +290,7 @@ def plot_location_reproduction(est, meas, val, save_dir, save: bool = True,
     ax.set_xlim(0, lim)
     ax.set_ylim(0, lim)
     ax.set_xlabel("Ground Truth")
-    ax.set_ylabel("Estimated")
+    ax.set_ylabel("Calibrated")
     ax.grid(True)
     ax.legend(loc="upper left")
 
@@ -319,7 +320,7 @@ def plot_location_maps(est, meas, val, save_dir, save: bool = True,
                        .reindex(index=rows_full, columns=cols_full).fillna(0))
                 for name in df.columns}
         vmax = max(mat.values.max() for mat in mats.values())
-        fig, axes = plt.subplots(1, len(mats), figsize=(7 * len(mats), 7))
+        fig, axes = plt.subplots(1, len(mats), figsize=(scatterplot_size[0] * len(mats), scatterplot_size[1]))
         for ax, (name, mat) in zip(np.atleast_1d(axes), mats.items()):
             sns.heatmap(mat, ax=ax, cmap="viridis", square=True, annot=True,
                         fmt=".0f", cbar=True, vmin=0, vmax=vmax)
@@ -391,7 +392,9 @@ def plot_activity_share_vs_opportunity(results_dir, data_dir, save_dir,
 
     # sns.set_style("whitegrid")
     fig, axes = plt.subplots(1, len(ACTIVITY_SHARE_ACTIVITIES),
-                             figsize=(16, 5), constrained_layout=True)
+                             figsize=(scatterplot_size[0] * len(ACTIVITY_SHARE_ACTIVITIES),
+                                      scatterplot_size[1]),
+                             constrained_layout=True)
 
     for ax, activity in zip(np.atleast_1d(axes), ACTIVITY_SHARE_ACTIVITIES):
         sim_act = sim_stays[sim_stays["activity"] == activity]
