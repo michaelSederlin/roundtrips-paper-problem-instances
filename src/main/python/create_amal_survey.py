@@ -1,18 +1,11 @@
-# Author: Michael Sederlin
-
-# Takes states.xml and generates a survey with travel plans from these individuals.
-# input = root / "input_amal_estimation" / "output" / "2026 02 01_ServerRuns" / "004" / "20E6_5x5_1000" / "output"
-
-# Needs documentation 
-
 import gzip
 import json
 from pathlib import Path
 import shutil
+from lxml import etree
 
 import pandas as pd
 import logging
-
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +17,6 @@ def decimal_to_hhmm(t: float) -> str:
 
 
 def load_mrts(states_fp: Path, idx: None | int = None) -> list: 
-    from lxml import etree
     opener = gzip.open if states_fp.suffix == ".gz" else open
     with opener(states_fp, 'rb') as fid:
         states = etree.parse(fid)
@@ -35,7 +27,7 @@ def load_mrts(states_fp: Path, idx: None | int = None) -> list:
     else: 
         return mrts
 
-def create_od_matrix(mrt: 'lxml.etree.Element', nodes: list) -> pd.DataFrame:
+def create_od_matrix(mrt: etree.Element, nodes: list) -> pd.DataFrame:
     def parse_node_names(*nodes): 
         out = []
         for n in nodes:
@@ -178,37 +170,12 @@ def write_warm_start(data_mrt, selected_uenrs: set, output: Path):
         json.dump(states, fid, indent=2)
     logger.info("Wrote warm start state (%d roundtrips) -> %s", len(states), out_path)
 
-
-DEFAULT_INPUT = Path("amal/Results_Paper/2026 08 07/amal_measurement/out/ProductionRun_1000")
-DEFAULT_OUTPUT = Path("renate/data/scenarios/amal/results_paper/2026 08 07/full")
-
-
-def parse_args():
-    import argparse
-    parser = argparse.ArgumentParser(description="Generate a survey (upbd/mddr) from simulated states.xml.")
-    parser.add_argument("-i", "--input", type=Path, default=DEFAULT_INPUT)
-    parser.add_argument("--states-xml-filename", type = str, default = "_final_states_merged.xml")
-    parser.add_argument("--population-filename", type = str, default = "population_merged.csv")
-    parser.add_argument("-o", "--output", type=Path, default=DEFAULT_OUTPUT)
-    parser.add_argument("-n", "--n-respondents", type=int, default=None)
-    parser.add_argument("--random-state", type=int, default=1084)
-    return parser.parse_args()
-
-
-def main(args):
-    input = args.input
-    output = args.output
+def main(input: Path, output: Path, states_xml_filename: str, population_filename: str):
     output.mkdir(parents=True, exist_ok=True)
     logger.info("Input dir: %s", input)
     logger.info("Output dir: %s", output)
 
-    # candidates = list(input.glob("states.xml"))
-    # if not candidates:
-    #     logger.error("No states file found in %s", input)
-    #     raise FileNotFoundError(f"No states file found")
-    # logger.info("Found %d states file(s); using %s", len(candidates), candidates[0].name)
-    states_xml = input / "partitions_merged" / args.states_xml_filename
-    # states_xml = input / "0/states.xml.gz"
+    states_xml = input / "partitions_merged" / states_xml_filename
 
     logger.info("Loading MultiRoundTrip (idx=-1) from %s", states_xml.name)
     data_mrt = load_mrts(states_xml, idx=-1)[0]
@@ -234,7 +201,7 @@ def main(args):
                 len(mddr), mddr['UENR'].nunique() if len(mddr) else 0)
 
     # Full survey
-    upbd_full = load_respondents(input / "partitions_merged/" / args.population_filename, home_map)
+    upbd_full = load_respondents(input / "partitions_merged/" / population_filename, home_map)
     upbd_save = upbd_full
 
     # upbd_save = upbd_full.sample(n = 400, random_state = 1084)
@@ -242,20 +209,8 @@ def main(args):
     write_filtered_states(data_mrt, set(upbd_save["UENR"]), output)
     write_warm_start(data_mrt, set(upbd_save["UENR"]), output)
 
-    logger.info("Copying nodes")
     shutil.copyfile(input / "nodes.tsv", output / "nodes.tsv")
-
-    logger.info("Copying edges")
     shutil.copyfile(input / "edges.tsv", output / "edges.tsv")
-
-    # write_survey(output, upbd_full, mddr)
-    # # Subsets
-    # SUBSET_SIZES = [50, 100, 200]
-    # SUBSET_SEED = 1084
-    # for n in SUBSET_SIZES:
-    #     upbd_sub = load_respondents(input / "partitions_merged/population.csv", home_map,
-    #                                 n=n, random_state=SUBSET_SEED)
-    #     write_survey(output / f"subset_n{n}_seed{SUBSET_SEED}", upbd_sub, mddr)
 
     logger.info("Loading opportunity_weights from %s", input / "opportunity_weights.csv")
     oppo_weights = pd.read_csv(input / "opportunity_weights.csv",
@@ -268,8 +223,10 @@ def main(args):
 
 
 if __name__ == "__main__":
-    args = parse_args()
-    main(args)
-    
-
-    
+    main(
+        input = Path("data/measurement_data"), 
+        output = Path("data/survey"), 
+        states_xml_filename = "final_states_merged.xml", 
+        population_filename = "population_merged.tsv"
+    )
+   

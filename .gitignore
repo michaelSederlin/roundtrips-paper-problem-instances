@@ -1,3 +1,5 @@
+run_disaggregate_ws.sh
+
 /target/
 /.vscode/
 dependency-reduced-pom.xml
