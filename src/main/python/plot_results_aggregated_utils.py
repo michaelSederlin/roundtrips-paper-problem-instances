@@ -7,14 +7,11 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 import xml.etree.ElementTree as ET
-
-
-
-
 from matplotlib.backends.backend_pdf import PdfPages
 from plotting.common_parameters import scatterplot_size, VALIDATION_COLOR, ESTIMATION_COLOR, format_axis, \
     sort_legend_entries, legend_fontsize, barplot_size, MEASUREMENT_COLOR, bar_width, bar_alpha, bar_edgecolor, \
     format_categorical_axis, savefig_pad
+
 
 
 scatter_kwds = dict(fmt='o', markersize=6, capsize=3)
@@ -23,42 +20,40 @@ scatter_kwds = dict(fmt='o', markersize=6, capsize=3)
 
 def plot_nStops_histogram(location_counts_file,measurement_states_file,validation_states_file,burn_in_iteration, output_file):
 
-    # Prepare data
+    # Get data
     df_locationCounts = pd.read_csv(location_counts_file, header=None, sep="\t")
-    measurement_nStops_abs = np.array(count_nStops(measurement_states_file))
-    validation_nStops_abs = np.array(count_nStops(validation_states_file))
+    measurement_data = np.array(count_nStops(measurement_states_file))
+    validation_data = np.array(count_nStops(validation_states_file))
 
+    # Avg over stable iteratrion
     last_n = len(df_locationCounts) - burn_in_iteration
-    sample_abs = df_locationCounts.tail(last_n).mean(axis=0).to_numpy()
-    max_len = len(sample_abs)
-    measurement_nStops_abs = np.pad(measurement_nStops_abs,
-                                    (0, max(0, max_len - len(measurement_nStops_abs))),
-                                    'constant')[:max_len]
-    validation_nStops_abs = np.pad(validation_nStops_abs,
-                                   (0, max(0, max_len - len(validation_nStops_abs))),
-                                   'constant')[:max_len]
+    calibration_data = df_locationCounts.tail(last_n).mean(axis=0).to_numpy()
 
-    # upper bound of 10 on the x-axis
-    sample_abs = sample_abs[:11]
-    measurement_nStops_abs = measurement_nStops_abs[:11]
-    validation_nStops_abs = validation_nStops_abs[:11]
+    # Align length
+    max_len = len(calibration_data)
+    measurement_data = np.pad(measurement_data,(0, max(0, max_len - len(measurement_data))),'constant')[:max_len]
+    validation_data = np.pad(validation_data,(0, max(0, max_len - len(validation_data))),'constant')[:max_len]
 
+    # upper bound x-axis
+    calibration_data = calibration_data[:11]
+    measurement_data = measurement_data[:11]
+    validation_data = validation_data[:11]
 
-    # Plot nStops histogram
-    x = np.arange(len(sample_abs))
+    # Plot
+    x = np.arange(len(calibration_data))
     labels = [str(i) for i in x]
 
     fig, ax = plt.subplots(figsize=barplot_size)
 
-    ax.bar(x - bar_width, measurement_nStops_abs, width=bar_width,
+    ax.bar(x - bar_width, measurement_data, width=bar_width,
            color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
            label="Measurement Data Set")
 
-    ax.bar(x, validation_nStops_abs, width=bar_width,
+    ax.bar(x, validation_data, width=bar_width,
            color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
            label="Validation Data Set")
 
-    ax.bar(x + bar_width, sample_abs, width=bar_width,
+    ax.bar(x + bar_width, calibration_data, width=bar_width,
            color=ESTIMATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
            label="Calibration")
 
@@ -68,7 +63,6 @@ def plot_nStops_histogram(location_counts_file,measurement_states_file,validatio
                             xticks=x,
                             xticklabels=labels)
     sort_legend_entries(ax)
-
 
     # Output
     save_dir = Path(output_file).parent
@@ -80,19 +74,15 @@ def plot_nStops_histogram(location_counts_file,measurement_states_file,validatio
 
 
 
-def plot_od(odTarget_file, od_validation_file, burn_in_iteration, output_file):
+def plot_matrix(odTarget_file, od_validation_file, burn_in_iteration, output_file, ddTarget):
 
-    # Ensure path types are standard Path objects
-    odTarget_file = Path(odTarget_file)
-    od_validation_file = Path(od_validation_file)
-
+    # Get data
     df_odtarget = pd.read_csv(odTarget_file, sep="\t")
-
     (pair_names, sample_values, target_values_measurement, std_target_values_measurement,
      std_sample_values) = get_measurement_data(df_odtarget, burn_in_iteration)
+    target_values_validation = get_validation_data(od_validation_file, pair_names, ddTarget=ddTarget)
 
-    target_values_validation = get_validation_data(od_validation_file, pair_names, ddTarget=False    )
-
+    # Prepare data
     df_od_plot = pd.DataFrame(
         {
             "sample": sample_values,
@@ -109,7 +99,7 @@ def plot_od(odTarget_file, od_validation_file, burn_in_iteration, output_file):
 
 def plot_locations(home_target_dfs,validation_file,burn_in_iteration,output_file):
 
-    # Read validation matrix
+    # Get data
     df_validation = pd.read_csv(validation_file, sep=';', header=0, index_col=0)
     df_validation = df_validation.apply(pd.to_numeric, errors='coerce').fillna(0.0)
 
@@ -143,37 +133,50 @@ def plot_locations(home_target_dfs,validation_file,burn_in_iteration,output_file
 
 
 
+def plot_departures_histogram(departures_file, measurement_states_file, validation_states_file, burn_in_iteration, output_file):
 
-def plot_dd(ddTarget_file, dd_validation_file, burn_in_iteration, output_file):
+    # Get data
+    df_locationCounts = pd.read_csv(departures_file, header=None, sep="\t")
+    df_measurement = count_departures_per_time_bin(measurement_states_file)
+    df_validation = count_departures_per_time_bin(validation_states_file)
 
-    # # Ensure path types are standard Path objects
-    # odTarget_file = Path(odTarget_file)
-    # od_validation_file = Path(od_validation_file)
-
-    df_odtarget = pd.read_csv(ddTarget_file, sep="\t")
-
-    (pair_names,
-     sample_values,
-     target_values_measurement,
-     std_target_values_measurement,
-     std_sample_values,
-     ) = get_measurement_data(df_odtarget, burn_in_iteration)
-
-    target_values_validation = get_validation_data(
-        dd_validation_file, pair_names, ddTarget=True
-    )
-
-    df_od_plot = pd.DataFrame(
-        {
-            "sample": sample_values,
-            "target measurement": target_values_measurement,
-            "target validation": target_values_validation,
-        },
-        index=pair_names,
-    )
+    # Prepare data
+    last_n = len(df_locationCounts) - burn_in_iteration
+    calibration_row = df_locationCounts.tail(last_n).mean(axis=0)
+    meas_row = df_measurement.iloc[0]
+    val_row = df_validation.iloc[0]
 
     # Plot
-    create_scatter_plot(df_od_plot, output_file)
+    x = np.arange(len(calibration_row))
+    labels = [str(i) if i % 2 == 0 else "" for i in x]
+
+    fig, ax = plt.subplots(figsize=barplot_size)
+
+    ax.bar(x - bar_width, meas_row.values, width=bar_width,
+           color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Measurement Data Set")
+
+    ax.bar(x, val_row.values, width=bar_width,
+           color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Validation Data Set")
+
+    ax.bar(x + bar_width, calibration_row.values, width=bar_width,
+           color=ESTIMATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Calibration")
+
+    format_categorical_axis(ax,
+                            xlabel="Hour",
+                            ylabel="Frequency",
+                            xticks=x,
+                            xticklabels=labels)
+    sort_legend_entries(ax)
+
+    # Output
+    save_dir = Path(output_file).parent
+    save_dir.mkdir(parents=True, exist_ok=True)
+    with PdfPages(output_file) as pdf:
+        pdf.savefig(fig, pad_inches=savefig_pad)
+    plt.close(fig)
 
 
 
@@ -239,7 +242,6 @@ def determine_burn_in(convergence_stats_file):
 def get_measurement_data(df_or_series, burn_in_iteration):
 
     last_n = len(df_or_series) - burn_in_iteration
-    # print(last_n)
     df_last = df_or_series.iloc[-last_n:]
     avg = df_last.mean()
     std = df_last.std()
@@ -256,13 +258,7 @@ def get_measurement_data(df_or_series, burn_in_iteration):
     std_target_values_measurement = np.array([std[c] for c in target_cols], dtype=float)
     std_sample_values = np.array([std_sample_map[p] for p in pair_names], dtype=float)
 
-    return (
-        pair_names,
-        sample_values,
-        target_values_measurement,
-        std_target_values_measurement,
-        std_sample_values,
-    )
+    return pair_names, sample_values, target_values_measurement, std_target_values_measurement, std_sample_values
 
 
 
@@ -306,7 +302,7 @@ def create_scatter_plot(df_od_plot, output_file) :
 
     fig, ax = plt.subplots(figsize=scatterplot_size)
 
-    # Validation (background layer)
+    # Validation (background)
     ax.errorbar(
         df_od_plot['target validation'].values,
         df_od_plot['sample'].values,
@@ -316,7 +312,7 @@ def create_scatter_plot(df_od_plot, output_file) :
         **scatter_kwds,
     )
 
-    # Calibration (foreground layer)
+    # Calibration (foreground)
     ax.errorbar(
         df_od_plot['target measurement'].values,
         df_od_plot['sample'].values,
@@ -337,3 +333,44 @@ def create_scatter_plot(df_od_plot, output_file) :
     with PdfPages(output_path) as pdf:
         pdf.savefig(fig)
     plt.close(fig)
+
+
+
+
+def count_departures_per_time_bin(xml_path: str) -> pd.DataFrame:
+    # Handle gzipped or standard XML files
+    if str(xml_path).endswith(".gz"):
+        with gzip.open(xml_path, "rt") as f:
+            tree = ET.parse(f)
+    else:
+        tree = ET.parse(xml_path)
+    root = tree.getroot()
+
+    # Find all MultiRoundTrip elements and select the last one
+    multi_round_trips = root.findall(".//MultiRoundTrip")
+    if not multi_round_trips:
+        raise ValueError("No 'MultiRoundTrip' elements found in the XML.")
+    last_trip = multi_round_trips[-1]
+
+    # Initialize counts for 24 hourly bins
+    bin_counts = {i: 0 for i in range(24)}
+
+    # Parse RoundTrip states and extract bin numbers
+    for round_trip in last_trip.findall(".//RoundTrip"):
+        state_elem = round_trip.find("State")
+        if state_elem is not None and state_elem.text:
+            match = re.search(r"bins\[(.*?)\]", state_elem.text)
+            if match:
+                bins = match.group(1).split(",")
+                for b in bins:
+                    b = b.strip()
+                    if b.isdigit():
+                        b = int(b)
+                        if 0 <= b < 24:
+                            bin_counts[b] += 1
+
+    # Convert the dictionary to a DataFrame with ordered columns
+    df_bins = pd.DataFrame([bin_counts])
+    df_bins = df_bins[[i for i in range(24)]]
+
+    return df_bins
