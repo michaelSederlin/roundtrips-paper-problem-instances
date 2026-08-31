@@ -12,9 +12,9 @@ from plotting.common_parameters import (VALIDATION_COLOR, ESTIMATION_COLOR, form
     format_categorical_axis)
 from plotting.plotting_utilities import save_show
 
+
+# Settings
 scatter_kwds = dict(fmt='o', markersize=6, capsize=3)
-
-
 barplot_size = (6, 5)
 scatterplot_size = (5, 5)
 
