@@ -154,9 +154,9 @@ def plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, 
     panel is a grouped bar histogram over shared hourly duration bins, styled to
     match the other population bar plots (plot_bars)."""
     series = [("Calibration", est_durs, "steelblue"),
-              ("Measurement Data Set", meas_durs, MEASUREMENT_COLOR)]
+              ("Measurement", meas_durs, MEASUREMENT_COLOR)]
     if val_durs is not None:
-        series.append(("Validation Data Set", val_durs, VALIDATION_COLOR))
+        series.append(("Validation", val_durs, VALIDATION_COLOR))
 
     bins = np.arange(0, int(horizon) + 1)  # hourly duration bins over the horizon
     centers = bins[:-1] + 0.5
@@ -201,10 +201,10 @@ def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
     if val is not None:
         ax.bar(x, val.reindex(index, fill_value=0), width=bar_width,
                color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-               label="Validation Data Set")
+               label="Validation")
     ax.bar(x - bar_width, meas.reindex(index, fill_value=0), width=bar_width,
            color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-           label="Measurement Data Set")
+           label="Measurement")
     format_categorical_axis(ax, xlabel, ylabel, xticks=x, xticklabels=xticklabels)
     sort_legend_entries(ax, loc = legend_placement)
     save_show(fig, path, save=save, show=show, output_suffix=output_suffix)
@@ -415,8 +415,8 @@ def plot_activity_share_vs_opportunity(results_dir, data_dir, save_dir,
         # Ground-truth overlays: one point per location, same colors as the other
         # population plots. Skip a series when its data is missing for the activity.
         for gt_visits, color, gt_label in (
-            (meas_visits, MEASUREMENT_COLOR, "Measurement Data Set"),
-            (val_visits, VALIDATION_COLOR, "Validation Data Set"),
+            (meas_visits, MEASUREMENT_COLOR, "Measurement"),
+            (val_visits, VALIDATION_COLOR, "Validation"),
         ):
             gt = _ground_truth_share_vs_sigma(gt_visits, activity, opp_act)
             if gt is None:

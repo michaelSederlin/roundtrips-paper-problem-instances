@@ -77,10 +77,10 @@ def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
     if val is not None:
         ax.bar(x, val.reindex(index, fill_value=0), width=bar_width,
                color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-               label="Validation Data Set")
+               label="Validation")
     ax.bar(x - bar_width, meas.reindex(index, fill_value=0), width=bar_width,
            color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-           label="Measurement Data Set")
+           label="Measurement")
     format_categorical_axis(ax, xlabel, ylabel, xticks=x, xticklabels=xticklabels)
     sort_legend_entries(ax)
     save_show(fig, path, save=save, show=show, output_suffix=output_suffix)
