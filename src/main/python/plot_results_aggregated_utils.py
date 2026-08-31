@@ -7,14 +7,16 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 import xml.etree.ElementTree as ET
-from matplotlib.backends.backend_pdf import PdfPages
-from plotting.common_parameters import scatterplot_size, VALIDATION_COLOR, ESTIMATION_COLOR, format_axis, \
-    sort_legend_entries, legend_fontsize, barplot_size, MEASUREMENT_COLOR, bar_width, bar_alpha, bar_edgecolor, \
-    format_categorical_axis, savefig_pad
-
-
+from plotting.common_parameters import (VALIDATION_COLOR, ESTIMATION_COLOR, format_axis,
+    sort_legend_entries, legend_fontsize, MEASUREMENT_COLOR, bar_width, bar_alpha, bar_edgecolor,
+    format_categorical_axis)
+from plotting.plotting_utilities import save_show
 
 scatter_kwds = dict(fmt='o', markersize=6, capsize=3)
+
+
+barplot_size = (6, 5)
+scatterplot_size = (5, 5)
 
 
 
@@ -43,7 +45,7 @@ def plot_nStops_histogram(location_counts_file,measurement_states_file,validatio
     x = np.arange(len(calibration_data))
     labels = [str(i) for i in x]
 
-    fig, ax = plt.subplots(figsize=barplot_size)
+    fig, ax = plt.subplots(figsize=scatterplot_size)
 
     ax.bar(x - bar_width, measurement_data, width=bar_width,
            color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
@@ -65,12 +67,7 @@ def plot_nStops_histogram(location_counts_file,measurement_states_file,validatio
     sort_legend_entries(ax)
 
     # Output
-    save_dir = Path(output_file).parent
-    save_dir.mkdir(parents=True, exist_ok=True)
-    with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, pad_inches=savefig_pad)
-    plt.close(fig)
-
+    save_show(fig, Path(output_file), True, False, ".pdf")
 
 
 
@@ -172,11 +169,7 @@ def plot_departures_histogram(departures_file, measurement_states_file, validati
     sort_legend_entries(ax)
 
     # Output
-    save_dir = Path(output_file).parent
-    save_dir.mkdir(parents=True, exist_ok=True)
-    with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, pad_inches=savefig_pad)
-    plt.close(fig)
+    save_show(fig, Path(output_file), True, False, ".pdf")
 
 
 
@@ -327,13 +320,7 @@ def create_scatter_plot(df_od_plot, output_file) :
     format_axis(ax, 'Ground truth', 'Calibrated', equal_lims=True)
     ax.legend(fontsize=legend_fontsize)
 
-    # Output
-    output_path = Path(output_file)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    with PdfPages(output_path) as pdf:
-        pdf.savefig(fig)
-    plt.close(fig)
-
+    save_show(fig, Path(output_file), True, False, ".pdf")
 
 
 
