@@ -1,4 +1,4 @@
-"""Driver for the plotting scripts: merges the partition output of each finished
+"""Driver for the plotting scripts: merges the partition calibration of each finished
 scenario run and then produces the reproduction plots for it."""
 
 from pathlib import Path
@@ -76,7 +76,7 @@ def plot_scenario(scenario):
 
 
 if __name__ == "__main__":
-    scenario = Path("output/disaggregate-calibration")
+    scenario = Path("calibration/disaggregate-calibration")
     plot_scenario(scenario)
     print("SCRIPT FINISHED")
 

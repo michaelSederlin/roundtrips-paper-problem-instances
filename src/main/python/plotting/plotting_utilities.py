@@ -66,7 +66,7 @@ def stay_activity(stay):
 
 def departure_hours(rt, time_bin_size):
     """Departure hour-of-day of one RoundTrip, from <Departures> (calibration
-    output) or, failing that, <State> bins[...] (merged/measurement files).
+    calibration) or, failing that, <State> bins[...] (merged/measurement files).
     The raw values are bin indices (hour = index * time_bin_size); convert
     before binning so the histogram is correct for any time_bin_size."""
     raw = rt.findtext("Departures") or ""

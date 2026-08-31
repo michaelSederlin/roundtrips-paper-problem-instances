@@ -1,6 +1,5 @@
 from pathlib import Path
 import json
-
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -106,7 +105,7 @@ if __name__ == "__main__":
     from argparse import ArgumentParser
     parser = ArgumentParser() 
     parser.add_argument("--json-file", type = Path)
-    parser.add_argument("--income-output-path", type = Path)
-    parser.add_argument("--age-output-path", type = Path)
+    parser.add_argument("--income-calibration-path", type = Path)
+    parser.add_argument("--age-calibration-path", type = Path)
     args = parser.parse_args()
     main(args.json_file, args.age_output_path, args.income_output_path)

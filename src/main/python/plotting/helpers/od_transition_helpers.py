@@ -265,7 +265,7 @@ def extract_partitioned_od_stats(
 
 
 def summarize_partitioned_simulation_vs_truth(od_stats: dict, tru_od: pd.DataFrame, alpha: float) -> dict:
-    """Sibling to summarize_simulation_vs_truth() for the partition-aggregated
+    """Sibling to summarize_simulation_vs_truth() for the partition-aggregated_calibration
     OD estimate. Transition-probability std is NOT combined across
     partitions: probabilities are a nonlinear ratio of OD counts (row sums),
     so partition-level probability variances don't combine additively the way

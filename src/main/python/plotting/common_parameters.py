@@ -1,4 +1,3 @@
-
 from matplotlib import pyplot as plt
 
 figure_width = 6
