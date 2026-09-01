@@ -97,4 +97,3 @@ if __name__ == "__main__":
     output_file = BASE_OUT / "departures_histogram.pdf"
 
     plot_departures_histogram(log_file, measurement_file, validation_file, burn_in_iteration,output_file)
-

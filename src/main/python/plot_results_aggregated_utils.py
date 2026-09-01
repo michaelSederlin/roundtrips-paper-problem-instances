@@ -8,7 +8,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import xml.etree.ElementTree as ET
 from plotting.common_parameters import (VALIDATION_COLOR, ESTIMATION_COLOR, format_axis,
-    sort_legend_entries, legend_fontsize, MEASUREMENT_COLOR, bar_width, bar_alpha, bar_edgecolor,
+    sort_legend_entries, legend_fontsize, scatterplot_size, barplot_size, MEASUREMENT_COLOR, bar_width, bar_alpha, bar_edgecolor,
     format_categorical_axis)
 from plotting.plotting_utilities import save_show
 
@@ -47,24 +47,23 @@ def plot_nStops_histogram(location_counts_file,measurement_states_file,validatio
 
     fig, ax = plt.subplots(figsize=scatterplot_size)
 
+    ax.set_box_aspect(1)
+
     ax.bar(x - bar_width, measurement_data, width=bar_width,
            color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-           label="Measurement Data Set")
+           label="Measurement")
 
     ax.bar(x, validation_data, width=bar_width,
            color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-           label="Validation Data Set")
+           label="Validation")
 
     ax.bar(x + bar_width, calibration_data, width=bar_width,
            color=ESTIMATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
            label="Calibration")
 
-    format_categorical_axis(ax,
-                            xlabel="Number of Stops",
-                            ylabel="Frequency",
-                            xticks=x,
-                            xticklabels=labels)
-    sort_legend_entries(ax)
+    format_categorical_axis(ax, xlabel="Number of Stops", ylabel="Frequency", xticks=x, xticklabels=labels)
+    # sort_legend_entries(ax)
+    ax.legend(fontsize=legend_fontsize)
 
     # Output
     save_show(fig, Path(output_file), True, False, ".pdf")
@@ -151,11 +150,11 @@ def plot_departures_histogram(departures_file, measurement_states_file, validati
 
     ax.bar(x - bar_width, meas_row.values, width=bar_width,
            color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-           label="Measurement Data Set")
+           label="Measurement")
 
     ax.bar(x, val_row.values, width=bar_width,
            color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-           label="Validation Data Set")
+           label="Validation")
 
     ax.bar(x + bar_width, calibration_row.values, width=bar_width,
            color=ESTIMATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
@@ -166,7 +165,8 @@ def plot_departures_histogram(departures_file, measurement_states_file, validati
                             ylabel="Frequency",
                             xticks=x,
                             xticklabels=labels)
-    sort_legend_entries(ax)
+    # sort_legend_entries(ax)
+    ax.legend(fontsize=legend_fontsize)
 
     # Output
     save_show(fig, Path(output_file), True, False, ".pdf")
