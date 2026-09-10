@@ -1,0 +1,39 @@
+19:27:43.591 INFO  synthesis.SynthesisRunner - Starting partition 2 from thread pool-2-thread-3
+19:27:43.683 INFO  synthesis.SynthesisRunner - Partition 2: Loaded population of size 63
+19:27:43.794 INFO  synthesis.SynthesisRunner - Partition 2: Sampling activity locations for 63 persons
+19:27:43.855 INFO  synthesis.SynthesisRunner - Partition 2: Initializing runner...
+19:27:43.860 INFO  synthesis.SynthesisRunner - Partition 2: Adding weights:
+19:27:43.881 INFO  synthesis.SynthesisRunner - Partition 2: Starting MCMC
+19:27:44.127 INFO  synthesis.SynthesisRunner - Partition 2: iter=200000 logWeight=-4301.127432733963 (796813 it/s)
+19:27:55.363 INFO  synthesis.SynthesisRunner - Partition 2: iter=400000 logWeight=9347.526804336689 (34795 it/s)
+19:28:07.126 INFO  synthesis.SynthesisRunner - Partition 2: iter=600000 logWeight=9670.721935557323 (25796 it/s)
+19:28:19.266 INFO  synthesis.SynthesisRunner - Partition 2: iter=800000 logWeight=9792.14318559895 (22600 it/s)
+19:28:31.438 INFO  synthesis.SynthesisRunner - Partition 2: iter=1000000 logWeight=9822.459103991465 (21022 it/s)
+19:28:44.537 INFO  synthesis.SynthesisRunner - Partition 2: iter=1200000 logWeight=9918.345706827842 (19779 it/s)
+19:28:57.718 INFO  synthesis.SynthesisRunner - Partition 2: iter=1400000 logWeight=9943.566820233114 (18957 it/s)
+19:29:11.478 INFO  synthesis.SynthesisRunner - Partition 2: iter=1600000 logWeight=9969.079062554554 (18263 it/s)
+19:29:25.258 INFO  synthesis.SynthesisRunner - Partition 2: iter=1800000 logWeight=9964.155427494388 (17753 it/s)
+19:29:39.599 INFO  synthesis.SynthesisRunner - Partition 2: iter=2000000 logWeight=9939.902422646297 (17281 it/s)
+19:29:54.043 INFO  synthesis.SynthesisRunner - Partition 2: iter=2200000 logWeight=9974.24808912114 (16900 it/s)
+19:30:08.279 INFO  synthesis.SynthesisRunner - Partition 2: iter=2400000 logWeight=9966.551046884395 (16619 it/s)
+19:30:23.011 INFO  synthesis.SynthesisRunner - Partition 2: iter=2600000 logWeight=9959.72224593946 (16337 it/s)
+19:30:38.341 INFO  synthesis.SynthesisRunner - Partition 2: iter=2800000 logWeight=9970.571291323062 (16048 it/s)
+19:30:51.866 INFO  synthesis.SynthesisRunner - Partition 2: iter=3000000 logWeight=9981.712971015679 (15958 it/s)
+19:31:05.652 INFO  synthesis.SynthesisRunner - Partition 2: iter=3200000 logWeight=9976.669979942606 (15858 it/s)
+19:31:19.842 INFO  synthesis.SynthesisRunner - Partition 2: iter=3400000 logWeight=9949.317089556589 (15743 it/s)
+19:31:33.261 INFO  synthesis.SynthesisRunner - Partition 2: iter=3600000 logWeight=9951.801257648252 (15694 it/s)
+19:31:46.805 INFO  synthesis.SynthesisRunner - Partition 2: iter=3800000 logWeight=9988.085416849342 (15642 it/s)
+19:32:00.706 INFO  synthesis.SynthesisRunner - Partition 2: iter=4000000 logWeight=9978.369270940868 (15574 it/s)
+19:32:14.865 INFO  synthesis.SynthesisRunner - Partition 2: iter=4200000 logWeight=9983.500508192163 (15498 it/s)
+19:32:29.251 INFO  synthesis.SynthesisRunner - Partition 2: iter=4400000 logWeight=9922.77384183413 (15418 it/s)
+19:32:43.982 INFO  synthesis.SynthesisRunner - Partition 2: iter=4600000 logWeight=9997.082345966784 (15327 it/s)
+19:32:58.714 INFO  synthesis.SynthesisRunner - Partition 2: iter=4800000 logWeight=9972.035355171098 (15246 it/s)
+19:33:13.621 INFO  synthesis.SynthesisRunner - Partition 2: iter=5000000 logWeight=9991.035008311494 (15163 it/s)
+19:33:29.450 INFO  synthesis.SynthesisRunner - Partition 2: iter=5200000 logWeight=9970.81724099721 (15047 it/s)
+19:33:45.431 INFO  synthesis.SynthesisRunner - Partition 2: iter=5400000 logWeight=9958.151691030604 (14935 it/s)
+19:34:00.735 INFO  synthesis.SynthesisRunner - Partition 2: iter=5600000 logWeight=9959.02341101469 (14859 it/s)
+19:34:15.540 INFO  synthesis.SynthesisRunner - Partition 2: iter=5800000 logWeight=9987.240790991264 (14808 it/s)
+19:34:30.386 INFO  synthesis.SynthesisRunner - Partition 2: iter=6000000 logWeight=9966.564421693482 (14759 it/s)
+19:34:38.039 INFO  synthesis.SynthesisRunner - Partition 2: Wrote final state to file output/ProductionRun_1000/2/final_state.json
+19:34:38.040 INFO  synthesis.SynthesisRunner - Partition 2: Simulation finished. Plotting results ...
+19:34:38.041 INFO  synthesis.SynthesisRunner - Done!

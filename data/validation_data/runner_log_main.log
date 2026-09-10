@@ -1,0 +1,38 @@
+19:27:43.548 INFO  synthesis.SynthesisRunner - ===== Simulation setup =====
+19:27:43.564 INFO  synthesis.SynthesisRunner - Start time: 2026-08-27T19:27:43.563666016
+19:27:43.565 INFO  synthesis.SynthesisRunner - Maximum number of iterations 2000000:
+19:27:43.566 INFO  synthesis.SynthesisRunner - Message interval 200000:
+19:27:43.567 INFO  synthesis.SynthesisRunner - Target population size: 
+19:27:43.567 INFO  synthesis.SynthesisRunner - Base output dir:  output/ProductionRun_1000
+19:27:43.568 INFO  synthesis.SynthesisRunner - Preferences file: data/synthesis/preferences.xml
+19:27:43.569 INFO  synthesis.SynthesisRunner - Opportunities:    output/ProductionRun_1000/opportunity_weights.csv
+19:27:43.570 INFO  synthesis.SynthesisRunner - Available processors (numProc): 16
+19:27:43.571 INFO  synthesis.SynthesisRunner - Base partition size: 62, remainder: 8
+19:27:43.571 INFO  synthesis.SynthesisRunner - Population sizes per partition: [63, 63, 63, 63, 63, 63, 63, 63, 62, 62, 62, 62, 62, 62, 62, 62]
+19:27:43.573 INFO  synthesis.SynthesisRunner - Seeds per partition: [100, 149, 198, 247, 296, 345, 394, 443, 492, 541, 590, 639, 688, 737, 786, 835] (baseSeed=100)
+19:27:43.573 INFO  synthesis.SynthesisRunner - Grid size: 5x5
+19:27:43.574 INFO  synthesis.SynthesisRunner - Period length (h): 24.0
+19:27:43.575 INFO  synthesis.SynthesisRunner - Time bin size (h): 1.0
+19:27:43.576 INFO  synthesis.SynthesisRunner - Number of time bins: 24
+19:27:43.577 INFO  synthesis.SynthesisRunner - Work opening hours: (6.0, 18.0)
+19:27:43.577 INFO  synthesis.SynthesisRunner - EDUCATION opening hours: (7.0, 18.0)
+19:27:43.578 INFO  synthesis.SynthesisRunner - OTHER opening hours: (8.0, 20.0)
+19:27:43.579 INFO  synthesis.SynthesisRunner - Minimum home duration opening hours: 9.0
+19:27:43.580 INFO  synthesis.SynthesisRunner - Saved opportunity weights to: output/ProductionRun_1000/opportunity_weights.csv
+19:27:43.580 INFO  synthesis.SynthesisRunner - ============================
+19:29:57.672 INFO  synthesis.SynthesisRunner - Partition 11 finished!
+19:30:38.603 INFO  synthesis.SynthesisRunner - Partition 7 finished!
+19:30:44.055 INFO  synthesis.SynthesisRunner - Partition 10 finished!
+19:31:23.637 INFO  synthesis.SynthesisRunner - Partition 9 finished!
+19:33:47.038 INFO  synthesis.SynthesisRunner - Partition 15 finished!
+19:33:53.915 INFO  synthesis.SynthesisRunner - Partition 1 finished!
+19:34:10.443 INFO  synthesis.SynthesisRunner - Partition 13 finished!
+19:34:38.041 INFO  synthesis.SynthesisRunner - Partition 2 finished!
+19:35:34.835 INFO  synthesis.SynthesisRunner - Partition 6 finished!
+19:35:41.520 INFO  synthesis.SynthesisRunner - Partition 4 finished!
+19:37:07.802 INFO  synthesis.SynthesisRunner - Partition 5 finished!
+19:37:33.385 INFO  synthesis.SynthesisRunner - Partition 12 finished!
+19:37:35.163 INFO  synthesis.SynthesisRunner - Partition 3 finished!
+19:38:48.715 INFO  synthesis.SynthesisRunner - Partition 0 finished!
+19:42:33.104 INFO  synthesis.SynthesisRunner - Partition 14 finished!
+19:42:53.561 INFO  synthesis.SynthesisRunner - Partition 8 finished!

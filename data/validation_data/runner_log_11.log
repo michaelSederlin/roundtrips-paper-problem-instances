@@ -1,0 +1,20 @@
+19:27:43.618 INFO  synthesis.SynthesisRunner - Starting partition 11 from thread pool-2-thread-12
+19:27:43.662 INFO  synthesis.SynthesisRunner - Partition 11: Loaded population of size 62
+19:27:43.788 INFO  synthesis.SynthesisRunner - Partition 11: Sampling activity locations for 62 persons
+19:27:43.840 INFO  synthesis.SynthesisRunner - Partition 11: Initializing runner...
+19:27:43.860 INFO  synthesis.SynthesisRunner - Partition 11: Adding weights:
+19:27:43.881 INFO  synthesis.SynthesisRunner - Partition 11: Starting MCMC
+19:27:44.119 INFO  synthesis.SynthesisRunner - Partition 11: iter=200000 logWeight=-3840.121560964764 (796813 it/s)
+19:27:54.932 INFO  synthesis.SynthesisRunner - Partition 11: iter=400000 logWeight=8840.187622669731 (36153 it/s)
+19:28:06.997 INFO  synthesis.SynthesisRunner - Partition 11: iter=600000 logWeight=9422.900151697377 (25940 it/s)
+19:28:18.813 INFO  synthesis.SynthesisRunner - Partition 11: iter=800000 logWeight=9520.722730851583 (22892 it/s)
+19:28:31.091 INFO  synthesis.SynthesisRunner - Partition 11: iter=1000000 logWeight=9643.823363305095 (21176 it/s)
+19:28:44.171 INFO  synthesis.SynthesisRunner - Partition 11: iter=1200000 logWeight=9678.04054534244 (19899 it/s)
+19:28:56.920 INFO  synthesis.SynthesisRunner - Partition 11: iter=1400000 logWeight=9681.211993244644 (19164 it/s)
+19:29:10.358 INFO  synthesis.SynthesisRunner - Partition 11: iter=1600000 logWeight=9669.045373801233 (18499 it/s)
+19:29:23.917 INFO  synthesis.SynthesisRunner - Partition 11: iter=1800000 logWeight=9632.164302180832 (17991 it/s)
+19:29:37.650 INFO  synthesis.SynthesisRunner - Partition 11: iter=2000000 logWeight=9643.50983408661 (17577 it/s)
+19:29:51.743 INFO  synthesis.SynthesisRunner - Partition 11: iter=2200000 logWeight=9684.104672676167 (17204 it/s)
+19:29:57.670 INFO  synthesis.SynthesisRunner - Partition 11: Wrote final state to file output/ProductionRun_1000/11/final_state.json
+19:29:57.671 INFO  synthesis.SynthesisRunner - Partition 11: Simulation finished. Plotting results ...
+19:29:57.671 INFO  synthesis.SynthesisRunner - Done!
