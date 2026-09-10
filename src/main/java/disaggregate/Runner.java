@@ -137,8 +137,16 @@ public class Runner implements Callable<Integer> {
         }
         logger.info("Kernel respondents: {} of {}", finalCompleteRespondents.size(), population.size());
 
-        int nParts = (opts.max_processes > 0) ? opts.max_processes : Runtime.getRuntime().availableProcessors();
-        List<List<Person>> partitions = splitEvenly(completeAgents, nParts);
+            int nThreads = (opts.max_processes > 0) ? opts.max_processes : Runtime.getRuntime().availableProcessors();
+
+            int nParts = (opts.n_parts > 0) ? opts.n_parts : nThreads;
+            List<List<Person>> partitions = splitEvenly(completeAgents, nParts);
+            nParts = Math.min(nParts, partitions.size());
+            
+        logger.info("Execution settings: requested partitions={}, effective partitions={}, threads={}, seed={}, horizon={}, time bin size={}",
+            opts.n_parts, nParts, nThreads, opts.seed, opts.horizon, opts.time_bin_size);
+
+        // int nParts = (opts.max_processes > 0) ? opts.max_processes : Runtime.getRuntime().availableProcessors();
         logger.info("Split {} persons into {} partitions", completeAgents.size(), partitions.size());
 
         ExecutorService pool = Executors.newFixedThreadPool(nParts);

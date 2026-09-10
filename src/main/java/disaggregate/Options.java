@@ -16,7 +16,8 @@ public class Options {
     @Option(names = "--n-respondents") public Integer n_respondents;
 
     // --- Run config ---
-    @Option(names = "--max-processes", defaultValue = "-1") public int max_processes;
+    @Option(names = "--n-partitions", defaultValue = "1", description="The number of partitions to make of the population. <0 means off --> uses number of threads") public int n_parts;
+    @Option(names = "--max-processes", defaultValue = "1", description = "Number of threads to use in parallell. Capped by cpu_count.  if < 0 uses cpu_count") public int max_processes;
     @Option(names = "--max-number-of-iterations") public Integer max_number_of_iterations;
     @Option(names = "--seed", defaultValue = "1084") public long seed;
     @Option(names = "--time-bin-size", defaultValue = "1.0") public double time_bin_size;
