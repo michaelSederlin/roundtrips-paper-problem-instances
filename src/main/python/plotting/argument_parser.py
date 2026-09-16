@@ -40,7 +40,7 @@ class ArgumentParser:
         self.parser.add_argument("--window", default = 1, type = int)
         self.parser.add_argument("--time-bin-size-h", type = float, default = 1.0)
         self.parser.add_argument("--horizon", type = float, default = 24.0)
-        self.parser.add_argument("--output-suffix", type=str, default='.pdf')
+        self.parser.add_argument("--calibration-suffix", type=str, default='.pdf')
 
         preference_args = self.parser.add_argument_group()
         preference_args.add_argument("--states-xml", type = Path)

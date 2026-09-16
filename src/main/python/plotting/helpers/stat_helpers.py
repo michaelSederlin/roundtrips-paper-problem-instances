@@ -73,7 +73,7 @@ def jensenshannon(p, q, base=None, *, axis=0, keepdims=False):
     q : (N,) array_like
         right probability vector
     base : double, optional
-        the base of the logarithm used to compute the output
+        the base of the logarithm used to compute the calibration
         if not given, then the routine uses the default base of
         scipy.stats.entropy.
     axis : int, optional

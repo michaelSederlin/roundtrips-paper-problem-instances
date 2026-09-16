@@ -1,6 +1,6 @@
 """Population-level reproduction plots for a finished AMAL run: departure-hour
 structure, nStops, per-activity participation totals, and per-zone location
-visit counts, aggregated across all partitions and compared against
+visit counts, aggregated_calibration across all partitions and compared against
 measurement/validation ground truth.
 OD/transition-matrix reproduction lives in plot_od_and_transitions.py.
 """

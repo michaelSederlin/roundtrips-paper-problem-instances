@@ -1,6 +1,6 @@
 """
 Converts a states.xml written in the current (RENATE) format into the older AMAL format,
-so readers written against the old format can consume current synthesis output.
+so readers written against the old format can consume current synthesis calibration.
 
 The two formats differ in three places:
 
@@ -76,6 +76,6 @@ if __name__ == "__main__":
     from argparse import ArgumentParser
     parser = ArgumentParser() 
     parser.add_argument("--input", type=Path)
-    parser.add_argument("--output", type=Path)
+    parser.add_argument("--calibration", type=Path)
     args = parser.parse_args()
     convert_states_to_amal(args.input, args.output)
