@@ -10,7 +10,36 @@ import re
 from ast import literal_eval
 import numpy as np
 
-from .common_parameters import figure_width, savefig_pad, axes_rect
+from .common_parameters import (
+    figure_width,
+    savefig_pad, 
+    axes_rect, 
+    barplot_size, 
+    bar_width,
+    bar_alpha, 
+    bar_edgecolor, 
+    ESTIMATION_COLOR, VALIDATION_COLOR, MEASUREMENT_COLOR, format_categorical_axis, sort_legend_entries
+)
+
+
+def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
+              save: bool = True, show: bool = False, output_suffix: str = ".pdf", legend_placement: str = None):
+    x = np.arange(len(index))
+    fig, ax = plt.subplots(figsize=barplot_size)
+    ax.bar(x + bar_width, est.reindex(index, fill_value=0), width=bar_width,
+           color=ESTIMATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Calibration")
+    if val is not None:
+        ax.bar(x, val.reindex(index, fill_value=0), width=bar_width,
+               color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+               label="Validation")
+    ax.bar(x - bar_width, meas.reindex(index, fill_value=0), width=bar_width,
+           color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Measurement")
+    format_categorical_axis(ax, xlabel, ylabel, xticks=x, xticklabels=xticklabels)
+    sort_legend_entries(ax, loc = legend_placement)
+    save_show(fig, path, save=save, show=show, output_suffix=output_suffix)
+
 
 def fixed_width_bbox(fig, width=None, pad=None):
     """Bbox that is tight vertically but a fixed `width` horizontally, anchored

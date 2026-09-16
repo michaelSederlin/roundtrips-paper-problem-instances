@@ -10,8 +10,8 @@ from plotting.plot_age_bin_activity_durations import main as age_bins_main
 
 DATA_DIR = Path("data/survey")
 
-MEASUREMENT_STATES_XML = Path('data/measurement_data/partitions_merged/_final_states_merged.xml')
-VALIDATION_STATES_XML = Path('data/validation_data/partitions_merged/_final_states_merged.xml')
+MEASUREMENT_STATES_XML = Path('data/measurement_data/partitions_merged/_final_states_merged.xml.gz')
+VALIDATION_STATES_XML = Path('data/validation_data/partitions_merged/_final_states_merged.xml.gz')
 
 POPULATION_FILENAME = 'population.tsv'
 TARGET_FILENAME = 'population_merged.tsv'

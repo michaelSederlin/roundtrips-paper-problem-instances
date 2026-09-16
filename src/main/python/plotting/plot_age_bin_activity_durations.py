@@ -17,7 +17,8 @@ import pandas as pd
 
 from .helpers import ArgumentParser
 from .plotting_utilities import (stay_activity,
-                                 parse_states_xml as _parse_states_xml)
+                                 parse_states_xml as _parse_states_xml, 
+                                 plot_bars)
 from .helpers.od_transition_helpers import save_show
 from .common_parameters import (
     barplot_size, 
@@ -65,25 +66,6 @@ def parse_states(root, last=False):
             rows.append(row)
 
     return pd.DataFrame(rows)
-
-def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
-              save: bool = True, show: bool = False, output_suffix: str = ".pdf"):
-    """Shared bar styling from common_parameters."""
-    x = np.arange(len(index))
-    fig, ax = plt.subplots(figsize=barplot_size)
-    ax.bar(x + bar_width, est.reindex(index, fill_value=0), width=bar_width,
-           color=ESTIMATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-           label="Calibration")
-    if val is not None:
-        ax.bar(x, val.reindex(index, fill_value=0), width=bar_width,
-               color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-               label="Validation Data Set")
-    ax.bar(x - bar_width, meas.reindex(index, fill_value=0), width=bar_width,
-           color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-           label="Measurement Data Set")
-    format_categorical_axis(ax, xlabel, ylabel, xticks=x, xticklabels=xticklabels)
-    sort_legend_entries(ax)
-    save_show(fig, path, save=save, show=show, output_suffix=output_suffix)
 
 def _by_age_bin(df, cols: str | list[str], age_by_name, bins):
     """Mean of `col` per age bin, after averaging over iterations per agent."""
@@ -196,7 +178,8 @@ def main(results_dir: Path,
               _by_age_bin(meas, NON_HOME_ACTIVITIES, age_by_name, AGE_BINS),
               _by_age_bin(val, NON_HOME_ACTIVITIES, age_by_name, AGE_BINS) if val is not None else None,
               cats, "Age", "Away-from-Home Duration [h]", ticklabels,
-              save_dir / "08_age_duration_away_from_home.pdf", **save_kwds)
+              save_dir / "08_age_duration_away_from_home.pdf", legend_placement = "lower left",
+              **save_kwds)
 
 
     # total non-HOME duration per age bin
@@ -204,7 +187,8 @@ def main(results_dir: Path,
             _by_inc_bin(meas, NON_HOME_ACTIVITIES, inc_by_name, INC_BINS),
             _by_inc_bin(val, NON_HOME_ACTIVITIES, inc_by_name, INC_BINS) if val is not None else None,
             inc_cats, "Income [ksek]", "Away-from-Home Duration [h]", inc_ticklabels,  
-            save_dir / "09_inc_duration_away_from_home.pdf", **save_kwds)
+            save_dir / "09_inc_duration_away_from_home.pdf", legend_placement="lower left",
+            **save_kwds)
 
     plot_bars(_by_gender(est, NON_HOME_ACTIVITIES, gender_by_name), 
                 _by_gender(meas, NON_HOME_ACTIVITIES, gender_by_name),

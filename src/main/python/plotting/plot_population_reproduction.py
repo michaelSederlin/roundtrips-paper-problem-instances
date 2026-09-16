@@ -26,7 +26,8 @@ from .common_parameters import (barplot_size, scatterplot_size, format_axis,
                                 legend_fontsize)
 from .helpers.partition_discovery import discover_partition_dirs, states_xml_path
 from .plotting_utilities import (process_states, stay_activity, departure_hours,
-                                 parse_states_xml as _parse_states_xml)
+                                 parse_states_xml as _parse_states_xml, 
+                                 plot_bars)
 
 MAX_NSTOPS = 10
 LOCATION_ACTIVITIES = ["HOME", "WORK", "EDUCATION", "OTHER"]
@@ -154,9 +155,9 @@ def plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, 
     panel is a grouped bar histogram over shared hourly duration bins, styled to
     match the other population bar plots (plot_bars)."""
     series = [("Calibration", est_durs, "steelblue"),
-              ("Measurement Data Set", meas_durs, MEASUREMENT_COLOR)]
+              ("Measurement", meas_durs, MEASUREMENT_COLOR)]
     if val_durs is not None:
-        series.append(("Validation Data Set", val_durs, VALIDATION_COLOR))
+        series.append(("Validation", val_durs, VALIDATION_COLOR))
 
     bins = np.arange(0, int(horizon) + 1)  # hourly duration bins over the horizon
     centers = bins[:-1] + 0.5
@@ -190,24 +191,6 @@ def plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, 
         save_show(fig, save_dir / f"06_activity_durations_{act}.pdf",
                   save=save, show=show, output_suffix=output_suffix)
 
-
-def plot_bars(est, meas, val, index, xlabel, ylabel, xticklabels, path,
-              save: bool = True, show: bool = False, output_suffix: str = ".pdf", legend_placement: str = None):
-    x = np.arange(len(index))
-    fig, ax = plt.subplots(figsize=barplot_size)
-    ax.bar(x + bar_width, est.reindex(index, fill_value=0), width=bar_width,
-           color=ESTIMATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-           label="Calibration")
-    if val is not None:
-        ax.bar(x, val.reindex(index, fill_value=0), width=bar_width,
-               color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-               label="Validation Data Set")
-    ax.bar(x - bar_width, meas.reindex(index, fill_value=0), width=bar_width,
-           color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
-           label="Measurement Data Set")
-    format_categorical_axis(ax, xlabel, ylabel, xticks=x, xticklabels=xticklabels)
-    sort_legend_entries(ax, loc = legend_placement)
-    save_show(fig, path, save=save, show=show, output_suffix=output_suffix)
 
 
 def _zone_counts(datasets, act):
@@ -415,8 +398,8 @@ def plot_activity_share_vs_opportunity(results_dir, data_dir, save_dir,
         # Ground-truth overlays: one point per location, same colors as the other
         # population plots. Skip a series when its data is missing for the activity.
         for gt_visits, color, gt_label in (
-            (meas_visits, MEASUREMENT_COLOR, "Measurement Data Set"),
-            (val_visits, VALIDATION_COLOR, "Validation Data Set"),
+            (meas_visits, MEASUREMENT_COLOR, "Measurement"),
+            (val_visits, VALIDATION_COLOR, "Validation"),
         ):
             gt = _ground_truth_share_vs_sigma(gt_visits, activity, opp_act)
             if gt is None:
@@ -483,7 +466,7 @@ def main(results_dir: Path,
                   + sorted(set(est["participation"].index) - set(LOCATION_ACTIVITIES)))
     plot_bars(est["participation"], meas["participation"], v("participation"), activities,
               "Activity", "Number of Activity Episodes", activities,
-              legend_placement="upper left",
+              legend_placement="lower left",
               path = save_dir / "04_activity_participation.pdf", **save_kwds)
 
     plot_location_reproduction(est["visits"], meas["visits"], v("visits"), save_dir, **save_kwds)

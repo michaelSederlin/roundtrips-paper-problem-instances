@@ -20,7 +20,7 @@ bar_width = 0.26
 bar_alpha = 0.75
 bar_edgecolor = "black"
 
-LEGEND_ORDER = ['Measurement Data Set', 'Validation Data Set', 'Calibration']
+LEGEND_ORDER = ['Measurement', 'Validation', 'Calibration']
 
 def format_axis(ax: plt.Axes, xlabel: str, ylabel: str, equal_lims: bool = False):
     xlabel, ylabel = xlabel.capitalize(), ylabel.capitalize()
