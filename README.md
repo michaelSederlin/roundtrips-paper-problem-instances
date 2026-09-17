@@ -52,7 +52,7 @@ modules under `src/main/python/plotting/`:
 
 ```bash
 PY=/opt/homebrew/Caskroom/miniconda/base/envs/renate/bin/python
-DATA_DIR=output/measurement_data
+DATA_DIR=calibration/measurement_data
 
 "$PY" -m src.main.python.plotting.merge_population_csv \
   --results-dir "$DATA_DIR" --population-filename population.csv \

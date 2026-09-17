@@ -1,0 +1,363 @@
+import gzip
+import math
+import re
+from collections import defaultdict
+from pathlib import Path
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+import xml.etree.ElementTree as ET
+from plotting.common_parameters import (VALIDATION_COLOR, ESTIMATION_COLOR, format_axis,
+    sort_legend_entries, legend_fontsize, scatterplot_size, barplot_size, MEASUREMENT_COLOR, bar_width, bar_alpha, bar_edgecolor,
+    format_categorical_axis)
+from plotting.plotting_utilities import save_show
+
+
+# Settings
+scatter_kwds = dict(fmt='o', markersize=6, capsize=3)
+barplot_size = (6, 5)
+scatterplot_size = (5, 5)
+
+
+
+def plot_nStops_histogram(location_counts_file,measurement_states_file,validation_states_file,burn_in_iteration, output_file):
+
+    # Get data
+    df_locationCounts = pd.read_csv(location_counts_file, header=None, sep="\t")
+    measurement_data = np.array(count_nStops(measurement_states_file))
+    validation_data = np.array(count_nStops(validation_states_file))
+
+    # Avg over stable iteratrion
+    last_n = len(df_locationCounts) - burn_in_iteration
+    calibration_data = df_locationCounts.tail(last_n).mean(axis=0).to_numpy()
+
+    # Align length
+    max_len = len(calibration_data)
+    measurement_data = np.pad(measurement_data,(0, max(0, max_len - len(measurement_data))),'constant')[:max_len]
+    validation_data = np.pad(validation_data,(0, max(0, max_len - len(validation_data))),'constant')[:max_len]
+
+    # upper bound x-axis
+    calibration_data = calibration_data[:11]
+    measurement_data = measurement_data[:11]
+    validation_data = validation_data[:11]
+
+    # Plot
+    x = np.arange(len(calibration_data))
+    labels = [str(i) for i in x]
+
+    fig, ax = plt.subplots(figsize=scatterplot_size)
+
+    ax.set_box_aspect(1)
+
+    ax.bar(x - bar_width, measurement_data, width=bar_width,
+           color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Measurement")
+
+    ax.bar(x, validation_data, width=bar_width,
+           color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Validation")
+
+    ax.bar(x + bar_width, calibration_data, width=bar_width,
+           color=ESTIMATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Calibration")
+
+    format_categorical_axis(ax, xlabel="Number of Stops", ylabel="Frequency", xticks=x, xticklabels=labels)
+    # sort_legend_entries(ax)
+    ax.legend(fontsize=legend_fontsize)
+
+    # Output
+    save_show(fig, Path(output_file), True, False, ".pdf")
+
+
+
+def plot_matrix(odTarget_file, od_validation_file, burn_in_iteration, output_file, ddTarget):
+
+    # Get data
+    df_odtarget = pd.read_csv(odTarget_file, sep="\t")
+    (pair_names, sample_values, target_values_measurement, std_target_values_measurement,
+     std_sample_values) = get_measurement_data(df_odtarget, burn_in_iteration)
+    target_values_validation = get_validation_data(od_validation_file, pair_names, ddTarget=ddTarget)
+
+    # Prepare data
+    df_od_plot = pd.DataFrame(
+        {
+            "sample": sample_values,
+            "target measurement": target_values_measurement,
+            "target validation": target_values_validation,
+        },
+        index=pair_names,
+    )
+
+    # Plot
+    create_scatter_plot(df_od_plot, output_file)
+
+
+
+def plot_locations(home_target_dfs,validation_file,burn_in_iteration,output_file):
+
+    # Get data
+    df_validation = pd.read_csv(validation_file, sep=';', header=0, index_col=0)
+    df_validation = df_validation.apply(pd.to_numeric, errors='coerce').fillna(0.0)
+
+    # Merge all groups
+    all_samples, all_meas, all_val, all_pairs = [], [], [], []
+
+    for group_name, df_group in home_target_dfs.items():
+        (pair_names, sample_values, target_meas,
+         _, _) = get_measurement_data(df_group, burn_in_iteration)
+
+        target_val = np.array([
+            float(df_validation.loc[group_name, p])
+            if group_name in df_validation.index and p in df_validation.columns
+            else 0.0
+            for p in pair_names
+        ], dtype=float)
+
+        all_samples.extend(sample_values)
+        all_meas.extend(target_meas)
+        all_val.extend(target_val)
+        all_pairs.extend(f"{group_name}_{p}" for p in pair_names)
+
+    df_plot = pd.DataFrame({
+        "sample": all_samples,
+        "target measurement": all_meas,
+        "target validation": all_val,
+    }, index=all_pairs)
+
+    # Plot
+    create_scatter_plot(df_plot, output_file)
+
+
+
+def plot_departures_histogram(departures_file, measurement_states_file, validation_states_file, burn_in_iteration, output_file):
+
+    # Get data
+    df_locationCounts = pd.read_csv(departures_file, header=None, sep="\t")
+    df_measurement = count_departures_per_time_bin(measurement_states_file)
+    df_validation = count_departures_per_time_bin(validation_states_file)
+
+    # Prepare data
+    last_n = len(df_locationCounts) - burn_in_iteration
+    calibration_row = df_locationCounts.tail(last_n).mean(axis=0)
+    meas_row = df_measurement.iloc[0]
+    val_row = df_validation.iloc[0]
+
+    # Plot
+    x = np.arange(len(calibration_row))
+    labels = [str(i) if i % 2 == 0 else "" for i in x]
+
+    fig, ax = plt.subplots(figsize=barplot_size)
+
+    ax.bar(x - bar_width, meas_row.values, width=bar_width,
+           color=MEASUREMENT_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Measurement")
+
+    ax.bar(x, val_row.values, width=bar_width,
+           color=VALIDATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Validation")
+
+    ax.bar(x + bar_width, calibration_row.values, width=bar_width,
+           color=ESTIMATION_COLOR, alpha=bar_alpha, edgecolor=bar_edgecolor,
+           label="Calibration")
+
+    format_categorical_axis(ax,
+                            xlabel="Hour",
+                            ylabel="Frequency",
+                            xticks=x,
+                            xticklabels=labels)
+    # sort_legend_entries(ax)
+    ax.legend(fontsize=legend_fontsize)
+
+    # Output
+    save_show(fig, Path(output_file), True, False, ".pdf")
+
+
+
+
+############################ Helper ############################
+
+def count_nStops(xml_path):
+    # Parse XML (supports .gz)
+    if str(xml_path).endswith(".gz"):
+        with gzip.open(xml_path, "rt") as f:
+            tree = ET.parse(f)
+    else:
+        tree = ET.parse(xml_path)
+    root = tree.getroot()
+
+    # Use the last MultiRoundTrip
+    multi_round_trips = root.findall(".//MultiRoundTrip")
+    if not multi_round_trips:
+        return []
+    last_trip = multi_round_trips[-1]
+
+    hist = defaultdict(int)
+    pattern_node = re.compile(r"\([^)]*\)\[[^\]]*\]")
+
+    for round_trip in last_trip.findall(".//RoundTrip"):
+        state_elem = round_trip.find("State")
+        if state_elem is None:
+            node_count = 0
+        else:
+            state_text = "".join(state_elem.itertext()).strip()
+            start = state_text.find("nodes[")
+            node_count = 0
+            if start != -1:
+                after = state_text[start + len("nodes["):]
+                end_bins = after.find("],bins")
+                end_bracket = after.find("]")
+                if end_bins != -1:
+                    nodes_blob = after[:end_bins]
+                elif end_bracket != -1:
+                    nodes_blob = after[:end_bracket]
+                else:
+                    nodes_blob = ""
+                node_count = len(pattern_node.findall(nodes_blob))
+
+        hist[node_count] += 1
+
+    max_nodes = max(hist.keys(), default=0)
+    counts = [0] * (max_nodes + 1)
+    for k, v in hist.items():
+        counts[k] = v
+    return counts
+
+
+def determine_burn_in(convergence_stats_file):
+    df_convergence_stats = pd.read_csv(convergence_stats_file, sep="\t")
+    last_row = df_convergence_stats.sort_values('iteration').iloc[-1]
+    msg_interval = 5000
+    burn_in_iteration = math.ceil(last_row['burnInIteration'] / msg_interval)
+    return burn_in_iteration
+
+
+
+def get_measurement_data(df_or_series, burn_in_iteration):
+
+    last_n = len(df_or_series) - burn_in_iteration
+    df_last = df_or_series.iloc[-last_n:]
+    avg = df_last.mean()
+    std = df_last.std()
+
+    target_cols = [c for c in avg.index if c.endswith("_target")]
+    pair_names = [c[:-7] for c in target_cols]
+
+    sample_map = {c[:-7]: avg[c] for c in avg.index if c.endswith("_sample")}
+    std_sample_map = {c[:-7]: std[c] for c in std.index if c.endswith("_sample")}
+
+    target_values_measurement = np.array([avg[c] for c in target_cols], dtype=float)
+    sample_values = np.array([sample_map[p] for p in pair_names], dtype=float)
+
+    std_target_values_measurement = np.array([std[c] for c in target_cols], dtype=float)
+    std_sample_values = np.array([std_sample_map[p] for p in pair_names], dtype=float)
+
+    return pair_names, sample_values, target_values_measurement, std_target_values_measurement, std_sample_values
+
+
+
+
+def get_validation_data(file_path, pair_names, ddTarget):
+
+    df_validation_matrix = pd.read_csv(file_path, sep=";", header=0, index_col=0)
+    df_validation_matrix = df_validation_matrix.apply(
+        pd.to_numeric, errors="coerce"
+    ).fillna(0.0)
+
+    # Flatten validation matrix to match keys like "origin->destination"
+    validation_matrix_dict = {}
+    for origin in df_validation_matrix.index:
+        for destination in df_validation_matrix.columns:
+            validation_matrix_dict[f"{origin}->{destination}"] = float(
+                df_validation_matrix.loc[origin, destination]
+            )
+
+    target_values_validation = []
+    for p in pair_names:
+        if ddTarget:
+            # Match ['dur13', 'dep6'] and '13'-'6'
+            parts = p.split("-")
+            origin = parts[0].replace("dur", "")
+            destination = parts[1].replace("dep", "")
+            dict_key = f"{origin}->{destination}"
+        else:
+            # Direct match for od and location
+            dict_key = p
+
+        val = validation_matrix_dict.get(dict_key, 0.0)
+        target_values_validation.append(val)
+
+    return np.array(target_values_validation, dtype=float)
+
+
+
+
+def create_scatter_plot(df_od_plot, output_file) :
+
+    fig, ax = plt.subplots(figsize=scatterplot_size)
+
+    # Validation (background)
+    ax.errorbar(
+        df_od_plot['target validation'].values,
+        df_od_plot['sample'].values,
+        color=VALIDATION_COLOR,
+        alpha=0.6,
+        label='Validation',
+        **scatter_kwds,
+    )
+
+    # Calibration (foreground)
+    ax.errorbar(
+        df_od_plot['target measurement'].values,
+        df_od_plot['sample'].values,
+        markerfacecolor='none',
+        markeredgecolor=ESTIMATION_COLOR,
+        color='none',
+        ecolor='gray',
+        label='Calibration',
+        **scatter_kwds,
+    )
+
+    format_axis(ax, 'Ground truth', 'Calibrated', equal_lims=True)
+    ax.legend(fontsize=legend_fontsize)
+
+    save_show(fig, Path(output_file), True, False, ".pdf")
+
+
+
+def count_departures_per_time_bin(xml_path: str) -> pd.DataFrame:
+    # Handle gzipped or standard XML files
+    if str(xml_path).endswith(".gz"):
+        with gzip.open(xml_path, "rt") as f:
+            tree = ET.parse(f)
+    else:
+        tree = ET.parse(xml_path)
+    root = tree.getroot()
+
+    # Find all MultiRoundTrip elements and select the last one
+    multi_round_trips = root.findall(".//MultiRoundTrip")
+    if not multi_round_trips:
+        raise ValueError("No 'MultiRoundTrip' elements found in the XML.")
+    last_trip = multi_round_trips[-1]
+
+    # Initialize counts for 24 hourly bins
+    bin_counts = {i: 0 for i in range(24)}
+
+    # Parse RoundTrip states and extract bin numbers
+    for round_trip in last_trip.findall(".//RoundTrip"):
+        state_elem = round_trip.find("State")
+        if state_elem is not None and state_elem.text:
+            match = re.search(r"bins\[(.*?)\]", state_elem.text)
+            if match:
+                bins = match.group(1).split(",")
+                for b in bins:
+                    b = b.strip()
+                    if b.isdigit():
+                        b = int(b)
+                        if 0 <= b < 24:
+                            bin_counts[b] += 1
+
+    # Convert the dictionary to a DataFrame with ordered columns
+    df_bins = pd.DataFrame([bin_counts])
+    df_bins = df_bins[[i for i in range(24)]]
+
+    return df_bins

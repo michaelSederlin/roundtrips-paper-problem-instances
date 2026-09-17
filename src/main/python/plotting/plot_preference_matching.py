@@ -33,9 +33,9 @@ def get_last_n_iterations(df, n, anchor_index=None, include_anchor=True):
 def main(results_dir: Path, save_dir: Path, states_xml: None | Path = None, population_csv: None | Path = None, window: int = 10, save: bool = True, show: bool = False):
 
     if results_dir is None:
-        results_dir = Path("./output/ProductionRun_N1000M1000/0/")
+        results_dir = Path("./calibration/ProductionRun_N1000M1000/0/")
     if save_dir is None:
-        save_dir = Path("./output/ProductionRun_N1000M1000/0/plots/")
+        save_dir = Path("./calibration/ProductionRun_N1000M1000/0/plots/")
     # if args.show is False:
     #     args.show = True
     if population_csv is None:
