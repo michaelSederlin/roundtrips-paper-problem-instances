@@ -192,6 +192,7 @@ def plot_marginal_activity_durations(est_durs, meas_durs, val_durs, activities, 
                   save=save, show=show, output_suffix=output_suffix)
 
 
+
 def _zone_counts(datasets, act):
     """Visit counts per (row, col) zone for one activity, aligned across
     `datasets` on the union of zones, missing entries filled with 0."""

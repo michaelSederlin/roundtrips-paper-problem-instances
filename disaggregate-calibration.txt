@@ -11,6 +11,9 @@
 ### === === RUN CONFIG ===  ===
 ### ===========================
 
+--n-partitions 32
+--max-processes 16
+
 --seed 1084
 --time-bin-size 1
 --horizon 24

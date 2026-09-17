@@ -33,14 +33,14 @@ def plot_scenario(scenario):
     save_dir = results_dir / 'new_plots'
     save_dir.mkdir(parents=True, exist_ok=True)
 
-    # population_merge_main(results_dir=results_dir,
-    #                       population_filename=POPULATION_FILENAME,
-    #                       target_filename=TARGET_FILENAME)
+    population_merge_main(results_dir=results_dir,
+                          population_filename=POPULATION_FILENAME,
+                          target_filename=TARGET_FILENAME)
     
-    # states_merge_main(results_dir=results_dir,
-    #                   population_filename=POPULATION_FILENAME,
-    #                   convergence_stats_filename=CONVERGENCE_STATS_FILENAME,
-    #                   window=WINDOW)
+    states_merge_main(results_dir=results_dir,
+                      population_filename=POPULATION_FILENAME,
+                      convergence_stats_filename=CONVERGENCE_STATS_FILENAME,
+                      window=WINDOW)
 
 
     population_reproduction_main(results_dir=results_dir,
@@ -76,7 +76,8 @@ def plot_scenario(scenario):
 
 
 if __name__ == "__main__":
-    scenario = Path("output/disaggregate-calibration")
+    # scenario = Path("output/disaggregate-calibration")
+    scenario = Path("output/new-results")
     plot_scenario(scenario)
     print("SCRIPT FINISHED")
 

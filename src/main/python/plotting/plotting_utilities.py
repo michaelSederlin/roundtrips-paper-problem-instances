@@ -51,7 +51,7 @@ def fixed_width_bbox(fig, width=None, pad=None):
     """
     width = figure_width if width is None else width
     pad = savefig_pad if pad is None else pad
-    raw = fig.get_tightbbox(fig.canvas.get_renderer()).padded(pad)
+    raw = fig.get_tightbbox().padded(pad)
     axes = fig.get_axes()
     if not axes:
         return raw
@@ -68,8 +68,7 @@ def save_show(fig, path: Path, save: bool = True, show: bool = False,
               output_suffix: str = ".pdf"):
     if save:
         fig.canvas.draw()          # required before get_tightbbox
-        fig.savefig(path.with_suffix(output_suffix), dpi=300,
-                    bbox_inches=fixed_width_bbox(fig))
+        fig.savefig(path.with_suffix(output_suffix), dpi=300)
     if show:
         plt.show()
     plt.close(fig)

@@ -109,7 +109,9 @@ def main(results_dir: Path,
 
     merged = results_dir / 'partitions_merged'
     pop = pd.read_csv(merged / 'population_merged.tsv', sep='\t')
-    pop['acts'] = pop['legs'].apply(lambda l: {d['destinationActivity'] for d in literal_eval(l)})
+    pop['acts'] = pop['legs'].apply(
+        lambda l: {d['destinationActivity'] for d in literal_eval(l)} if pd.notna(l) else set()
+    )
     idx2name = pop.set_index(pop['idx'].astype(str))['name'].to_dict()
 
     age_by_name = pop.set_index('name')['age'].to_dict()

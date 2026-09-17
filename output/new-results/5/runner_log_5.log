@@ -1,0 +1,27 @@
+07:33:09.082 INFO  disaggregate.Runner - Starting partition 5 (32 agents) on thread pool-2-thread-6
+07:33:09.482 INFO  disaggregate.utils.LoadOpportunityWeights - Loading opportunity weights from data/survey/opportunity_weights.csv
+07:33:09.530 INFO  disaggregate.utils.LoadOpportunityWeights - Loaded opportunity weights for 25 zones.
+07:33:09.534 INFO  disaggregate.utils.LoadOpportunityWeights - Loaded opportunity weights for 100 nodes.
+07:33:09.542 INFO  disaggregate.utils.LoadOpportunityWeights - Skipped activities: HOME=0/25 (0.00%), WORK=0/25 (0.00%), EDUCATION=0/25 (0.00%), OTHER=0/25 (0.00%)
+07:33:10.211 INFO  disaggregate.Runner - Partition 5 warm-started from data/survey/priorState.json (global offset 160)
+07:33:10.216 INFO  disaggregate.Runner - 	Restricting to a single (highest-opportunity) node per round trip for: [HOME, WORK, EDUCATION]
+07:33:10.217 INFO  disaggregate.Runner - Kernel construction: traveler(lAge=3.0, lInc=60.0, eta=-1.0) | nStops=ON(bw=1.0) | scheduleOverlap(bw=ON(bw=1.0))
+07:33:10.259 INFO  disaggregate.weights.StrictlyEnforceCorrectHomeLocationWeight - Initialized home location constraint weights for 32 roundtrips
+07:33:10.266 INFO  disaggregate.Runner - 	Added StrictlyEnforeCorrectHomeLocationWeight as individualWeight
+07:33:10.267 INFO  disaggregate.Runner - Geometric mean staying weight added
+07:33:10.279 INFO  disaggregate.weights.MovementWeight - Using raw counts
+07:33:10.330 INFO  disaggregate.Runner - Geometric Mean Movement weight added
+07:33:10.366 INFO  disaggregate.Runner - Kernel weights added
+07:33:10.370 INFO  disaggregate.Runner - Partition 5: Starting MCMC
+07:33:10.534 INFO  common.ProgressLogger - 5 iter=10000 logWeight=-771.5637425350553 logWeightDiff=-Infinity   (60606 it/s)
+07:33:12.603 INFO  common.ProgressLogger - 5 iter=20000 logWeight=-563.0834714236371 logWeightDiff=-208.48027111141823   (8953 it/s)
+07:33:14.121 INFO  common.ProgressLogger - 5 iter=30000 logWeight=-590.8906970561177 logWeightDiff=27.807225632480595   (7996 it/s)
+07:33:15.245 INFO  common.ProgressLogger - 5 iter=40000 logWeight=-548.8122604292511 logWeightDiff=-42.07843662686662   (8203 it/s)
+07:33:16.296 INFO  common.ProgressLogger - 5 iter=50000 logWeight=-541.9197067722868 logWeightDiff=-6.89255365696431   (8437 it/s)
+07:33:17.567 INFO  common.ProgressLogger - 5 iter=60000 logWeight=-524.30237805741 logWeightDiff=-17.61732871487675   (8337 it/s)
+07:33:19.015 INFO  common.ProgressLogger - 5 iter=70000 logWeight=-511.08508208639984 logWeightDiff=-13.217295971010174   (8096 it/s)
+07:33:20.691 INFO  common.ProgressLogger - 5 iter=80000 logWeight=-525.7389064213291 logWeightDiff=14.653824334929311   (7751 it/s)
+07:33:22.223 INFO  common.ProgressLogger - 5 iter=90000 logWeight=-517.6052277329655 logWeightDiff=-8.133678688363602   (7593 it/s)
+07:33:23.601 INFO  common.ProgressLogger - 5 iter=100000 logWeight=-523.7835629032204 logWeightDiff=6.178335170254854   (7557 it/s)
+07:33:25.211 INFO  common.ProgressLogger - 5 iter=110000 logWeight=-528.9906780526055 logWeightDiff=5.2071151493851175   (7411 it/s)
+07:33:26.298 INFO  se.vti.utils.misc.metropolishastings.terminationcriteria.CombinedAnyTerminationCriterion - Termination triggered by criterion: 
