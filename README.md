@@ -84,14 +84,8 @@ This step tries to recover the population using only the survey, without knowing
 
 ## A note on splitting the work into pieces
 
-Population creation and disaggregate calibration each split the population into separate
-pieces (partitions) and run each piece on its own, often at the same time on different
-processor cores. This is only correct
-because every person is handled completely on their own — one person's trips never
-depend on another person's trips. Splitting the population into pieces, running each
-piece separately, and joining the results back together therefore gives the exact same
-answer as running everyone together in one piece. The number of pieces is set in the
-arguments file and does not change the results, only how fast the run finishes.
+Population creation and disaggregate calibration each split the population into separate pieces (partitions) and run each piece on its own, often at the same time on different processor cores. This is only correct because every person is handled completely on their own — one person's trips never depend on another person's trips. 
+Splitting the population into pieces, running each piece separately, and joining the results back together therefore gives the exact same answer as running everyone together in one piece. The number of pieces is set in the arguments file and does not change the results, only how fast the run finishes.
 
 ## Technical notes
 
