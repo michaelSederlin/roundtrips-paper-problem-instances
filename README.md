@@ -1,18 +1,19 @@
-# roundtrips-paper-problem-instances
+# Roundtrips Problem Instances
+
+## Generic probabilistic spatiotemporal transport model
+
+**Gunnar Flötteröd**
+_Linköping University; Swedish National Road and Transport Research Institute_
+
+**Franz-Xaver Rupprecht**
+_BOKU University_
+
+**Michael Sederlin**
+_Linköping University; Swedish National Road and Transport Research Institute_
 
 
-Enhetsnamn	TAL-Z4G4-2
-Fullständigt enhetsnamn	TAL-Z4G4-2.vti.se
-Processor	Intel(R) Xeon(R) W-2245 CPU @ 3.90GHz (3.91 GHz)
-Installerat RAM-minne	288 GB (288 GB går att använda)
-Enhets-ID	C2ADDA2A-B5BF-435F-B9B8-56DE1C0FC323
-Produkt-ID	00391-70000-00000-AA560
-Systemtyp	64-bitars operativsystem, x64-baserad processor
-Penna och pekskärm	Penn- eller tryckinmatning är inte tillgängligt för den här bildskärmen
 
-
-
-Problem instances for the roundtrips paper. **Synthesis** simulates a ground-truth
+**Synthesis** simulates a ground-truth
 population on a grid world; **survey generation** turns it into a survey that looks like
 observed travel data; **disaggregate calibration** tries to recover the population from
 that survey alone.
