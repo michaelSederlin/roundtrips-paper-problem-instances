@@ -1,6 +1,3 @@
-"""Driver for the plotting scripts: merges the partition calibration of each finished
-scenario run and then produces the reproduction plots for it."""
-
 from pathlib import Path
 from plotting.merge_population_csv import main as population_merge_main
 from plotting.merge_states_xml import main as states_merge_main
@@ -30,7 +27,7 @@ def plot_scenario(scenario):
         print("Results dir doesn't exist")
         raise FileNotFoundError("Results directory doesn't exist!")
     
-    save_dir = results_dir / 'test_plots'
+    save_dir = results_dir / 'plots'
     save_dir.mkdir(parents=True, exist_ok=True)
 
     population_merge_main(results_dir=results_dir,
@@ -77,7 +74,7 @@ def plot_scenario(scenario):
 
 if __name__ == "__main__":
     # scenario = Path("calibration/disaggregate-calibration")
-    scenario = Path("output/new-results")
+    scenario = Path("output/disaggregate-calibration")
     plot_scenario(scenario)
     print("SCRIPT FINISHED")
 
