@@ -2,7 +2,7 @@
 # AMAL arguments estimation (ParallellAmalRunner / renate.cases.RunnerOptions)
 # =====================================================================================
 
---name disaggregate-calibration-no-gender
+--name disaggregate-calibration
 --scenario-dir data/survey
 --output-dir output/
 --warm-start-file data/survey/priorState.json 
@@ -10,6 +10,9 @@
 ### ===========================
 ### === === RUN CONFIG ===  ===
 ### ===========================
+
+--n-partitions 32
+--max-processes 16
 
 --seed 1084
 --time-bin-size 1

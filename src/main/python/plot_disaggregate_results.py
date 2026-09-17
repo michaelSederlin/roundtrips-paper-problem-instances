@@ -30,7 +30,7 @@ def plot_scenario(scenario):
         print("Results dir doesn't exist")
         raise FileNotFoundError("Results directory doesn't exist!")
     
-    save_dir = results_dir / 'new_plots'
+    save_dir = results_dir / 'test_plots'
     save_dir.mkdir(parents=True, exist_ok=True)
 
     population_merge_main(results_dir=results_dir,
@@ -76,7 +76,8 @@ def plot_scenario(scenario):
 
 
 if __name__ == "__main__":
-    scenario = Path("calibration/disaggregate-calibration")
+    # scenario = Path("calibration/disaggregate-calibration")
+    scenario = Path("output/new-results")
     plot_scenario(scenario)
     print("SCRIPT FINISHED")
 

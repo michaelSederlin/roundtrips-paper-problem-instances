@@ -4,14 +4,11 @@ participation per age band, estimation vs measurement/validation ground truth.
 Figure sizes, font sizes, bar colors/width and legend ordering all come from
 common_parameters, so the paper figures can be retuned in one place.
 """
-import gzip
 import re
 from ast import literal_eval
 from collections import defaultdict
 from pathlib import Path
 
-import lxml.etree
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -19,18 +16,7 @@ from .helpers import ArgumentParser
 from .plotting_utilities import (stay_activity,
                                  parse_states_xml as _parse_states_xml, 
                                  plot_bars)
-from .helpers.od_transition_helpers import save_show
-from .common_parameters import (
-    barplot_size, 
-    bar_width, 
-    bar_alpha, 
-    bar_edgecolor, 
-    ESTIMATION_COLOR, 
-    VALIDATION_COLOR, 
-    MEASUREMENT_COLOR,
-    sort_legend_entries, 
-    format_categorical_axis
-)
+
 
 ACTIVITIES = ["HOME", "WORK", "EDUCATION", "OTHER"]
 NON_HOME_ACTIVITIES = [a for a in ACTIVITIES if a != "HOME"]
@@ -85,14 +71,6 @@ def _by_inc_bin(df, cols, inc_by_name, bins):
     per_agent['inc_bin'] = pd.cut(per_agent['inc'], bins)
     return per_agent.groupby('inc_bin', observed=False)[cols].mean().sum(axis = 1)
 
-def _by_gender(df, cols, gender_by_name):
-    if isinstance(cols, str): 
-        cols = [cols]
-    per_agent = df.groupby('name', as_index = False)[cols].mean()
-    per_agent['gender'] = per_agent['name'].map(gender_by_name)
-    return per_agent.groupby('gender', observed=False)[cols].mean().sum(axis = 1)
-
-
 def main(results_dir: Path,
          measurement_states_xml: Path,
          save_dir: Path = None,
@@ -116,7 +94,6 @@ def main(results_dir: Path,
 
     age_by_name = pop.set_index('name')['age'].to_dict()
     inc_by_name = pop.set_index('name')['inc'].to_dict()
-    gender_by_name = pop.set_index('name')['gender'].to_dict()
 
     est = parse_states(_parse_states_xml(merged / 'final_states_merged.xml').getroot())
     est['name'] = est['idx'].astype(str).map(idx2name)
@@ -134,47 +111,6 @@ def main(results_dir: Path,
     ticklabels = [f"{int(c.left)}" if i % 2 == 0 else "" for i, c in enumerate(cats)]
     inc_ticklabels = [f"{int(c.left)}" if i % 2 == 0 else "" for i, c in enumerate(inc_cats)]
 
-    gender_cats = pd.Index(sorted(pop['gender'].dropna().unique()))
-    gender_ticklabels = gender_cats.astype(str).tolist()    
-
-    for act in ACTIVITIES:
-        # mean marginal duration per age bin
-        plot_bars(_by_age_bin(est, act, age_by_name, AGE_BINS),
-                  _by_age_bin(meas, act, age_by_name, AGE_BINS),
-                  _by_age_bin(val, act, age_by_name, AGE_BINS) if val is not None else None,
-                  cats, "Age", f"{act} Duration [h]", ticklabels,
-                  save_dir / f"08_age_duration_{act}.pdf", **save_kwds)
-        
-
-        # participation rate per age bin
-        plot_bars(_by_age_bin(est, f'{act}_part', age_by_name, AGE_BINS) * 100,
-                  _by_age_bin(meas, f'{act}_part', age_by_name, AGE_BINS) * 100,
-                  (_by_age_bin(val, f'{act}_part', age_by_name, AGE_BINS) * 100)
-                  if val is not None else None,
-                  cats, "Age", f"{act} Participation [%]", ticklabels,
-                  save_dir / f"08_age_participation_{act}.pdf", **save_kwds)
-
-        plot_bars(_by_inc_bin(est, act, inc_by_name, INC_BINS), 
-                  _by_inc_bin(meas, act, inc_by_name, INC_BINS),
-                  _by_inc_bin(val, act, inc_by_name, INC_BINS)
-                    if val is not None else None, 
-                    inc_cats, "Income [ksek]", f"{act} Duration [h]", inc_ticklabels,
-                    save_dir / f"09_inc_duration_{act}.pdf", **save_kwds)
-        
-        plot_bars(_by_inc_bin(est, f'{act}_part', inc_by_name, INC_BINS) * 100, 
-                  _by_inc_bin(meas, f'{act}_part', inc_by_name, INC_BINS) * 100,
-                  _by_inc_bin(val, f'{act}_part', inc_by_name, INC_BINS) * 100
-                    if val is not None else None, 
-                    inc_cats, "Income [ksek]", f"{act} Participation [%]", inc_ticklabels,
-                    save_dir / f"09_inc_participation_{act}.pdf", **save_kwds)
-
-        plot_bars(_by_gender(est, act, gender_by_name), 
-                  _by_gender(meas, act, gender_by_name),
-                  _by_gender(val, act, gender_by_name)
-                        if val is not None else None, 
-                    gender_cats, "Gender", f"{act} Duration [h]", gender_ticklabels,
-                    save_dir / f"10_gender_duration_{act}.pdf", **save_kwds)
-
     # total non-HOME duration per age bin
     plot_bars(_by_age_bin(est, NON_HOME_ACTIVITIES, age_by_name, AGE_BINS),
               _by_age_bin(meas, NON_HOME_ACTIVITIES, age_by_name, AGE_BINS),
@@ -191,23 +127,7 @@ def main(results_dir: Path,
             inc_cats, "Income [ksek]", "Away-from-Home Duration [h]", inc_ticklabels,  
             save_dir / "09_inc_duration_away_from_home.pdf", legend_placement="lower left",
             **save_kwds)
-
-    plot_bars(_by_gender(est, NON_HOME_ACTIVITIES, gender_by_name), 
-                _by_gender(meas, NON_HOME_ACTIVITIES, gender_by_name),
-                _by_gender(val, NON_HOME_ACTIVITIES, gender_by_name)
-                    if val is not None else None, 
-                gender_cats, "Gender", "Away-from-Home Duration [h]", gender_ticklabels,
-                save_dir / f"10_gender_duration_away_from_home.pdf", **save_kwds)
-    
-    # nStops per age bin
-    plot_bars(_by_age_bin(est, 'nstops', age_by_name, AGE_BINS),
-              _by_age_bin(meas, 'nstops', age_by_name, AGE_BINS),
-              _by_age_bin(val, 'nstops', age_by_name, AGE_BINS) if val is not None else None,
-              cats, "Age", "Number of Stops", ticklabels,
-              save_dir / "08_age_nStops.pdf", **save_kwds)
-
     print(f"Done. Age-binned reproduction plots written to: {save_dir}")
-
 
 if __name__ == "__main__":
     parser = ArgumentParser()
