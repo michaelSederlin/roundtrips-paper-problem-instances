@@ -1,0 +1,125 @@
+[ {
+  "index" : 0,
+  "nodes" : [ "(2,1)[HOME]", "(4,3)[WORK]", "(3,3)[HOME]" ],
+  "dptBins" : [ 7, 16, 18 ]
+}, {
+  "index" : 1,
+  "nodes" : [ "(3,0)[HOME]", "(2,4)[WORK]", "(0,3)[OTHER]" ],
+  "dptBins" : [ 8, 17, 20 ]
+}, {
+  "index" : 2,
+  "nodes" : [ "(4,0)[HOME]", "(1,1)[WORK]", "(0,3)[OTHER]" ],
+  "dptBins" : [ 9, 18, 20 ]
+}, {
+  "index" : 3,
+  "nodes" : [ "(2,3)[HOME]", "(2,0)[WORK]", "(2,3)[OTHER]" ],
+  "dptBins" : [ 8, 15, 17 ]
+}, {
+  "index" : 4,
+  "nodes" : [ "(0,2)[HOME]", "(1,2)[EDUCATION]", "(2,0)[OTHER]", "(4,2)[EDUCATION]" ],
+  "dptBins" : [ 8, 12, 14, 15 ]
+}, {
+  "index" : 5,
+  "nodes" : [ "(0,1)[HOME]", "(2,4)[WORK]", "(0,2)[OTHER]" ],
+  "dptBins" : [ 7, 16, 17 ]
+}, {
+  "index" : 6,
+  "nodes" : [ "(4,0)[HOME]", "(3,1)[EDUCATION]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 10, 11, 14 ]
+}, {
+  "index" : 7,
+  "nodes" : [ "(4,2)[HOME]", "(2,2)[WORK]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 9, 15, 17 ]
+}, {
+  "index" : 8,
+  "nodes" : [ "(0,3)[HOME]", "(0,1)[WORK]", "(2,0)[WORK]" ],
+  "dptBins" : [ 7, 16, 18 ]
+}, {
+  "index" : 9,
+  "nodes" : [ "(2,4)[HOME]", "(4,1)[WORK]", "(3,1)[OTHER]" ],
+  "dptBins" : [ 8, 15, 16 ]
+}, {
+  "index" : 10,
+  "nodes" : [ "(4,1)[HOME]", "(4,4)[WORK]", "(4,4)[OTHER]" ],
+  "dptBins" : [ 5, 14, 16 ]
+}, {
+  "index" : 11,
+  "nodes" : [ "(4,1)[HOME]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 11, 14 ]
+}, {
+  "index" : 12,
+  "nodes" : [ "(0,4)[HOME]", "(1,0)[WORK]", "(4,1)[OTHER]" ],
+  "dptBins" : [ 8, 17, 20 ]
+}, {
+  "index" : 13,
+  "nodes" : [ "(3,4)[HOME]", "(2,4)[WORK]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 8, 16, 19 ]
+}, {
+  "index" : 14,
+  "nodes" : [ "(3,0)[HOME]", "(2,3)[WORK]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 5, 14, 16 ]
+}, {
+  "index" : 15,
+  "nodes" : [ "(2,2)[HOME]", "(1,1)[WORK]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 8, 17, 18 ]
+}, {
+  "index" : 16,
+  "nodes" : [ "(1,1)[HOME]", "(1,0)[OTHER]", "(0,1)[WORK]" ],
+  "dptBins" : [ 8, 9, 18 ]
+}, {
+  "index" : 17,
+  "nodes" : [ "(0,3)[HOME]", "(2,4)[WORK]", "(4,0)[OTHER]" ],
+  "dptBins" : [ 9, 17, 20 ]
+}, {
+  "index" : 18,
+  "nodes" : [ "(3,0)[HOME]", "(2,3)[WORK]", "(0,2)[WORK]" ],
+  "dptBins" : [ 10, 19, 21 ]
+}, {
+  "index" : 19,
+  "nodes" : [ "(3,1)[HOME]", "(4,1)[WORK]", "(4,4)[OTHER]" ],
+  "dptBins" : [ 11, 17, 19 ]
+}, {
+  "index" : 20,
+  "nodes" : [ "(4,2)[HOME]", "(4,1)[WORK]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 10, 16, 19 ]
+}, {
+  "index" : 21,
+  "nodes" : [ "(1,0)[HOME]", "(1,1)[WORK]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 9, 17, 19 ]
+}, {
+  "index" : 22,
+  "nodes" : [ "(4,3)[HOME]", "(2,0)[OTHER]", "(1,0)[WORK]" ],
+  "dptBins" : [ 8, 9, 17 ]
+}, {
+  "index" : 23,
+  "nodes" : [ "(2,2)[HOME]", "(3,1)[EDUCATION]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 12, 16, 19 ]
+}, {
+  "index" : 24,
+  "nodes" : [ "(1,0)[HOME]", "(4,1)[WORK]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 8, 16, 19 ]
+}, {
+  "index" : 25,
+  "nodes" : [ "(0,3)[HOME]", "(4,0)[WORK]", "(4,0)[OTHER]", "(2,4)[WORK]" ],
+  "dptBins" : [ 9, 15, 17, 18 ]
+}, {
+  "index" : 26,
+  "nodes" : [ "(4,2)[HOME]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 15, 18 ]
+}, {
+  "index" : 27,
+  "nodes" : [ "(2,2)[HOME]", "(3,1)[HOME]", "(1,0)[WORK]" ],
+  "dptBins" : [ 8, 16, 21 ]
+}, {
+  "index" : 28,
+  "nodes" : [ "(1,0)[HOME]", "(3,0)[WORK]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 7, 17, 19 ]
+}, {
+  "index" : 29,
+  "nodes" : [ "(2,3)[HOME]", "(4,4)[WORK]", "(4,0)[OTHER]" ],
+  "dptBins" : [ 6, 17, 19 ]
+}, {
+  "index" : 30,
+  "nodes" : [ "(2,3)[HOME]", "(4,2)[WORK]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 5, 13, 16 ]
+} ]

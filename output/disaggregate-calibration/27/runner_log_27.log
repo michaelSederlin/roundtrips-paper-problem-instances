@@ -1,0 +1,53 @@
+07:33:09.100 INFO  disaggregate.Runner - Starting partition 27 (31 agents) on thread pool-2-thread-28
+07:33:09.255 INFO  disaggregate.utils.LoadOpportunityWeights - Loading opportunity weights from data/survey/opportunity_weights.csv
+07:33:09.541 INFO  disaggregate.utils.LoadOpportunityWeights - Loaded opportunity weights for 25 zones.
+07:33:09.542 INFO  disaggregate.utils.LoadOpportunityWeights - Loaded opportunity weights for 100 nodes.
+07:33:09.543 INFO  disaggregate.utils.LoadOpportunityWeights - Skipped activities: HOME=0/25 (0.00%), WORK=0/25 (0.00%), EDUCATION=0/25 (0.00%), OTHER=0/25 (0.00%)
+07:33:10.198 INFO  disaggregate.Runner - Partition 27 warm-started from data/survey/priorState.json (global offset 845)
+07:33:10.206 INFO  disaggregate.Runner - 	Restricting to a single (highest-opportunity) node per round trip for: [HOME, WORK, EDUCATION]
+07:33:10.210 INFO  disaggregate.Runner - Kernel construction: traveler(lAge=3.0, lInc=60.0, eta=-1.0) | nStops=ON(bw=1.0) | scheduleOverlap(bw=ON(bw=1.0))
+07:33:10.259 INFO  disaggregate.weights.StrictlyEnforceCorrectHomeLocationWeight - Initialized home location constraint weights for 31 roundtrips
+07:33:10.264 INFO  disaggregate.Runner - 	Added StrictlyEnforeCorrectHomeLocationWeight as individualWeight
+07:33:10.266 INFO  disaggregate.Runner - Geometric mean staying weight added
+07:33:10.274 INFO  disaggregate.weights.MovementWeight - Using raw counts
+07:33:10.279 INFO  disaggregate.Runner - Geometric Mean Movement weight added
+07:33:10.306 INFO  disaggregate.Runner - Kernel weights added
+07:33:10.347 INFO  disaggregate.Runner - Partition 27: Starting MCMC
+07:33:10.461 INFO  common.ProgressLogger - 27 iter=10000 logWeight=-708.3140639893315 logWeightDiff=-Infinity   (88496 it/s)
+07:33:12.814 INFO  common.ProgressLogger - 27 iter=20000 logWeight=-581.8128644281635 logWeightDiff=-126.50119956116805   (8107 it/s)
+07:33:14.058 INFO  common.ProgressLogger - 27 iter=30000 logWeight=-545.1449873458848 logWeightDiff=-36.667877082278665   (8084 it/s)
+07:33:15.721 INFO  common.ProgressLogger - 27 iter=40000 logWeight=-538.3363105530613 logWeightDiff=-6.808676792823576   (7443 it/s)
+07:33:16.890 INFO  common.ProgressLogger - 27 iter=50000 logWeight=-516.5979630772486 logWeightDiff=-21.738347475812702   (7642 it/s)
+07:33:18.356 INFO  common.ProgressLogger - 27 iter=60000 logWeight=-520.5364057744696 logWeightDiff=3.938442697221035   (7492 it/s)
+07:33:20.119 INFO  common.ProgressLogger - 27 iter=70000 logWeight=-504.9701525743087 logWeightDiff=-15.566253200160872   (7164 it/s)
+07:33:21.535 INFO  common.ProgressLogger - 27 iter=80000 logWeight=-501.0024706219392 logWeightDiff=-3.967681952369503   (7151 it/s)
+07:33:23.278 INFO  common.ProgressLogger - 27 iter=90000 logWeight=-499.60561114356886 logWeightDiff=-1.3968594783703452   (6960 it/s)
+07:33:25.222 INFO  common.ProgressLogger - 27 iter=100000 logWeight=-517.4719602324697 logWeightDiff=17.86634908890079   (6723 it/s)
+07:33:26.545 INFO  common.ProgressLogger - 27 iter=110000 logWeight=-528.1935854240999 logWeightDiff=10.72162519163021   (6791 it/s)
+07:33:28.063 INFO  common.ProgressLogger - 27 iter=120000 logWeight=-521.4178172104376 logWeightDiff=-6.775768213662218   (6774 it/s)
+07:33:29.327 INFO  common.ProgressLogger - 27 iter=130000 logWeight=-522.2679660781363 logWeightDiff=0.8501488676986355   (6849 it/s)
+07:33:30.802 INFO  common.ProgressLogger - 27 iter=140000 logWeight=-504.2838918464937 logWeightDiff=-17.98407423164258   (6844 it/s)
+07:33:32.172 INFO  common.ProgressLogger - 27 iter=150000 logWeight=-506.3558730761714 logWeightDiff=2.0719812296777036   (6873 it/s)
+07:33:33.590 INFO  common.ProgressLogger - 27 iter=160000 logWeight=-489.0463239470108 logWeightDiff=-17.309549129160587   (6884 it/s)
+07:33:34.878 INFO  common.ProgressLogger - 27 iter=170000 logWeight=-511.32787520452814 logWeightDiff=22.28155125751732   (6930 it/s)
+07:33:36.489 INFO  common.ProgressLogger - 27 iter=180000 logWeight=-490.9021238858856 logWeightDiff=-20.42575131864254   (6885 it/s)
+07:33:37.745 INFO  common.ProgressLogger - 27 iter=190000 logWeight=-490.74235820952987 logWeightDiff=-0.15976567635573247   (6935 it/s)
+07:33:39.166 INFO  common.ProgressLogger - 27 iter=200000 logWeight=-485.90165742128966 logWeightDiff=-4.840700788240213   (6940 it/s)
+07:33:40.596 INFO  common.ProgressLogger - 27 iter=210000 logWeight=-511.08784380560724 logWeightDiff=25.18618638431758   (6942 it/s)
+07:33:41.956 INFO  common.ProgressLogger - 27 iter=220000 logWeight=-511.7529799416943 logWeightDiff=0.6651361360870851   (6960 it/s)
+07:33:43.829 INFO  common.ProgressLogger - 27 iter=230000 logWeight=-518.9356718369149 logWeightDiff=7.182691895220614   (6869 it/s)
+07:33:45.133 INFO  common.ProgressLogger - 27 iter=240000 logWeight=-506.3955365348087 logWeightDiff=-12.54013530210625   (6899 it/s)
+07:33:46.683 INFO  common.ProgressLogger - 27 iter=250000 logWeight=-506.8215362361831 logWeightDiff=0.42599970137439414   (6880 it/s)
+07:33:48.057 INFO  common.ProgressLogger - 27 iter=260000 logWeight=-497.39920960133566 logWeightDiff=-9.422326634847423   (6895 it/s)
+07:33:49.673 INFO  common.ProgressLogger - 27 iter=270000 logWeight=-498.9351585946316 logWeightDiff=1.5359489932959605   (6866 it/s)
+07:33:51.304 INFO  common.ProgressLogger - 27 iter=280000 logWeight=-528.7828427517046 logWeightDiff=29.84768415707299   (6836 it/s)
+07:33:52.780 INFO  common.ProgressLogger - 27 iter=290000 logWeight=-512.6667783071317 logWeightDiff=-16.116064444572885   (6834 it/s)
+07:33:54.430 INFO  common.ProgressLogger - 27 iter=300000 logWeight=-495.4852219423973 logWeightDiff=-17.181556364734433   (6805 it/s)
+07:33:55.922 INFO  common.ProgressLogger - 27 iter=310000 logWeight=-528.3651439677103 logWeightDiff=32.87992202531302   (6802 it/s)
+07:33:57.553 INFO  common.ProgressLogger - 27 iter=320000 logWeight=-518.6669715145352 logWeightDiff=-9.698172453175061   (6779 it/s)
+07:33:59.039 INFO  common.ProgressLogger - 27 iter=330000 logWeight=-507.84920802323717 logWeightDiff=-10.81776349129808   (6777 it/s)
+07:34:00.476 INFO  common.ProgressLogger - 27 iter=340000 logWeight=-495.81731772510125 logWeightDiff=-12.03189029813592   (6783 it/s)
+07:34:02.006 INFO  common.ProgressLogger - 27 iter=350000 logWeight=-505.3054401980632 logWeightDiff=9.488122472961948   (6775 it/s)
+07:34:03.580 INFO  common.ProgressLogger - 27 iter=360000 logWeight=-500.18001542317205 logWeightDiff=-5.125424774891144   (6763 it/s)
+07:34:05.499 INFO  common.ProgressLogger - 27 iter=370000 logWeight=-501.3398400004837 logWeightDiff=1.1598245773116673   (6709 it/s)
+07:34:07.042 INFO  se.vti.utils.misc.metropolishastings.terminationcriteria.CombinedAnyTerminationCriterion - Termination triggered by criterion: 
