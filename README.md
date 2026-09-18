@@ -50,29 +50,28 @@ Turn the synthesized population into something that looks like a real travel sur
    ./generate_survey_data.sh
    ```
 
-3. **Run the calibration.** 
+2. **Run the calibration.** 
 This step tries to recover the population using only the survey, without knowing the true population from step 2 above:
    ```bash
    java -cp target/<jar> disaggregate.Runner @args/disaggregate-calibration.txt
    ```
 
-4. **Make result plots.**
+3. **Make result plots.**
    ```bash
    python src/main/python/plot_disaggregate_results.py
    ```
 
 ### Aggregate calibration path
 
-1. **Create the aggregate measures.** This turns the made-up population into summary
-   counts and totals (trip counts between zones, home and work location counts,
-   duration/departure tables, and so on), the kind of data you'd get from traffic counts
-   or census tables rather than an individual-level survey.
+1. **Create the aggregate measures.**
+This step extracts aggregate measures from the synthetic ground truth.
 
 2. **Run the calibration.**
+This step tries to recover the population using only aggregate measures.
    ```bash
    java -cp target/<jar> aggregate.RunnerRtAmalWithActivities
    ```
-
+   
 3. **Make result plots.**
    ```bash
    python src/main/python/plot_results_aggregated.py
