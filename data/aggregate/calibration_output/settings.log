@@ -15,12 +15,12 @@ prior: TODO log prior
 Gauss: true
 target2sigma: {OD=2.0, HL=2.0, WL=2.0, DDH=2.0, DDW=2.0}
 
-Start: 2026-09-18 11:09:43
-End:   2026-09-18 11:09:54
+Start: 2026-09-18 11:33:59
+End:   2026-09-18 11:34:10
 Runtime [sec]: 10
 Runtime [min]: 0
 Runtime [h]:   0,0
 Runtime [d]:   0,00
 Time per iteration [s]: 0,00100
 
-2026-09-18 11:09:43	2026-09-18 11:09:54	0,0	0,0	0	10	0e6	0,00100
+2026-09-18 11:33:59	2026-09-18 11:34:10	0,0	0,0	0	10	0e6	0,00100

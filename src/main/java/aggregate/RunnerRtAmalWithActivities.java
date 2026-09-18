@@ -47,8 +47,8 @@ public class RunnerRtAmalWithActivities {
 		LocalDateTime startTime = LocalDateTime.now();
 
 		long seed = 4711l;
-		String inputFolder = "./data/aggregate/measurement/";
-		String outputFolder = "./data/aggregate/calibration_out/testing/";
+		String inputFolder = "./data/aggregate/measurement_input/";
+		String outputFolder = "./data/aggregate/calibration_output/";
 
 		int nTimeBins = 24;
 		double timeBinSize_h = 1;
@@ -309,14 +309,14 @@ public class RunnerRtAmalWithActivities {
 
 		// ------------------ Run PythonPlotter ------------------
 
-//		new PythonRunner(
-//				"src/main/python/roundtrips/plotting/new/plot_results_aggregated.py",
-//				"--calibration", "./output/",
-//				"--measurement", "./input/amal/measurementData/",
-//				"--validation",  "./input/amal/validationData/",
-//				"--out",         "./output/"
-//				,"--join"
-//				).run();
+		new PythonRunner(
+				"src/main/python/plot_results_aggregated.py",
+				"--calibration", "./data/aggregate/calibration_output/",
+				"--measurement", "./data/aggregate/measurement_input/",
+				"--validation",  "./data/aggregate/validation_input/",
+				"--out",         "./data/aggregate/calibration_output/"
+				,"--join"
+				).run();
 	}
 	
 	

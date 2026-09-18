@@ -7,6 +7,9 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 import xml.etree.ElementTree as ET
+
+from pypdf import PdfWriter
+
 from plotting.common_parameters import (VALIDATION_COLOR, ESTIMATION_COLOR, format_axis,
     sort_legend_entries, legend_fontsize, scatterplot_size, barplot_size, MEASUREMENT_COLOR, bar_width, bar_alpha, bar_edgecolor,
     format_categorical_axis)
@@ -223,10 +226,9 @@ def count_nStops(xml_path):
     return counts
 
 
-def determine_burn_in(convergence_stats_file):
+def determine_burn_in(convergence_stats_file, msg_interval):
     df_convergence_stats = pd.read_csv(convergence_stats_file, sep="\t")
     last_row = df_convergence_stats.sort_values('iteration').iloc[-1]
-    msg_interval = 5000
     burn_in_iteration = math.ceil(last_row['burnInIteration'] / msg_interval)
     return burn_in_iteration
 
@@ -361,3 +363,25 @@ def count_departures_per_time_bin(xml_path: str) -> pd.DataFrame:
     df_bins = df_bins[[i for i in range(24)]]
 
     return df_bins
+
+
+
+def join_pdfs(BASE_OUT):
+    pdfs = sorted(
+        p for p in BASE_OUT.glob("*.pdf")
+        if p.name.lower() not in ["plots.pdf", "all_plots.pdf"]
+    )
+
+    if not pdfs:
+        return
+
+    writer = PdfWriter()
+    for pdf in pdfs:
+        writer.append(str(pdf))
+
+    with open(BASE_OUT / "plots.pdf", "wb") as out_f:
+        writer.write(out_f)
+    writer.close()
+
+    for pdf in pdfs:
+        pdf.unlink()

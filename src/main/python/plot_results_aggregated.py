@@ -1,99 +1,164 @@
-import os
-from pathlib import Path
 import pandas as pd
-from plot_results_aggregated_utils import determine_burn_in, plot_locations, plot_nStops_histogram, plot_matrix, plot_departures_histogram
+import argparse
+from pathlib import Path
+
+from plot_results_aggregated_utils import (
+    determine_burn_in, plot_locations, plot_nStops_histogram,
+    plot_matrix, plot_departures_histogram, join_pdfs
+)
+
+############  Helper Methods ############
+
+def load_target_dfs(directory: Path, keyword: str) -> dict[str, pd.DataFrame]:
+    dfs = {}
+    for path in sorted(p for p in directory.iterdir() if p.is_file()):
+        if keyword in path.name:
+            group_name = path.stem.split('_')[-1]
+            dfs[group_name] = pd.read_csv(path, sep="\t")
+    if not dfs:
+        raise FileNotFoundError(f"Keine '{keyword}'-Dateien in {directory}")
+    return dfs
 
 
-if __name__ == "__main__":
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Generates the evaluation plots for the aggregated calibration."
+    )
+    parser.add_argument("--calibration", "-c", type=Path, required=True,
+                        help="Directory containing the calibration outputs")
+    parser.add_argument("--measurement", "-m", type=Path, required=True,
+                        help="Directory containing the measurement data")
+    parser.add_argument("--validation", "-v", type=Path, required=True,
+                        help="Directory containing the validation data")
+    parser.add_argument("--out", "-o", type=Path, required=True,
+                        help="Output directory for the PDFs")
+    parser.add_argument("--join", "-j", action="store_true",
+                        help="Merge all generated PDFs into all_plots.pdf")
+    return parser.parse_args()
 
 
-    ### directory
-    current_file = Path(__file__).resolve()
-    BASE_IN = current_file.parent.parent.parent.parent / "data/aggregated_calibration/"
-    BASE_OUT = current_file.parent.parent.parent.parent / "data/aggregated_calibration/plots/"
 
 
+############ Main Method ############
+
+def main():
 
     ### burn-in
-    convergence_stats_file = BASE_IN / "calibration/2026 08 28/convergenceStats.tsv"
-    burn_in_iteration = determine_burn_in(convergence_stats_file)
+    convergence_stats_file = CALIBRATION_IN / "convergenceStats.tsv"
+    if convergence_stats_file.is_file():
+        burn_in_iteration = determine_burn_in(convergence_stats_file, 5000)
+    else:
+        df_locationCounts = pd.read_csv(CALIBRATION_IN / "locationCounts.log", header=None, sep="\t")
+        burn_in_iteration = len(df_locationCounts) - 1
 
 
-
-    ### nstops
-    log_file = BASE_IN / "calibration/2026 08 28/locationCounts.log"
-    measurement_file = BASE_IN / "measurement/_final_states_merged.xml"
-    validation_file = BASE_IN / "validation/_final_states_merged.xml"
-    output_file = BASE_OUT / "nStops_histogram.pdf"
-
-    plot_nStops_histogram(log_file, measurement_file, validation_file, burn_in_iteration, output_file)
-
+    ### nStops
+    plot_nStops_histogram(
+        CALIBRATION_IN / "locationCounts.log",
+        measurement_states_file,
+        validation_states_file,
+        burn_in_iteration,
+        BASE_OUT / "01_nStops_histogram.pdf",
+    )
 
 
     ### od
-    target_file = BASE_IN / "calibration/2026 08 28/odTarget.csv"
-    validation_file = BASE_IN / "validation/25_od.csv"
-    output_file = BASE_OUT / "od_target.pdf"
-
-    plot_matrix(target_file, validation_file, burn_in_iteration, output_file, False)
-
+    plot_matrix(
+        CALIBRATION_IN / "odTarget.csv",
+        VALIDATION_IN / "25_od.csv",
+        burn_in_iteration,
+        BASE_OUT / "02_od_target.pdf",
+        False,
+    )
 
 
     ### home locations
-    targets_path = BASE_IN / "calibration/2026 08 28/"
-    target_files = [f for f in os.listdir(targets_path) if os.path.isfile(os.path.join(targets_path, f))]
-    target_dfs = {}
-    for file in target_files:
-        if "homeTarget" in file:
-            df = pd.read_csv(targets_path / file, sep="\t")
-            group_name = file[:-4].split('_')[-1]
-            target_dfs[group_name] = df
-    validation_file = BASE_IN / "validation/25_homeLocations.csv"
-    output_file = BASE_OUT / "home_location_target.pdf"
-
-    plot_locations(target_dfs, validation_file, burn_in_iteration, output_file)
-
+    plot_locations(
+        load_target_dfs(CALIBRATION_IN, "homeTarget"),
+        VALIDATION_IN / "25_homeLocations.csv",
+        burn_in_iteration,
+        BASE_OUT / "03_home_location_target.pdf",
+    )
 
 
     ### work locations
-    targets_path = BASE_IN / "calibration/2026 08 28/"
-    target_files = [f for f in os.listdir(targets_path) if os.path.isfile(os.path.join(targets_path, f))]
-    target_dfs = {}
-    for file in target_files:
-        if "workTarget" in file:
-            df = pd.read_csv(targets_path / file, sep="\t")
-            group_name = file[:-4].split('_')[-1]
-            target_dfs[group_name] = df
-
-    validation_file = BASE_IN / "validation/25_workLocations_all.csv"
-    output_file = BASE_OUT / "work_location_target.pdf"
-
-    plot_locations(target_dfs, validation_file, burn_in_iteration, output_file)
-
+    plot_locations(
+        load_target_dfs(CALIBRATION_IN, "workTarget"),
+        VALIDATION_IN / "25_workLocations.csv",
+        burn_in_iteration,
+        BASE_OUT / "04_work_location_target.pdf",
+    )
 
 
     ### dd home
-    target_file = BASE_IN / "calibration/2026 08 28/ddHomeTarget.csv"
-    validation_file = BASE_IN / "validation/25_ddHome.csv"
-    output_file = BASE_OUT / "dd_home_target.pdf"
-
-    plot_matrix(target_file, validation_file, burn_in_iteration, output_file, True)
-
+    plot_matrix(
+        CALIBRATION_IN / "ddHomeTarget.csv",
+        VALIDATION_IN / "25_ddHome.csv",
+        burn_in_iteration,
+        BASE_OUT / "05_dd_home_target.pdf",
+        True,
+    )
 
 
     ### dd work
-    target_file = BASE_IN / "calibration/2026 08 28/ddWorkTarget.csv"
-    validation_file = BASE_IN / "validation/25_ddWork.csv"
-    output_file = BASE_OUT / "dd_work_target.pdf"
-
-    plot_matrix(target_file, validation_file, burn_in_iteration, output_file, True)
-
+    plot_matrix(
+        CALIBRATION_IN / "ddWorkTarget.csv",
+        VALIDATION_IN / "25_ddWork.csv",
+        burn_in_iteration,
+        BASE_OUT / "06_dd_work_target.pdf",
+        True,
+    )
 
 
     ### departures histogram
-    log_file = BASE_IN / "calibration/2026 08 28/departures.log"
-    measurement_file = BASE_IN / "measurement/_final_states_merged.xml"
-    validation_file = BASE_IN / "validation/_final_states_merged.xml"
-    output_file = BASE_OUT / "departures_histogram.pdf"
+    plot_departures_histogram(
+        CALIBRATION_IN / "departures.log",
+        measurement_states_file,
+        validation_states_file,
+        burn_in_iteration,
+        BASE_OUT / "07_departures_histogram.pdf",
+    )
 
-    plot_departures_histogram(log_file, measurement_file, validation_file, burn_in_iteration,output_file)
+    if JOIN:
+        join_pdfs(BASE_OUT)
+
+
+############ Run Main Method ############
+
+if __name__ == "__main__":
+
+    ### Args hard coded
+    # ROOT = Path(__file__).resolve().parent.parent.parent.parent
+    # BASE_IN = ROOT / "data/aggregated_calibration/"
+    # BASE_OUT = ROOT / "data/aggregated_calibration/plots/"
+    # CALIBRATION_IN = BASE_IN / "calibration" / "2026 08 28"
+    # MEASUREMENT_IN = BASE_IN / "measurement"
+    # VALIDATION_IN  = BASE_IN / "validation"
+    # JOIN = True
+
+    # measurement_states_file = MEASUREMENT_IN / "_final_states_merged.xml"
+    # validation_states_file  = VALIDATION_IN  / "_final_states_merged.xml"
+
+    ### Args hard coded
+    # BASE_IN = Path("./input/")
+    # BASE_OUT = Path("./plots/")
+    # CALIBRATION_IN = BASE_IN / "calibration"
+    # MEASUREMENT_IN = BASE_IN / "measurement"
+    # VALIDATION_IN  = BASE_IN / "validation"
+    # JOIN = True
+
+    # measurement_states_file = MEASUREMENT_IN / "_final_states_merged.xml"
+    # validation_states_file  = VALIDATION_IN  / "_final_states_merged.xml"
+
+    ### Args from command line
+    args = parse_args()
+    CALIBRATION_IN = args.calibration.expanduser().resolve()
+    MEASUREMENT_IN = args.measurement.expanduser().resolve()
+    VALIDATION_IN  = args.validation.expanduser().resolve()
+    BASE_OUT       = args.out.expanduser().resolve()
+    JOIN           = args.join
+
+    measurement_states_file = MEASUREMENT_IN / "_final_states_merged.xml"
+    validation_states_file  = VALIDATION_IN  / "_final_states_merged.xml"
+
+    main()
