@@ -16,7 +16,7 @@ _Linköping University; Swedish National Road and Transport Research Institute_
 **Synthesis** simulates a ground-truth population on a grid world; 
 **survey generation** turns it into a survey that looks like observed travel data; 
 **disaggregate calibration** tries to recover the population from that survey alone.
-**aggregate calbration** 
+**aggregate calbration** tries to recover the population from aggregated data extracted from ground-truth.
 
 ## Running the simulation, step by step
 
