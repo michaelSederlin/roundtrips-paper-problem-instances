@@ -1,11 +1,6 @@
-run_disaggregate_ws.sh
-
 /target/
 /.vscode/
 dependency-reduced-pom.xml
-run_amal_ws.sh
-output/**/*.xml
-data/**/*.xml
 # Byte-compiled / optimized / DLL files
 **/__pycache__/
 *.py[codz]
