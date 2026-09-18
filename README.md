@@ -63,10 +63,9 @@ This step tries to recover the population using only the survey, without knowing
 
 ### Aggregate calibration path
 
-1. **Extract the aggregate measures.**
+1. **Extract the aggregate measures from ground truth.**
 
-2. **Run the calibration.**
-This step tries to recover the population's travel patterns from aggregate measures.
+2. **Run the calibration using aggregate measures.**
    ```bash
    java -cp target/<jar> aggregate.RunnerRtAmalWithActivities
    ```
