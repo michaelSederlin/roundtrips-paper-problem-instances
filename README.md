@@ -68,14 +68,8 @@ This step extracts aggregate measures from the synthetic ground truth.
 
 2. **Run the calibration.**
 This step tries to recover the population using only aggregate measures.
-   ```bash
-   java -cp target/<jar> aggregate.RunnerRtAmalWithActivities
-   ```
    
 3. **Make result plots.**
-   ```bash
-   python src/main/python/plot_results_aggregated.py
-   ```
 
 ## A note on splitting the work into pieces
 
