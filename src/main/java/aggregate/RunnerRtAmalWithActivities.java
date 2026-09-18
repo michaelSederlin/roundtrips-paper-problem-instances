@@ -47,8 +47,8 @@ public class RunnerRtAmalWithActivities {
 		LocalDateTime startTime = LocalDateTime.now();
 
 		long seed = 4711l;
-		String inputFolder = "./data/aggregate/measurement_input/";
-		String outputFolder = "./data/aggregate/calibration_output/";
+		String inputFolder = "./data/...";
+		String outputFolder = "./data/...";
 
 		int nTimeBins = 24;
 		double timeBinSize_h = 1;
@@ -68,9 +68,9 @@ public class RunnerRtAmalWithActivities {
 
 		// ----- Testing ----- 
 		
-		convergenceCriterion = false;
-		nIterations = 1 * 1000 * 1000;
-		msgInterval = nIterations/200; 
+//		convergenceCriterion = false;
+//		nIterations = 1 * 100 * 1000;
+//		msgInterval = nIterations/200; 
 
 
 
@@ -305,18 +305,6 @@ public class RunnerRtAmalWithActivities {
 				"TODO log prior");
 		settingsLogger.writeRuntimeInfo(iterCounter.getLastIteration());
 
-
-
-		// ------------------ Run PythonPlotter ------------------
-
-		new PythonRunner(
-				"src/main/python/plot_results_aggregated.py",
-				"--calibration", "./data/aggregate/calibration_output/",
-				"--measurement", "./data/aggregate/measurement_input/",
-				"--validation",  "./data/aggregate/validation_input/",
-				"--out",         "./data/aggregate/calibration_output/"
-				,"--join"
-				).run();
 	}
 	
 	
