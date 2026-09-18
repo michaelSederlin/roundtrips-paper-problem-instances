@@ -16,7 +16,6 @@ import aggregate.model.ODTargetIgnoringActivities;
 import aggregate.utils.CsvReader;
 import aggregate.utils.IterationCounter;
 import aggregate.utils.LocationReader;
-import aggregate.utils.PythonRunner;
 import aggregate.utils.SettingsLogger;
 import aggregate.utils.SimpleStatsLogger;
 import aggregate.utils.TargetLoggerConcatenating;
