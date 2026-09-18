@@ -19,13 +19,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
 
-
 import se.vti.roundtrips.common.Runner;
 import se.vti.roundtrips.common.Scenario;
 import common.Activity;
 import common.GridNodeWithActivity;
 import common.logging.*;
-import common.IterationCounter;
 import se.vti.roundtrips.multiple.MultiRoundTrip;
 import se.vti.roundtrips.multiple.MultiRoundTripJsonIO;
 import se.vti.roundtrips.samplingweights.timeUse.LogarithmicTimeMultiplePersonsSingleDay;
@@ -300,9 +298,6 @@ public class SynthesisRunner implements Callable<Integer> {
                         partition, iter, logWeight, String.format("%.0f", rate));
             }
         });
-
-        var iterCounter = new IterationCounter<MultiRoundTrip<GridNodeWithActivity>>();
-        runner.addStateProcessor(iterCounter);
 
         var terminationCriterion = new BlockAverageTerminationCriterion<MultiRoundTrip<GridNodeWithActivity>>()
                 .setCheckInterval(10_000).setMinSamples(10_000)
