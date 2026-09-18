@@ -1,0 +1,26 @@
+Class: aggregate.RunnerRtAmalWithActivities
+Seed: 4711
+
+nTimeBins: 24
+timeBinSize_h: 1.0
+realPopulationSize: 1000
+nRoundTrips: 1000
+
+convergenceCriterion: false
+convergenceCriterion tolerance: 0.2
+last iteration: 9999
+msg interval: 50
+
+prior: TODO log prior
+Gauss: true
+target2sigma: {OD=2.0, HL=2.0, WL=2.0, DDH=2.0, DDW=2.0}
+
+Start: 2026-09-18 11:09:43
+End:   2026-09-18 11:09:54
+Runtime [sec]: 10
+Runtime [min]: 0
+Runtime [h]:   0,0
+Runtime [d]:   0,00
+Time per iteration [s]: 0,00100
+
+2026-09-18 11:09:43	2026-09-18 11:09:54	0,0	0,0	0	10	0e6	0,00100

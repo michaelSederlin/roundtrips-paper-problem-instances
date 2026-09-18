@@ -1,0 +1,4001 @@
+[ {
+  "index" : 0,
+  "nodes" : [ "(4,2)[OTHER]", "(1,2)[WORK]", "(3,1)[WORK]", "(2,3)[EDUCATION]" ],
+  "dptBins" : [ 1, 2, 8, 13 ]
+}, {
+  "index" : 1,
+  "nodes" : [ "(2,4)[HOME]", "(4,2)[OTHER]", "(2,3)[WORK]", "(3,0)[HOME]" ],
+  "dptBins" : [ 7, 9, 17, 18 ]
+}, {
+  "index" : 2,
+  "nodes" : [ "(3,1)[HOME]", "(3,2)[WORK]" ],
+  "dptBins" : [ 11, 12 ]
+}, {
+  "index" : 3,
+  "nodes" : [ "(3,0)[HOME]", "(4,2)[EDUCATION]" ],
+  "dptBins" : [ 12, 16 ]
+}, {
+  "index" : 4,
+  "nodes" : [ "(2,4)[OTHER]", "(4,0)[WORK]" ],
+  "dptBins" : [ 0, 5 ]
+}, {
+  "index" : 5,
+  "nodes" : [ "(2,2)[WORK]", "(4,4)[EDUCATION]", "(1,3)[OTHER]", "(0,0)[WORK]" ],
+  "dptBins" : [ 7, 19, 20, 21 ]
+}, {
+  "index" : 6,
+  "nodes" : [ "(2,0)[HOME]", "(1,4)[OTHER]", "(1,1)[WORK]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 5, 7, 14, 16 ]
+}, {
+  "index" : 7,
+  "nodes" : [ "(1,0)[HOME]", "(1,1)[WORK]", "(2,2)[HOME]" ],
+  "dptBins" : [ 0, 10, 20 ]
+}, {
+  "index" : 8,
+  "nodes" : [ "(0,4)[EDUCATION]", "(2,0)[WORK]", "(0,2)[EDUCATION]", "(2,4)[OTHER]", "(3,1)[OTHER]", "(1,0)[HOME]" ],
+  "dptBins" : [ 12, 13, 16, 17, 18, 23 ]
+}, {
+  "index" : 9,
+  "nodes" : [ "(0,4)[OTHER]", "(0,0)[WORK]" ],
+  "dptBins" : [ 9, 13 ]
+}, {
+  "index" : 10,
+  "nodes" : [ "(1,1)[HOME]", "(3,4)[EDUCATION]" ],
+  "dptBins" : [ 14, 21 ]
+}, {
+  "index" : 11,
+  "nodes" : [ "(0,1)[HOME]", "(3,0)[WORK]" ],
+  "dptBins" : [ 2, 6 ]
+}, {
+  "index" : 12,
+  "nodes" : [ "(1,4)[EDUCATION]", "(3,3)[EDUCATION]" ],
+  "dptBins" : [ 3, 8 ]
+}, {
+  "index" : 13,
+  "nodes" : [ "(0,0)[EDUCATION]", "(4,4)[WORK]", "(4,3)[EDUCATION]", "(3,3)[HOME]", "(2,0)[HOME]" ],
+  "dptBins" : [ 1, 3, 11, 15, 19 ]
+}, {
+  "index" : 14,
+  "nodes" : [ "(1,3)[OTHER]", "(2,3)[EDUCATION]" ],
+  "dptBins" : [ 1, 7 ]
+}, {
+  "index" : 15,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 16,
+  "nodes" : [ "(1,3)[EDUCATION]" ],
+  "dptBins" : [ 2 ]
+}, {
+  "index" : 17,
+  "nodes" : [ "(0,2)[WORK]", "(3,1)[HOME]" ],
+  "dptBins" : [ 3, 6 ]
+}, {
+  "index" : 18,
+  "nodes" : [ "(4,3)[HOME]", "(4,0)[WORK]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 9, 10, 19 ]
+}, {
+  "index" : 19,
+  "nodes" : [ "(2,4)[EDUCATION]", "(1,1)[OTHER]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 4, 16, 23 ]
+}, {
+  "index" : 20,
+  "nodes" : [ "(2,2)[HOME]", "(2,4)[WORK]", "(4,0)[WORK]" ],
+  "dptBins" : [ 7, 11, 18 ]
+}, {
+  "index" : 21,
+  "nodes" : [ "(1,4)[HOME]" ],
+  "dptBins" : [ 20 ]
+}, {
+  "index" : 22,
+  "nodes" : [ "(2,0)[EDUCATION]", "(0,1)[HOME]" ],
+  "dptBins" : [ 11, 23 ]
+}, {
+  "index" : 23,
+  "nodes" : [ "(0,1)[EDUCATION]", "(0,0)[HOME]" ],
+  "dptBins" : [ 4, 10 ]
+}, {
+  "index" : 24,
+  "nodes" : [ "(3,3)[OTHER]", "(1,2)[OTHER]" ],
+  "dptBins" : [ 2, 16 ]
+}, {
+  "index" : 25,
+  "nodes" : [ "(3,1)[WORK]", "(1,1)[WORK]" ],
+  "dptBins" : [ 2, 17 ]
+}, {
+  "index" : 26,
+  "nodes" : [ "(3,3)[EDUCATION]", "(1,3)[EDUCATION]", "(2,3)[WORK]", "(2,4)[HOME]" ],
+  "dptBins" : [ 0, 8, 17, 19 ]
+}, {
+  "index" : 27,
+  "nodes" : [ "(1,1)[HOME]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 9, 21 ]
+}, {
+  "index" : 28,
+  "nodes" : [ "(3,1)[HOME]", "(3,0)[EDUCATION]", "(0,2)[OTHER]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 2, 4, 6, 13 ]
+}, {
+  "index" : 29,
+  "nodes" : [ "(2,0)[WORK]", "(1,1)[HOME]", "(0,2)[OTHER]", "(1,0)[OTHER]" ],
+  "dptBins" : [ 3, 8, 15, 16 ]
+}, {
+  "index" : 30,
+  "nodes" : [ "(4,0)[HOME]" ],
+  "dptBins" : [ 2 ]
+}, {
+  "index" : 31,
+  "nodes" : [ "(4,0)[OTHER]", "(2,2)[EDUCATION]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 5, 10, 19 ]
+}, {
+  "index" : 32,
+  "nodes" : [ "(1,2)[HOME]", "(1,3)[WORK]", "(3,2)[HOME]" ],
+  "dptBins" : [ 9, 17, 20 ]
+}, {
+  "index" : 33,
+  "nodes" : [ "(0,2)[HOME]", "(2,0)[OTHER]", "(0,0)[WORK]" ],
+  "dptBins" : [ 8, 17, 19 ]
+}, {
+  "index" : 34,
+  "nodes" : [ "(1,3)[EDUCATION]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 12, 14 ]
+}, {
+  "index" : 35,
+  "nodes" : [ "(1,2)[EDUCATION]", "(0,3)[EDUCATION]", "(0,2)[HOME]", "(3,1)[WORK]" ],
+  "dptBins" : [ 1, 4, 7, 15 ]
+}, {
+  "index" : 36,
+  "nodes" : [ "(1,0)[OTHER]", "(4,3)[WORK]" ],
+  "dptBins" : [ 7, 15 ]
+}, {
+  "index" : 37,
+  "nodes" : [ "(4,0)[HOME]", "(3,3)[HOME]", "(3,3)[WORK]", "(0,0)[HOME]" ],
+  "dptBins" : [ 6, 10, 15, 18 ]
+}, {
+  "index" : 38,
+  "nodes" : [ "(1,3)[HOME]", "(2,0)[WORK]", "(1,2)[OTHER]", "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 7, 15, 17, 20 ]
+}, {
+  "index" : 39,
+  "nodes" : [ "(3,2)[HOME]", "(3,1)[EDUCATION]" ],
+  "dptBins" : [ 4, 19 ]
+}, {
+  "index" : 40,
+  "nodes" : [ "(0,3)[EDUCATION]", "(3,1)[HOME]", "(1,1)[WORK]", "(3,4)[EDUCATION]" ],
+  "dptBins" : [ 0, 13, 20, 21 ]
+}, {
+  "index" : 41,
+  "nodes" : [ "(2,4)[OTHER]", "(2,4)[WORK]", "(1,1)[OTHER]", "(3,4)[WORK]" ],
+  "dptBins" : [ 2, 3, 10, 17 ]
+}, {
+  "index" : 42,
+  "nodes" : [ "(3,0)[OTHER]", "(2,0)[WORK]", "(2,3)[WORK]" ],
+  "dptBins" : [ 12, 13, 21 ]
+}, {
+  "index" : 43,
+  "nodes" : [ "(2,4)[HOME]", "(0,3)[OTHER]", "(4,3)[WORK]", "(4,4)[WORK]", "(0,0)[OTHER]" ],
+  "dptBins" : [ 0, 1, 11, 15, 22 ]
+}, {
+  "index" : 44,
+  "nodes" : [ "(2,3)[HOME]", "(2,4)[HOME]", "(3,1)[OTHER]" ],
+  "dptBins" : [ 8, 14, 20 ]
+}, {
+  "index" : 45,
+  "nodes" : [ "(1,3)[OTHER]", "(0,3)[HOME]", "(1,3)[WORK]", "(4,0)[HOME]" ],
+  "dptBins" : [ 4, 10, 18, 20 ]
+}, {
+  "index" : 46,
+  "nodes" : [ "(0,3)[WORK]", "(3,3)[OTHER]", "(2,4)[WORK]" ],
+  "dptBins" : [ 16, 20, 22 ]
+}, {
+  "index" : 47,
+  "nodes" : [ "(3,1)[HOME]", "(1,4)[EDUCATION]", "(1,3)[HOME]" ],
+  "dptBins" : [ 5, 13, 18 ]
+}, {
+  "index" : 48,
+  "nodes" : [ "(3,4)[HOME]", "(0,0)[OTHER]", "(2,1)[OTHER]" ],
+  "dptBins" : [ 6, 8, 16 ]
+}, {
+  "index" : 49,
+  "nodes" : [ "(3,3)[HOME]", "(0,2)[WORK]" ],
+  "dptBins" : [ 15, 21 ]
+}, {
+  "index" : 50,
+  "nodes" : [ "(0,3)[EDUCATION]", "(2,1)[WORK]", "(4,4)[OTHER]" ],
+  "dptBins" : [ 1, 4, 21 ]
+}, {
+  "index" : 51,
+  "nodes" : [ "(2,0)[EDUCATION]", "(0,0)[HOME]" ],
+  "dptBins" : [ 5, 6 ]
+}, {
+  "index" : 52,
+  "nodes" : [ "(2,0)[EDUCATION]", "(1,4)[WORK]", "(4,0)[HOME]" ],
+  "dptBins" : [ 2, 7, 16 ]
+}, {
+  "index" : 53,
+  "nodes" : [ "(4,3)[WORK]", "(3,4)[OTHER]", "(3,1)[WORK]" ],
+  "dptBins" : [ 2, 8, 17 ]
+}, {
+  "index" : 54,
+  "nodes" : [ "(2,4)[EDUCATION]", "(4,3)[EDUCATION]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 13, 21, 22 ]
+}, {
+  "index" : 55,
+  "nodes" : [ "(3,3)[EDUCATION]", "(2,0)[OTHER]", "(2,4)[WORK]", "(4,1)[OTHER]" ],
+  "dptBins" : [ 9, 10, 18, 19 ]
+}, {
+  "index" : 56,
+  "nodes" : [ "(0,2)[EDUCATION]", "(1,0)[EDUCATION]", "(2,0)[OTHER]", "(4,0)[HOME]", "(3,4)[WORK]" ],
+  "dptBins" : [ 1, 3, 4, 12, 16 ]
+}, {
+  "index" : 57,
+  "nodes" : [ "(4,2)[HOME]" ],
+  "dptBins" : [ 18 ]
+}, {
+  "index" : 58,
+  "nodes" : [ "(2,3)[HOME]", "(1,1)[OTHER]", "(2,2)[WORK]", "(2,3)[EDUCATION]" ],
+  "dptBins" : [ 8, 13, 18, 20 ]
+}, {
+  "index" : 59,
+  "nodes" : [ "(1,3)[WORK]", "(1,1)[WORK]" ],
+  "dptBins" : [ 13, 16 ]
+}, {
+  "index" : 60,
+  "nodes" : [ "(4,4)[HOME]", "(4,0)[EDUCATION]", "(1,2)[EDUCATION]" ],
+  "dptBins" : [ 10, 17, 19 ]
+}, {
+  "index" : 61,
+  "nodes" : [ "(0,0)[HOME]", "(4,3)[WORK]", "(2,4)[EDUCATION]", "(2,0)[WORK]" ],
+  "dptBins" : [ 7, 11, 12, 18 ]
+}, {
+  "index" : 62,
+  "nodes" : [ "(2,0)[HOME]", "(3,0)[HOME]", "(4,3)[WORK]" ],
+  "dptBins" : [ 8, 12, 18 ]
+}, {
+  "index" : 63,
+  "nodes" : [ "(3,2)[OTHER]", "(0,3)[OTHER]", "(0,1)[WORK]" ],
+  "dptBins" : [ 1, 14, 19 ]
+}, {
+  "index" : 64,
+  "nodes" : [ "(2,2)[WORK]" ],
+  "dptBins" : [ 22 ]
+}, {
+  "index" : 65,
+  "nodes" : [ "(0,0)[HOME]" ],
+  "dptBins" : [ 3 ]
+}, {
+  "index" : 66,
+  "nodes" : [ "(1,1)[WORK]", "(1,3)[EDUCATION]", "(4,4)[OTHER]", "(1,1)[OTHER]", "(2,0)[EDUCATION]", "(2,4)[OTHER]", "(2,0)[OTHER]", "(2,3)[WORK]" ],
+  "dptBins" : [ 0, 3, 4, 13, 15, 17, 18, 19 ]
+}, {
+  "index" : 67,
+  "nodes" : [ "(1,1)[OTHER]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 4, 21 ]
+}, {
+  "index" : 68,
+  "nodes" : [ "(4,2)[EDUCATION]", "(2,3)[WORK]", "(2,4)[OTHER]", "(3,1)[EDUCATION]" ],
+  "dptBins" : [ 4, 6, 8, 18 ]
+}, {
+  "index" : 69,
+  "nodes" : [ "(3,1)[OTHER]", "(1,4)[EDUCATION]", "(3,2)[WORK]" ],
+  "dptBins" : [ 0, 9, 16 ]
+}, {
+  "index" : 70,
+  "nodes" : [ "(3,4)[HOME]", "(1,4)[OTHER]", "(2,3)[WORK]", "(1,4)[HOME]" ],
+  "dptBins" : [ 11, 14, 22, 23 ]
+}, {
+  "index" : 71,
+  "nodes" : [ "(3,4)[OTHER]", "(4,1)[WORK]" ],
+  "dptBins" : [ 3, 9 ]
+}, {
+  "index" : 72,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 73,
+  "nodes" : [ "(1,4)[OTHER]", "(4,1)[WORK]" ],
+  "dptBins" : [ 7, 10 ]
+}, {
+  "index" : 74,
+  "nodes" : [ "(3,4)[WORK]" ],
+  "dptBins" : [ 15 ]
+}, {
+  "index" : 75,
+  "nodes" : [ "(2,2)[HOME]", "(2,4)[EDUCATION]", "(0,3)[HOME]", "(1,1)[HOME]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 4, 5, 6, 8, 13 ]
+}, {
+  "index" : 76,
+  "nodes" : [ "(3,3)[WORK]", "(0,2)[WORK]", "(4,4)[OTHER]" ],
+  "dptBins" : [ 0, 1, 18 ]
+}, {
+  "index" : 77,
+  "nodes" : [ "(0,0)[WORK]", "(0,0)[WORK]" ],
+  "dptBins" : [ 6, 20 ]
+}, {
+  "index" : 78,
+  "nodes" : [ "(2,4)[WORK]", "(3,0)[EDUCATION]", "(0,0)[WORK]" ],
+  "dptBins" : [ 2, 12, 18 ]
+}, {
+  "index" : 79,
+  "nodes" : [ "(2,3)[HOME]", "(4,3)[OTHER]", "(4,0)[OTHER]" ],
+  "dptBins" : [ 8, 11, 19 ]
+}, {
+  "index" : 80,
+  "nodes" : [ "(4,2)[HOME]", "(2,0)[WORK]", "(2,4)[OTHER]", "(3,4)[WORK]", "(1,1)[HOME]" ],
+  "dptBins" : [ 4, 5, 12, 22, 23 ]
+}, {
+  "index" : 81,
+  "nodes" : [ "(2,0)[EDUCATION]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 1, 3 ]
+}, {
+  "index" : 82,
+  "nodes" : [ "(2,2)[HOME]", "(1,2)[WORK]", "(4,0)[HOME]" ],
+  "dptBins" : [ 6, 12, 17 ]
+}, {
+  "index" : 83,
+  "nodes" : [ "(3,1)[OTHER]", "(4,4)[OTHER]", "(4,4)[EDUCATION]" ],
+  "dptBins" : [ 8, 17, 19 ]
+}, {
+  "index" : 84,
+  "nodes" : [ "(1,2)[EDUCATION]" ],
+  "dptBins" : [ 8 ]
+}, {
+  "index" : 85,
+  "nodes" : [ "(0,1)[HOME]", "(1,0)[WORK]" ],
+  "dptBins" : [ 15, 19 ]
+}, {
+  "index" : 86,
+  "nodes" : [ "(1,1)[EDUCATION]", "(3,1)[OTHER]", "(0,1)[EDUCATION]" ],
+  "dptBins" : [ 3, 13, 18 ]
+}, {
+  "index" : 87,
+  "nodes" : [ "(0,2)[HOME]", "(2,0)[OTHER]", "(0,4)[WORK]" ],
+  "dptBins" : [ 7, 9, 18 ]
+}, {
+  "index" : 88,
+  "nodes" : [ "(2,0)[OTHER]", "(2,0)[WORK]", "(3,1)[HOME]", "(1,3)[EDUCATION]" ],
+  "dptBins" : [ 0, 8, 9, 13 ]
+}, {
+  "index" : 89,
+  "nodes" : [ "(1,3)[OTHER]", "(1,0)[OTHER]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 2, 20, 22 ]
+}, {
+  "index" : 90,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 91,
+  "nodes" : [ "(3,1)[OTHER]", "(3,2)[WORK]" ],
+  "dptBins" : [ 12, 18 ]
+}, {
+  "index" : 92,
+  "nodes" : [ "(4,4)[OTHER]", "(4,2)[OTHER]", "(4,3)[WORK]", "(0,1)[EDUCATION]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 1, 7, 16, 18, 20 ]
+}, {
+  "index" : 93,
+  "nodes" : [ "(0,4)[HOME]", "(0,4)[WORK]" ],
+  "dptBins" : [ 14, 22 ]
+}, {
+  "index" : 94,
+  "nodes" : [ "(1,4)[EDUCATION]", "(1,1)[WORK]", "(2,2)[OTHER]", "(0,1)[EDUCATION]", "(2,4)[HOME]", "(1,2)[HOME]" ],
+  "dptBins" : [ 6, 9, 13, 15, 18, 21 ]
+}, {
+  "index" : 95,
+  "nodes" : [ "(1,3)[HOME]", "(1,0)[EDUCATION]", "(1,0)[WORK]" ],
+  "dptBins" : [ 1, 9, 15 ]
+}, {
+  "index" : 96,
+  "nodes" : [ "(3,1)[EDUCATION]", "(4,4)[EDUCATION]", "(4,3)[OTHER]" ],
+  "dptBins" : [ 2, 8, 9 ]
+}, {
+  "index" : 97,
+  "nodes" : [ "(2,0)[HOME]", "(2,3)[OTHER]", "(3,1)[HOME]", "(4,4)[WORK]" ],
+  "dptBins" : [ 0, 1, 6, 22 ]
+}, {
+  "index" : 98,
+  "nodes" : [ "(2,2)[OTHER]", "(1,4)[OTHER]", "(1,1)[OTHER]", "(3,1)[OTHER]" ],
+  "dptBins" : [ 1, 2, 5, 6 ]
+}, {
+  "index" : 99,
+  "nodes" : [ "(3,0)[HOME]", "(2,3)[EDUCATION]" ],
+  "dptBins" : [ 18, 20 ]
+}, {
+  "index" : 100,
+  "nodes" : [ "(0,3)[EDUCATION]", "(1,0)[EDUCATION]", "(1,2)[HOME]", "(1,2)[WORK]" ],
+  "dptBins" : [ 0, 10, 20, 21 ]
+}, {
+  "index" : 101,
+  "nodes" : [ "(3,2)[WORK]", "(4,1)[WORK]", "(2,0)[EDUCATION]", "(4,4)[EDUCATION]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 1, 3, 5, 12, 19 ]
+}, {
+  "index" : 102,
+  "nodes" : [ "(0,4)[HOME]", "(1,4)[HOME]" ],
+  "dptBins" : [ 6, 16 ]
+}, {
+  "index" : 103,
+  "nodes" : [ "(3,3)[OTHER]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 10, 13 ]
+}, {
+  "index" : 104,
+  "nodes" : [ "(3,2)[EDUCATION]", "(0,2)[OTHER]", "(3,4)[EDUCATION]", "(3,0)[OTHER]" ],
+  "dptBins" : [ 2, 4, 14, 15 ]
+}, {
+  "index" : 105,
+  "nodes" : [ "(2,3)[HOME]", "(0,0)[WORK]", "(3,3)[HOME]" ],
+  "dptBins" : [ 9, 13, 21 ]
+}, {
+  "index" : 106,
+  "nodes" : [ "(4,3)[OTHER]", "(2,0)[HOME]" ],
+  "dptBins" : [ 19, 20 ]
+}, {
+  "index" : 107,
+  "nodes" : [ "(3,0)[HOME]", "(1,1)[OTHER]", "(1,4)[OTHER]", "(1,0)[EDUCATION]", "(4,1)[HOME]" ],
+  "dptBins" : [ 0, 11, 13, 15, 18 ]
+}, {
+  "index" : 108,
+  "nodes" : [ "(2,4)[HOME]", "(2,1)[OTHER]" ],
+  "dptBins" : [ 7, 19 ]
+}, {
+  "index" : 109,
+  "nodes" : [ "(2,4)[WORK]" ],
+  "dptBins" : [ 19 ]
+}, {
+  "index" : 110,
+  "nodes" : [ "(2,4)[OTHER]", "(1,0)[HOME]", "(0,3)[HOME]", "(3,4)[HOME]" ],
+  "dptBins" : [ 6, 10, 18, 23 ]
+}, {
+  "index" : 111,
+  "nodes" : [ "(4,0)[EDUCATION]", "(2,0)[OTHER]", "(2,2)[WORK]" ],
+  "dptBins" : [ 6, 8, 20 ]
+}, {
+  "index" : 112,
+  "nodes" : [ "(2,1)[HOME]", "(3,0)[OTHER]", "(3,3)[HOME]", "(3,0)[EDUCATION]", "(4,2)[EDUCATION]" ],
+  "dptBins" : [ 8, 10, 17, 18, 20 ]
+}, {
+  "index" : 113,
+  "nodes" : [ "(2,4)[WORK]", "(3,4)[HOME]", "(2,0)[WORK]", "(1,4)[OTHER]" ],
+  "dptBins" : [ 5, 7, 15, 19 ]
+}, {
+  "index" : 114,
+  "nodes" : [ "(1,1)[WORK]", "(3,0)[WORK]" ],
+  "dptBins" : [ 7, 16 ]
+}, {
+  "index" : 115,
+  "nodes" : [ "(3,4)[HOME]", "(1,0)[EDUCATION]", "(3,1)[HOME]", "(4,0)[EDUCATION]", "(1,4)[HOME]" ],
+  "dptBins" : [ 2, 3, 17, 20, 21 ]
+}, {
+  "index" : 116,
+  "nodes" : [ "(0,1)[HOME]", "(4,0)[WORK]" ],
+  "dptBins" : [ 7, 17 ]
+}, {
+  "index" : 117,
+  "nodes" : [ "(4,4)[WORK]", "(3,4)[OTHER]" ],
+  "dptBins" : [ 2, 3 ]
+}, {
+  "index" : 118,
+  "nodes" : [ "(2,0)[HOME]", "(4,3)[EDUCATION]", "(2,3)[HOME]", "(3,0)[EDUCATION]" ],
+  "dptBins" : [ 0, 6, 8, 10 ]
+}, {
+  "index" : 119,
+  "nodes" : [ "(2,4)[HOME]", "(4,4)[HOME]", "(0,0)[HOME]" ],
+  "dptBins" : [ 7, 12, 18 ]
+}, {
+  "index" : 120,
+  "nodes" : [ "(1,1)[WORK]", "(2,4)[OTHER]", "(2,3)[HOME]" ],
+  "dptBins" : [ 3, 7, 14 ]
+}, {
+  "index" : 121,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 122,
+  "nodes" : [ "(2,0)[HOME]", "(3,1)[WORK]", "(2,3)[WORK]" ],
+  "dptBins" : [ 9, 17, 18 ]
+}, {
+  "index" : 123,
+  "nodes" : [ "(2,4)[HOME]", "(4,4)[EDUCATION]", "(3,1)[HOME]", "(0,0)[WORK]" ],
+  "dptBins" : [ 0, 1, 7, 14 ]
+}, {
+  "index" : 124,
+  "nodes" : [ "(1,3)[EDUCATION]", "(3,2)[WORK]", "(2,0)[HOME]", "(4,1)[OTHER]", "(2,4)[WORK]", "(3,0)[HOME]" ],
+  "dptBins" : [ 2, 3, 8, 12, 13, 16 ]
+}, {
+  "index" : 125,
+  "nodes" : [ "(2,0)[WORK]", "(0,0)[HOME]", "(2,3)[WORK]" ],
+  "dptBins" : [ 8, 11, 13 ]
+}, {
+  "index" : 126,
+  "nodes" : [ "(4,1)[HOME]", "(2,3)[WORK]" ],
+  "dptBins" : [ 0, 17 ]
+}, {
+  "index" : 127,
+  "nodes" : [ "(4,3)[EDUCATION]", "(0,4)[HOME]", "(2,4)[OTHER]", "(2,3)[WORK]" ],
+  "dptBins" : [ 2, 4, 7, 19 ]
+}, {
+  "index" : 128,
+  "nodes" : [ "(1,4)[HOME]", "(3,3)[OTHER]" ],
+  "dptBins" : [ 7, 10 ]
+}, {
+  "index" : 129,
+  "nodes" : [ "(4,3)[WORK]", "(4,1)[WORK]" ],
+  "dptBins" : [ 7, 15 ]
+}, {
+  "index" : 130,
+  "nodes" : [ "(2,3)[WORK]" ],
+  "dptBins" : [ 10 ]
+}, {
+  "index" : 131,
+  "nodes" : [ "(3,1)[HOME]", "(0,4)[EDUCATION]", "(4,0)[WORK]", "(3,1)[HOME]" ],
+  "dptBins" : [ 11, 15, 16, 23 ]
+}, {
+  "index" : 132,
+  "nodes" : [ "(4,2)[WORK]" ],
+  "dptBins" : [ 23 ]
+}, {
+  "index" : 133,
+  "nodes" : [ "(3,3)[EDUCATION]", "(0,2)[EDUCATION]", "(2,1)[WORK]", "(4,3)[OTHER]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 0, 9, 13, 15, 20 ]
+}, {
+  "index" : 134,
+  "nodes" : [ "(2,0)[HOME]", "(4,2)[WORK]", "(3,4)[HOME]", "(3,0)[HOME]" ],
+  "dptBins" : [ 7, 10, 13, 19 ]
+}, {
+  "index" : 135,
+  "nodes" : [ "(1,0)[HOME]", "(2,2)[WORK]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 8, 15, 20 ]
+}, {
+  "index" : 136,
+  "nodes" : [ "(4,3)[EDUCATION]", "(1,1)[HOME]", "(3,3)[HOME]" ],
+  "dptBins" : [ 3, 7, 14 ]
+}, {
+  "index" : 137,
+  "nodes" : [ "(0,1)[HOME]", "(0,2)[WORK]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 8, 18, 19 ]
+}, {
+  "index" : 138,
+  "nodes" : [ "(2,3)[HOME]", "(3,1)[OTHER]", "(2,0)[OTHER]", "(4,4)[HOME]", "(3,3)[EDUCATION]" ],
+  "dptBins" : [ 8, 15, 17, 20, 21 ]
+}, {
+  "index" : 139,
+  "nodes" : [ "(2,4)[EDUCATION]", "(3,4)[EDUCATION]", "(4,0)[WORK]" ],
+  "dptBins" : [ 8, 16, 23 ]
+}, {
+  "index" : 140,
+  "nodes" : [ "(4,0)[WORK]" ],
+  "dptBins" : [ 2 ]
+}, {
+  "index" : 141,
+  "nodes" : [ "(4,0)[HOME]", "(2,0)[HOME]", "(3,0)[WORK]" ],
+  "dptBins" : [ 8, 10, 18 ]
+}, {
+  "index" : 142,
+  "nodes" : [ "(2,0)[EDUCATION]", "(1,1)[WORK]", "(1,3)[OTHER]" ],
+  "dptBins" : [ 3, 17, 19 ]
+}, {
+  "index" : 143,
+  "nodes" : [ "(0,3)[WORK]" ],
+  "dptBins" : [ 0 ]
+}, {
+  "index" : 144,
+  "nodes" : [ "(0,4)[OTHER]", "(2,2)[OTHER]", "(1,4)[WORK]", "(2,3)[WORK]" ],
+  "dptBins" : [ 4, 10, 12, 18 ]
+}, {
+  "index" : 145,
+  "nodes" : [ "(0,0)[HOME]", "(3,0)[HOME]", "(0,3)[OTHER]", "(0,2)[WORK]" ],
+  "dptBins" : [ 6, 8, 12, 18 ]
+}, {
+  "index" : 146,
+  "nodes" : [ "(2,0)[EDUCATION]", "(3,2)[EDUCATION]" ],
+  "dptBins" : [ 12, 18 ]
+}, {
+  "index" : 147,
+  "nodes" : [ "(2,3)[EDUCATION]", "(4,4)[HOME]", "(4,0)[WORK]" ],
+  "dptBins" : [ 0, 13, 17 ]
+}, {
+  "index" : 148,
+  "nodes" : [ "(2,0)[EDUCATION]", "(3,0)[WORK]", "(1,2)[HOME]", "(2,4)[EDUCATION]", "(2,4)[HOME]" ],
+  "dptBins" : [ 7, 13, 16, 17, 18 ]
+}, {
+  "index" : 149,
+  "nodes" : [ "(3,1)[OTHER]" ],
+  "dptBins" : [ 23 ]
+}, {
+  "index" : 150,
+  "nodes" : [ "(3,1)[WORK]" ],
+  "dptBins" : [ 23 ]
+}, {
+  "index" : 151,
+  "nodes" : [ "(1,4)[EDUCATION]", "(1,0)[EDUCATION]" ],
+  "dptBins" : [ 5, 11 ]
+}, {
+  "index" : 152,
+  "nodes" : [ "(4,1)[OTHER]", "(2,2)[OTHER]", "(0,0)[WORK]", "(1,2)[EDUCATION]" ],
+  "dptBins" : [ 0, 8, 13, 14 ]
+}, {
+  "index" : 153,
+  "nodes" : [ "(2,2)[HOME]", "(1,1)[HOME]", "(2,2)[HOME]" ],
+  "dptBins" : [ 9, 14, 21 ]
+}, {
+  "index" : 154,
+  "nodes" : [ "(0,2)[OTHER]", "(3,3)[WORK]" ],
+  "dptBins" : [ 1, 9 ]
+}, {
+  "index" : 155,
+  "nodes" : [ "(3,3)[HOME]" ],
+  "dptBins" : [ 22 ]
+}, {
+  "index" : 156,
+  "nodes" : [ "(3,0)[HOME]", "(0,1)[OTHER]", "(4,1)[OTHER]", "(3,0)[WORK]" ],
+  "dptBins" : [ 2, 8, 11, 18 ]
+}, {
+  "index" : 157,
+  "nodes" : [ "(1,0)[HOME]", "(2,4)[OTHER]" ],
+  "dptBins" : [ 7, 18 ]
+}, {
+  "index" : 158,
+  "nodes" : [ "(0,4)[EDUCATION]", "(3,4)[WORK]", "(2,3)[EDUCATION]", "(2,0)[OTHER]", "(4,4)[WORK]", "(3,1)[WORK]", "(4,1)[WORK]" ],
+  "dptBins" : [ 1, 2, 3, 7, 14, 16, 21 ]
+}, {
+  "index" : 159,
+  "nodes" : [ "(0,0)[HOME]", "(4,0)[HOME]" ],
+  "dptBins" : [ 7, 19 ]
+}, {
+  "index" : 160,
+  "nodes" : [ "(2,4)[HOME]", "(4,0)[WORK]" ],
+  "dptBins" : [ 10, 12 ]
+}, {
+  "index" : 161,
+  "nodes" : [ "(3,1)[OTHER]", "(3,1)[OTHER]", "(3,0)[WORK]" ],
+  "dptBins" : [ 0, 9, 17 ]
+}, {
+  "index" : 162,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 163,
+  "nodes" : [ "(2,3)[HOME]", "(2,1)[WORK]", "(3,1)[OTHER]" ],
+  "dptBins" : [ 7, 17, 18 ]
+}, {
+  "index" : 164,
+  "nodes" : [ "(4,2)[WORK]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 1, 18 ]
+}, {
+  "index" : 165,
+  "nodes" : [ "(3,0)[EDUCATION]", "(2,3)[WORK]" ],
+  "dptBins" : [ 14, 22 ]
+}, {
+  "index" : 166,
+  "nodes" : [ "(2,4)[WORK]", "(2,1)[EDUCATION]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 5, 6, 23 ]
+}, {
+  "index" : 167,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 168,
+  "nodes" : [ "(1,1)[EDUCATION]", "(3,2)[WORK]", "(2,1)[OTHER]", "(0,2)[WORK]" ],
+  "dptBins" : [ 9, 13, 19, 22 ]
+}, {
+  "index" : 169,
+  "nodes" : [ "(3,4)[WORK]", "(3,0)[WORK]", "(0,1)[OTHER]", "(4,2)[EDUCATION]" ],
+  "dptBins" : [ 9, 13, 20, 22 ]
+}, {
+  "index" : 170,
+  "nodes" : [ "(2,0)[HOME]", "(3,3)[EDUCATION]", "(3,0)[HOME]" ],
+  "dptBins" : [ 11, 13, 23 ]
+}, {
+  "index" : 171,
+  "nodes" : [ "(0,0)[EDUCATION]", "(3,3)[OTHER]", "(3,0)[WORK]" ],
+  "dptBins" : [ 3, 7, 23 ]
+}, {
+  "index" : 172,
+  "nodes" : [ "(3,4)[WORK]", "(1,2)[OTHER]", "(2,2)[WORK]", "(2,3)[OTHER]" ],
+  "dptBins" : [ 2, 15, 17, 18 ]
+}, {
+  "index" : 173,
+  "nodes" : [ "(3,1)[HOME]", "(1,2)[HOME]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 7, 11, 13 ]
+}, {
+  "index" : 174,
+  "nodes" : [ "(0,0)[HOME]" ],
+  "dptBins" : [ 13 ]
+}, {
+  "index" : 175,
+  "nodes" : [ "(0,4)[EDUCATION]", "(3,4)[WORK]" ],
+  "dptBins" : [ 12, 18 ]
+}, {
+  "index" : 176,
+  "nodes" : [ "(4,2)[EDUCATION]", "(3,3)[WORK]", "(3,0)[OTHER]", "(1,1)[HOME]", "(4,4)[WORK]" ],
+  "dptBins" : [ 0, 7, 9, 12, 23 ]
+}, {
+  "index" : 177,
+  "nodes" : [ "(1,3)[HOME]", "(4,2)[EDUCATION]", "(1,0)[OTHER]", "(1,1)[HOME]" ],
+  "dptBins" : [ 3, 11, 12, 13 ]
+}, {
+  "index" : 178,
+  "nodes" : [ "(2,2)[HOME]", "(1,4)[HOME]" ],
+  "dptBins" : [ 11, 21 ]
+}, {
+  "index" : 179,
+  "nodes" : [ "(1,3)[HOME]", "(0,1)[WORK]" ],
+  "dptBins" : [ 8, 17 ]
+}, {
+  "index" : 180,
+  "nodes" : [ "(2,4)[HOME]", "(3,1)[EDUCATION]" ],
+  "dptBins" : [ 16, 21 ]
+}, {
+  "index" : 181,
+  "nodes" : [ "(2,3)[OTHER]", "(3,3)[WORK]" ],
+  "dptBins" : [ 0, 13 ]
+}, {
+  "index" : 182,
+  "nodes" : [ "(3,3)[HOME]", "(3,0)[EDUCATION]" ],
+  "dptBins" : [ 4, 6 ]
+}, {
+  "index" : 183,
+  "nodes" : [ "(0,2)[HOME]", "(4,1)[WORK]", "(2,2)[WORK]" ],
+  "dptBins" : [ 1, 13, 14 ]
+}, {
+  "index" : 184,
+  "nodes" : [ "(4,0)[WORK]", "(1,1)[WORK]" ],
+  "dptBins" : [ 10, 20 ]
+}, {
+  "index" : 185,
+  "nodes" : [ "(3,1)[HOME]" ],
+  "dptBins" : [ 15 ]
+}, {
+  "index" : 186,
+  "nodes" : [ "(1,3)[HOME]" ],
+  "dptBins" : [ 8 ]
+}, {
+  "index" : 187,
+  "nodes" : [ "(1,1)[HOME]", "(0,0)[OTHER]", "(3,1)[HOME]" ],
+  "dptBins" : [ 17, 19, 21 ]
+}, {
+  "index" : 188,
+  "nodes" : [ "(0,1)[EDUCATION]", "(1,0)[WORK]", "(2,0)[EDUCATION]", "(1,0)[WORK]" ],
+  "dptBins" : [ 1, 2, 11, 17 ]
+}, {
+  "index" : 189,
+  "nodes" : [ "(0,1)[OTHER]" ],
+  "dptBins" : [ 7 ]
+}, {
+  "index" : 190,
+  "nodes" : [ "(3,2)[OTHER]", "(4,3)[WORK]", "(1,2)[EDUCATION]" ],
+  "dptBins" : [ 12, 18, 21 ]
+}, {
+  "index" : 191,
+  "nodes" : [ "(4,3)[HOME]", "(2,0)[HOME]", "(2,0)[HOME]", "(4,2)[WORK]" ],
+  "dptBins" : [ 6, 7, 16, 19 ]
+}, {
+  "index" : 192,
+  "nodes" : [ "(3,4)[HOME]", "(2,2)[WORK]", "(3,1)[HOME]", "(3,3)[WORK]" ],
+  "dptBins" : [ 5, 8, 20, 22 ]
+}, {
+  "index" : 193,
+  "nodes" : [ "(4,0)[HOME]", "(0,0)[HOME]", "(0,0)[HOME]" ],
+  "dptBins" : [ 6, 13, 18 ]
+}, {
+  "index" : 194,
+  "nodes" : [ "(2,3)[HOME]" ],
+  "dptBins" : [ 9 ]
+}, {
+  "index" : 195,
+  "nodes" : [ "(0,1)[HOME]", "(0,2)[HOME]", "(3,4)[WORK]" ],
+  "dptBins" : [ 4, 12, 18 ]
+}, {
+  "index" : 196,
+  "nodes" : [ "(3,2)[HOME]", "(3,3)[EDUCATION]" ],
+  "dptBins" : [ 8, 20 ]
+}, {
+  "index" : 197,
+  "nodes" : [ "(0,4)[WORK]", "(1,1)[OTHER]", "(3,2)[HOME]" ],
+  "dptBins" : [ 5, 6, 12 ]
+}, {
+  "index" : 198,
+  "nodes" : [ "(1,1)[OTHER]", "(1,1)[EDUCATION]", "(3,3)[HOME]" ],
+  "dptBins" : [ 16, 18, 21 ]
+}, {
+  "index" : 199,
+  "nodes" : [ "(3,0)[OTHER]", "(2,1)[OTHER]", "(1,0)[OTHER]", "(2,0)[WORK]", "(2,4)[HOME]" ],
+  "dptBins" : [ 5, 10, 11, 13, 23 ]
+}, {
+  "index" : 200,
+  "nodes" : [ "(0,0)[HOME]", "(1,2)[EDUCATION]" ],
+  "dptBins" : [ 7, 19 ]
+}, {
+  "index" : 201,
+  "nodes" : [ "(2,2)[HOME]" ],
+  "dptBins" : [ 11 ]
+}, {
+  "index" : 202,
+  "nodes" : [ "(4,2)[OTHER]", "(1,2)[WORK]" ],
+  "dptBins" : [ 17, 21 ]
+}, {
+  "index" : 203,
+  "nodes" : [ "(3,1)[HOME]" ],
+  "dptBins" : [ 2 ]
+}, {
+  "index" : 204,
+  "nodes" : [ "(2,4)[EDUCATION]", "(0,4)[EDUCATION]", "(4,3)[OTHER]", "(1,1)[HOME]", "(1,1)[HOME]", "(4,0)[EDUCATION]", "(4,1)[WORK]" ],
+  "dptBins" : [ 0, 2, 8, 11, 16, 19, 23 ]
+}, {
+  "index" : 205,
+  "nodes" : [ "(1,0)[HOME]", "(3,4)[WORK]", "(3,1)[WORK]" ],
+  "dptBins" : [ 7, 16, 21 ]
+}, {
+  "index" : 206,
+  "nodes" : [ "(1,1)[WORK]", "(0,1)[WORK]", "(4,0)[OTHER]", "(4,4)[HOME]" ],
+  "dptBins" : [ 0, 10, 11, 20 ]
+}, {
+  "index" : 207,
+  "nodes" : [ "(1,3)[HOME]", "(2,4)[WORK]", "(2,3)[EDUCATION]" ],
+  "dptBins" : [ 8, 11, 19 ]
+}, {
+  "index" : 208,
+  "nodes" : [ "(2,4)[WORK]" ],
+  "dptBins" : [ 19 ]
+}, {
+  "index" : 209,
+  "nodes" : [ "(3,1)[HOME]", "(3,2)[HOME]", "(0,4)[HOME]" ],
+  "dptBins" : [ 8, 20, 21 ]
+}, {
+  "index" : 210,
+  "nodes" : [ "(2,0)[OTHER]", "(2,0)[OTHER]", "(3,1)[HOME]", "(0,3)[WORK]" ],
+  "dptBins" : [ 8, 14, 18, 23 ]
+}, {
+  "index" : 211,
+  "nodes" : [ "(3,1)[HOME]" ],
+  "dptBins" : [ 18 ]
+}, {
+  "index" : 212,
+  "nodes" : [ "(2,2)[EDUCATION]", "(1,1)[HOME]", "(2,4)[OTHER]", "(4,4)[EDUCATION]", "(0,3)[WORK]", "(4,0)[OTHER]", "(2,2)[WORK]" ],
+  "dptBins" : [ 0, 3, 13, 15, 19, 21, 23 ]
+}, {
+  "index" : 213,
+  "nodes" : [ "(0,1)[WORK]", "(2,2)[EDUCATION]", "(3,4)[HOME]", "(3,1)[HOME]" ],
+  "dptBins" : [ 2, 3, 4, 19 ]
+}, {
+  "index" : 214,
+  "nodes" : [ "(2,2)[EDUCATION]" ],
+  "dptBins" : [ 23 ]
+}, {
+  "index" : 215,
+  "nodes" : [ "(4,1)[HOME]", "(0,3)[OTHER]", "(2,2)[WORK]", "(3,1)[EDUCATION]" ],
+  "dptBins" : [ 2, 9, 16, 23 ]
+}, {
+  "index" : 216,
+  "nodes" : [ "(1,1)[OTHER]", "(0,1)[OTHER]", "(1,1)[HOME]" ],
+  "dptBins" : [ 2, 6, 12 ]
+}, {
+  "index" : 217,
+  "nodes" : [ "(3,0)[HOME]", "(3,1)[EDUCATION]", "(2,0)[WORK]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 0, 6, 10, 12 ]
+}, {
+  "index" : 218,
+  "nodes" : [ "(2,0)[WORK]", "(4,2)[OTHER]", "(2,0)[WORK]" ],
+  "dptBins" : [ 7, 19, 22 ]
+}, {
+  "index" : 219,
+  "nodes" : [ "(0,1)[HOME]" ],
+  "dptBins" : [ 10 ]
+}, {
+  "index" : 220,
+  "nodes" : [ "(4,2)[HOME]", "(2,1)[OTHER]", "(1,4)[WORK]", "(3,3)[HOME]" ],
+  "dptBins" : [ 6, 7, 8, 12 ]
+}, {
+  "index" : 221,
+  "nodes" : [ "(4,1)[HOME]", "(4,2)[WORK]", "(1,2)[WORK]" ],
+  "dptBins" : [ 8, 16, 19 ]
+}, {
+  "index" : 222,
+  "nodes" : [ "(2,1)[HOME]", "(2,4)[WORK]" ],
+  "dptBins" : [ 6, 19 ]
+}, {
+  "index" : 223,
+  "nodes" : [ "(1,4)[HOME]" ],
+  "dptBins" : [ 6 ]
+}, {
+  "index" : 224,
+  "nodes" : [ "(4,1)[WORK]", "(2,1)[WORK]", "(3,2)[OTHER]", "(2,2)[EDUCATION]" ],
+  "dptBins" : [ 7, 15, 16, 18 ]
+}, {
+  "index" : 225,
+  "nodes" : [ "(2,4)[EDUCATION]", "(1,1)[HOME]", "(3,0)[EDUCATION]", "(1,1)[OTHER]", "(1,0)[WORK]", "(2,3)[EDUCATION]", "(0,3)[OTHER]" ],
+  "dptBins" : [ 0, 6, 7, 8, 15, 18, 19 ]
+}, {
+  "index" : 226,
+  "nodes" : [ "(4,0)[EDUCATION]", "(0,2)[OTHER]", "(2,2)[EDUCATION]" ],
+  "dptBins" : [ 0, 1, 21 ]
+}, {
+  "index" : 227,
+  "nodes" : [ "(2,2)[OTHER]", "(0,0)[HOME]" ],
+  "dptBins" : [ 17, 19 ]
+}, {
+  "index" : 228,
+  "nodes" : [ "(1,2)[EDUCATION]", "(4,1)[WORK]", "(2,0)[OTHER]", "(1,3)[WORK]" ],
+  "dptBins" : [ 5, 11, 15, 16 ]
+}, {
+  "index" : 229,
+  "nodes" : [ "(4,4)[HOME]", "(2,0)[OTHER]", "(1,0)[HOME]", "(1,1)[OTHER]", "(0,0)[HOME]", "(0,4)[WORK]" ],
+  "dptBins" : [ 0, 2, 3, 5, 9, 16 ]
+}, {
+  "index" : 230,
+  "nodes" : [ "(4,1)[EDUCATION]", "(1,2)[OTHER]", "(0,2)[WORK]", "(2,0)[HOME]" ],
+  "dptBins" : [ 3, 11, 15, 16 ]
+}, {
+  "index" : 231,
+  "nodes" : [ "(0,4)[HOME]" ],
+  "dptBins" : [ 18 ]
+}, {
+  "index" : 232,
+  "nodes" : [ "(2,0)[WORK]", "(4,1)[WORK]", "(3,0)[WORK]" ],
+  "dptBins" : [ 9, 18, 21 ]
+}, {
+  "index" : 233,
+  "nodes" : [ "(0,1)[WORK]", "(3,3)[EDUCATION]", "(3,1)[OTHER]" ],
+  "dptBins" : [ 11, 13, 15 ]
+}, {
+  "index" : 234,
+  "nodes" : [ "(2,3)[OTHER]", "(4,4)[WORK]" ],
+  "dptBins" : [ 8, 17 ]
+}, {
+  "index" : 235,
+  "nodes" : [ "(3,3)[OTHER]", "(4,0)[HOME]", "(2,4)[HOME]", "(0,1)[OTHER]", "(2,2)[EDUCATION]" ],
+  "dptBins" : [ 2, 3, 6, 16, 21 ]
+}, {
+  "index" : 236,
+  "nodes" : [ "(1,2)[EDUCATION]", "(3,1)[EDUCATION]", "(1,3)[WORK]", "(0,1)[HOME]" ],
+  "dptBins" : [ 0, 4, 12, 21 ]
+}, {
+  "index" : 237,
+  "nodes" : [ "(3,1)[HOME]", "(2,4)[WORK]" ],
+  "dptBins" : [ 9, 21 ]
+}, {
+  "index" : 238,
+  "nodes" : [ "(0,2)[OTHER]", "(1,1)[HOME]" ],
+  "dptBins" : [ 0, 21 ]
+}, {
+  "index" : 239,
+  "nodes" : [ "(1,1)[EDUCATION]", "(4,3)[WORK]" ],
+  "dptBins" : [ 7, 16 ]
+}, {
+  "index" : 240,
+  "nodes" : [ "(1,4)[HOME]", "(0,0)[EDUCATION]", "(2,4)[WORK]", "(1,4)[HOME]" ],
+  "dptBins" : [ 9, 14, 16, 20 ]
+}, {
+  "index" : 241,
+  "nodes" : [ "(0,3)[OTHER]", "(1,2)[WORK]", "(0,1)[WORK]" ],
+  "dptBins" : [ 10, 18, 23 ]
+}, {
+  "index" : 242,
+  "nodes" : [ "(2,4)[OTHER]", "(0,4)[EDUCATION]" ],
+  "dptBins" : [ 8, 11 ]
+}, {
+  "index" : 243,
+  "nodes" : [ "(3,1)[HOME]", "(3,2)[EDUCATION]", "(0,2)[WORK]" ],
+  "dptBins" : [ 8, 12, 18 ]
+}, {
+  "index" : 244,
+  "nodes" : [ "(1,3)[WORK]" ],
+  "dptBins" : [ 5 ]
+}, {
+  "index" : 245,
+  "nodes" : [ "(0,2)[OTHER]", "(3,2)[WORK]", "(0,2)[EDUCATION]", "(4,1)[OTHER]" ],
+  "dptBins" : [ 2, 3, 18, 19 ]
+}, {
+  "index" : 246,
+  "nodes" : [ "(2,3)[HOME]", "(4,1)[WORK]", "(0,2)[OTHER]" ],
+  "dptBins" : [ 7, 14, 15 ]
+}, {
+  "index" : 247,
+  "nodes" : [ "(4,0)[HOME]", "(2,0)[OTHER]", "(4,3)[EDUCATION]" ],
+  "dptBins" : [ 7, 15, 21 ]
+}, {
+  "index" : 248,
+  "nodes" : [ "(1,4)[HOME]", "(1,1)[WORK]", "(2,0)[HOME]" ],
+  "dptBins" : [ 5, 7, 17 ]
+}, {
+  "index" : 249,
+  "nodes" : [ "(0,3)[OTHER]", "(2,3)[WORK]", "(3,3)[EDUCATION]" ],
+  "dptBins" : [ 8, 10, 23 ]
+}, {
+  "index" : 250,
+  "nodes" : [ "(4,4)[EDUCATION]", "(0,0)[WORK]", "(1,3)[EDUCATION]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 8, 14, 19, 22 ]
+}, {
+  "index" : 251,
+  "nodes" : [ "(4,3)[OTHER]", "(3,2)[OTHER]", "(4,4)[WORK]" ],
+  "dptBins" : [ 0, 10, 16 ]
+}, {
+  "index" : 252,
+  "nodes" : [ "(2,1)[WORK]" ],
+  "dptBins" : [ 15 ]
+}, {
+  "index" : 253,
+  "nodes" : [ "(2,1)[HOME]", "(2,3)[WORK]", "(1,2)[WORK]" ],
+  "dptBins" : [ 8, 17, 21 ]
+}, {
+  "index" : 254,
+  "nodes" : [ "(3,4)[OTHER]", "(3,1)[WORK]" ],
+  "dptBins" : [ 10, 17 ]
+}, {
+  "index" : 255,
+  "nodes" : [ "(0,0)[HOME]" ],
+  "dptBins" : [ 8 ]
+}, {
+  "index" : 256,
+  "nodes" : [ "(3,0)[EDUCATION]" ],
+  "dptBins" : [ 5 ]
+}, {
+  "index" : 257,
+  "nodes" : [ "(3,2)[HOME]", "(3,4)[WORK]" ],
+  "dptBins" : [ 5, 21 ]
+}, {
+  "index" : 258,
+  "nodes" : [ "(4,2)[HOME]", "(1,4)[WORK]", "(0,0)[OTHER]", "(4,2)[HOME]" ],
+  "dptBins" : [ 9, 16, 19, 20 ]
+}, {
+  "index" : 259,
+  "nodes" : [ "(1,1)[HOME]", "(4,2)[WORK]", "(0,3)[OTHER]" ],
+  "dptBins" : [ 10, 18, 20 ]
+}, {
+  "index" : 260,
+  "nodes" : [ "(2,3)[EDUCATION]", "(3,3)[WORK]", "(4,2)[OTHER]", "(2,3)[HOME]" ],
+  "dptBins" : [ 2, 5, 19, 20 ]
+}, {
+  "index" : 261,
+  "nodes" : [ "(1,3)[EDUCATION]", "(4,4)[HOME]", "(0,0)[EDUCATION]", "(0,2)[WORK]" ],
+  "dptBins" : [ 0, 6, 10, 18 ]
+}, {
+  "index" : 262,
+  "nodes" : [ "(0,0)[EDUCATION]" ],
+  "dptBins" : [ 2 ]
+}, {
+  "index" : 263,
+  "nodes" : [ "(3,3)[HOME]", "(3,0)[HOME]" ],
+  "dptBins" : [ 13, 21 ]
+}, {
+  "index" : 264,
+  "nodes" : [ "(1,2)[HOME]", "(2,2)[WORK]", "(2,4)[HOME]" ],
+  "dptBins" : [ 10, 18, 21 ]
+}, {
+  "index" : 265,
+  "nodes" : [ "(3,2)[WORK]", "(2,0)[HOME]", "(4,2)[WORK]" ],
+  "dptBins" : [ 2, 7, 22 ]
+}, {
+  "index" : 266,
+  "nodes" : [ "(4,2)[OTHER]", "(4,1)[WORK]" ],
+  "dptBins" : [ 7, 10 ]
+}, {
+  "index" : 267,
+  "nodes" : [ "(2,3)[EDUCATION]", "(2,0)[WORK]", "(4,3)[HOME]" ],
+  "dptBins" : [ 11, 18, 23 ]
+}, {
+  "index" : 268,
+  "nodes" : [ "(0,0)[OTHER]", "(3,1)[WORK]", "(3,4)[OTHER]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 7, 10, 20, 22 ]
+}, {
+  "index" : 269,
+  "nodes" : [ "(1,2)[OTHER]", "(2,2)[OTHER]", "(0,1)[HOME]" ],
+  "dptBins" : [ 14, 18, 21 ]
+}, {
+  "index" : 270,
+  "nodes" : [ "(1,1)[OTHER]", "(1,4)[EDUCATION]" ],
+  "dptBins" : [ 4, 5 ]
+}, {
+  "index" : 271,
+  "nodes" : [ "(2,0)[OTHER]", "(1,2)[OTHER]", "(3,0)[EDUCATION]" ],
+  "dptBins" : [ 5, 8, 20 ]
+}, {
+  "index" : 272,
+  "nodes" : [ "(4,4)[OTHER]" ],
+  "dptBins" : [ 20 ]
+}, {
+  "index" : 273,
+  "nodes" : [ "(0,0)[OTHER]" ],
+  "dptBins" : [ 15 ]
+}, {
+  "index" : 274,
+  "nodes" : [ "(1,1)[HOME]", "(2,0)[EDUCATION]", "(1,3)[WORK]", "(3,2)[OTHER]" ],
+  "dptBins" : [ 10, 12, 16, 20 ]
+}, {
+  "index" : 275,
+  "nodes" : [ "(2,0)[OTHER]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 9, 12 ]
+}, {
+  "index" : 276,
+  "nodes" : [ "(4,2)[EDUCATION]", "(0,2)[WORK]", "(3,3)[EDUCATION]" ],
+  "dptBins" : [ 7, 14, 19 ]
+}, {
+  "index" : 277,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 278,
+  "nodes" : [ "(0,2)[EDUCATION]", "(2,4)[WORK]", "(0,2)[OTHER]" ],
+  "dptBins" : [ 1, 4, 21 ]
+}, {
+  "index" : 279,
+  "nodes" : [ "(2,0)[WORK]", "(1,2)[OTHER]", "(3,3)[WORK]", "(1,1)[HOME]" ],
+  "dptBins" : [ 3, 7, 14, 21 ]
+}, {
+  "index" : 280,
+  "nodes" : [ "(1,3)[EDUCATION]", "(3,4)[HOME]" ],
+  "dptBins" : [ 5, 23 ]
+}, {
+  "index" : 281,
+  "nodes" : [ "(1,4)[HOME]" ],
+  "dptBins" : [ 17 ]
+}, {
+  "index" : 282,
+  "nodes" : [ "(0,1)[HOME]", "(0,2)[WORK]", "(0,2)[HOME]" ],
+  "dptBins" : [ 3, 5, 9 ]
+}, {
+  "index" : 283,
+  "nodes" : [ "(3,3)[OTHER]", "(3,2)[EDUCATION]", "(2,3)[EDUCATION]", "(2,4)[EDUCATION]", "(3,4)[OTHER]" ],
+  "dptBins" : [ 3, 7, 8, 13, 16 ]
+}, {
+  "index" : 284,
+  "nodes" : [ "(1,2)[HOME]", "(0,0)[WORK]" ],
+  "dptBins" : [ 8, 17 ]
+}, {
+  "index" : 285,
+  "nodes" : [ "(1,1)[HOME]", "(3,4)[HOME]", "(1,1)[HOME]" ],
+  "dptBins" : [ 9, 10, 19 ]
+}, {
+  "index" : 286,
+  "nodes" : [ "(3,1)[EDUCATION]", "(4,2)[WORK]" ],
+  "dptBins" : [ 3, 4 ]
+}, {
+  "index" : 287,
+  "nodes" : [ "(0,3)[OTHER]", "(1,0)[OTHER]", "(3,3)[WORK]" ],
+  "dptBins" : [ 13, 16, 22 ]
+}, {
+  "index" : 288,
+  "nodes" : [ "(4,1)[HOME]" ],
+  "dptBins" : [ 21 ]
+}, {
+  "index" : 289,
+  "nodes" : [ "(0,2)[HOME]", "(2,0)[EDUCATION]", "(1,4)[HOME]", "(4,3)[WORK]" ],
+  "dptBins" : [ 9, 20, 22, 23 ]
+}, {
+  "index" : 290,
+  "nodes" : [ "(1,0)[OTHER]", "(2,1)[EDUCATION]", "(3,3)[WORK]", "(2,2)[HOME]" ],
+  "dptBins" : [ 5, 9, 18, 23 ]
+}, {
+  "index" : 291,
+  "nodes" : [ "(3,1)[OTHER]", "(4,4)[HOME]", "(0,2)[EDUCATION]" ],
+  "dptBins" : [ 2, 8, 21 ]
+}, {
+  "index" : 292,
+  "nodes" : [ "(4,4)[HOME]", "(2,0)[WORK]" ],
+  "dptBins" : [ 9, 21 ]
+}, {
+  "index" : 293,
+  "nodes" : [ "(1,0)[HOME]", "(2,0)[HOME]", "(0,1)[EDUCATION]" ],
+  "dptBins" : [ 1, 5, 14 ]
+}, {
+  "index" : 294,
+  "nodes" : [ "(4,1)[HOME]", "(3,1)[WORK]" ],
+  "dptBins" : [ 9, 17 ]
+}, {
+  "index" : 295,
+  "nodes" : [ "(1,0)[HOME]", "(2,0)[OTHER]", "(1,1)[WORK]", "(4,0)[OTHER]" ],
+  "dptBins" : [ 2, 7, 16, 17 ]
+}, {
+  "index" : 296,
+  "nodes" : [ "(0,2)[EDUCATION]", "(0,3)[EDUCATION]", "(1,3)[OTHER]", "(0,1)[HOME]", "(3,0)[OTHER]" ],
+  "dptBins" : [ 9, 13, 14, 16, 23 ]
+}, {
+  "index" : 297,
+  "nodes" : [ "(2,2)[EDUCATION]", "(4,0)[OTHER]" ],
+  "dptBins" : [ 1, 22 ]
+}, {
+  "index" : 298,
+  "nodes" : [ "(4,3)[HOME]" ],
+  "dptBins" : [ 4 ]
+}, {
+  "index" : 299,
+  "nodes" : [ "(2,4)[OTHER]", "(3,2)[WORK]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 1, 11, 15 ]
+}, {
+  "index" : 300,
+  "nodes" : [ "(2,4)[WORK]", "(3,4)[OTHER]", "(3,4)[HOME]", "(2,0)[HOME]", "(3,4)[EDUCATION]", "(4,3)[EDUCATION]" ],
+  "dptBins" : [ 1, 4, 10, 13, 15, 18 ]
+}, {
+  "index" : 301,
+  "nodes" : [ "(0,4)[WORK]", "(0,3)[HOME]", "(0,2)[HOME]", "(4,4)[WORK]", "(4,4)[HOME]" ],
+  "dptBins" : [ 1, 3, 7, 15, 17 ]
+}, {
+  "index" : 302,
+  "nodes" : [ "(4,3)[HOME]", "(0,1)[OTHER]" ],
+  "dptBins" : [ 6, 8 ]
+}, {
+  "index" : 303,
+  "nodes" : [ "(2,3)[WORK]", "(1,4)[HOME]" ],
+  "dptBins" : [ 0, 18 ]
+}, {
+  "index" : 304,
+  "nodes" : [ "(3,1)[HOME]", "(2,2)[EDUCATION]", "(4,3)[EDUCATION]" ],
+  "dptBins" : [ 7, 11, 21 ]
+}, {
+  "index" : 305,
+  "nodes" : [ "(3,3)[EDUCATION]", "(3,1)[EDUCATION]", "(1,2)[EDUCATION]", "(1,0)[OTHER]" ],
+  "dptBins" : [ 1, 4, 6, 21 ]
+}, {
+  "index" : 306,
+  "nodes" : [ "(3,4)[HOME]", "(3,4)[HOME]", "(3,1)[WORK]" ],
+  "dptBins" : [ 5, 8, 15 ]
+}, {
+  "index" : 307,
+  "nodes" : [ "(3,1)[OTHER]", "(4,0)[OTHER]", "(1,0)[WORK]" ],
+  "dptBins" : [ 2, 10, 18 ]
+}, {
+  "index" : 308,
+  "nodes" : [ "(1,1)[HOME]", "(0,2)[EDUCATION]", "(1,0)[HOME]" ],
+  "dptBins" : [ 2, 9, 11 ]
+}, {
+  "index" : 309,
+  "nodes" : [ "(4,3)[HOME]", "(1,1)[HOME]", "(0,4)[HOME]", "(1,2)[OTHER]", "(3,4)[HOME]" ],
+  "dptBins" : [ 1, 3, 5, 16, 22 ]
+}, {
+  "index" : 310,
+  "nodes" : [ "(4,4)[HOME]", "(2,3)[EDUCATION]", "(2,3)[HOME]" ],
+  "dptBins" : [ 7, 15, 18 ]
+}, {
+  "index" : 311,
+  "nodes" : [ "(0,2)[WORK]", "(0,2)[HOME]", "(2,4)[HOME]", "(4,0)[HOME]" ],
+  "dptBins" : [ 9, 16, 17, 18 ]
+}, {
+  "index" : 312,
+  "nodes" : [ "(2,4)[EDUCATION]", "(2,4)[HOME]", "(3,0)[WORK]" ],
+  "dptBins" : [ 8, 10, 20 ]
+}, {
+  "index" : 313,
+  "nodes" : [ "(1,0)[HOME]", "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 17, 19 ]
+}, {
+  "index" : 314,
+  "nodes" : [ "(2,0)[EDUCATION]", "(2,2)[WORK]" ],
+  "dptBins" : [ 8, 15 ]
+}, {
+  "index" : 315,
+  "nodes" : [ "(4,0)[EDUCATION]", "(1,4)[HOME]", "(3,3)[HOME]" ],
+  "dptBins" : [ 1, 2, 11 ]
+}, {
+  "index" : 316,
+  "nodes" : [ "(3,4)[WORK]", "(0,2)[HOME]", "(1,3)[WORK]", "(0,2)[HOME]" ],
+  "dptBins" : [ 3, 9, 12, 13 ]
+}, {
+  "index" : 317,
+  "nodes" : [ "(2,0)[HOME]", "(0,1)[HOME]", "(1,1)[WORK]" ],
+  "dptBins" : [ 2, 10, 17 ]
+}, {
+  "index" : 318,
+  "nodes" : [ "(3,2)[HOME]", "(1,3)[HOME]", "(3,1)[HOME]", "(1,2)[HOME]", "(1,2)[OTHER]" ],
+  "dptBins" : [ 0, 2, 11, 16, 23 ]
+}, {
+  "index" : 319,
+  "nodes" : [ "(0,4)[HOME]" ],
+  "dptBins" : [ 19 ]
+}, {
+  "index" : 320,
+  "nodes" : [ "(3,4)[WORK]" ],
+  "dptBins" : [ 16 ]
+}, {
+  "index" : 321,
+  "nodes" : [ "(4,1)[HOME]", "(1,0)[HOME]" ],
+  "dptBins" : [ 6, 18 ]
+}, {
+  "index" : 322,
+  "nodes" : [ "(0,3)[OTHER]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 5, 15 ]
+}, {
+  "index" : 323,
+  "nodes" : [ "(4,0)[WORK]", "(1,1)[HOME]", "(3,2)[EDUCATION]" ],
+  "dptBins" : [ 2, 8, 17 ]
+}, {
+  "index" : 324,
+  "nodes" : [ "(3,1)[WORK]", "(3,0)[WORK]", "(0,2)[OTHER]", "(1,2)[EDUCATION]", "(1,4)[OTHER]" ],
+  "dptBins" : [ 12, 16, 19, 22, 23 ]
+}, {
+  "index" : 325,
+  "nodes" : [ "(2,2)[HOME]", "(2,0)[WORK]", "(0,1)[EDUCATION]" ],
+  "dptBins" : [ 7, 13, 22 ]
+}, {
+  "index" : 326,
+  "nodes" : [ "(1,1)[EDUCATION]", "(4,4)[EDUCATION]", "(1,1)[HOME]", "(3,1)[WORK]" ],
+  "dptBins" : [ 5, 16, 18, 19 ]
+}, {
+  "index" : 327,
+  "nodes" : [ "(3,3)[HOME]" ],
+  "dptBins" : [ 6 ]
+}, {
+  "index" : 328,
+  "nodes" : [ "(0,2)[WORK]", "(4,3)[HOME]", "(4,4)[WORK]", "(2,0)[WORK]" ],
+  "dptBins" : [ 6, 10, 18, 20 ]
+}, {
+  "index" : 329,
+  "nodes" : [ "(0,1)[HOME]", "(2,4)[OTHER]", "(2,1)[OTHER]", "(1,2)[OTHER]" ],
+  "dptBins" : [ 9, 10, 15, 20 ]
+}, {
+  "index" : 330,
+  "nodes" : [ "(3,3)[WORK]", "(1,1)[HOME]", "(2,0)[HOME]", "(1,1)[OTHER]", "(3,3)[WORK]", "(3,3)[OTHER]" ],
+  "dptBins" : [ 1, 7, 8, 13, 18, 23 ]
+}, {
+  "index" : 331,
+  "nodes" : [ "(3,2)[OTHER]" ],
+  "dptBins" : [ 1 ]
+}, {
+  "index" : 332,
+  "nodes" : [ "(2,0)[HOME]", "(3,1)[OTHER]", "(4,1)[OTHER]", "(1,0)[HOME]" ],
+  "dptBins" : [ 8, 9, 10, 20 ]
+}, {
+  "index" : 333,
+  "nodes" : [ "(2,1)[EDUCATION]", "(1,1)[WORK]", "(2,3)[HOME]" ],
+  "dptBins" : [ 11, 21, 22 ]
+}, {
+  "index" : 334,
+  "nodes" : [ "(0,4)[EDUCATION]" ],
+  "dptBins" : [ 16 ]
+}, {
+  "index" : 335,
+  "nodes" : [ "(2,3)[WORK]", "(2,4)[HOME]", "(0,1)[OTHER]" ],
+  "dptBins" : [ 10, 12, 13 ]
+}, {
+  "index" : 336,
+  "nodes" : [ "(1,1)[HOME]", "(2,4)[WORK]", "(3,1)[OTHER]", "(2,4)[HOME]" ],
+  "dptBins" : [ 7, 11, 14, 17 ]
+}, {
+  "index" : 337,
+  "nodes" : [ "(1,3)[HOME]", "(1,1)[WORK]", "(1,4)[EDUCATION]" ],
+  "dptBins" : [ 11, 14, 21 ]
+}, {
+  "index" : 338,
+  "nodes" : [ "(0,3)[WORK]", "(2,4)[WORK]", "(0,2)[EDUCATION]", "(2,0)[WORK]" ],
+  "dptBins" : [ 2, 5, 6, 7 ]
+}, {
+  "index" : 339,
+  "nodes" : [ "(2,0)[HOME]", "(4,4)[WORK]", "(0,4)[HOME]" ],
+  "dptBins" : [ 2, 3, 10 ]
+}, {
+  "index" : 340,
+  "nodes" : [ "(0,2)[HOME]", "(0,1)[OTHER]", "(0,0)[WORK]", "(4,2)[EDUCATION]" ],
+  "dptBins" : [ 5, 10, 15, 19 ]
+}, {
+  "index" : 341,
+  "nodes" : [ "(2,4)[HOME]", "(1,2)[WORK]", "(4,4)[WORK]", "(3,1)[HOME]" ],
+  "dptBins" : [ 6, 7, 15, 19 ]
+}, {
+  "index" : 342,
+  "nodes" : [ "(4,3)[HOME]", "(0,1)[WORK]", "(0,0)[EDUCATION]", "(2,2)[EDUCATION]" ],
+  "dptBins" : [ 7, 15, 22, 23 ]
+}, {
+  "index" : 343,
+  "nodes" : [ "(0,2)[HOME]", "(1,3)[HOME]" ],
+  "dptBins" : [ 9, 12 ]
+}, {
+  "index" : 344,
+  "nodes" : [ "(0,1)[HOME]", "(0,4)[OTHER]", "(1,1)[WORK]", "(3,0)[WORK]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 6, 7, 11, 15, 19 ]
+}, {
+  "index" : 345,
+  "nodes" : [ "(2,0)[WORK]", "(3,1)[WORK]" ],
+  "dptBins" : [ 0, 3 ]
+}, {
+  "index" : 346,
+  "nodes" : [ "(0,3)[OTHER]", "(1,1)[WORK]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 10, 20, 21 ]
+}, {
+  "index" : 347,
+  "nodes" : [ "(0,2)[HOME]" ],
+  "dptBins" : [ 1 ]
+}, {
+  "index" : 348,
+  "nodes" : [ "(3,0)[HOME]", "(3,0)[WORK]", "(1,1)[HOME]", "(2,4)[WORK]" ],
+  "dptBins" : [ 1, 4, 10, 17 ]
+}, {
+  "index" : 349,
+  "nodes" : [ "(2,4)[HOME]", "(4,3)[WORK]" ],
+  "dptBins" : [ 22, 23 ]
+}, {
+  "index" : 350,
+  "nodes" : [ "(0,0)[EDUCATION]", "(2,0)[HOME]", "(2,3)[EDUCATION]", "(1,4)[OTHER]" ],
+  "dptBins" : [ 2, 12, 13, 18 ]
+}, {
+  "index" : 351,
+  "nodes" : [ "(4,4)[EDUCATION]" ],
+  "dptBins" : [ 8 ]
+}, {
+  "index" : 352,
+  "nodes" : [ "(0,0)[WORK]", "(2,0)[EDUCATION]", "(4,4)[EDUCATION]" ],
+  "dptBins" : [ 3, 6, 19 ]
+}, {
+  "index" : 353,
+  "nodes" : [ "(4,4)[EDUCATION]" ],
+  "dptBins" : [ 22 ]
+}, {
+  "index" : 354,
+  "nodes" : [ "(2,1)[HOME]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 8, 13 ]
+}, {
+  "index" : 355,
+  "nodes" : [ "(2,3)[HOME]", "(2,0)[WORK]", "(0,0)[HOME]", "(3,3)[OTHER]" ],
+  "dptBins" : [ 9, 10, 11, 23 ]
+}, {
+  "index" : 356,
+  "nodes" : [ "(0,0)[OTHER]", "(1,3)[HOME]", "(0,0)[WORK]", "(2,0)[HOME]" ],
+  "dptBins" : [ 5, 7, 11, 19 ]
+}, {
+  "index" : 357,
+  "nodes" : [ "(3,1)[HOME]", "(4,4)[OTHER]", "(1,2)[OTHER]", "(2,1)[WORK]" ],
+  "dptBins" : [ 6, 12, 17, 19 ]
+}, {
+  "index" : 358,
+  "nodes" : [ "(0,3)[WORK]", "(2,3)[OTHER]", "(1,0)[HOME]" ],
+  "dptBins" : [ 4, 17, 20 ]
+}, {
+  "index" : 359,
+  "nodes" : [ "(1,2)[EDUCATION]" ],
+  "dptBins" : [ 20 ]
+}, {
+  "index" : 360,
+  "nodes" : [ "(0,1)[OTHER]", "(2,2)[HOME]" ],
+  "dptBins" : [ 1, 14 ]
+}, {
+  "index" : 361,
+  "nodes" : [ "(4,4)[HOME]" ],
+  "dptBins" : [ 22 ]
+}, {
+  "index" : 362,
+  "nodes" : [ "(4,1)[HOME]" ],
+  "dptBins" : [ 6 ]
+}, {
+  "index" : 363,
+  "nodes" : [ "(1,2)[HOME]", "(4,0)[EDUCATION]", "(4,0)[HOME]", "(0,4)[HOME]", "(1,4)[HOME]" ],
+  "dptBins" : [ 9, 13, 14, 19, 21 ]
+}, {
+  "index" : 364,
+  "nodes" : [ "(1,2)[WORK]" ],
+  "dptBins" : [ 17 ]
+}, {
+  "index" : 365,
+  "nodes" : [ "(2,0)[OTHER]", "(1,4)[EDUCATION]", "(1,1)[WORK]", "(3,0)[EDUCATION]", "(4,1)[WORK]" ],
+  "dptBins" : [ 3, 6, 12, 14, 20 ]
+}, {
+  "index" : 366,
+  "nodes" : [ "(3,4)[WORK]", "(1,2)[WORK]", "(4,2)[WORK]", "(3,4)[HOME]", "(4,0)[OTHER]", "(1,4)[OTHER]" ],
+  "dptBins" : [ 2, 8, 16, 19, 22, 23 ]
+}, {
+  "index" : 367,
+  "nodes" : [ "(3,0)[WORK]", "(1,1)[EDUCATION]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 5, 17, 19 ]
+}, {
+  "index" : 368,
+  "nodes" : [ "(4,4)[HOME]", "(0,2)[OTHER]", "(4,4)[WORK]", "(0,3)[WORK]" ],
+  "dptBins" : [ 5, 8, 12, 18 ]
+}, {
+  "index" : 369,
+  "nodes" : [ "(1,3)[WORK]" ],
+  "dptBins" : [ 10 ]
+}, {
+  "index" : 370,
+  "nodes" : [ "(1,1)[HOME]", "(2,0)[EDUCATION]", "(4,0)[OTHER]", "(2,1)[EDUCATION]" ],
+  "dptBins" : [ 6, 13, 17, 19 ]
+}, {
+  "index" : 371,
+  "nodes" : [ "(1,2)[WORK]", "(4,1)[WORK]", "(4,1)[HOME]", "(4,0)[WORK]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 2, 8, 9, 16, 21 ]
+}, {
+  "index" : 372,
+  "nodes" : [ "(4,2)[HOME]", "(4,1)[OTHER]" ],
+  "dptBins" : [ 3, 6 ]
+}, {
+  "index" : 373,
+  "nodes" : [ "(4,1)[WORK]" ],
+  "dptBins" : [ 2 ]
+}, {
+  "index" : 374,
+  "nodes" : [ "(3,2)[HOME]", "(1,1)[WORK]", "(3,3)[EDUCATION]" ],
+  "dptBins" : [ 7, 16, 20 ]
+}, {
+  "index" : 375,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 376,
+  "nodes" : [ "(0,4)[HOME]" ],
+  "dptBins" : [ 23 ]
+}, {
+  "index" : 377,
+  "nodes" : [ "(0,3)[WORK]", "(3,2)[HOME]", "(4,4)[EDUCATION]", "(4,3)[EDUCATION]" ],
+  "dptBins" : [ 2, 20, 22, 23 ]
+}, {
+  "index" : 378,
+  "nodes" : [ "(2,1)[OTHER]", "(2,3)[OTHER]" ],
+  "dptBins" : [ 2, 10 ]
+}, {
+  "index" : 379,
+  "nodes" : [ "(1,4)[HOME]" ],
+  "dptBins" : [ 7 ]
+}, {
+  "index" : 380,
+  "nodes" : [ "(0,1)[WORK]", "(2,0)[WORK]", "(0,2)[OTHER]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 2, 4, 14, 15 ]
+}, {
+  "index" : 381,
+  "nodes" : [ "(1,1)[EDUCATION]", "(1,2)[EDUCATION]", "(0,1)[OTHER]", "(3,3)[WORK]" ],
+  "dptBins" : [ 1, 8, 13, 21 ]
+}, {
+  "index" : 382,
+  "nodes" : [ "(3,3)[HOME]", "(1,1)[WORK]", "(4,4)[WORK]" ],
+  "dptBins" : [ 9, 19, 21 ]
+}, {
+  "index" : 383,
+  "nodes" : [ "(4,0)[OTHER]", "(0,0)[HOME]", "(0,0)[EDUCATION]", "(2,0)[WORK]", "(0,3)[EDUCATION]" ],
+  "dptBins" : [ 1, 4, 6, 9, 21 ]
+}, {
+  "index" : 384,
+  "nodes" : [ "(2,2)[HOME]", "(4,2)[WORK]", "(0,3)[OTHER]", "(3,2)[EDUCATION]" ],
+  "dptBins" : [ 6, 14, 15, 18 ]
+}, {
+  "index" : 385,
+  "nodes" : [ "(0,2)[HOME]", "(3,0)[EDUCATION]", "(1,2)[WORK]" ],
+  "dptBins" : [ 9, 11, 21 ]
+}, {
+  "index" : 386,
+  "nodes" : [ "(1,4)[OTHER]", "(3,4)[EDUCATION]" ],
+  "dptBins" : [ 2, 6 ]
+}, {
+  "index" : 387,
+  "nodes" : [ "(2,0)[OTHER]", "(3,3)[WORK]", "(0,1)[EDUCATION]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 6, 12, 13, 21 ]
+}, {
+  "index" : 388,
+  "nodes" : [ "(1,3)[OTHER]", "(3,3)[WORK]", "(1,3)[HOME]" ],
+  "dptBins" : [ 1, 10, 11 ]
+}, {
+  "index" : 389,
+  "nodes" : [ "(1,0)[EDUCATION]", "(0,3)[EDUCATION]", "(1,1)[WORK]" ],
+  "dptBins" : [ 4, 14, 18 ]
+}, {
+  "index" : 390,
+  "nodes" : [ "(2,1)[WORK]", "(2,0)[OTHER]", "(0,2)[EDUCATION]", "(3,4)[OTHER]", "(4,0)[WORK]" ],
+  "dptBins" : [ 7, 10, 14, 18, 21 ]
+}, {
+  "index" : 391,
+  "nodes" : [ "(0,1)[WORK]", "(3,1)[WORK]", "(2,0)[WORK]", "(2,1)[OTHER]" ],
+  "dptBins" : [ 8, 15, 21, 22 ]
+}, {
+  "index" : 392,
+  "nodes" : [ "(3,0)[OTHER]", "(0,0)[WORK]", "(3,3)[OTHER]" ],
+  "dptBins" : [ 0, 14, 19 ]
+}, {
+  "index" : 393,
+  "nodes" : [ "(1,3)[OTHER]", "(2,4)[WORK]", "(0,4)[WORK]" ],
+  "dptBins" : [ 7, 10, 17 ]
+}, {
+  "index" : 394,
+  "nodes" : [ "(0,0)[HOME]", "(0,3)[HOME]", "(4,0)[WORK]" ],
+  "dptBins" : [ 4, 8, 15 ]
+}, {
+  "index" : 395,
+  "nodes" : [ "(2,2)[OTHER]", "(4,4)[EDUCATION]", "(4,3)[OTHER]", "(0,0)[HOME]" ],
+  "dptBins" : [ 1, 10, 20, 22 ]
+}, {
+  "index" : 396,
+  "nodes" : [ "(0,2)[HOME]", "(2,3)[EDUCATION]", "(3,4)[HOME]", "(3,2)[EDUCATION]" ],
+  "dptBins" : [ 6, 7, 10, 20 ]
+}, {
+  "index" : 397,
+  "nodes" : [ "(1,2)[EDUCATION]", "(1,1)[OTHER]", "(1,0)[EDUCATION]", "(2,0)[EDUCATION]", "(0,3)[HOME]", "(0,4)[HOME]" ],
+  "dptBins" : [ 1, 7, 8, 11, 12, 23 ]
+}, {
+  "index" : 398,
+  "nodes" : [ "(3,2)[HOME]", "(3,1)[EDUCATION]", "(0,3)[OTHER]" ],
+  "dptBins" : [ 5, 18, 23 ]
+}, {
+  "index" : 399,
+  "nodes" : [ "(4,2)[HOME]", "(0,3)[OTHER]", "(4,1)[HOME]" ],
+  "dptBins" : [ 7, 14, 20 ]
+}, {
+  "index" : 400,
+  "nodes" : [ "(2,2)[HOME]", "(3,2)[EDUCATION]", "(3,1)[WORK]" ],
+  "dptBins" : [ 8, 10, 18 ]
+}, {
+  "index" : 401,
+  "nodes" : [ "(2,3)[HOME]", "(0,2)[HOME]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 7, 10, 17 ]
+}, {
+  "index" : 402,
+  "nodes" : [ "(2,2)[WORK]", "(2,4)[OTHER]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 1, 5, 19 ]
+}, {
+  "index" : 403,
+  "nodes" : [ "(4,2)[WORK]" ],
+  "dptBins" : [ 6 ]
+}, {
+  "index" : 404,
+  "nodes" : [ "(0,1)[WORK]", "(3,0)[HOME]" ],
+  "dptBins" : [ 14, 20 ]
+}, {
+  "index" : 405,
+  "nodes" : [ "(0,0)[WORK]" ],
+  "dptBins" : [ 19 ]
+}, {
+  "index" : 406,
+  "nodes" : [ "(3,1)[WORK]", "(4,2)[OTHER]" ],
+  "dptBins" : [ 4, 12 ]
+}, {
+  "index" : 407,
+  "nodes" : [ "(0,2)[EDUCATION]", "(1,0)[EDUCATION]", "(2,0)[EDUCATION]", "(1,2)[HOME]" ],
+  "dptBins" : [ 4, 5, 8, 15 ]
+}, {
+  "index" : 408,
+  "nodes" : [ "(1,0)[HOME]" ],
+  "dptBins" : [ 13 ]
+}, {
+  "index" : 409,
+  "nodes" : [ "(4,4)[HOME]", "(2,4)[OTHER]", "(0,0)[OTHER]" ],
+  "dptBins" : [ 8, 14, 18 ]
+}, {
+  "index" : 410,
+  "nodes" : [ "(4,1)[HOME]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 9, 11 ]
+}, {
+  "index" : 411,
+  "nodes" : [ "(3,2)[EDUCATION]", "(3,3)[HOME]", "(3,0)[OTHER]", "(0,4)[WORK]" ],
+  "dptBins" : [ 0, 8, 10, 14 ]
+}, {
+  "index" : 412,
+  "nodes" : [ "(2,4)[HOME]", "(1,0)[HOME]", "(0,1)[EDUCATION]" ],
+  "dptBins" : [ 0, 8, 12 ]
+}, {
+  "index" : 413,
+  "nodes" : [ "(4,2)[OTHER]", "(4,4)[WORK]", "(1,2)[WORK]" ],
+  "dptBins" : [ 10, 18, 22 ]
+}, {
+  "index" : 414,
+  "nodes" : [ "(2,0)[WORK]", "(1,0)[WORK]" ],
+  "dptBins" : [ 0, 23 ]
+}, {
+  "index" : 415,
+  "nodes" : [ "(3,1)[OTHER]", "(1,4)[WORK]", "(1,4)[OTHER]" ],
+  "dptBins" : [ 8, 10, 18 ]
+}, {
+  "index" : 416,
+  "nodes" : [ "(2,3)[OTHER]", "(3,2)[WORK]", "(4,4)[EDUCATION]", "(4,1)[HOME]" ],
+  "dptBins" : [ 11, 17, 21, 22 ]
+}, {
+  "index" : 417,
+  "nodes" : [ "(1,2)[EDUCATION]", "(2,4)[WORK]", "(3,1)[OTHER]" ],
+  "dptBins" : [ 0, 9, 12 ]
+}, {
+  "index" : 418,
+  "nodes" : [ "(2,3)[HOME]", "(3,1)[HOME]" ],
+  "dptBins" : [ 1, 3 ]
+}, {
+  "index" : 419,
+  "nodes" : [ "(0,4)[EDUCATION]", "(3,3)[HOME]", "(3,4)[EDUCATION]" ],
+  "dptBins" : [ 13, 14, 23 ]
+}, {
+  "index" : 420,
+  "nodes" : [ "(4,1)[OTHER]", "(4,0)[EDUCATION]", "(3,0)[WORK]", "(0,4)[EDUCATION]" ],
+  "dptBins" : [ 7, 9, 16, 22 ]
+}, {
+  "index" : 421,
+  "nodes" : [ "(0,1)[EDUCATION]", "(0,2)[EDUCATION]" ],
+  "dptBins" : [ 7, 8 ]
+}, {
+  "index" : 422,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 423,
+  "nodes" : [ "(0,4)[WORK]", "(0,1)[WORK]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 10, 15, 19 ]
+}, {
+  "index" : 424,
+  "nodes" : [ "(2,1)[EDUCATION]", "(4,2)[OTHER]" ],
+  "dptBins" : [ 6, 20 ]
+}, {
+  "index" : 425,
+  "nodes" : [ "(4,3)[HOME]", "(0,1)[WORK]", "(4,2)[HOME]", "(4,4)[WORK]", "(3,4)[WORK]", "(4,4)[EDUCATION]" ],
+  "dptBins" : [ 3, 6, 7, 9, 13, 21 ]
+}, {
+  "index" : 426,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 427,
+  "nodes" : [ "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 0 ]
+}, {
+  "index" : 428,
+  "nodes" : [ "(4,1)[HOME]" ],
+  "dptBins" : [ 14 ]
+}, {
+  "index" : 429,
+  "nodes" : [ "(3,2)[HOME]", "(1,0)[EDUCATION]" ],
+  "dptBins" : [ 6, 16 ]
+}, {
+  "index" : 430,
+  "nodes" : [ "(2,0)[EDUCATION]", "(0,2)[WORK]", "(3,0)[WORK]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 6, 9, 18, 20 ]
+}, {
+  "index" : 431,
+  "nodes" : [ "(0,1)[HOME]", "(2,0)[EDUCATION]", "(0,1)[WORK]" ],
+  "dptBins" : [ 0, 14, 21 ]
+}, {
+  "index" : 432,
+  "nodes" : [ "(0,1)[HOME]" ],
+  "dptBins" : [ 9 ]
+}, {
+  "index" : 433,
+  "nodes" : [ "(4,0)[EDUCATION]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 5, 17 ]
+}, {
+  "index" : 434,
+  "nodes" : [ "(2,4)[OTHER]", "(1,2)[HOME]", "(4,2)[WORK]" ],
+  "dptBins" : [ 4, 5, 23 ]
+}, {
+  "index" : 435,
+  "nodes" : [ "(1,2)[WORK]", "(2,0)[OTHER]", "(2,3)[EDUCATION]" ],
+  "dptBins" : [ 5, 12, 19 ]
+}, {
+  "index" : 436,
+  "nodes" : [ "(0,2)[HOME]", "(2,3)[OTHER]" ],
+  "dptBins" : [ 10, 19 ]
+}, {
+  "index" : 437,
+  "nodes" : [ "(0,3)[HOME]", "(0,3)[WORK]" ],
+  "dptBins" : [ 19, 22 ]
+}, {
+  "index" : 438,
+  "nodes" : [ "(0,0)[EDUCATION]", "(1,3)[HOME]", "(1,1)[EDUCATION]", "(1,3)[HOME]" ],
+  "dptBins" : [ 3, 10, 20, 21 ]
+}, {
+  "index" : 439,
+  "nodes" : [ "(4,4)[OTHER]", "(1,2)[EDUCATION]", "(1,1)[WORK]", "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 0, 2, 8, 22 ]
+}, {
+  "index" : 440,
+  "nodes" : [ "(0,3)[OTHER]" ],
+  "dptBins" : [ 10 ]
+}, {
+  "index" : 441,
+  "nodes" : [ "(1,4)[EDUCATION]", "(0,4)[EDUCATION]", "(1,4)[HOME]" ],
+  "dptBins" : [ 0, 7, 19 ]
+}, {
+  "index" : 442,
+  "nodes" : [ "(2,3)[HOME]", "(2,0)[OTHER]", "(1,4)[EDUCATION]", "(2,3)[OTHER]" ],
+  "dptBins" : [ 0, 5, 10, 15 ]
+}, {
+  "index" : 443,
+  "nodes" : [ "(1,3)[HOME]", "(3,1)[HOME]", "(1,1)[HOME]" ],
+  "dptBins" : [ 6, 11, 20 ]
+}, {
+  "index" : 444,
+  "nodes" : [ "(2,4)[WORK]", "(1,0)[WORK]", "(4,2)[WORK]", "(3,0)[OTHER]", "(0,0)[WORK]", "(3,1)[WORK]" ],
+  "dptBins" : [ 8, 14, 15, 19, 20, 21 ]
+}, {
+  "index" : 445,
+  "nodes" : [ "(1,0)[HOME]" ],
+  "dptBins" : [ 8 ]
+}, {
+  "index" : 446,
+  "nodes" : [ "(3,2)[HOME]", "(3,0)[HOME]" ],
+  "dptBins" : [ 9, 20 ]
+}, {
+  "index" : 447,
+  "nodes" : [ "(2,2)[HOME]", "(2,0)[HOME]" ],
+  "dptBins" : [ 7, 19 ]
+}, {
+  "index" : 448,
+  "nodes" : [ "(3,1)[HOME]", "(1,2)[OTHER]", "(3,1)[HOME]" ],
+  "dptBins" : [ 8, 12, 20 ]
+}, {
+  "index" : 449,
+  "nodes" : [ "(4,0)[OTHER]", "(2,0)[EDUCATION]", "(1,2)[WORK]" ],
+  "dptBins" : [ 2, 14, 16 ]
+}, {
+  "index" : 450,
+  "nodes" : [ "(1,2)[HOME]", "(1,3)[WORK]", "(3,4)[WORK]" ],
+  "dptBins" : [ 7, 16, 21 ]
+}, {
+  "index" : 451,
+  "nodes" : [ "(1,4)[WORK]", "(3,1)[WORK]", "(2,0)[WORK]" ],
+  "dptBins" : [ 10, 19, 21 ]
+}, {
+  "index" : 452,
+  "nodes" : [ "(3,0)[WORK]", "(3,0)[EDUCATION]", "(1,1)[HOME]" ],
+  "dptBins" : [ 0, 4, 7 ]
+}, {
+  "index" : 453,
+  "nodes" : [ "(4,3)[HOME]", "(2,4)[EDUCATION]", "(2,3)[WORK]" ],
+  "dptBins" : [ 6, 10, 17 ]
+}, {
+  "index" : 454,
+  "nodes" : [ "(1,3)[HOME]", "(4,1)[EDUCATION]", "(0,2)[WORK]" ],
+  "dptBins" : [ 7, 8, 16 ]
+}, {
+  "index" : 455,
+  "nodes" : [ "(4,0)[HOME]", "(4,2)[HOME]" ],
+  "dptBins" : [ 6, 17 ]
+}, {
+  "index" : 456,
+  "nodes" : [ "(2,0)[OTHER]", "(2,0)[HOME]" ],
+  "dptBins" : [ 3, 16 ]
+}, {
+  "index" : 457,
+  "nodes" : [ "(0,0)[EDUCATION]", "(4,4)[EDUCATION]", "(3,4)[EDUCATION]", "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 2, 5, 13, 23 ]
+}, {
+  "index" : 458,
+  "nodes" : [ "(4,1)[EDUCATION]", "(3,3)[WORK]", "(4,4)[OTHER]" ],
+  "dptBins" : [ 8, 10, 12 ]
+}, {
+  "index" : 459,
+  "nodes" : [ "(4,4)[HOME]", "(0,4)[WORK]", "(0,2)[OTHER]" ],
+  "dptBins" : [ 16, 19, 23 ]
+}, {
+  "index" : 460,
+  "nodes" : [ "(4,0)[EDUCATION]", "(1,3)[WORK]" ],
+  "dptBins" : [ 1, 13 ]
+}, {
+  "index" : 461,
+  "nodes" : [ "(2,4)[WORK]", "(2,1)[WORK]", "(1,2)[OTHER]" ],
+  "dptBins" : [ 5, 8, 22 ]
+}, {
+  "index" : 462,
+  "nodes" : [ "(1,2)[OTHER]", "(1,3)[OTHER]", "(4,3)[HOME]" ],
+  "dptBins" : [ 4, 10, 13 ]
+}, {
+  "index" : 463,
+  "nodes" : [ "(2,1)[HOME]", "(2,1)[OTHER]", "(2,0)[OTHER]", "(2,2)[EDUCATION]" ],
+  "dptBins" : [ 8, 13, 19, 20 ]
+}, {
+  "index" : 464,
+  "nodes" : [ "(4,3)[HOME]", "(2,1)[OTHER]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 7, 9, 20 ]
+}, {
+  "index" : 465,
+  "nodes" : [ "(1,4)[OTHER]", "(2,0)[HOME]" ],
+  "dptBins" : [ 2, 15 ]
+}, {
+  "index" : 466,
+  "nodes" : [ "(1,1)[OTHER]" ],
+  "dptBins" : [ 17 ]
+}, {
+  "index" : 467,
+  "nodes" : [ "(2,4)[EDUCATION]", "(0,0)[OTHER]" ],
+  "dptBins" : [ 15, 19 ]
+}, {
+  "index" : 468,
+  "nodes" : [ "(0,0)[WORK]" ],
+  "dptBins" : [ 3 ]
+}, {
+  "index" : 469,
+  "nodes" : [ "(4,3)[HOME]" ],
+  "dptBins" : [ 12 ]
+}, {
+  "index" : 470,
+  "nodes" : [ "(2,3)[EDUCATION]", "(2,1)[OTHER]", "(4,2)[HOME]", "(1,0)[EDUCATION]", "(0,2)[WORK]" ],
+  "dptBins" : [ 0, 1, 5, 9, 18 ]
+}, {
+  "index" : 471,
+  "nodes" : [ "(3,3)[HOME]", "(4,1)[EDUCATION]" ],
+  "dptBins" : [ 11, 13 ]
+}, {
+  "index" : 472,
+  "nodes" : [ "(2,1)[EDUCATION]" ],
+  "dptBins" : [ 20 ]
+}, {
+  "index" : 473,
+  "nodes" : [ "(4,4)[WORK]", "(1,3)[OTHER]", "(3,3)[WORK]" ],
+  "dptBins" : [ 6, 11, 17 ]
+}, {
+  "index" : 474,
+  "nodes" : [ "(4,1)[EDUCATION]", "(3,0)[WORK]" ],
+  "dptBins" : [ 11, 17 ]
+}, {
+  "index" : 475,
+  "nodes" : [ "(3,3)[WORK]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 5, 8 ]
+}, {
+  "index" : 476,
+  "nodes" : [ "(2,0)[HOME]", "(4,1)[HOME]" ],
+  "dptBins" : [ 11, 17 ]
+}, {
+  "index" : 477,
+  "nodes" : [ "(4,2)[HOME]", "(2,2)[OTHER]", "(2,3)[WORK]" ],
+  "dptBins" : [ 10, 12, 17 ]
+}, {
+  "index" : 478,
+  "nodes" : [ "(2,3)[OTHER]", "(2,4)[EDUCATION]", "(1,0)[WORK]", "(3,2)[EDUCATION]", "(2,3)[HOME]" ],
+  "dptBins" : [ 2, 3, 11, 12, 14 ]
+}, {
+  "index" : 479,
+  "nodes" : [ "(0,1)[WORK]" ],
+  "dptBins" : [ 20 ]
+}, {
+  "index" : 480,
+  "nodes" : [ "(1,2)[HOME]", "(2,4)[HOME]" ],
+  "dptBins" : [ 12, 21 ]
+}, {
+  "index" : 481,
+  "nodes" : [ "(1,0)[EDUCATION]", "(2,0)[OTHER]", "(4,3)[EDUCATION]" ],
+  "dptBins" : [ 3, 15, 19 ]
+}, {
+  "index" : 482,
+  "nodes" : [ "(0,2)[HOME]", "(0,1)[HOME]", "(0,2)[WORK]" ],
+  "dptBins" : [ 8, 16, 19 ]
+}, {
+  "index" : 483,
+  "nodes" : [ "(1,4)[OTHER]", "(3,1)[OTHER]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 3, 5, 18 ]
+}, {
+  "index" : 484,
+  "nodes" : [ "(0,3)[OTHER]", "(3,3)[OTHER]", "(1,2)[OTHER]", "(1,3)[OTHER]", "(1,0)[EDUCATION]", "(1,3)[OTHER]" ],
+  "dptBins" : [ 1, 4, 10, 13, 15, 19 ]
+}, {
+  "index" : 485,
+  "nodes" : [ "(3,3)[OTHER]", "(0,3)[OTHER]", "(3,0)[EDUCATION]", "(4,0)[HOME]", "(2,0)[WORK]", "(3,1)[EDUCATION]", "(3,3)[HOME]" ],
+  "dptBins" : [ 0, 1, 5, 6, 12, 15, 22 ]
+}, {
+  "index" : 486,
+  "nodes" : [ "(4,2)[OTHER]", "(4,3)[HOME]", "(1,4)[EDUCATION]", "(3,0)[HOME]" ],
+  "dptBins" : [ 1, 2, 6, 20 ]
+}, {
+  "index" : 487,
+  "nodes" : [ "(1,0)[HOME]", "(0,4)[OTHER]" ],
+  "dptBins" : [ 5, 21 ]
+}, {
+  "index" : 488,
+  "nodes" : [ "(4,4)[HOME]", "(4,4)[WORK]" ],
+  "dptBins" : [ 7, 20 ]
+}, {
+  "index" : 489,
+  "nodes" : [ "(0,2)[HOME]", "(2,0)[HOME]", "(0,0)[HOME]" ],
+  "dptBins" : [ 11, 15, 21 ]
+}, {
+  "index" : 490,
+  "nodes" : [ "(2,3)[OTHER]", "(3,2)[WORK]", "(1,0)[HOME]" ],
+  "dptBins" : [ 8, 14, 21 ]
+}, {
+  "index" : 491,
+  "nodes" : [ "(1,2)[WORK]", "(2,2)[HOME]" ],
+  "dptBins" : [ 4, 11 ]
+}, {
+  "index" : 492,
+  "nodes" : [ "(2,2)[HOME]", "(2,2)[WORK]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 8, 13, 19 ]
+}, {
+  "index" : 493,
+  "nodes" : [ "(3,0)[HOME]", "(4,4)[OTHER]" ],
+  "dptBins" : [ 17, 22 ]
+}, {
+  "index" : 494,
+  "nodes" : [ "(3,0)[OTHER]", "(2,0)[WORK]", "(3,0)[WORK]" ],
+  "dptBins" : [ 8, 10, 16 ]
+}, {
+  "index" : 495,
+  "nodes" : [ "(1,1)[HOME]", "(1,1)[WORK]" ],
+  "dptBins" : [ 8, 19 ]
+}, {
+  "index" : 496,
+  "nodes" : [ "(2,3)[EDUCATION]", "(0,4)[HOME]", "(0,2)[EDUCATION]" ],
+  "dptBins" : [ 0, 2, 18 ]
+}, {
+  "index" : 497,
+  "nodes" : [ "(2,3)[WORK]", "(1,2)[EDUCATION]" ],
+  "dptBins" : [ 21, 23 ]
+}, {
+  "index" : 498,
+  "nodes" : [ "(4,3)[HOME]", "(1,3)[HOME]", "(4,0)[WORK]" ],
+  "dptBins" : [ 7, 14, 18 ]
+}, {
+  "index" : 499,
+  "nodes" : [ "(2,1)[EDUCATION]", "(3,0)[WORK]", "(0,0)[EDUCATION]" ],
+  "dptBins" : [ 7, 13, 18 ]
+}, {
+  "index" : 500,
+  "nodes" : [ "(3,2)[OTHER]", "(4,4)[HOME]", "(0,2)[OTHER]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 5, 7, 18, 22 ]
+}, {
+  "index" : 501,
+  "nodes" : [ "(1,2)[OTHER]", "(2,0)[WORK]", "(3,1)[HOME]" ],
+  "dptBins" : [ 12, 18, 23 ]
+}, {
+  "index" : 502,
+  "nodes" : [ "(1,0)[HOME]", "(2,3)[WORK]" ],
+  "dptBins" : [ 9, 23 ]
+}, {
+  "index" : 503,
+  "nodes" : [ "(2,0)[WORK]", "(1,1)[OTHER]", "(2,1)[EDUCATION]", "(4,1)[HOME]", "(0,0)[HOME]", "(3,0)[HOME]" ],
+  "dptBins" : [ 4, 5, 11, 12, 13, 22 ]
+}, {
+  "index" : 504,
+  "nodes" : [ "(2,3)[HOME]", "(2,3)[WORK]", "(0,1)[WORK]", "(3,3)[HOME]" ],
+  "dptBins" : [ 4, 11, 13, 14 ]
+}, {
+  "index" : 505,
+  "nodes" : [ "(3,4)[OTHER]", "(4,1)[HOME]", "(0,0)[HOME]" ],
+  "dptBins" : [ 3, 4, 20 ]
+}, {
+  "index" : 506,
+  "nodes" : [ "(0,4)[EDUCATION]", "(2,4)[EDUCATION]", "(2,0)[OTHER]", "(4,0)[WORK]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 2, 4, 10, 16, 20 ]
+}, {
+  "index" : 507,
+  "nodes" : [ "(3,4)[EDUCATION]", "(0,4)[OTHER]" ],
+  "dptBins" : [ 14, 21 ]
+}, {
+  "index" : 508,
+  "nodes" : [ "(0,0)[HOME]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 5, 9 ]
+}, {
+  "index" : 509,
+  "nodes" : [ "(3,0)[HOME]", "(2,4)[EDUCATION]", "(3,1)[OTHER]" ],
+  "dptBins" : [ 5, 13, 23 ]
+}, {
+  "index" : 510,
+  "nodes" : [ "(1,1)[EDUCATION]", "(4,2)[OTHER]", "(0,4)[HOME]" ],
+  "dptBins" : [ 2, 4, 14 ]
+}, {
+  "index" : 511,
+  "nodes" : [ "(0,4)[HOME]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 2, 10 ]
+}, {
+  "index" : 512,
+  "nodes" : [ "(1,0)[OTHER]" ],
+  "dptBins" : [ 2 ]
+}, {
+  "index" : 513,
+  "nodes" : [ "(3,1)[HOME]", "(2,0)[EDUCATION]", "(1,4)[HOME]" ],
+  "dptBins" : [ 0, 5, 13 ]
+}, {
+  "index" : 514,
+  "nodes" : [ "(4,4)[EDUCATION]", "(0,0)[WORK]", "(2,4)[WORK]", "(2,2)[HOME]" ],
+  "dptBins" : [ 4, 7, 15, 20 ]
+}, {
+  "index" : 515,
+  "nodes" : [ "(2,4)[HOME]", "(4,3)[WORK]", "(0,4)[HOME]" ],
+  "dptBins" : [ 7, 13, 19 ]
+}, {
+  "index" : 516,
+  "nodes" : [ "(4,3)[WORK]", "(3,3)[OTHER]", "(2,1)[HOME]", "(4,1)[EDUCATION]" ],
+  "dptBins" : [ 2, 3, 4, 22 ]
+}, {
+  "index" : 517,
+  "nodes" : [ "(3,0)[HOME]", "(0,2)[HOME]" ],
+  "dptBins" : [ 0, 19 ]
+}, {
+  "index" : 518,
+  "nodes" : [ "(3,4)[WORK]", "(2,3)[WORK]", "(0,3)[OTHER]", "(4,3)[WORK]" ],
+  "dptBins" : [ 8, 15, 16, 20 ]
+}, {
+  "index" : 519,
+  "nodes" : [ "(3,0)[EDUCATION]", "(2,1)[WORK]", "(4,1)[EDUCATION]", "(3,2)[OTHER]", "(0,0)[EDUCATION]" ],
+  "dptBins" : [ 11, 16, 20, 22, 23 ]
+}, {
+  "index" : 520,
+  "nodes" : [ "(0,4)[EDUCATION]", "(0,0)[HOME]", "(2,3)[WORK]", "(1,2)[EDUCATION]" ],
+  "dptBins" : [ 5, 19, 22, 23 ]
+}, {
+  "index" : 521,
+  "nodes" : [ "(0,1)[HOME]", "(4,1)[EDUCATION]", "(4,0)[OTHER]", "(0,2)[EDUCATION]" ],
+  "dptBins" : [ 0, 3, 4, 15 ]
+}, {
+  "index" : 522,
+  "nodes" : [ "(2,3)[WORK]", "(2,3)[HOME]", "(2,2)[HOME]", "(2,2)[EDUCATION]" ],
+  "dptBins" : [ 2, 9, 14, 20 ]
+}, {
+  "index" : 523,
+  "nodes" : [ "(3,0)[OTHER]" ],
+  "dptBins" : [ 1 ]
+}, {
+  "index" : 524,
+  "nodes" : [ "(2,4)[HOME]", "(1,0)[EDUCATION]", "(1,2)[WORK]", "(2,4)[HOME]", "(4,4)[HOME]", "(2,3)[OTHER]" ],
+  "dptBins" : [ 1, 3, 5, 12, 14, 18 ]
+}, {
+  "index" : 525,
+  "nodes" : [ "(0,2)[WORK]", "(3,3)[OTHER]" ],
+  "dptBins" : [ 1, 12 ]
+}, {
+  "index" : 526,
+  "nodes" : [ "(1,1)[OTHER]", "(4,4)[EDUCATION]", "(4,3)[WORK]" ],
+  "dptBins" : [ 5, 8, 21 ]
+}, {
+  "index" : 527,
+  "nodes" : [ "(3,1)[HOME]", "(0,0)[WORK]", "(3,2)[EDUCATION]" ],
+  "dptBins" : [ 9, 16, 21 ]
+}, {
+  "index" : 528,
+  "nodes" : [ "(3,2)[OTHER]", "(3,0)[OTHER]", "(1,1)[HOME]", "(0,1)[HOME]" ],
+  "dptBins" : [ 3, 4, 10, 16 ]
+}, {
+  "index" : 529,
+  "nodes" : [ "(1,1)[OTHER]", "(2,4)[OTHER]", "(4,0)[EDUCATION]", "(0,3)[EDUCATION]" ],
+  "dptBins" : [ 6, 7, 17, 19 ]
+}, {
+  "index" : 530,
+  "nodes" : [ "(1,1)[WORK]", "(3,3)[HOME]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 9, 17, 18 ]
+}, {
+  "index" : 531,
+  "nodes" : [ "(3,2)[EDUCATION]", "(0,4)[WORK]", "(4,1)[OTHER]" ],
+  "dptBins" : [ 6, 15, 21 ]
+}, {
+  "index" : 532,
+  "nodes" : [ "(2,1)[EDUCATION]" ],
+  "dptBins" : [ 4 ]
+}, {
+  "index" : 533,
+  "nodes" : [ "(4,0)[HOME]", "(2,0)[HOME]", "(2,3)[WORK]" ],
+  "dptBins" : [ 9, 10, 17 ]
+}, {
+  "index" : 534,
+  "nodes" : [ "(0,4)[OTHER]", "(0,2)[WORK]" ],
+  "dptBins" : [ 9, 16 ]
+}, {
+  "index" : 535,
+  "nodes" : [ "(3,0)[OTHER]", "(1,0)[OTHER]", "(0,2)[OTHER]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 9, 14, 18, 22 ]
+}, {
+  "index" : 536,
+  "nodes" : [ "(4,1)[HOME]", "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 9, 17 ]
+}, {
+  "index" : 537,
+  "nodes" : [ "(1,0)[OTHER]", "(0,1)[EDUCATION]", "(0,2)[OTHER]", "(1,4)[WORK]", "(2,1)[HOME]", "(3,3)[OTHER]" ],
+  "dptBins" : [ 0, 1, 2, 3, 17, 22 ]
+}, {
+  "index" : 538,
+  "nodes" : [ "(2,4)[OTHER]", "(2,3)[WORK]" ],
+  "dptBins" : [ 6, 23 ]
+}, {
+  "index" : 539,
+  "nodes" : [ "(1,0)[OTHER]", "(4,1)[HOME]", "(4,2)[OTHER]" ],
+  "dptBins" : [ 1, 13, 21 ]
+}, {
+  "index" : 540,
+  "nodes" : [ "(4,0)[WORK]", "(3,1)[OTHER]", "(2,0)[HOME]" ],
+  "dptBins" : [ 9, 13, 17 ]
+}, {
+  "index" : 541,
+  "nodes" : [ "(0,0)[OTHER]", "(1,1)[OTHER]", "(3,4)[EDUCATION]", "(4,1)[EDUCATION]" ],
+  "dptBins" : [ 1, 2, 3, 17 ]
+}, {
+  "index" : 542,
+  "nodes" : [ "(4,2)[OTHER]" ],
+  "dptBins" : [ 13 ]
+}, {
+  "index" : 543,
+  "nodes" : [ "(4,4)[EDUCATION]", "(4,0)[OTHER]" ],
+  "dptBins" : [ 20, 22 ]
+}, {
+  "index" : 544,
+  "nodes" : [ "(0,2)[HOME]", "(0,4)[HOME]", "(0,0)[HOME]" ],
+  "dptBins" : [ 0, 6, 17 ]
+}, {
+  "index" : 545,
+  "nodes" : [ "(3,0)[WORK]", "(3,2)[HOME]", "(4,0)[OTHER]", "(1,4)[HOME]" ],
+  "dptBins" : [ 0, 2, 4, 19 ]
+}, {
+  "index" : 546,
+  "nodes" : [ "(1,2)[OTHER]", "(2,0)[OTHER]", "(1,0)[HOME]", "(2,4)[HOME]", "(4,1)[EDUCATION]", "(3,2)[WORK]", "(2,0)[HOME]" ],
+  "dptBins" : [ 3, 11, 12, 13, 16, 18, 20 ]
+}, {
+  "index" : 547,
+  "nodes" : [ "(3,0)[EDUCATION]", "(2,0)[HOME]", "(1,3)[WORK]" ],
+  "dptBins" : [ 8, 21, 22 ]
+}, {
+  "index" : 548,
+  "nodes" : [ "(3,1)[HOME]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 4, 13 ]
+}, {
+  "index" : 549,
+  "nodes" : [ "(2,3)[HOME]", "(3,1)[EDUCATION]" ],
+  "dptBins" : [ 8, 14 ]
+}, {
+  "index" : 550,
+  "nodes" : [ "(4,4)[OTHER]", "(2,1)[EDUCATION]", "(1,4)[OTHER]" ],
+  "dptBins" : [ 10, 11, 13 ]
+}, {
+  "index" : 551,
+  "nodes" : [ "(0,1)[OTHER]" ],
+  "dptBins" : [ 13 ]
+}, {
+  "index" : 552,
+  "nodes" : [ "(3,2)[OTHER]", "(4,0)[EDUCATION]", "(3,4)[WORK]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 3, 12, 15, 22 ]
+}, {
+  "index" : 553,
+  "nodes" : [ "(0,0)[WORK]", "(4,2)[OTHER]" ],
+  "dptBins" : [ 8, 16 ]
+}, {
+  "index" : 554,
+  "nodes" : [ "(4,1)[HOME]", "(4,3)[WORK]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 10, 12, 15 ]
+}, {
+  "index" : 555,
+  "nodes" : [ "(0,2)[EDUCATION]", "(0,2)[HOME]", "(3,2)[WORK]", "(3,0)[WORK]", "(1,4)[WORK]", "(0,0)[HOME]" ],
+  "dptBins" : [ 2, 7, 8, 11, 18, 19 ]
+}, {
+  "index" : 556,
+  "nodes" : [ "(1,2)[WORK]", "(0,2)[EDUCATION]", "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 12, 21, 22 ]
+}, {
+  "index" : 557,
+  "nodes" : [ "(2,0)[EDUCATION]", "(3,0)[EDUCATION]", "(3,3)[HOME]", "(2,1)[WORK]" ],
+  "dptBins" : [ 3, 4, 8, 16 ]
+}, {
+  "index" : 558,
+  "nodes" : [ "(1,2)[WORK]", "(3,1)[OTHER]", "(0,3)[OTHER]", "(2,3)[WORK]", "(2,0)[OTHER]", "(3,0)[WORK]" ],
+  "dptBins" : [ 1, 6, 11, 15, 17, 23 ]
+}, {
+  "index" : 559,
+  "nodes" : [ "(0,0)[HOME]", "(2,4)[HOME]" ],
+  "dptBins" : [ 5, 18 ]
+}, {
+  "index" : 560,
+  "nodes" : [ "(3,1)[WORK]", "(0,1)[WORK]" ],
+  "dptBins" : [ 10, 16 ]
+}, {
+  "index" : 561,
+  "nodes" : [ "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 22 ]
+}, {
+  "index" : 562,
+  "nodes" : [ "(2,4)[HOME]", "(1,1)[WORK]", "(0,2)[HOME]" ],
+  "dptBins" : [ 10, 16, 21 ]
+}, {
+  "index" : 563,
+  "nodes" : [ "(2,4)[OTHER]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 6, 21 ]
+}, {
+  "index" : 564,
+  "nodes" : [ "(2,4)[OTHER]", "(1,3)[EDUCATION]", "(2,1)[HOME]" ],
+  "dptBins" : [ 4, 12, 15 ]
+}, {
+  "index" : 565,
+  "nodes" : [ "(2,4)[OTHER]", "(0,4)[WORK]" ],
+  "dptBins" : [ 1, 19 ]
+}, {
+  "index" : 566,
+  "nodes" : [ "(3,2)[WORK]", "(2,0)[OTHER]", "(0,1)[EDUCATION]" ],
+  "dptBins" : [ 8, 21, 23 ]
+}, {
+  "index" : 567,
+  "nodes" : [ "(3,4)[HOME]", "(2,0)[WORK]", "(2,0)[WORK]" ],
+  "dptBins" : [ 7, 10, 18 ]
+}, {
+  "index" : 568,
+  "nodes" : [ "(2,0)[EDUCATION]", "(2,0)[HOME]", "(2,4)[OTHER]" ],
+  "dptBins" : [ 1, 18, 22 ]
+}, {
+  "index" : 569,
+  "nodes" : [ "(0,2)[WORK]", "(0,0)[OTHER]", "(0,0)[WORK]" ],
+  "dptBins" : [ 2, 11, 17 ]
+}, {
+  "index" : 570,
+  "nodes" : [ "(4,3)[OTHER]", "(0,1)[OTHER]", "(3,3)[WORK]" ],
+  "dptBins" : [ 4, 10, 17 ]
+}, {
+  "index" : 571,
+  "nodes" : [ "(0,0)[HOME]", "(2,0)[HOME]" ],
+  "dptBins" : [ 9, 18 ]
+}, {
+  "index" : 572,
+  "nodes" : [ "(4,2)[OTHER]", "(0,4)[EDUCATION]" ],
+  "dptBins" : [ 8, 12 ]
+}, {
+  "index" : 573,
+  "nodes" : [ "(2,3)[HOME]", "(1,0)[EDUCATION]" ],
+  "dptBins" : [ 15, 20 ]
+}, {
+  "index" : 574,
+  "nodes" : [ "(1,1)[WORK]", "(1,0)[EDUCATION]" ],
+  "dptBins" : [ 12, 23 ]
+}, {
+  "index" : 575,
+  "nodes" : [ "(4,2)[EDUCATION]", "(1,0)[WORK]" ],
+  "dptBins" : [ 2, 16 ]
+}, {
+  "index" : 576,
+  "nodes" : [ "(2,3)[WORK]", "(2,2)[WORK]", "(2,1)[HOME]" ],
+  "dptBins" : [ 9, 16, 19 ]
+}, {
+  "index" : 577,
+  "nodes" : [ "(0,2)[WORK]" ],
+  "dptBins" : [ 8 ]
+}, {
+  "index" : 578,
+  "nodes" : [ "(3,2)[HOME]", "(2,0)[OTHER]", "(2,2)[OTHER]", "(2,1)[WORK]" ],
+  "dptBins" : [ 0, 4, 11, 17 ]
+}, {
+  "index" : 579,
+  "nodes" : [ "(4,4)[EDUCATION]", "(2,3)[HOME]" ],
+  "dptBins" : [ 5, 22 ]
+}, {
+  "index" : 580,
+  "nodes" : [ "(2,0)[OTHER]", "(4,0)[WORK]", "(1,1)[HOME]", "(2,3)[WORK]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 6, 8, 12, 15, 20 ]
+}, {
+  "index" : 581,
+  "nodes" : [ "(3,1)[HOME]", "(1,1)[WORK]", "(3,0)[OTHER]", "(1,2)[HOME]" ],
+  "dptBins" : [ 6, 10, 15, 18 ]
+}, {
+  "index" : 582,
+  "nodes" : [ "(0,4)[HOME]", "(2,4)[HOME]", "(2,2)[WORK]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 4, 9, 15, 17 ]
+}, {
+  "index" : 583,
+  "nodes" : [ "(3,1)[HOME]", "(3,1)[WORK]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 7, 14, 17 ]
+}, {
+  "index" : 584,
+  "nodes" : [ "(3,0)[HOME]", "(2,1)[EDUCATION]", "(1,0)[HOME]", "(2,4)[EDUCATION]", "(3,0)[EDUCATION]" ],
+  "dptBins" : [ 0, 8, 14, 15, 21 ]
+}, {
+  "index" : 585,
+  "nodes" : [ "(3,4)[WORK]", "(3,0)[WORK]", "(2,3)[WORK]", "(3,1)[OTHER]" ],
+  "dptBins" : [ 9, 16, 20, 22 ]
+}, {
+  "index" : 586,
+  "nodes" : [ "(1,0)[EDUCATION]", "(2,3)[EDUCATION]" ],
+  "dptBins" : [ 8, 9 ]
+}, {
+  "index" : 587,
+  "nodes" : [ "(4,0)[EDUCATION]", "(4,2)[HOME]", "(2,3)[WORK]" ],
+  "dptBins" : [ 0, 9, 17 ]
+}, {
+  "index" : 588,
+  "nodes" : [ "(1,2)[OTHER]", "(1,1)[OTHER]", "(2,3)[WORK]" ],
+  "dptBins" : [ 1, 2, 17 ]
+}, {
+  "index" : 589,
+  "nodes" : [ "(3,3)[HOME]", "(0,2)[EDUCATION]", "(4,2)[WORK]", "(3,0)[HOME]" ],
+  "dptBins" : [ 7, 9, 16, 19 ]
+}, {
+  "index" : 590,
+  "nodes" : [ "(0,1)[HOME]" ],
+  "dptBins" : [ 21 ]
+}, {
+  "index" : 591,
+  "nodes" : [ "(4,3)[HOME]", "(3,0)[WORK]", "(2,4)[WORK]" ],
+  "dptBins" : [ 10, 15, 19 ]
+}, {
+  "index" : 592,
+  "nodes" : [ "(4,0)[EDUCATION]", "(4,1)[EDUCATION]", "(0,3)[WORK]", "(2,4)[WORK]" ],
+  "dptBins" : [ 6, 16, 20, 22 ]
+}, {
+  "index" : 593,
+  "nodes" : [ "(2,4)[HOME]", "(3,4)[HOME]", "(4,3)[HOME]" ],
+  "dptBins" : [ 7, 11, 16 ]
+}, {
+  "index" : 594,
+  "nodes" : [ "(4,3)[OTHER]", "(0,0)[EDUCATION]" ],
+  "dptBins" : [ 16, 20 ]
+}, {
+  "index" : 595,
+  "nodes" : [ "(2,0)[HOME]", "(1,2)[HOME]", "(3,0)[WORK]" ],
+  "dptBins" : [ 16, 18, 19 ]
+}, {
+  "index" : 596,
+  "nodes" : [ "(4,1)[HOME]", "(2,3)[WORK]", "(1,1)[WORK]" ],
+  "dptBins" : [ 8, 9, 17 ]
+}, {
+  "index" : 597,
+  "nodes" : [ "(1,1)[HOME]", "(2,4)[OTHER]", "(2,3)[EDUCATION]", "(2,3)[WORK]" ],
+  "dptBins" : [ 7, 12, 16, 17 ]
+}, {
+  "index" : 598,
+  "nodes" : [ "(3,0)[WORK]", "(2,0)[EDUCATION]", "(4,4)[EDUCATION]", "(1,1)[WORK]", "(1,4)[OTHER]", "(3,1)[HOME]", "(2,1)[EDUCATION]" ],
+  "dptBins" : [ 3, 6, 10, 11, 14, 19, 22 ]
+}, {
+  "index" : 599,
+  "nodes" : [ "(2,3)[EDUCATION]", "(0,0)[HOME]", "(4,1)[WORK]", "(3,0)[WORK]" ],
+  "dptBins" : [ 1, 4, 7, 8 ]
+}, {
+  "index" : 600,
+  "nodes" : [ "(3,4)[HOME]", "(3,0)[HOME]" ],
+  "dptBins" : [ 4, 21 ]
+}, {
+  "index" : 601,
+  "nodes" : [ "(2,1)[HOME]", "(3,0)[HOME]" ],
+  "dptBins" : [ 3, 4 ]
+}, {
+  "index" : 602,
+  "nodes" : [ "(2,0)[HOME]", "(2,3)[WORK]", "(0,4)[OTHER]" ],
+  "dptBins" : [ 1, 2, 15 ]
+}, {
+  "index" : 603,
+  "nodes" : [ "(0,2)[HOME]", "(4,0)[OTHER]", "(0,4)[EDUCATION]" ],
+  "dptBins" : [ 6, 14, 18 ]
+}, {
+  "index" : 604,
+  "nodes" : [ "(4,4)[WORK]", "(3,0)[OTHER]" ],
+  "dptBins" : [ 6, 17 ]
+}, {
+  "index" : 605,
+  "nodes" : [ "(1,2)[EDUCATION]", "(0,0)[HOME]", "(0,1)[EDUCATION]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 9, 11, 12, 16 ]
+}, {
+  "index" : 606,
+  "nodes" : [ "(0,2)[HOME]" ],
+  "dptBins" : [ 1 ]
+}, {
+  "index" : 607,
+  "nodes" : [ "(0,0)[WORK]", "(1,0)[OTHER]", "(0,0)[EDUCATION]" ],
+  "dptBins" : [ 0, 14, 17 ]
+}, {
+  "index" : 608,
+  "nodes" : [ "(0,0)[EDUCATION]", "(2,3)[HOME]", "(1,3)[WORK]" ],
+  "dptBins" : [ 3, 10, 17 ]
+}, {
+  "index" : 609,
+  "nodes" : [ "(2,2)[WORK]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 0, 20 ]
+}, {
+  "index" : 610,
+  "nodes" : [ "(1,1)[HOME]", "(3,1)[HOME]", "(2,4)[OTHER]", "(0,4)[WORK]" ],
+  "dptBins" : [ 2, 4, 9, 16 ]
+}, {
+  "index" : 611,
+  "nodes" : [ "(0,4)[HOME]", "(4,0)[WORK]", "(4,4)[WORK]" ],
+  "dptBins" : [ 7, 18, 19 ]
+}, {
+  "index" : 612,
+  "nodes" : [ "(3,4)[HOME]", "(2,3)[OTHER]", "(1,2)[HOME]", "(1,1)[WORK]" ],
+  "dptBins" : [ 0, 2, 5, 23 ]
+}, {
+  "index" : 613,
+  "nodes" : [ "(4,2)[WORK]", "(0,2)[EDUCATION]", "(2,2)[EDUCATION]" ],
+  "dptBins" : [ 0, 16, 17 ]
+}, {
+  "index" : 614,
+  "nodes" : [ "(3,1)[OTHER]", "(3,1)[OTHER]", "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 7, 13, 22 ]
+}, {
+  "index" : 615,
+  "nodes" : [ "(3,1)[OTHER]", "(3,4)[HOME]", "(3,4)[EDUCATION]" ],
+  "dptBins" : [ 1, 5, 18 ]
+}, {
+  "index" : 616,
+  "nodes" : [ "(3,3)[HOME]", "(1,0)[HOME]", "(3,0)[WORK]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 11, 13, 16, 17 ]
+}, {
+  "index" : 617,
+  "nodes" : [ "(2,4)[EDUCATION]", "(3,2)[EDUCATION]" ],
+  "dptBins" : [ 13, 20 ]
+}, {
+  "index" : 618,
+  "nodes" : [ "(0,1)[HOME]", "(2,3)[WORK]" ],
+  "dptBins" : [ 8, 19 ]
+}, {
+  "index" : 619,
+  "nodes" : [ "(4,0)[EDUCATION]", "(1,2)[HOME]", "(1,3)[WORK]" ],
+  "dptBins" : [ 0, 9, 14 ]
+}, {
+  "index" : 620,
+  "nodes" : [ "(3,3)[WORK]", "(2,4)[EDUCATION]", "(2,0)[HOME]", "(3,0)[HOME]" ],
+  "dptBins" : [ 1, 5, 7, 14 ]
+}, {
+  "index" : 621,
+  "nodes" : [ "(3,3)[HOME]", "(2,4)[WORK]", "(1,4)[OTHER]" ],
+  "dptBins" : [ 3, 17, 21 ]
+}, {
+  "index" : 622,
+  "nodes" : [ "(1,0)[OTHER]", "(2,4)[HOME]", "(0,2)[HOME]" ],
+  "dptBins" : [ 1, 2, 22 ]
+}, {
+  "index" : 623,
+  "nodes" : [ "(0,3)[HOME]", "(2,0)[HOME]", "(1,2)[WORK]" ],
+  "dptBins" : [ 8, 9, 17 ]
+}, {
+  "index" : 624,
+  "nodes" : [ "(2,2)[EDUCATION]", "(3,0)[WORK]", "(3,4)[EDUCATION]" ],
+  "dptBins" : [ 9, 17, 18 ]
+}, {
+  "index" : 625,
+  "nodes" : [ "(0,3)[HOME]", "(1,2)[EDUCATION]" ],
+  "dptBins" : [ 6, 18 ]
+}, {
+  "index" : 626,
+  "nodes" : [ "(0,3)[WORK]" ],
+  "dptBins" : [ 5 ]
+}, {
+  "index" : 627,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 628,
+  "nodes" : [ "(0,2)[HOME]", "(3,0)[WORK]" ],
+  "dptBins" : [ 2, 8 ]
+}, {
+  "index" : 629,
+  "nodes" : [ "(0,0)[EDUCATION]" ],
+  "dptBins" : [ 21 ]
+}, {
+  "index" : 630,
+  "nodes" : [ "(0,1)[EDUCATION]", "(4,1)[OTHER]", "(4,3)[WORK]", "(0,2)[WORK]" ],
+  "dptBins" : [ 4, 12, 16, 19 ]
+}, {
+  "index" : 631,
+  "nodes" : [ "(4,3)[HOME]", "(1,3)[WORK]", "(3,1)[HOME]" ],
+  "dptBins" : [ 8, 16, 19 ]
+}, {
+  "index" : 632,
+  "nodes" : [ "(1,3)[OTHER]", "(2,0)[HOME]" ],
+  "dptBins" : [ 4, 19 ]
+}, {
+  "index" : 633,
+  "nodes" : [ "(1,4)[EDUCATION]", "(4,2)[EDUCATION]", "(4,3)[WORK]" ],
+  "dptBins" : [ 12, 15, 23 ]
+}, {
+  "index" : 634,
+  "nodes" : [ "(2,3)[HOME]" ],
+  "dptBins" : [ 17 ]
+}, {
+  "index" : 635,
+  "nodes" : [ "(3,0)[OTHER]", "(1,0)[HOME]", "(1,3)[EDUCATION]" ],
+  "dptBins" : [ 8, 19, 23 ]
+}, {
+  "index" : 636,
+  "nodes" : [ "(4,4)[WORK]", "(3,0)[WORK]", "(4,3)[HOME]", "(0,3)[WORK]" ],
+  "dptBins" : [ 0, 2, 10, 17 ]
+}, {
+  "index" : 637,
+  "nodes" : [ "(1,4)[HOME]", "(3,2)[WORK]", "(2,1)[EDUCATION]" ],
+  "dptBins" : [ 8, 17, 21 ]
+}, {
+  "index" : 638,
+  "nodes" : [ "(3,2)[EDUCATION]", "(4,0)[OTHER]", "(4,4)[HOME]", "(0,2)[WORK]" ],
+  "dptBins" : [ 14, 20, 21, 22 ]
+}, {
+  "index" : 639,
+  "nodes" : [ "(1,1)[OTHER]", "(0,3)[WORK]", "(1,0)[EDUCATION]", "(3,0)[OTHER]" ],
+  "dptBins" : [ 0, 3, 21, 23 ]
+}, {
+  "index" : 640,
+  "nodes" : [ "(4,2)[HOME]", "(1,3)[OTHER]" ],
+  "dptBins" : [ 9, 19 ]
+}, {
+  "index" : 641,
+  "nodes" : [ "(2,3)[EDUCATION]" ],
+  "dptBins" : [ 17 ]
+}, {
+  "index" : 642,
+  "nodes" : [ "(3,1)[OTHER]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 7, 9 ]
+}, {
+  "index" : 643,
+  "nodes" : [ "(1,1)[OTHER]" ],
+  "dptBins" : [ 18 ]
+}, {
+  "index" : 644,
+  "nodes" : [ "(2,2)[EDUCATION]", "(2,1)[HOME]", "(1,3)[OTHER]", "(2,0)[OTHER]", "(4,1)[WORK]" ],
+  "dptBins" : [ 3, 8, 13, 15, 20 ]
+}, {
+  "index" : 645,
+  "nodes" : [ "(1,1)[EDUCATION]", "(0,0)[HOME]", "(1,1)[WORK]", "(4,3)[OTHER]", "(2,0)[EDUCATION]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 4, 7, 13, 19, 22, 23 ]
+}, {
+  "index" : 646,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 647,
+  "nodes" : [ "(2,0)[OTHER]", "(3,2)[OTHER]", "(0,1)[EDUCATION]", "(0,1)[WORK]" ],
+  "dptBins" : [ 4, 6, 10, 17 ]
+}, {
+  "index" : 648,
+  "nodes" : [ "(3,3)[EDUCATION]", "(0,0)[OTHER]", "(0,4)[HOME]" ],
+  "dptBins" : [ 1, 13, 20 ]
+}, {
+  "index" : 649,
+  "nodes" : [ "(1,0)[HOME]", "(2,2)[OTHER]", "(2,0)[EDUCATION]", "(3,1)[WORK]", "(4,1)[OTHER]" ],
+  "dptBins" : [ 2, 7, 13, 17, 23 ]
+}, {
+  "index" : 650,
+  "nodes" : [ "(3,0)[HOME]" ],
+  "dptBins" : [ 6 ]
+}, {
+  "index" : 651,
+  "nodes" : [ "(2,2)[OTHER]", "(1,3)[HOME]" ],
+  "dptBins" : [ 4, 21 ]
+}, {
+  "index" : 652,
+  "nodes" : [ "(4,1)[HOME]", "(3,1)[WORK]", "(3,3)[OTHER]" ],
+  "dptBins" : [ 7, 12, 19 ]
+}, {
+  "index" : 653,
+  "nodes" : [ "(4,3)[HOME]" ],
+  "dptBins" : [ 22 ]
+}, {
+  "index" : 654,
+  "nodes" : [ "(3,0)[HOME]", "(1,0)[HOME]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 1, 8, 14 ]
+}, {
+  "index" : 655,
+  "nodes" : [ "(4,4)[OTHER]", "(2,0)[WORK]" ],
+  "dptBins" : [ 16, 18 ]
+}, {
+  "index" : 656,
+  "nodes" : [ "(2,3)[HOME]", "(4,4)[OTHER]" ],
+  "dptBins" : [ 4, 8 ]
+}, {
+  "index" : 657,
+  "nodes" : [ "(2,0)[HOME]", "(2,4)[EDUCATION]", "(3,4)[WORK]", "(3,0)[WORK]" ],
+  "dptBins" : [ 5, 6, 7, 17 ]
+}, {
+  "index" : 658,
+  "nodes" : [ "(3,1)[WORK]" ],
+  "dptBins" : [ 6 ]
+}, {
+  "index" : 659,
+  "nodes" : [ "(0,2)[HOME]", "(0,3)[WORK]", "(4,2)[EDUCATION]", "(3,1)[WORK]" ],
+  "dptBins" : [ 6, 11, 13, 17 ]
+}, {
+  "index" : 660,
+  "nodes" : [ "(2,3)[EDUCATION]", "(0,1)[EDUCATION]" ],
+  "dptBins" : [ 7, 13 ]
+}, {
+  "index" : 661,
+  "nodes" : [ "(1,4)[HOME]", "(0,3)[EDUCATION]", "(1,0)[WORK]" ],
+  "dptBins" : [ 11, 22, 23 ]
+}, {
+  "index" : 662,
+  "nodes" : [ "(1,1)[HOME]", "(0,2)[OTHER]", "(1,4)[WORK]", "(2,0)[EDUCATION]", "(2,2)[EDUCATION]" ],
+  "dptBins" : [ 9, 15, 18, 20, 21 ]
+}, {
+  "index" : 663,
+  "nodes" : [ "(2,1)[HOME]", "(4,0)[OTHER]", "(2,1)[OTHER]", "(0,1)[HOME]" ],
+  "dptBins" : [ 6, 13, 15, 18 ]
+}, {
+  "index" : 664,
+  "nodes" : [ "(2,4)[HOME]", "(2,1)[EDUCATION]", "(2,4)[EDUCATION]", "(4,0)[EDUCATION]", "(1,4)[EDUCATION]", "(2,1)[HOME]" ],
+  "dptBins" : [ 2, 3, 8, 10, 13, 22 ]
+}, {
+  "index" : 665,
+  "nodes" : [ "(3,1)[WORK]" ],
+  "dptBins" : [ 16 ]
+}, {
+  "index" : 666,
+  "nodes" : [ "(3,0)[EDUCATION]", "(4,0)[OTHER]" ],
+  "dptBins" : [ 6, 10 ]
+}, {
+  "index" : 667,
+  "nodes" : [ "(4,4)[EDUCATION]", "(1,0)[WORK]" ],
+  "dptBins" : [ 15, 19 ]
+}, {
+  "index" : 668,
+  "nodes" : [ "(4,4)[EDUCATION]", "(3,0)[EDUCATION]", "(1,4)[OTHER]", "(4,3)[EDUCATION]" ],
+  "dptBins" : [ 15, 17, 21, 22 ]
+}, {
+  "index" : 669,
+  "nodes" : [ "(4,2)[OTHER]", "(3,0)[HOME]", "(2,1)[EDUCATION]", "(1,0)[EDUCATION]", "(1,4)[HOME]" ],
+  "dptBins" : [ 6, 8, 11, 19, 22 ]
+}, {
+  "index" : 670,
+  "nodes" : [ "(1,1)[OTHER]", "(2,3)[EDUCATION]", "(4,1)[HOME]", "(3,2)[HOME]", "(4,3)[WORK]", "(4,2)[HOME]" ],
+  "dptBins" : [ 2, 6, 10, 14, 17, 20 ]
+}, {
+  "index" : 671,
+  "nodes" : [ "(1,4)[HOME]", "(2,0)[HOME]" ],
+  "dptBins" : [ 6, 15 ]
+}, {
+  "index" : 672,
+  "nodes" : [ "(1,4)[EDUCATION]", "(0,0)[WORK]" ],
+  "dptBins" : [ 3, 13 ]
+}, {
+  "index" : 673,
+  "nodes" : [ "(0,3)[HOME]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 6, 20 ]
+}, {
+  "index" : 674,
+  "nodes" : [ "(2,1)[WORK]", "(3,4)[WORK]", "(2,1)[WORK]" ],
+  "dptBins" : [ 10, 16, 19 ]
+}, {
+  "index" : 675,
+  "nodes" : [ "(1,3)[HOME]", "(2,0)[OTHER]", "(2,0)[EDUCATION]", "(1,3)[HOME]" ],
+  "dptBins" : [ 3, 5, 11, 23 ]
+}, {
+  "index" : 676,
+  "nodes" : [ "(2,2)[OTHER]", "(4,1)[OTHER]" ],
+  "dptBins" : [ 11, 18 ]
+}, {
+  "index" : 677,
+  "nodes" : [ "(0,3)[HOME]", "(0,0)[EDUCATION]", "(2,1)[WORK]" ],
+  "dptBins" : [ 8, 10, 17 ]
+}, {
+  "index" : 678,
+  "nodes" : [ "(0,4)[HOME]", "(0,0)[EDUCATION]", "(3,4)[HOME]" ],
+  "dptBins" : [ 8, 12, 21 ]
+}, {
+  "index" : 679,
+  "nodes" : [ "(4,4)[OTHER]", "(3,1)[EDUCATION]", "(4,1)[WORK]" ],
+  "dptBins" : [ 0, 4, 23 ]
+}, {
+  "index" : 680,
+  "nodes" : [ "(4,4)[WORK]", "(0,3)[HOME]", "(2,3)[WORK]", "(4,3)[EDUCATION]", "(2,2)[WORK]", "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 2, 3, 9, 11, 18, 19 ]
+}, {
+  "index" : 681,
+  "nodes" : [ "(4,0)[OTHER]", "(0,4)[EDUCATION]", "(3,0)[WORK]", "(4,3)[EDUCATION]" ],
+  "dptBins" : [ 4, 8, 16, 21 ]
+}, {
+  "index" : 682,
+  "nodes" : [ "(3,1)[HOME]" ],
+  "dptBins" : [ 1 ]
+}, {
+  "index" : 683,
+  "nodes" : [ "(2,1)[OTHER]", "(2,0)[WORK]", "(2,4)[EDUCATION]", "(0,2)[OTHER]", "(3,1)[OTHER]" ],
+  "dptBins" : [ 9, 13, 14, 21, 23 ]
+}, {
+  "index" : 684,
+  "nodes" : [ "(2,3)[HOME]" ],
+  "dptBins" : [ 6 ]
+}, {
+  "index" : 685,
+  "nodes" : [ "(1,1)[HOME]", "(4,3)[EDUCATION]" ],
+  "dptBins" : [ 9, 19 ]
+}, {
+  "index" : 686,
+  "nodes" : [ "(4,2)[HOME]", "(0,0)[WORK]", "(1,4)[WORK]" ],
+  "dptBins" : [ 15, 18, 20 ]
+}, {
+  "index" : 687,
+  "nodes" : [ "(4,2)[HOME]", "(3,2)[HOME]", "(0,2)[EDUCATION]", "(1,4)[WORK]" ],
+  "dptBins" : [ 0, 7, 8, 14 ]
+}, {
+  "index" : 688,
+  "nodes" : [ "(2,2)[OTHER]", "(3,1)[EDUCATION]", "(2,2)[HOME]", "(0,3)[HOME]" ],
+  "dptBins" : [ 1, 7, 8, 19 ]
+}, {
+  "index" : 689,
+  "nodes" : [ "(3,1)[OTHER]", "(1,0)[HOME]", "(1,3)[EDUCATION]", "(1,4)[WORK]", "(0,2)[OTHER]" ],
+  "dptBins" : [ 2, 10, 17, 18, 19 ]
+}, {
+  "index" : 690,
+  "nodes" : [ "(3,0)[EDUCATION]", "(0,4)[OTHER]", "(1,1)[EDUCATION]", "(2,1)[EDUCATION]" ],
+  "dptBins" : [ 11, 13, 14, 18 ]
+}, {
+  "index" : 691,
+  "nodes" : [ "(4,3)[HOME]", "(0,4)[HOME]", "(2,2)[WORK]" ],
+  "dptBins" : [ 2, 7, 12 ]
+}, {
+  "index" : 692,
+  "nodes" : [ "(2,3)[WORK]", "(0,2)[EDUCATION]", "(2,4)[OTHER]" ],
+  "dptBins" : [ 4, 8, 10 ]
+}, {
+  "index" : 693,
+  "nodes" : [ "(1,2)[HOME]", "(1,3)[HOME]" ],
+  "dptBins" : [ 6, 8 ]
+}, {
+  "index" : 694,
+  "nodes" : [ "(2,1)[HOME]", "(4,1)[HOME]", "(4,1)[WORK]", "(2,1)[OTHER]", "(4,1)[HOME]" ],
+  "dptBins" : [ 7, 9, 12, 14, 17 ]
+}, {
+  "index" : 695,
+  "nodes" : [ "(1,4)[HOME]", "(1,1)[WORK]", "(4,4)[OTHER]" ],
+  "dptBins" : [ 12, 13, 20 ]
+}, {
+  "index" : 696,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 697,
+  "nodes" : [ "(2,1)[EDUCATION]" ],
+  "dptBins" : [ 18 ]
+}, {
+  "index" : 698,
+  "nodes" : [ "(2,2)[WORK]", "(2,0)[HOME]" ],
+  "dptBins" : [ 8, 22 ]
+}, {
+  "index" : 699,
+  "nodes" : [ "(2,0)[OTHER]" ],
+  "dptBins" : [ 7 ]
+}, {
+  "index" : 700,
+  "nodes" : [ "(0,3)[HOME]", "(3,4)[HOME]" ],
+  "dptBins" : [ 13, 17 ]
+}, {
+  "index" : 701,
+  "nodes" : [ "(2,4)[WORK]", "(2,3)[WORK]", "(3,2)[OTHER]", "(4,0)[OTHER]", "(2,3)[OTHER]", "(2,3)[EDUCATION]", "(3,0)[HOME]", "(3,3)[EDUCATION]" ],
+  "dptBins" : [ 0, 4, 9, 14, 15, 17, 18, 23 ]
+}, {
+  "index" : 702,
+  "nodes" : [ "(2,3)[HOME]", "(2,3)[WORK]" ],
+  "dptBins" : [ 8, 16 ]
+}, {
+  "index" : 703,
+  "nodes" : [ "(4,1)[WORK]", "(1,4)[OTHER]", "(0,2)[WORK]", "(4,2)[HOME]", "(0,0)[OTHER]" ],
+  "dptBins" : [ 1, 6, 7, 14, 16 ]
+}, {
+  "index" : 704,
+  "nodes" : [ "(0,0)[WORK]", "(2,0)[HOME]", "(1,1)[WORK]" ],
+  "dptBins" : [ 0, 10, 17 ]
+}, {
+  "index" : 705,
+  "nodes" : [ "(4,4)[EDUCATION]", "(2,4)[WORK]" ],
+  "dptBins" : [ 7, 22 ]
+}, {
+  "index" : 706,
+  "nodes" : [ "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 20 ]
+}, {
+  "index" : 707,
+  "nodes" : [ "(4,1)[EDUCATION]", "(2,1)[OTHER]", "(3,1)[OTHER]" ],
+  "dptBins" : [ 13, 14, 20 ]
+}, {
+  "index" : 708,
+  "nodes" : [ "(3,0)[WORK]", "(2,0)[HOME]", "(2,1)[EDUCATION]" ],
+  "dptBins" : [ 10, 11, 17 ]
+}, {
+  "index" : 709,
+  "nodes" : [ "(4,3)[EDUCATION]", "(3,2)[WORK]" ],
+  "dptBins" : [ 14, 18 ]
+}, {
+  "index" : 710,
+  "nodes" : [ "(2,1)[HOME]" ],
+  "dptBins" : [ 8 ]
+}, {
+  "index" : 711,
+  "nodes" : [ "(1,4)[HOME]", "(1,4)[WORK]" ],
+  "dptBins" : [ 2, 7 ]
+}, {
+  "index" : 712,
+  "nodes" : [ "(0,4)[OTHER]", "(2,1)[WORK]", "(1,1)[WORK]" ],
+  "dptBins" : [ 0, 5, 18 ]
+}, {
+  "index" : 713,
+  "nodes" : [ "(1,1)[OTHER]", "(3,4)[WORK]", "(3,2)[HOME]" ],
+  "dptBins" : [ 7, 14, 16 ]
+}, {
+  "index" : 714,
+  "nodes" : [ "(2,4)[OTHER]", "(4,2)[WORK]" ],
+  "dptBins" : [ 10, 14 ]
+}, {
+  "index" : 715,
+  "nodes" : [ "(1,3)[WORK]" ],
+  "dptBins" : [ 14 ]
+}, {
+  "index" : 716,
+  "nodes" : [ "(1,1)[HOME]", "(2,0)[OTHER]", "(3,0)[WORK]", "(1,1)[HOME]" ],
+  "dptBins" : [ 1, 9, 14, 22 ]
+}, {
+  "index" : 717,
+  "nodes" : [ "(1,4)[HOME]", "(0,0)[HOME]" ],
+  "dptBins" : [ 13, 18 ]
+}, {
+  "index" : 718,
+  "nodes" : [ "(1,0)[WORK]", "(3,2)[OTHER]", "(1,1)[WORK]", "(0,4)[WORK]" ],
+  "dptBins" : [ 5, 7, 14, 20 ]
+}, {
+  "index" : 719,
+  "nodes" : [ "(1,3)[HOME]", "(0,1)[WORK]", "(4,0)[HOME]" ],
+  "dptBins" : [ 8, 15, 22 ]
+}, {
+  "index" : 720,
+  "nodes" : [ "(4,3)[OTHER]", "(3,4)[WORK]", "(4,2)[WORK]", "(1,3)[OTHER]" ],
+  "dptBins" : [ 8, 12, 18, 21 ]
+}, {
+  "index" : 721,
+  "nodes" : [ "(3,3)[HOME]", "(3,2)[HOME]", "(2,4)[WORK]" ],
+  "dptBins" : [ 6, 12, 18 ]
+}, {
+  "index" : 722,
+  "nodes" : [ "(2,4)[EDUCATION]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 1, 16 ]
+}, {
+  "index" : 723,
+  "nodes" : [ "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 11 ]
+}, {
+  "index" : 724,
+  "nodes" : [ "(3,1)[HOME]", "(4,4)[WORK]" ],
+  "dptBins" : [ 7, 16 ]
+}, {
+  "index" : 725,
+  "nodes" : [ "(1,1)[HOME]", "(1,4)[OTHER]", "(3,0)[WORK]" ],
+  "dptBins" : [ 7, 9, 17 ]
+}, {
+  "index" : 726,
+  "nodes" : [ "(3,3)[WORK]", "(1,0)[HOME]", "(4,3)[WORK]", "(3,0)[WORK]" ],
+  "dptBins" : [ 7, 8, 9, 16 ]
+}, {
+  "index" : 727,
+  "nodes" : [ "(3,3)[EDUCATION]", "(0,0)[WORK]" ],
+  "dptBins" : [ 12, 19 ]
+}, {
+  "index" : 728,
+  "nodes" : [ "(3,4)[OTHER]", "(1,3)[WORK]" ],
+  "dptBins" : [ 7, 14 ]
+}, {
+  "index" : 729,
+  "nodes" : [ "(0,4)[OTHER]", "(2,4)[WORK]", "(2,2)[EDUCATION]" ],
+  "dptBins" : [ 9, 16, 22 ]
+}, {
+  "index" : 730,
+  "nodes" : [ "(2,3)[OTHER]", "(2,0)[EDUCATION]", "(2,3)[HOME]", "(0,0)[HOME]" ],
+  "dptBins" : [ 0, 9, 10, 18 ]
+}, {
+  "index" : 731,
+  "nodes" : [ "(0,2)[WORK]" ],
+  "dptBins" : [ 7 ]
+}, {
+  "index" : 732,
+  "nodes" : [ "(1,1)[WORK]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 1, 9 ]
+}, {
+  "index" : 733,
+  "nodes" : [ "(2,3)[HOME]", "(1,3)[OTHER]" ],
+  "dptBins" : [ 9, 18 ]
+}, {
+  "index" : 734,
+  "nodes" : [ "(1,2)[EDUCATION]", "(2,2)[OTHER]", "(1,0)[OTHER]", "(1,0)[HOME]" ],
+  "dptBins" : [ 12, 13, 17, 20 ]
+}, {
+  "index" : 735,
+  "nodes" : [ "(4,0)[HOME]", "(0,2)[WORK]", "(3,4)[HOME]" ],
+  "dptBins" : [ 9, 17, 21 ]
+}, {
+  "index" : 736,
+  "nodes" : [ "(3,1)[HOME]" ],
+  "dptBins" : [ 20 ]
+}, {
+  "index" : 737,
+  "nodes" : [ "(2,4)[HOME]", "(0,4)[HOME]", "(3,2)[EDUCATION]", "(1,3)[EDUCATION]", "(0,2)[EDUCATION]" ],
+  "dptBins" : [ 13, 15, 18, 21, 22 ]
+}, {
+  "index" : 738,
+  "nodes" : [ "(2,3)[HOME]", "(2,3)[OTHER]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 6, 7, 17 ]
+}, {
+  "index" : 739,
+  "nodes" : [ "(0,1)[EDUCATION]", "(3,0)[WORK]" ],
+  "dptBins" : [ 10, 18 ]
+}, {
+  "index" : 740,
+  "nodes" : [ "(4,3)[HOME]", "(1,1)[WORK]" ],
+  "dptBins" : [ 8, 13 ]
+}, {
+  "index" : 741,
+  "nodes" : [ "(3,2)[EDUCATION]", "(2,3)[WORK]", "(0,0)[OTHER]", "(2,1)[EDUCATION]", "(2,1)[OTHER]" ],
+  "dptBins" : [ 0, 1, 15, 18, 21 ]
+}, {
+  "index" : 742,
+  "nodes" : [ "(0,4)[HOME]", "(1,1)[HOME]", "(4,4)[WORK]", "(2,1)[WORK]", "(2,4)[OTHER]" ],
+  "dptBins" : [ 10, 14, 17, 18, 21 ]
+}, {
+  "index" : 743,
+  "nodes" : [ "(2,0)[OTHER]", "(3,2)[HOME]", "(0,4)[EDUCATION]" ],
+  "dptBins" : [ 2, 10, 23 ]
+}, {
+  "index" : 744,
+  "nodes" : [ "(1,1)[HOME]", "(2,0)[OTHER]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 11, 15, 20 ]
+}, {
+  "index" : 745,
+  "nodes" : [ "(4,0)[WORK]", "(2,0)[WORK]" ],
+  "dptBins" : [ 5, 17 ]
+}, {
+  "index" : 746,
+  "nodes" : [ "(0,3)[HOME]", "(0,2)[EDUCATION]" ],
+  "dptBins" : [ 14, 19 ]
+}, {
+  "index" : 747,
+  "nodes" : [ "(2,1)[HOME]", "(2,2)[EDUCATION]" ],
+  "dptBins" : [ 9, 22 ]
+}, {
+  "index" : 748,
+  "nodes" : [ "(2,1)[HOME]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 8, 19 ]
+}, {
+  "index" : 749,
+  "nodes" : [ "(2,3)[HOME]", "(4,0)[OTHER]", "(1,2)[HOME]", "(0,1)[EDUCATION]" ],
+  "dptBins" : [ 6, 13, 17, 18 ]
+}, {
+  "index" : 750,
+  "nodes" : [ "(0,3)[WORK]" ],
+  "dptBins" : [ 11 ]
+}, {
+  "index" : 751,
+  "nodes" : [ "(1,2)[HOME]" ],
+  "dptBins" : [ 15 ]
+}, {
+  "index" : 752,
+  "nodes" : [ "(3,0)[OTHER]", "(4,3)[WORK]" ],
+  "dptBins" : [ 7, 14 ]
+}, {
+  "index" : 753,
+  "nodes" : [ "(3,3)[WORK]", "(1,0)[EDUCATION]", "(1,1)[WORK]", "(1,1)[HOME]", "(4,1)[OTHER]" ],
+  "dptBins" : [ 4, 7, 15, 19, 21 ]
+}, {
+  "index" : 754,
+  "nodes" : [ "(0,0)[HOME]", "(0,2)[WORK]", "(0,4)[OTHER]" ],
+  "dptBins" : [ 0, 8, 20 ]
+}, {
+  "index" : 755,
+  "nodes" : [ "(3,3)[HOME]", "(0,0)[OTHER]", "(1,1)[WORK]", "(0,3)[OTHER]" ],
+  "dptBins" : [ 12, 20, 21, 22 ]
+}, {
+  "index" : 756,
+  "nodes" : [ "(2,0)[HOME]" ],
+  "dptBins" : [ 21 ]
+}, {
+  "index" : 757,
+  "nodes" : [ "(3,4)[HOME]", "(3,2)[WORK]", "(1,2)[WORK]", "(0,4)[EDUCATION]" ],
+  "dptBins" : [ 6, 11, 17, 20 ]
+}, {
+  "index" : 758,
+  "nodes" : [ "(1,0)[WORK]", "(1,1)[WORK]", "(0,2)[HOME]", "(4,1)[EDUCATION]" ],
+  "dptBins" : [ 4, 14, 19, 21 ]
+}, {
+  "index" : 759,
+  "nodes" : [ "(0,0)[HOME]", "(2,0)[HOME]", "(1,0)[WORK]", "(2,2)[HOME]" ],
+  "dptBins" : [ 9, 11, 18, 20 ]
+}, {
+  "index" : 760,
+  "nodes" : [ "(4,4)[HOME]", "(1,1)[HOME]", "(1,0)[EDUCATION]" ],
+  "dptBins" : [ 2, 5, 12 ]
+}, {
+  "index" : 761,
+  "nodes" : [ "(2,4)[WORK]", "(3,1)[WORK]", "(1,0)[EDUCATION]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 2, 13, 14, 18 ]
+}, {
+  "index" : 762,
+  "nodes" : [ "(3,0)[EDUCATION]", "(3,0)[EDUCATION]", "(1,0)[EDUCATION]" ],
+  "dptBins" : [ 1, 11, 19 ]
+}, {
+  "index" : 763,
+  "nodes" : [ "(0,2)[OTHER]" ],
+  "dptBins" : [ 19 ]
+}, {
+  "index" : 764,
+  "nodes" : [ "(0,0)[OTHER]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 10, 13 ]
+}, {
+  "index" : 765,
+  "nodes" : [ "(4,4)[HOME]", "(2,0)[WORK]" ],
+  "dptBins" : [ 5, 19 ]
+}, {
+  "index" : 766,
+  "nodes" : [ "(0,1)[EDUCATION]", "(2,3)[OTHER]", "(4,0)[WORK]", "(4,1)[EDUCATION]" ],
+  "dptBins" : [ 1, 10, 16, 22 ]
+}, {
+  "index" : 767,
+  "nodes" : [ "(1,1)[HOME]", "(4,4)[WORK]", "(4,3)[HOME]" ],
+  "dptBins" : [ 6, 10, 20 ]
+}, {
+  "index" : 768,
+  "nodes" : [ "(0,2)[HOME]", "(3,1)[OTHER]", "(3,2)[WORK]", "(0,3)[EDUCATION]" ],
+  "dptBins" : [ 9, 11, 18, 20 ]
+}, {
+  "index" : 769,
+  "nodes" : [ "(1,1)[EDUCATION]", "(1,4)[EDUCATION]", "(3,2)[WORK]", "(3,0)[EDUCATION]" ],
+  "dptBins" : [ 1, 3, 4, 6 ]
+}, {
+  "index" : 770,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 771,
+  "nodes" : [ "(0,2)[OTHER]", "(4,4)[HOME]", "(4,2)[WORK]" ],
+  "dptBins" : [ 6, 12, 17 ]
+}, {
+  "index" : 772,
+  "nodes" : [ "(1,4)[HOME]", "(2,0)[WORK]", "(2,0)[OTHER]", "(1,3)[WORK]" ],
+  "dptBins" : [ 0, 5, 15, 22 ]
+}, {
+  "index" : 773,
+  "nodes" : [ "(4,0)[OTHER]", "(1,1)[WORK]" ],
+  "dptBins" : [ 7, 11 ]
+}, {
+  "index" : 774,
+  "nodes" : [ "(1,3)[EDUCATION]", "(1,3)[WORK]", "(1,3)[OTHER]" ],
+  "dptBins" : [ 0, 7, 18 ]
+}, {
+  "index" : 775,
+  "nodes" : [ "(0,1)[OTHER]", "(0,2)[EDUCATION]", "(2,2)[EDUCATION]", "(2,3)[EDUCATION]", "(4,0)[WORK]" ],
+  "dptBins" : [ 8, 10, 12, 20, 23 ]
+}, {
+  "index" : 776,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 777,
+  "nodes" : [ "(2,0)[WORK]", "(0,1)[HOME]", "(2,0)[OTHER]", "(3,4)[HOME]", "(2,2)[WORK]", "(2,2)[HOME]", "(0,2)[EDUCATION]" ],
+  "dptBins" : [ 0, 1, 2, 5, 13, 14, 16 ]
+}, {
+  "index" : 778,
+  "nodes" : [ "(1,0)[EDUCATION]", "(3,1)[OTHER]", "(1,1)[EDUCATION]", "(1,0)[HOME]" ],
+  "dptBins" : [ 0, 2, 10, 20 ]
+}, {
+  "index" : 779,
+  "nodes" : [ "(1,1)[WORK]", "(1,1)[WORK]", "(4,3)[EDUCATION]" ],
+  "dptBins" : [ 2, 10, 14 ]
+}, {
+  "index" : 780,
+  "nodes" : [ "(3,1)[OTHER]", "(3,3)[WORK]", "(0,0)[WORK]" ],
+  "dptBins" : [ 7, 16, 23 ]
+}, {
+  "index" : 781,
+  "nodes" : [ "(2,0)[EDUCATION]", "(1,1)[WORK]" ],
+  "dptBins" : [ 17, 23 ]
+}, {
+  "index" : 782,
+  "nodes" : [ "(1,1)[OTHER]", "(3,0)[EDUCATION]" ],
+  "dptBins" : [ 10, 16 ]
+}, {
+  "index" : 783,
+  "nodes" : [ "(1,3)[WORK]", "(1,1)[HOME]", "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 4, 13, 20 ]
+}, {
+  "index" : 784,
+  "nodes" : [ "(4,0)[HOME]", "(1,1)[WORK]", "(0,2)[OTHER]" ],
+  "dptBins" : [ 2, 13, 23 ]
+}, {
+  "index" : 785,
+  "nodes" : [ "(4,4)[OTHER]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 2, 17 ]
+}, {
+  "index" : 786,
+  "nodes" : [ "(4,4)[OTHER]", "(3,0)[WORK]" ],
+  "dptBins" : [ 0, 1 ]
+}, {
+  "index" : 787,
+  "nodes" : [ "(4,3)[EDUCATION]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 4, 23 ]
+}, {
+  "index" : 788,
+  "nodes" : [ "(0,3)[OTHER]", "(2,0)[HOME]", "(2,4)[WORK]", "(2,3)[WORK]", "(0,2)[HOME]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 3, 8, 10, 17, 18, 20 ]
+}, {
+  "index" : 789,
+  "nodes" : [ "(2,0)[EDUCATION]", "(1,1)[WORK]" ],
+  "dptBins" : [ 12, 18 ]
+}, {
+  "index" : 790,
+  "nodes" : [ "(3,3)[WORK]", "(1,1)[WORK]" ],
+  "dptBins" : [ 8, 23 ]
+}, {
+  "index" : 791,
+  "nodes" : [ "(3,1)[HOME]" ],
+  "dptBins" : [ 1 ]
+}, {
+  "index" : 792,
+  "nodes" : [ "(4,4)[EDUCATION]", "(1,4)[OTHER]", "(4,4)[OTHER]", "(1,2)[HOME]", "(1,2)[EDUCATION]" ],
+  "dptBins" : [ 1, 2, 9, 17, 18 ]
+}, {
+  "index" : 793,
+  "nodes" : [ "(1,4)[WORK]", "(1,4)[EDUCATION]", "(4,0)[HOME]" ],
+  "dptBins" : [ 10, 11, 15 ]
+}, {
+  "index" : 794,
+  "nodes" : [ "(0,0)[WORK]", "(2,4)[WORK]", "(4,4)[OTHER]", "(0,3)[HOME]", "(3,2)[WORK]" ],
+  "dptBins" : [ 1, 4, 11, 16, 21 ]
+}, {
+  "index" : 795,
+  "nodes" : [ "(4,4)[WORK]", "(1,2)[OTHER]", "(2,4)[WORK]" ],
+  "dptBins" : [ 3, 9, 12 ]
+}, {
+  "index" : 796,
+  "nodes" : [ "(1,3)[HOME]", "(4,4)[HOME]", "(0,3)[WORK]" ],
+  "dptBins" : [ 7, 10, 17 ]
+}, {
+  "index" : 797,
+  "nodes" : [ "(3,1)[OTHER]", "(1,0)[EDUCATION]" ],
+  "dptBins" : [ 0, 21 ]
+}, {
+  "index" : 798,
+  "nodes" : [ "(0,0)[HOME]", "(1,3)[WORK]" ],
+  "dptBins" : [ 0, 19 ]
+}, {
+  "index" : 799,
+  "nodes" : [ "(4,4)[EDUCATION]" ],
+  "dptBins" : [ 21 ]
+}, {
+  "index" : 800,
+  "nodes" : [ "(0,2)[OTHER]", "(2,0)[WORK]", "(1,4)[OTHER]" ],
+  "dptBins" : [ 7, 12, 14 ]
+}, {
+  "index" : 801,
+  "nodes" : [ "(4,0)[WORK]" ],
+  "dptBins" : [ 16 ]
+}, {
+  "index" : 802,
+  "nodes" : [ "(1,1)[EDUCATION]", "(0,2)[HOME]", "(3,3)[WORK]" ],
+  "dptBins" : [ 5, 15, 20 ]
+}, {
+  "index" : 803,
+  "nodes" : [ "(1,3)[HOME]", "(0,3)[EDUCATION]" ],
+  "dptBins" : [ 15, 20 ]
+}, {
+  "index" : 804,
+  "nodes" : [ "(1,2)[HOME]", "(4,4)[OTHER]" ],
+  "dptBins" : [ 2, 15 ]
+}, {
+  "index" : 805,
+  "nodes" : [ "(0,4)[WORK]", "(3,0)[OTHER]", "(2,1)[EDUCATION]" ],
+  "dptBins" : [ 2, 14, 16 ]
+}, {
+  "index" : 806,
+  "nodes" : [ "(3,2)[WORK]" ],
+  "dptBins" : [ 22 ]
+}, {
+  "index" : 807,
+  "nodes" : [ "(4,0)[HOME]", "(2,3)[OTHER]", "(0,0)[WORK]" ],
+  "dptBins" : [ 5, 9, 16 ]
+}, {
+  "index" : 808,
+  "nodes" : [ "(1,4)[OTHER]", "(3,2)[WORK]", "(4,1)[OTHER]", "(2,0)[HOME]" ],
+  "dptBins" : [ 4, 11, 17, 18 ]
+}, {
+  "index" : 809,
+  "nodes" : [ "(3,3)[OTHER]", "(4,1)[WORK]", "(3,3)[HOME]", "(2,0)[WORK]" ],
+  "dptBins" : [ 11, 17, 22, 23 ]
+}, {
+  "index" : 810,
+  "nodes" : [ "(2,2)[OTHER]", "(1,1)[HOME]" ],
+  "dptBins" : [ 12, 15 ]
+}, {
+  "index" : 811,
+  "nodes" : [ "(3,3)[OTHER]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 9, 13 ]
+}, {
+  "index" : 812,
+  "nodes" : [ "(2,3)[HOME]", "(0,1)[OTHER]", "(3,1)[EDUCATION]", "(4,2)[EDUCATION]" ],
+  "dptBins" : [ 7, 9, 16, 17 ]
+}, {
+  "index" : 813,
+  "nodes" : [ "(1,0)[HOME]", "(2,2)[WORK]", "(1,0)[WORK]", "(4,3)[HOME]" ],
+  "dptBins" : [ 7, 8, 16, 19 ]
+}, {
+  "index" : 814,
+  "nodes" : [ "(4,4)[WORK]", "(1,1)[EDUCATION]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 3, 18, 22 ]
+}, {
+  "index" : 815,
+  "nodes" : [ "(1,3)[HOME]", "(2,2)[WORK]", "(0,1)[EDUCATION]" ],
+  "dptBins" : [ 7, 13, 18 ]
+}, {
+  "index" : 816,
+  "nodes" : [ "(2,3)[EDUCATION]", "(4,4)[WORK]", "(2,1)[WORK]", "(3,4)[WORK]" ],
+  "dptBins" : [ 7, 14, 17, 19 ]
+}, {
+  "index" : 817,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 818,
+  "nodes" : [ "(1,1)[OTHER]", "(2,2)[OTHER]", "(3,0)[OTHER]" ],
+  "dptBins" : [ 12, 14, 22 ]
+}, {
+  "index" : 819,
+  "nodes" : [ "(0,0)[EDUCATION]", "(3,0)[HOME]" ],
+  "dptBins" : [ 3, 4 ]
+}, {
+  "index" : 820,
+  "nodes" : [ "(3,4)[EDUCATION]", "(1,0)[EDUCATION]", "(3,1)[OTHER]" ],
+  "dptBins" : [ 9, 20, 23 ]
+}, {
+  "index" : 821,
+  "nodes" : [ "(1,3)[WORK]" ],
+  "dptBins" : [ 1 ]
+}, {
+  "index" : 822,
+  "nodes" : [ "(0,4)[HOME]", "(2,3)[OTHER]", "(0,3)[EDUCATION]" ],
+  "dptBins" : [ 11, 16, 17 ]
+}, {
+  "index" : 823,
+  "nodes" : [ "(3,1)[HOME]", "(0,1)[WORK]", "(4,3)[EDUCATION]", "(4,4)[HOME]" ],
+  "dptBins" : [ 0, 5, 19, 20 ]
+}, {
+  "index" : 824,
+  "nodes" : [ "(2,3)[WORK]", "(1,0)[EDUCATION]", "(0,0)[WORK]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 5, 15, 17, 22 ]
+}, {
+  "index" : 825,
+  "nodes" : [ "(1,2)[HOME]", "(4,1)[WORK]" ],
+  "dptBins" : [ 9, 18 ]
+}, {
+  "index" : 826,
+  "nodes" : [ "(4,0)[WORK]", "(0,1)[OTHER]", "(2,0)[WORK]", "(3,2)[HOME]" ],
+  "dptBins" : [ 5, 8, 15, 16 ]
+}, {
+  "index" : 827,
+  "nodes" : [ "(2,0)[WORK]", "(0,0)[WORK]", "(2,1)[OTHER]", "(0,0)[EDUCATION]", "(2,0)[WORK]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 7, 9, 11, 14, 15, 20 ]
+}, {
+  "index" : 828,
+  "nodes" : [ "(2,4)[HOME]", "(3,0)[HOME]", "(0,2)[HOME]", "(1,1)[WORK]" ],
+  "dptBins" : [ 8, 9, 16, 20 ]
+}, {
+  "index" : 829,
+  "nodes" : [ "(4,2)[HOME]" ],
+  "dptBins" : [ 20 ]
+}, {
+  "index" : 830,
+  "nodes" : [ "(4,0)[WORK]", "(2,0)[OTHER]", "(1,4)[HOME]", "(2,3)[EDUCATION]" ],
+  "dptBins" : [ 4, 8, 12, 22 ]
+}, {
+  "index" : 831,
+  "nodes" : [ "(4,1)[HOME]", "(2,4)[EDUCATION]", "(2,4)[HOME]" ],
+  "dptBins" : [ 6, 8, 19 ]
+}, {
+  "index" : 832,
+  "nodes" : [ "(4,1)[WORK]", "(1,0)[WORK]" ],
+  "dptBins" : [ 10, 17 ]
+}, {
+  "index" : 833,
+  "nodes" : [ "(0,3)[OTHER]", "(2,3)[HOME]" ],
+  "dptBins" : [ 14, 22 ]
+}, {
+  "index" : 834,
+  "nodes" : [ "(0,1)[EDUCATION]", "(2,0)[HOME]", "(2,3)[WORK]" ],
+  "dptBins" : [ 17, 21, 23 ]
+}, {
+  "index" : 835,
+  "nodes" : [ "(3,0)[HOME]" ],
+  "dptBins" : [ 4 ]
+}, {
+  "index" : 836,
+  "nodes" : [ "(0,2)[OTHER]", "(1,0)[EDUCATION]" ],
+  "dptBins" : [ 12, 20 ]
+}, {
+  "index" : 837,
+  "nodes" : [ "(3,1)[OTHER]" ],
+  "dptBins" : [ 5 ]
+}, {
+  "index" : 838,
+  "nodes" : [ "(1,0)[WORK]", "(3,0)[WORK]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 7, 16, 22 ]
+}, {
+  "index" : 839,
+  "nodes" : [ "(1,1)[WORK]", "(1,2)[HOME]", "(2,4)[WORK]", "(4,1)[EDUCATION]" ],
+  "dptBins" : [ 0, 7, 13, 19 ]
+}, {
+  "index" : 840,
+  "nodes" : [ "(4,0)[WORK]", "(2,0)[EDUCATION]", "(0,0)[WORK]", "(4,0)[OTHER]" ],
+  "dptBins" : [ 12, 14, 18, 19 ]
+}, {
+  "index" : 841,
+  "nodes" : [ "(0,4)[EDUCATION]", "(3,3)[HOME]", "(4,1)[EDUCATION]" ],
+  "dptBins" : [ 2, 9, 16 ]
+}, {
+  "index" : 842,
+  "nodes" : [ "(0,0)[HOME]", "(4,4)[WORK]", "(1,1)[OTHER]", "(4,1)[OTHER]", "(2,3)[HOME]", "(1,4)[EDUCATION]" ],
+  "dptBins" : [ 5, 6, 9, 12, 15, 22 ]
+}, {
+  "index" : 843,
+  "nodes" : [ "(0,3)[WORK]", "(3,3)[OTHER]", "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 5, 6, 13 ]
+}, {
+  "index" : 844,
+  "nodes" : [ "(2,1)[HOME]", "(3,3)[EDUCATION]" ],
+  "dptBins" : [ 7, 20 ]
+}, {
+  "index" : 845,
+  "nodes" : [ "(1,1)[OTHER]", "(2,4)[OTHER]", "(1,2)[OTHER]" ],
+  "dptBins" : [ 1, 16, 23 ]
+}, {
+  "index" : 846,
+  "nodes" : [ "(2,0)[EDUCATION]", "(1,2)[OTHER]" ],
+  "dptBins" : [ 4, 12 ]
+}, {
+  "index" : 847,
+  "nodes" : [ "(4,2)[HOME]", "(2,4)[WORK]", "(1,4)[EDUCATION]" ],
+  "dptBins" : [ 6, 15, 19 ]
+}, {
+  "index" : 848,
+  "nodes" : [ "(4,0)[EDUCATION]", "(3,1)[HOME]", "(3,0)[WORK]", "(2,4)[HOME]" ],
+  "dptBins" : [ 1, 8, 18, 22 ]
+}, {
+  "index" : 849,
+  "nodes" : [ "(0,4)[OTHER]", "(3,2)[HOME]", "(3,1)[HOME]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 6, 11, 18, 19 ]
+}, {
+  "index" : 850,
+  "nodes" : [ "(2,0)[HOME]", "(1,0)[WORK]", "(2,0)[HOME]", "(0,1)[EDUCATION]" ],
+  "dptBins" : [ 8, 15, 18, 21 ]
+}, {
+  "index" : 851,
+  "nodes" : [ "(3,3)[EDUCATION]", "(4,2)[EDUCATION]" ],
+  "dptBins" : [ 9, 23 ]
+}, {
+  "index" : 852,
+  "nodes" : [ "(1,4)[HOME]", "(4,2)[HOME]" ],
+  "dptBins" : [ 6, 9 ]
+}, {
+  "index" : 853,
+  "nodes" : [ "(2,4)[OTHER]", "(2,4)[HOME]" ],
+  "dptBins" : [ 1, 17 ]
+}, {
+  "index" : 854,
+  "nodes" : [ "(1,3)[HOME]", "(0,2)[OTHER]", "(3,0)[WORK]" ],
+  "dptBins" : [ 6, 7, 17 ]
+}, {
+  "index" : 855,
+  "nodes" : [ "(1,1)[EDUCATION]", "(4,3)[OTHER]", "(2,4)[OTHER]" ],
+  "dptBins" : [ 6, 19, 20 ]
+}, {
+  "index" : 856,
+  "nodes" : [ "(3,3)[EDUCATION]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 8, 12 ]
+}, {
+  "index" : 857,
+  "nodes" : [ "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 14 ]
+}, {
+  "index" : 858,
+  "nodes" : [ "(0,2)[WORK]", "(2,0)[HOME]", "(1,3)[EDUCATION]" ],
+  "dptBins" : [ 7, 11, 17 ]
+}, {
+  "index" : 859,
+  "nodes" : [ "(2,0)[OTHER]", "(4,0)[WORK]" ],
+  "dptBins" : [ 14, 18 ]
+}, {
+  "index" : 860,
+  "nodes" : [ "(1,4)[EDUCATION]", "(1,2)[EDUCATION]", "(1,4)[WORK]" ],
+  "dptBins" : [ 6, 8, 11 ]
+}, {
+  "index" : 861,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 862,
+  "nodes" : [ "(0,2)[HOME]", "(1,1)[WORK]", "(3,1)[EDUCATION]" ],
+  "dptBins" : [ 4, 5, 6 ]
+}, {
+  "index" : 863,
+  "nodes" : [ "(3,2)[OTHER]", "(4,0)[WORK]" ],
+  "dptBins" : [ 8, 17 ]
+}, {
+  "index" : 864,
+  "nodes" : [ "(2,0)[WORK]", "(0,0)[HOME]" ],
+  "dptBins" : [ 1, 15 ]
+}, {
+  "index" : 865,
+  "nodes" : [ "(2,4)[EDUCATION]", "(4,4)[EDUCATION]" ],
+  "dptBins" : [ 16, 21 ]
+}, {
+  "index" : 866,
+  "nodes" : [ "(1,0)[HOME]" ],
+  "dptBins" : [ 2 ]
+}, {
+  "index" : 867,
+  "nodes" : [ "(2,4)[HOME]", "(1,4)[OTHER]" ],
+  "dptBins" : [ 4, 13 ]
+}, {
+  "index" : 868,
+  "nodes" : [ "(3,1)[OTHER]", "(1,1)[EDUCATION]", "(2,4)[OTHER]", "(2,2)[EDUCATION]" ],
+  "dptBins" : [ 0, 7, 19, 22 ]
+}, {
+  "index" : 869,
+  "nodes" : [ "(3,0)[WORK]", "(0,0)[HOME]" ],
+  "dptBins" : [ 12, 13 ]
+}, {
+  "index" : 870,
+  "nodes" : [ "(2,0)[OTHER]", "(4,4)[HOME]", "(0,0)[WORK]", "(0,0)[HOME]" ],
+  "dptBins" : [ 8, 11, 18, 20 ]
+}, {
+  "index" : 871,
+  "nodes" : [ "(1,1)[OTHER]", "(1,1)[HOME]", "(0,0)[WORK]", "(0,1)[WORK]" ],
+  "dptBins" : [ 11, 13, 18, 20 ]
+}, {
+  "index" : 872,
+  "nodes" : [ "(2,0)[EDUCATION]", "(2,0)[HOME]", "(3,3)[EDUCATION]" ],
+  "dptBins" : [ 12, 13, 19 ]
+}, {
+  "index" : 873,
+  "nodes" : [ "(3,0)[WORK]", "(1,4)[WORK]" ],
+  "dptBins" : [ 8, 11 ]
+}, {
+  "index" : 874,
+  "nodes" : [ "(2,3)[WORK]", "(3,2)[HOME]", "(3,3)[WORK]" ],
+  "dptBins" : [ 1, 3, 18 ]
+}, {
+  "index" : 875,
+  "nodes" : [ "(0,1)[HOME]", "(0,4)[EDUCATION]" ],
+  "dptBins" : [ 7, 19 ]
+}, {
+  "index" : 876,
+  "nodes" : [ "(2,3)[WORK]" ],
+  "dptBins" : [ 13 ]
+}, {
+  "index" : 877,
+  "nodes" : [ "(3,2)[EDUCATION]", "(1,4)[WORK]" ],
+  "dptBins" : [ 7, 15 ]
+}, {
+  "index" : 878,
+  "nodes" : [ "(1,1)[HOME]", "(2,3)[WORK]", "(1,1)[OTHER]", "(1,1)[WORK]", "(2,1)[HOME]" ],
+  "dptBins" : [ 8, 14, 17, 19, 20 ]
+}, {
+  "index" : 879,
+  "nodes" : [ "(2,0)[HOME]", "(1,3)[WORK]" ],
+  "dptBins" : [ 8, 19 ]
+}, {
+  "index" : 880,
+  "nodes" : [ "(4,1)[WORK]", "(1,1)[OTHER]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 1, 8, 20 ]
+}, {
+  "index" : 881,
+  "nodes" : [ "(2,0)[HOME]", "(2,0)[EDUCATION]", "(1,3)[EDUCATION]" ],
+  "dptBins" : [ 11, 12, 17 ]
+}, {
+  "index" : 882,
+  "nodes" : [ "(1,0)[HOME]", "(4,4)[OTHER]", "(3,1)[HOME]" ],
+  "dptBins" : [ 11, 15, 21 ]
+}, {
+  "index" : 883,
+  "nodes" : [ "(0,4)[HOME]", "(1,0)[WORK]" ],
+  "dptBins" : [ 7, 16 ]
+}, {
+  "index" : 884,
+  "nodes" : [ "(4,1)[WORK]", "(4,3)[EDUCATION]", "(1,0)[WORK]", "(0,2)[EDUCATION]" ],
+  "dptBins" : [ 0, 10, 17, 18 ]
+}, {
+  "index" : 885,
+  "nodes" : [ "(3,4)[OTHER]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 13, 19 ]
+}, {
+  "index" : 886,
+  "nodes" : [ "(1,0)[HOME]", "(2,0)[HOME]", "(0,1)[EDUCATION]" ],
+  "dptBins" : [ 12, 18, 20 ]
+}, {
+  "index" : 887,
+  "nodes" : [ "(1,0)[HOME]", "(4,0)[EDUCATION]", "(4,1)[EDUCATION]" ],
+  "dptBins" : [ 0, 9, 22 ]
+}, {
+  "index" : 888,
+  "nodes" : [ "(4,0)[HOME]", "(4,2)[HOME]" ],
+  "dptBins" : [ 7, 20 ]
+}, {
+  "index" : 889,
+  "nodes" : [ "(2,2)[HOME]" ],
+  "dptBins" : [ 23 ]
+}, {
+  "index" : 890,
+  "nodes" : [ "(2,3)[OTHER]", "(0,1)[EDUCATION]", "(4,4)[WORK]", "(1,3)[EDUCATION]" ],
+  "dptBins" : [ 4, 9, 16, 18 ]
+}, {
+  "index" : 891,
+  "nodes" : [ "(4,4)[EDUCATION]", "(3,4)[OTHER]" ],
+  "dptBins" : [ 6, 19 ]
+}, {
+  "index" : 892,
+  "nodes" : [ "(3,1)[HOME]", "(1,2)[WORK]", "(3,1)[EDUCATION]" ],
+  "dptBins" : [ 6, 10, 12 ]
+}, {
+  "index" : 893,
+  "nodes" : [ "(2,2)[EDUCATION]", "(1,1)[HOME]", "(4,4)[OTHER]" ],
+  "dptBins" : [ 6, 13, 18 ]
+}, {
+  "index" : 894,
+  "nodes" : [ "(3,4)[HOME]", "(4,0)[OTHER]", "(2,2)[OTHER]", "(2,0)[WORK]" ],
+  "dptBins" : [ 1, 3, 11, 20 ]
+}, {
+  "index" : 895,
+  "nodes" : [ "(3,1)[WORK]", "(2,0)[OTHER]", "(2,4)[HOME]", "(1,1)[WORK]", "(1,1)[WORK]" ],
+  "dptBins" : [ 3, 4, 9, 12, 14 ]
+}, {
+  "index" : 896,
+  "nodes" : [ "(2,3)[OTHER]", "(1,4)[WORK]" ],
+  "dptBins" : [ 2, 20 ]
+}, {
+  "index" : 897,
+  "nodes" : [ "(2,4)[EDUCATION]", "(1,0)[OTHER]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 10, 17, 22 ]
+}, {
+  "index" : 898,
+  "nodes" : [ "(2,2)[OTHER]", "(3,1)[WORK]", "(0,0)[WORK]", "(4,0)[HOME]", "(0,3)[HOME]" ],
+  "dptBins" : [ 3, 6, 15, 18, 22 ]
+}, {
+  "index" : 899,
+  "nodes" : [ "(2,0)[OTHER]", "(4,4)[WORK]", "(0,2)[WORK]" ],
+  "dptBins" : [ 1, 7, 14 ]
+}, {
+  "index" : 900,
+  "nodes" : [ "(1,3)[HOME]", "(3,1)[EDUCATION]" ],
+  "dptBins" : [ 16, 23 ]
+}, {
+  "index" : 901,
+  "nodes" : [ "(3,4)[OTHER]", "(4,1)[HOME]" ],
+  "dptBins" : [ 14, 17 ]
+}, {
+  "index" : 902,
+  "nodes" : [ "(4,1)[WORK]", "(3,1)[EDUCATION]", "(1,2)[OTHER]" ],
+  "dptBins" : [ 8, 10, 13 ]
+}, {
+  "index" : 903,
+  "nodes" : [ "(2,4)[HOME]", "(4,0)[OTHER]" ],
+  "dptBins" : [ 15, 21 ]
+}, {
+  "index" : 904,
+  "nodes" : [ "(3,0)[HOME]", "(4,4)[EDUCATION]", "(3,2)[EDUCATION]" ],
+  "dptBins" : [ 3, 7, 22 ]
+}, {
+  "index" : 905,
+  "nodes" : [ "(3,4)[HOME]", "(3,3)[WORK]", "(4,0)[WORK]", "(3,0)[WORK]", "(1,0)[HOME]" ],
+  "dptBins" : [ 5, 7, 14, 18, 21 ]
+}, {
+  "index" : 906,
+  "nodes" : [ "(4,2)[HOME]", "(2,2)[WORK]" ],
+  "dptBins" : [ 0, 3 ]
+}, {
+  "index" : 907,
+  "nodes" : [ "(2,0)[HOME]", "(2,0)[HOME]", "(4,1)[EDUCATION]" ],
+  "dptBins" : [ 9, 15, 21 ]
+}, {
+  "index" : 908,
+  "nodes" : [ "(3,3)[HOME]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 10, 20 ]
+}, {
+  "index" : 909,
+  "nodes" : [ "(1,2)[OTHER]", "(4,1)[EDUCATION]", "(4,0)[WORK]", "(4,3)[OTHER]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 0, 10, 12, 14, 15 ]
+}, {
+  "index" : 910,
+  "nodes" : [ "(2,2)[HOME]", "(1,0)[HOME]", "(3,4)[OTHER]", "(0,3)[WORK]" ],
+  "dptBins" : [ 14, 15, 18, 19 ]
+}, {
+  "index" : 911,
+  "nodes" : [ "(4,1)[OTHER]", "(1,0)[OTHER]", "(3,4)[WORK]", "(4,3)[WORK]", "(1,1)[WORK]" ],
+  "dptBins" : [ 0, 7, 8, 13, 18 ]
+}, {
+  "index" : 912,
+  "nodes" : [ "(2,4)[WORK]", "(2,2)[HOME]", "(2,3)[WORK]" ],
+  "dptBins" : [ 0, 9, 17 ]
+}, {
+  "index" : 913,
+  "nodes" : [ "(1,1)[OTHER]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 4, 18 ]
+}, {
+  "index" : 914,
+  "nodes" : [ "(1,2)[HOME]", "(4,3)[WORK]", "(2,0)[OTHER]", "(2,3)[WORK]", "(1,2)[EDUCATION]" ],
+  "dptBins" : [ 3, 11, 12, 15, 22 ]
+}, {
+  "index" : 915,
+  "nodes" : [ "(1,2)[WORK]", "(3,4)[EDUCATION]", "(4,2)[EDUCATION]" ],
+  "dptBins" : [ 0, 1, 2 ]
+}, {
+  "index" : 916,
+  "nodes" : [ "(3,1)[HOME]", "(4,3)[WORK]", "(2,0)[HOME]" ],
+  "dptBins" : [ 0, 11, 13 ]
+}, {
+  "index" : 917,
+  "nodes" : [ "(2,4)[HOME]", "(0,4)[HOME]" ],
+  "dptBins" : [ 8, 20 ]
+}, {
+  "index" : 918,
+  "nodes" : [ "(0,1)[OTHER]", "(2,0)[HOME]" ],
+  "dptBins" : [ 9, 15 ]
+}, {
+  "index" : 919,
+  "nodes" : [ "(4,4)[WORK]" ],
+  "dptBins" : [ 12 ]
+}, {
+  "index" : 920,
+  "nodes" : [ "(4,3)[HOME]", "(3,1)[OTHER]" ],
+  "dptBins" : [ 9, 18 ]
+}, {
+  "index" : 921,
+  "nodes" : [ "(3,1)[EDUCATION]", "(1,1)[OTHER]" ],
+  "dptBins" : [ 4, 9 ]
+}, {
+  "index" : 922,
+  "nodes" : [ "(3,3)[EDUCATION]", "(3,0)[OTHER]", "(1,3)[OTHER]" ],
+  "dptBins" : [ 4, 10, 12 ]
+}, {
+  "index" : 923,
+  "nodes" : [ "(1,1)[EDUCATION]", "(1,0)[EDUCATION]" ],
+  "dptBins" : [ 1, 17 ]
+}, {
+  "index" : 924,
+  "nodes" : [ "(2,4)[EDUCATION]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 12, 18 ]
+}, {
+  "index" : 925,
+  "nodes" : [ "(1,1)[WORK]", "(3,0)[WORK]" ],
+  "dptBins" : [ 8, 13 ]
+}, {
+  "index" : 926,
+  "nodes" : [ "(0,0)[HOME]", "(4,2)[HOME]", "(4,1)[HOME]" ],
+  "dptBins" : [ 8, 17, 20 ]
+}, {
+  "index" : 927,
+  "nodes" : [ "(0,2)[EDUCATION]", "(0,4)[WORK]", "(1,0)[OTHER]" ],
+  "dptBins" : [ 7, 14, 15 ]
+}, {
+  "index" : 928,
+  "nodes" : [ "(3,1)[OTHER]", "(4,3)[OTHER]", "(3,0)[OTHER]", "(4,0)[OTHER]" ],
+  "dptBins" : [ 0, 3, 7, 16 ]
+}, {
+  "index" : 929,
+  "nodes" : [ "(4,4)[HOME]", "(0,4)[HOME]", "(3,1)[HOME]", "(1,4)[EDUCATION]" ],
+  "dptBins" : [ 9, 13, 15, 20 ]
+}, {
+  "index" : 930,
+  "nodes" : [ "(4,0)[HOME]", "(4,4)[WORK]" ],
+  "dptBins" : [ 10, 18 ]
+}, {
+  "index" : 931,
+  "nodes" : [ "(1,1)[OTHER]", "(1,2)[EDUCATION]" ],
+  "dptBins" : [ 8, 17 ]
+}, {
+  "index" : 932,
+  "nodes" : [ "(0,3)[HOME]", "(4,1)[WORK]", "(2,3)[OTHER]" ],
+  "dptBins" : [ 7, 14, 18 ]
+}, {
+  "index" : 933,
+  "nodes" : [ "(1,4)[HOME]", "(3,4)[OTHER]", "(3,2)[EDUCATION]" ],
+  "dptBins" : [ 7, 8, 18 ]
+}, {
+  "index" : 934,
+  "nodes" : [ "(2,2)[EDUCATION]", "(2,3)[HOME]", "(3,0)[OTHER]", "(1,4)[WORK]" ],
+  "dptBins" : [ 0, 3, 9, 17 ]
+}, {
+  "index" : 935,
+  "nodes" : [ "(0,3)[HOME]" ],
+  "dptBins" : [ 23 ]
+}, {
+  "index" : 936,
+  "nodes" : [ "(0,2)[EDUCATION]", "(1,4)[EDUCATION]", "(1,2)[OTHER]" ],
+  "dptBins" : [ 11, 21, 22 ]
+}, {
+  "index" : 937,
+  "nodes" : [ "(1,1)[WORK]", "(3,1)[WORK]", "(1,1)[OTHER]", "(4,2)[OTHER]", "(2,2)[EDUCATION]", "(1,3)[WORK]" ],
+  "dptBins" : [ 6, 9, 13, 17, 20, 22 ]
+}, {
+  "index" : 938,
+  "nodes" : [ "(3,2)[EDUCATION]", "(2,4)[OTHER]", "(0,2)[EDUCATION]" ],
+  "dptBins" : [ 4, 13, 15 ]
+}, {
+  "index" : 939,
+  "nodes" : [ "(4,1)[OTHER]", "(3,4)[HOME]", "(0,4)[WORK]" ],
+  "dptBins" : [ 3, 7, 13 ]
+}, {
+  "index" : 940,
+  "nodes" : [ "(1,0)[WORK]", "(3,0)[WORK]" ],
+  "dptBins" : [ 11, 17 ]
+}, {
+  "index" : 941,
+  "nodes" : [ "(2,1)[WORK]", "(2,4)[OTHER]", "(3,0)[WORK]", "(3,2)[WORK]" ],
+  "dptBins" : [ 8, 11, 17, 22 ]
+}, {
+  "index" : 942,
+  "nodes" : [ "(3,0)[EDUCATION]", "(2,0)[HOME]", "(3,1)[EDUCATION]", "(1,3)[OTHER]" ],
+  "dptBins" : [ 1, 7, 9, 12 ]
+}, {
+  "index" : 943,
+  "nodes" : [ "(2,3)[EDUCATION]", "(0,4)[HOME]", "(3,1)[HOME]" ],
+  "dptBins" : [ 1, 18, 19 ]
+}, {
+  "index" : 944,
+  "nodes" : [ "(2,0)[OTHER]", "(1,2)[OTHER]", "(3,0)[WORK]" ],
+  "dptBins" : [ 1, 2, 9 ]
+}, {
+  "index" : 945,
+  "nodes" : [ "(2,0)[WORK]", "(2,4)[OTHER]", "(0,0)[HOME]" ],
+  "dptBins" : [ 9, 13, 21 ]
+}, {
+  "index" : 946,
+  "nodes" : [ "(2,0)[EDUCATION]", "(3,0)[OTHER]" ],
+  "dptBins" : [ 3, 6 ]
+}, {
+  "index" : 947,
+  "nodes" : [ "(3,4)[HOME]", "(4,2)[HOME]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 6, 16, 19 ]
+}, {
+  "index" : 948,
+  "nodes" : [ "(3,3)[OTHER]" ],
+  "dptBins" : [ 7 ]
+}, {
+  "index" : 949,
+  "nodes" : [ "(4,2)[HOME]" ],
+  "dptBins" : [ 8 ]
+}, {
+  "index" : 950,
+  "nodes" : [ "(1,1)[OTHER]", "(1,0)[WORK]", "(2,2)[HOME]" ],
+  "dptBins" : [ 8, 14, 21 ]
+}, {
+  "index" : 951,
+  "nodes" : [ "(1,0)[EDUCATION]", "(3,3)[EDUCATION]" ],
+  "dptBins" : [ 2, 10 ]
+}, {
+  "index" : 952,
+  "nodes" : [ "(3,0)[OTHER]", "(2,4)[OTHER]", "(0,3)[HOME]" ],
+  "dptBins" : [ 10, 14, 18 ]
+}, {
+  "index" : 953,
+  "nodes" : [ "(1,4)[HOME]", "(2,4)[HOME]", "(1,1)[EDUCATION]", "(1,1)[OTHER]", "(3,2)[OTHER]" ],
+  "dptBins" : [ 7, 8, 10, 17, 19 ]
+}, {
+  "index" : 954,
+  "nodes" : [ "(1,2)[WORK]", "(1,1)[HOME]" ],
+  "dptBins" : [ 21, 23 ]
+}, {
+  "index" : 955,
+  "nodes" : [ "(1,4)[OTHER]", "(3,3)[HOME]", "(2,4)[HOME]", "(2,0)[WORK]", "(0,0)[OTHER]" ],
+  "dptBins" : [ 3, 15, 16, 22, 23 ]
+}, {
+  "index" : 956,
+  "nodes" : [ "(4,0)[WORK]" ],
+  "dptBins" : [ 10 ]
+}, {
+  "index" : 957,
+  "nodes" : [ "(2,1)[HOME]", "(1,2)[EDUCATION]", "(3,0)[EDUCATION]", "(2,4)[OTHER]" ],
+  "dptBins" : [ 3, 5, 12, 23 ]
+}, {
+  "index" : 958,
+  "nodes" : [ "(2,1)[HOME]", "(4,2)[OTHER]" ],
+  "dptBins" : [ 8, 19 ]
+}, {
+  "index" : 959,
+  "nodes" : [ "(4,4)[HOME]", "(3,1)[HOME]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 1, 6, 16 ]
+}, {
+  "index" : 960,
+  "nodes" : [ "(3,0)[OTHER]", "(3,3)[WORK]", "(1,1)[HOME]" ],
+  "dptBins" : [ 5, 11, 19 ]
+}, {
+  "index" : 961,
+  "nodes" : [ "(0,4)[OTHER]" ],
+  "dptBins" : [ 16 ]
+}, {
+  "index" : 962,
+  "nodes" : [ "(0,1)[HOME]", "(2,2)[OTHER]", "(0,0)[OTHER]", "(4,4)[HOME]", "(2,0)[OTHER]" ],
+  "dptBins" : [ 1, 2, 11, 16, 19 ]
+}, {
+  "index" : 963,
+  "nodes" : [ "(2,0)[EDUCATION]", "(2,0)[OTHER]", "(1,4)[OTHER]" ],
+  "dptBins" : [ 8, 15, 23 ]
+}, {
+  "index" : 964,
+  "nodes" : [ "(4,2)[HOME]", "(0,2)[HOME]" ],
+  "dptBins" : [ 1, 10 ]
+}, {
+  "index" : 965,
+  "nodes" : [ "(2,2)[HOME]", "(3,2)[EDUCATION]" ],
+  "dptBins" : [ 8, 12 ]
+}, {
+  "index" : 966,
+  "nodes" : [ "(0,1)[WORK]", "(2,0)[WORK]" ],
+  "dptBins" : [ 16, 22 ]
+}, {
+  "index" : 967,
+  "nodes" : [ "(4,0)[WORK]", "(4,2)[WORK]" ],
+  "dptBins" : [ 2, 10 ]
+}, {
+  "index" : 968,
+  "nodes" : [ "(1,4)[OTHER]", "(2,1)[WORK]", "(2,0)[WORK]", "(1,1)[WORK]" ],
+  "dptBins" : [ 3, 7, 14, 19 ]
+}, {
+  "index" : 969,
+  "nodes" : [ "(3,2)[EDUCATION]", "(0,4)[EDUCATION]", "(2,0)[HOME]", "(0,1)[WORK]" ],
+  "dptBins" : [ 4, 5, 11, 17 ]
+}, {
+  "index" : 970,
+  "nodes" : [ "(1,0)[HOME]", "(3,3)[WORK]", "(3,1)[WORK]", "(3,0)[WORK]" ],
+  "dptBins" : [ 4, 6, 9, 14 ]
+}, {
+  "index" : 971,
+  "nodes" : [ "(2,3)[EDUCATION]", "(1,3)[OTHER]" ],
+  "dptBins" : [ 21, 22 ]
+}, {
+  "index" : 972,
+  "nodes" : [ ],
+  "dptBins" : [ ]
+}, {
+  "index" : 973,
+  "nodes" : [ "(3,1)[OTHER]", "(0,4)[OTHER]", "(4,4)[WORK]", "(1,3)[HOME]" ],
+  "dptBins" : [ 0, 9, 10, 12 ]
+}, {
+  "index" : 974,
+  "nodes" : [ "(2,1)[EDUCATION]", "(2,4)[EDUCATION]" ],
+  "dptBins" : [ 11, 23 ]
+}, {
+  "index" : 975,
+  "nodes" : [ "(2,0)[EDUCATION]", "(0,1)[WORK]" ],
+  "dptBins" : [ 2, 22 ]
+}, {
+  "index" : 976,
+  "nodes" : [ "(0,0)[HOME]", "(4,3)[OTHER]", "(2,2)[WORK]" ],
+  "dptBins" : [ 17, 21, 22 ]
+}, {
+  "index" : 977,
+  "nodes" : [ "(2,0)[HOME]", "(3,0)[HOME]" ],
+  "dptBins" : [ 3, 15 ]
+}, {
+  "index" : 978,
+  "nodes" : [ "(4,1)[OTHER]", "(2,0)[HOME]" ],
+  "dptBins" : [ 6, 21 ]
+}, {
+  "index" : 979,
+  "nodes" : [ "(3,4)[OTHER]", "(1,3)[HOME]", "(3,3)[WORK]", "(4,2)[WORK]" ],
+  "dptBins" : [ 4, 9, 16, 18 ]
+}, {
+  "index" : 980,
+  "nodes" : [ "(0,2)[EDUCATION]", "(2,4)[WORK]", "(1,4)[WORK]", "(1,0)[EDUCATION]" ],
+  "dptBins" : [ 4, 15, 19, 21 ]
+}, {
+  "index" : 981,
+  "nodes" : [ "(1,1)[WORK]", "(0,2)[OTHER]", "(1,1)[WORK]" ],
+  "dptBins" : [ 14, 19, 20 ]
+}, {
+  "index" : 982,
+  "nodes" : [ "(4,2)[HOME]", "(4,4)[HOME]", "(3,1)[WORK]", "(2,2)[HOME]" ],
+  "dptBins" : [ 6, 16, 18, 20 ]
+}, {
+  "index" : 983,
+  "nodes" : [ "(2,0)[OTHER]", "(2,0)[EDUCATION]", "(0,2)[WORK]", "(3,1)[HOME]" ],
+  "dptBins" : [ 0, 2, 3, 18 ]
+}, {
+  "index" : 984,
+  "nodes" : [ "(0,2)[HOME]", "(4,3)[WORK]", "(2,4)[HOME]", "(3,2)[HOME]" ],
+  "dptBins" : [ 6, 7, 9, 17 ]
+}, {
+  "index" : 985,
+  "nodes" : [ "(1,3)[OTHER]", "(1,3)[EDUCATION]", "(0,4)[HOME]" ],
+  "dptBins" : [ 13, 19, 23 ]
+}, {
+  "index" : 986,
+  "nodes" : [ "(2,3)[HOME]" ],
+  "dptBins" : [ 14 ]
+}, {
+  "index" : 987,
+  "nodes" : [ "(3,1)[HOME]", "(1,1)[WORK]" ],
+  "dptBins" : [ 2, 12 ]
+}, {
+  "index" : 988,
+  "nodes" : [ "(4,0)[HOME]", "(2,1)[EDUCATION]", "(2,4)[EDUCATION]", "(4,0)[HOME]", "(4,2)[HOME]" ],
+  "dptBins" : [ 1, 4, 6, 16, 20 ]
+}, {
+  "index" : 989,
+  "nodes" : [ "(3,1)[EDUCATION]", "(4,0)[EDUCATION]", "(2,3)[HOME]", "(3,0)[EDUCATION]" ],
+  "dptBins" : [ 9, 13, 15, 21 ]
+}, {
+  "index" : 990,
+  "nodes" : [ "(2,1)[HOME]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 8, 19 ]
+}, {
+  "index" : 991,
+  "nodes" : [ "(4,3)[HOME]", "(3,2)[HOME]", "(2,0)[EDUCATION]" ],
+  "dptBins" : [ 9, 14, 19 ]
+}, {
+  "index" : 992,
+  "nodes" : [ "(1,1)[HOME]", "(2,4)[HOME]", "(4,2)[WORK]", "(1,1)[EDUCATION]" ],
+  "dptBins" : [ 2, 11, 16, 20 ]
+}, {
+  "index" : 993,
+  "nodes" : [ "(3,1)[EDUCATION]", "(1,1)[HOME]", "(1,1)[WORK]" ],
+  "dptBins" : [ 2, 10, 17 ]
+}, {
+  "index" : 994,
+  "nodes" : [ "(2,2)[EDUCATION]", "(2,2)[HOME]", "(2,0)[OTHER]", "(2,0)[HOME]" ],
+  "dptBins" : [ 4, 5, 19, 22 ]
+}, {
+  "index" : 995,
+  "nodes" : [ "(3,0)[WORK]", "(4,1)[HOME]" ],
+  "dptBins" : [ 4, 19 ]
+}, {
+  "index" : 996,
+  "nodes" : [ "(0,0)[OTHER]", "(4,0)[EDUCATION]" ],
+  "dptBins" : [ 9, 22 ]
+}, {
+  "index" : 997,
+  "nodes" : [ "(0,4)[WORK]", "(4,3)[WORK]" ],
+  "dptBins" : [ 21, 23 ]
+}, {
+  "index" : 998,
+  "nodes" : [ "(3,4)[HOME]", "(4,1)[OTHER]", "(0,1)[WORK]", "(4,2)[OTHER]" ],
+  "dptBins" : [ 0, 5, 6, 7 ]
+}, {
+  "index" : 999,
+  "nodes" : [ "(1,3)[EDUCATION]", "(2,3)[WORK]", "(2,2)[OTHER]" ],
+  "dptBins" : [ 3, 10, 23 ]
+} ]
