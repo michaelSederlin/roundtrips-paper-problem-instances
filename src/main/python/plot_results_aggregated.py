@@ -128,18 +128,6 @@ def main():
 if __name__ == "__main__":
 
     ### Args hard coded
-    # ROOT = Path(__file__).resolve().parent.parent.parent.parent
-    # BASE_IN = ROOT / "data/aggregated_calibration/"
-    # BASE_OUT = ROOT / "data/aggregated_calibration/plots/"
-    # CALIBRATION_IN = BASE_IN / "calibration" / "2026 08 28"
-    # MEASUREMENT_IN = BASE_IN / "measurement"
-    # VALIDATION_IN  = BASE_IN / "validation"
-    # JOIN = True
-
-    # measurement_states_file = MEASUREMENT_IN / "_final_states_merged.xml"
-    # validation_states_file  = VALIDATION_IN  / "_final_states_merged.xml"
-
-    ### Args hard coded
     # BASE_IN = Path("./input/")
     # BASE_OUT = Path("./plots/")
     # CALIBRATION_IN = BASE_IN / "calibration"
