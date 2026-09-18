@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
-
 import aggregate.model.AtActivityLocationTargetWithActivities;
 import aggregate.model.DDHomeSummaryWithActivities;
 import aggregate.model.DDHomeTargetWithActivities;
@@ -23,31 +22,6 @@ import aggregate.utils.SimpleStatsLogger;
 import aggregate.utils.TargetLoggerConcatenating;
 import common.MatrixDataReader;
 import common.logging.XMLStateLogger;
-
-//import rt.model.location.AtActivityLocationTargetWithActivities;
-//import rt.model.location.HomeLocationTargetWithActivities;
-//import rt.model.departureDuration.DDHomeSummaryWithActivities;
-//import rt.model.departureDuration.DDHomeTargetWithActivities;
-//import rt.model.departureDuration.DDWorkByGroupSummaryWithActivities;
-//import rt.model.departureDuration.DDWorkTargetWithActivities;
-//import rt.model.od.ODSummaryIgnoringActivities;
-//import rt.model.od.ODTargetIgnoringActivities;
-
-//import rt.utils.logging.IterationCounter;
-//import rt.utils.logging.SettingsLogger;
-//import rt.utils.logging.SimpleStatsLogger;
-//import rt.utils.logging.TargetLoggerConcatenating;
-
-//import rt.utils.logging.XMLCompressor;
-//import rt.utils.logging.XMLStateLogger;
-
-//import rt.utils.pythonPlotting.PythonRunner;
-
-//import rt.utils.reading.CsvReader;
-//import rt.utils.reading.LocationReader;
-
-//import rt.utils.reading.MatrixDataReader;
-
 import se.vti.roundtrips.common.Node;
 import se.vti.roundtrips.common.RandomRoundTripGenerator;
 import se.vti.roundtrips.common.Runner;
@@ -350,7 +324,6 @@ public class RunnerRtAmalWithActivities {
 	// ------------------ Helper  ------------------
 
 	private static Map<String, Map<String, Double>> readGroup2Zone2Target(String file) {
-
 	    Map<String, Map<String, Double>> group2zone2target = new LinkedHashMap<>();
 	    for (Map.Entry<Tuple<String, String>, Double> entry :
 	            MatrixDataReader.readWithSemicolonSeparator(file).entrySet()) {
@@ -364,13 +337,12 @@ public class RunnerRtAmalWithActivities {
 	}
 
 
-	private static PopulationGrouping createGrouping(Map<String, Map<String, Double>> group2zone2target,
-	                                                 int nRoundTrips) {
-
+	private static PopulationGrouping createGrouping(Map<String, Map<String, Double>> group2zone2target, int nRoundTrips) {
 	    PopulationGrouping grouping = new PopulationGrouping(nRoundTrips);
 	    group2zone2target.forEach((group, zone2target) ->
 	            grouping.addGroup(group, zone2target.values().stream().mapToDouble(c -> c).sum()));
 	    group2zone2target.keySet().forEach(grouping::createFilter);
 	    return grouping;
 	}
+	
 }
