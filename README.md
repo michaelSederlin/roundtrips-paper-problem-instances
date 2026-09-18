@@ -68,10 +68,6 @@ This step tries to recover the population using only the survey, without knowing
    duration/departure tables, and so on), the kind of data you'd get from traffic counts
    or census tables rather than an individual-level survey.
 
-   > TODO (author of the aggregate branch, please fill in): which script or manual step
-   > produces the files in `data/aggregated_calibration/measurement/` from the
-   > synthesized population?
-
 2. **Run the calibration.**
    ```bash
    java -cp target/<jar> aggregate.RunnerRtAmalWithActivities
