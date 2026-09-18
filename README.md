@@ -63,14 +63,19 @@ This step tries to recover the population using only the survey, without knowing
 
 ### Aggregate calibration path
 
-1. **Create the aggregate measures.**
-This step extracts aggregate measures from the synthetic ground truth.
+1. **Extract the aggregate measures.**
 
 2. **Run the calibration.**
-This step tries to recover the population using only aggregate measures.
+This step tries to recover the population's travel patterns from aggregate measures.
+   ```bash
+   java -cp target/<jar> aggregate.RunnerRtAmalWithActivities
+   ```
    
 3. **Make result plots.**
-
+   ```bash
+   python src/main/python/plot_results_aggregated.py
+   ```
+   
 ## A note on splitting the work into pieces
 
 Population creation and disaggregate calibration each split the population into separate pieces (partitions) and run each piece on its own, often at the same time on different processor cores. This is only correct because every person is handled completely on their own — one person's trips never depend on another person's trips. 
