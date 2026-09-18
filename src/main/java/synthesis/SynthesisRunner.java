@@ -289,7 +289,6 @@ public class SynthesisRunner implements Callable<Integer> {
         runner.addStateProcessor(new ActivityDurationLogger(msgInt, partitionOutputDir.resolve("activityDurations.xml")));
         runner.addStateProcessor(new ActivityDepartureDurationLogger(msgInt, partitionOutputDir.resolve("activityDeparturesDurations.xml").toString()));
         runner.addStateProcessor(new VariablesLogger(msgInt, partitionOutputDir.resolve("stateVariables.tsv")));
-        runner.addStateProcessor(new SimpleStatsLogger<>(scenario, msgInt, partitionOutputDir));
         runner.addStateProcessor(new MHAbstractStateProcessor<MultiRoundTrip<GridNodeWithActivity>>(0, msgInt) {
             private long iter = 0;
             private final long  t0 = System.currentTimeMillis();
