@@ -88,18 +88,9 @@ Splitting the population into pieces, running each piece separately, and joining
 - Partitions each number their people from 0, so the merge qualifies `idx` as
   `{partition}_{idx}` (`0_0`, `0_1`, …) to get a globally unique key. The merged file is
   **tab**-separated while the per-partition `population.csv` are comma-separated.
-- Two synthesis XML formats exist and differ in where the activity lives: RENATE
-  (current, `output/`) puts it on `StayEpisode loc="(1,3)[WORK]"` with a separate
-  `labels="[WORK]"`; AMAL (older, `data/ground_truth/`) puts it on both `MoveEpisode` and
-  `StayEpisode` via `activity="WORK"`. `StayEpisode.loc` is the only field both populate
-  identically.
 - `--warm-start-file` (e.g. `data/survey/finalState.json`) starts calibration from the
   synthesis end state instead of cold. The file is a flat JSON list indexed `0..n-1`,
   **positionally aligned with `upbd.csv` row order**. Alignment breaks if a person is
   **skipped at load** — no legs in `mddr.csv`, or a failed validation — since every later
   agent then shifts by one. Check the log line `Loaded N of M persons.`: if N < M, the
   warm start is misaligned.
-- Remote runs: `./run_disaggregate_ws.sh {build|push|run|status|logs|clean}` builds the
-  image, ships it to the workstation named by `MACHINE`, and runs it via
-  `docker-compose.yml`. Override the argument file with `ARGS=other-args.txt`.
-
