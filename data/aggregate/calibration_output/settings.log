@@ -8,19 +8,19 @@ nRoundTrips: 1000
 
 convergenceCriterion: false
 convergenceCriterion tolerance: 0.2
-last iteration: 9999
-msg interval: 50
+last iteration: 999999
+msg interval: 5000
 
 prior: TODO log prior
 Gauss: true
 target2sigma: {OD=2.0, HL=2.0, WL=2.0, DDH=2.0, DDW=2.0}
 
-Start: 2026-09-18 11:33:59
-End:   2026-09-18 11:34:10
-Runtime [sec]: 10
-Runtime [min]: 0
-Runtime [h]:   0,0
+Start: 2026-09-18 11:35:04
+End:   2026-09-18 11:38:46
+Runtime [sec]: 222
+Runtime [min]: 4
+Runtime [h]:   0,1
 Runtime [d]:   0,00
-Time per iteration [s]: 0,00100
+Time per iteration [s]: 0,00022
 
-2026-09-18 11:33:59	2026-09-18 11:34:10	0,0	0,0	0	10	0e6	0,00100
+2026-09-18 11:35:04	2026-09-18 11:38:46	0,0	0,1	4	222	0e6	0,00022

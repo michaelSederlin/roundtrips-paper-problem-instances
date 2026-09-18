@@ -69,7 +69,7 @@ public class RunnerRtAmalWithActivities {
 		// ----- Testing ----- 
 		
 		convergenceCriterion = false;
-		nIterations = 1 * 10 * 1000;
+		nIterations = 1 * 1000 * 1000;
 		msgInterval = nIterations/200; 
 
 
