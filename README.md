@@ -15,8 +15,8 @@ _Linköping University; Swedish National Road and Transport Research Institute (
 There are four steps 
 **synthesis** simulates a ground-truth population on a grid world; 
 **data preparation** turns synthesis output into a survey/aggregated data for calibration; 
-**disaggregate calibration** tries to recover the population from that survey alone.
-**aggregate calbration** tries to recover the population from aggregated data extracted from ground-truth.
+**disaggregate calibration**  generates mobility behaviour from the disaggregate survey data alone.
+**aggregate calbration** generates mobility behaviour fromthe aggregate data extracted from the ground-truth.
 
 ## Running the simulation, step by step
 
