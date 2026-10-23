@@ -3,13 +3,13 @@
 ## Generic probabilistic spatiotemporal transport model
 
 **Gunnar Flötteröd**
-_Linköping University; Swedish National Road and Transport Research Institute_
+_Linköping University; Swedish National Road and Transport Research Institute (VTI)_
 
 **Franz-Xaver Rupprecht**
 _BOKU University_
 
 **Michael Sederlin**
-_Linköping University; Swedish National Road and Transport Research Institute_
+_Linköping University; Swedish National Road and Transport Research Institute (VTI)_
 
 
 There are four steps 
